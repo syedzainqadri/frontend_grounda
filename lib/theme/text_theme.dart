@@ -26,14 +26,14 @@ class CustomTextTheme {
 
     return TextTheme(
       displayLarge: GoogleFonts.ubuntu(
-        fontSize: 96,
+        fontSize: 58,
         color: textColor,
         fontWeight: light,
         letterSpacing: -1.5,
       ),
       displayMedium: GoogleFonts.ubuntu(
         color: textColor,
-        fontSize: 60,
+        fontSize: 42,
         fontWeight: light,
         letterSpacing: -0.5,
       ),
@@ -63,13 +63,13 @@ class CustomTextTheme {
       ),
       bodyLarge: GoogleFonts.ubuntu(
         color: textColor,
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: regular,
         letterSpacing: 0.5,
       ),
       bodyMedium: GoogleFonts.ubuntu(
         color: textColor,
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: regular,
         letterSpacing: 0.25,
       ),

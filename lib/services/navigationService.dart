@@ -6,5 +6,5 @@ import 'package:get/route_manager.dart';
 appRoutes() => [
       GetPage(name: '/', page: () => InitialNavigation()),
       GetPage(name: '/dashboard', page: () => const DashboardView()),
-      GetPage(name: '/login', page: () => const LoginView()),
+      GetPage(name: '/login', page: () => LoginView()),
     ];

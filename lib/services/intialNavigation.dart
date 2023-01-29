@@ -22,6 +22,6 @@ class InitialNavigation extends GetView<AuthController> {
         backgroundColor: kPrimaryColor,
         body: controller.auth.currentUser != null
             ? const DashboardView()
-            : const LoginView());
+            : LoginView());
   }
 }

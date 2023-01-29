@@ -44,6 +44,7 @@ dependencies:
   html: ^0.15.1
   firebase_storage: ^11.0.10
   google_fonts: ^4.0.0
+  google_sign_in: ^5.4.3
 
 dev_dependencies:
   flutter_test:
