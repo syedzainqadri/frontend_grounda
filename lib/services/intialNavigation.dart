@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/AuthController.dart';
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/views/dashboard/dashboard_view.dart';
-import 'package:frontend_grounda/views/login/login_view.dart';
+import 'package:frontend_grounda/views/pages/dashboard%20copy/dashboard_page.dart';
+import 'package:frontend_grounda/views/pages/login/login_view.dart';
 import 'package:get/get.dart';
-// import 'package:live_streaming_app/utils/constants.dart';
-// import '../views/dashboard/dashbord_view.dart';
-// import '../views/login/login_view.dart';
 
 class InitialNavigation extends GetView<AuthController> {
   InitialNavigation({Key? key}) : super(key: key);
@@ -21,7 +18,7 @@ class InitialNavigation extends GetView<AuthController> {
     return Scaffold(
         backgroundColor: kPrimaryColor,
         body: controller.auth.currentUser != null
-            ? const DashboardView()
+            ? const DashboardPage()
             : LoginView());
   }
 }
