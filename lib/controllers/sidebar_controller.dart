@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 class SideBarController extends GetxController {
   RxString title = "Events List".obs;
+  var width = 0.0.obs;
 
   final List<String> iconsList = [
     "assets/icon/dashboard.svg",
@@ -36,7 +37,15 @@ class SideBarController extends GetxController {
     "Logout",
   ];
 
+  // @override
+  // void onInit() {
+  //   width.value = Get.width;
+  //   // TODO: implement onInit
+  //   super.onInit();
+  // }
+
   final _pageController = PageController().obs;
+  var show = false.obs;
   PageController get pageController => _pageController.value;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/sidebar_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/sidebar_item.dart';
-import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
@@ -17,12 +16,12 @@ class MobileSidebar extends StatelessWidget {
         color: kDarkColor,
         child: Column(
           children: [
-            SizedBox(height: 4.h),
+            const SizedBox(height: 4),
             Image.asset("assets/images/dashboard-logo.png",
-                height: 10.h, width: 20.w),
-            SizedBox(height: 4.h),
+                height: 10, width: 20),
+            const SizedBox(height: 4),
             const Divider(thickness: 2, color: kDarkLightColor),
-            SizedBox(height: 6.h),
+            const SizedBox(height: 6),
             Expanded(
               child: ListView.builder(
                 itemCount: sideBarController.iconsList.length,

@@ -16,12 +16,12 @@ class TabletSidebar extends StatelessWidget {
         color: kDarkColor,
         child: Column(
           children: [
-            SizedBox(height: 4.h),
+            const SizedBox(height: 4),
             Image.asset("assets/images/dashboard-logo.png",
-                height: 6.h, width: 10.w),
-            SizedBox(height: 2.h),
+                height: 6, width: 10),
+            const SizedBox(height: 2),
             const Divider(thickness: 2, color: kDarkLightColor),
-            SizedBox(height: 4.h),
+            const SizedBox(height: 4),
             Expanded(
               child: ListView.builder(
                 itemCount: sideBarController.iconsList.length,

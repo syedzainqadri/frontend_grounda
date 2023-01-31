@@ -16,12 +16,12 @@ class DesktopSidebar extends StatelessWidget {
         color: kDarkColor,
         child: Column(
           children: [
-            SizedBox(height: 4.h),
+            const SizedBox(height: 4),
             Image.asset("assets/images/dashboard-logo.png",
-                height: 10.h, width: 20.w),
-            SizedBox(height: 4.h),
+                height: 10, width: 20),
+            const SizedBox(height: 4),
             const Divider(thickness: 2, color: kDarkLightColor),
-            SizedBox(height: 6.h),
+            const SizedBox(height: 6),
             Expanded(
               child: ListView.builder(
                 itemCount: sideBarController.iconsList.length,

@@ -12,18 +12,15 @@ import 'package:frontend_grounda/views/pages/project/project_page.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
 import 'sidebar/mobile_sidebar.dart';
 
 class RootView extends GetView<SideBarController> {
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  bool show = false.obs();
-
-  RootView({super.key});
+  const RootView({super.key});
 
   @override
   Widget build(BuildContext context) {
     double width = Get.width;
+    var show = false.obs;
 
     return Scaffold(
       key: controller.scaffoldKey,
@@ -37,15 +34,26 @@ class RootView extends GetView<SideBarController> {
           ),
         ),
         leading: Obx(
-          () => IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              show = !show;
-              if (width > 200 && width < 500) {
-                controller.scaffoldKey.currentState?.openDrawer();
-              }
-            },
-          ),
+          () => show.value == false
+              ? IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    show.value = true;
+                    print(show.value);
+                    if (width > 200 && width < 500) {
+                      controller.scaffoldKey.currentState?.openDrawer();
+                    }
+                  },
+                )
+              : IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    show.value = false;
+                    if (width > 200 && width < 500) {
+                      controller.scaffoldKey.currentState?.openDrawer();
+                    }
+                  },
+                ),
         ),
         actions: [
           Row(
@@ -55,60 +63,62 @@ class RootView extends GetView<SideBarController> {
                 "Logout",
                 style: Theme.of(context).textTheme.displayMedium,
               ),
-              SizedBox(width: 2.w),
+              const SizedBox(width: 2),
             ],
           ),
         ],
       ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: width >= 920
-                ? show == true
-                    ? width * 0.15
-                    : 0
-                : width > 600
-                    ? show == true
-                        ? width * 0.1
-                        : 0
-                    : 0,
-            child: width >= 920
-                ? show == true
-                    ? DesktopSidebar(sideBarController: controller)
-                    : MobileSidebar(sideBarController: controller)
-                : width > 600
-                    ? show == true
-                        ? TabletSidebar(sideBarController: controller)
-                        : MobileSidebar(sideBarController: controller)
-                    : null,
-          ),
-          SizedBox(
-            width: width > 920
-                ? show == true
-                    ? width * 0.85
-                    : width
-                : width > 600
-                    ? show == true
-                        ? width * 0.9
-                        : width
-                    : width,
-            child: PageView(
-              controller: controller.pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: const [
-                DashboardPage(),
-                CustomerPage(),
-                CategoryPage(),
-                PostPage(),
-                ProjectPage(),
-                AgencyPage(),
-                DeveloperPage(),
-                ProductPage(),
-              ],
+      body: Obx(
+        () => Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: width >= 920
+                  ? show.value == true
+                      ? width * 0.15
+                      : 0
+                  : width > 600
+                      ? show.value == true
+                          ? width * 0.1
+                          : 0
+                      : 0,
+              child: width >= 920
+                  ? show.value == true
+                      ? DesktopSidebar(sideBarController: controller)
+                      : MobileSidebar(sideBarController: controller)
+                  : width > 600
+                      ? show.value == true
+                          ? TabletSidebar(sideBarController: controller)
+                          : MobileSidebar(sideBarController: controller)
+                      : null,
             ),
-          ),
-        ],
+            SizedBox(
+              width: width > 920
+                  ? show.value == true
+                      ? width * 0.85
+                      : width
+                  : width > 600
+                      ? show.value == true
+                          ? width * 0.9
+                          : width
+                      : width,
+              child: PageView(
+                controller: controller.pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: const [
+                  DashboardPage(),
+                  CustomerPage(),
+                  CategoryPage(),
+                  PostPage(),
+                  ProjectPage(),
+                  AgencyPage(),
+                  DeveloperPage(),
+                  ProductPage(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
