@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frontend_grounda/controllers/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/utils/values_manager.dart';
+import 'package:get/get.dart';
 
-class SidebarItem extends StatelessWidget {
+class SidebarItem extends GetView<ThemeChangeController> {
   const SidebarItem(
       {Key? key,
       this.title,
@@ -21,13 +23,18 @@ class SidebarItem extends StatelessWidget {
     return isTablet
         ? ListTile(
             onTap: press,
-            leading: SvgPicture.asset(svgSrc,
-                color: kDarkLightColor, height: AppSize.s20))
+            leading: SvgPicture.asset(svgSrc, color: kPrimaryColor, height: 15))
         : ListTile(
             onTap: press,
             horizontalTitleGap: AppSize.s0,
-            leading:
-                SvgPicture.asset(svgSrc, color: kRedColor, height: AppSize.s16),
-            title: Text(title!));
+            leading: SvgPicture.asset(svgSrc, color: kPrimaryColor, height: 15),
+            title: Text(
+              title!,
+              style: TextStyle(
+                color: controller.isDarkMode.value ? kBrightColor : kDarkColor,
+                fontSize: 16,
+              ),
+            ),
+          );
   }
 }

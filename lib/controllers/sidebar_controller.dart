@@ -6,20 +6,20 @@ class SideBarController extends GetxController {
   var width = 0.0.obs;
 
   final List<String> iconsList = [
-    "assets/icon/dashboard.svg",
-    "assets/icon/customer-list.svg",
-    "assets/icon/category-list.svg",
-    "assets/icon/post-list.svg",
-    "assets/icon/project-list.svg",
-    "assets/icon/agency-list.svg",
-    "assets/icon/developer-list.svg",
-    "assets/icon/product-list.svg",
-    "assets/icon/order-list.svg",
-    "assets/icon/blog-list.svg",
-    "assets/icon/forum-list.svg",
-    "assets/icon/support-list.svg",
-    "assets/icon/setting.svg",
-    "assets/icon/logout.svg",
+    "assets/icons/dashboard.svg",
+    "assets/icons/customer-list.svg",
+    "assets/icons/category-list.svg",
+    "assets/icons/post-list.svg",
+    "assets/icons/project-list.svg",
+    "assets/icons/agency-list.svg",
+    "assets/icons/developer-list.svg",
+    "assets/icons/product-list.svg",
+    "assets/icons/order-list.svg",
+    "assets/icons/blog-list.svg",
+    "assets/icons/forum-list.svg",
+    "assets/icons/support-list.svg",
+    "assets/icons/setting.svg",
+    "assets/icons/logout.svg",
   ];
   final List<String> namesList = [
     'Dashboard',
@@ -34,15 +34,9 @@ class SideBarController extends GetxController {
     "Blog",
     "Forum",
     "Help",
+    "setting",
     "Logout",
   ];
-
-  // @override
-  // void onInit() {
-  //   width.value = Get.width;
-  //   // TODO: implement onInit
-  //   super.onInit();
-  // }
 
   final _pageController = PageController().obs;
   var show = false.obs;

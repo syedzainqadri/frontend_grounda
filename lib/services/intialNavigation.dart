@@ -6,17 +6,13 @@ import 'package:frontend_grounda/views/root_view.dart';
 import 'package:get/get.dart';
 
 class InitialNavigation extends GetView<AuthController> {
-  InitialNavigation({Key? key}) : super(key: key);
-  final isLoading = true.obs;
+  const InitialNavigation({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    if (controller.auth.currentUser == null) {
-      isLoading.value = true;
-    } else {
-      isLoading.value = false;
-    }
     return Scaffold(
         backgroundColor: kPrimaryColor,
-        body: controller.auth.currentUser != null ? RootView() : LoginView());
+        body: controller.auth.currentUser != null
+            ? const RootView()
+            : LoginView());
   }
 }
