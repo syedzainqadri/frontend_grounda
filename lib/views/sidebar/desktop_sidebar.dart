@@ -18,13 +18,13 @@ class DesktopSidebar extends GetView<ThemeChangeController> {
         backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
         child: Column(
           children: [
-            const SizedBox(height: 4),
+            const SizedBox(height: 10),
             SizedBox(
-              height: 60,
+              height: 40,
               child: Image.asset("assets/images/dashboard-logo.png",
-                  height: 20, width: 120),
+                  height: 80, width: 150),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 0),
             const Divider(),
             const SizedBox(height: 6),
             Expanded(

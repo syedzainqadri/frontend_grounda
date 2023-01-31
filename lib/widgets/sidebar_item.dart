@@ -23,16 +23,34 @@ class SidebarItem extends GetView<ThemeChangeController> {
     return isTablet
         ? ListTile(
             onTap: press,
-            leading: SvgPicture.asset(svgSrc, color: kPrimaryColor, height: 15))
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: SvgPicture.asset(
+                svgSrc,
+                color: kPrimaryColor,
+                height: 15,
+              ),
+            ))
         : ListTile(
             onTap: press,
             horizontalTitleGap: AppSize.s0,
-            leading: SvgPicture.asset(svgSrc, color: kPrimaryColor, height: 15),
-            title: Text(
-              title!,
-              style: TextStyle(
-                color: controller.isDarkMode.value ? kBrightColor : kDarkColor,
-                fontSize: 16,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 12.0),
+              child: SvgPicture.asset(
+                svgSrc,
+                color: kPrimaryColor,
+                height: 15,
+              ),
+            ),
+            title: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                title!,
+                style: TextStyle(
+                  color:
+                      controller.isDarkMode.value ? kBrightColor : kDarkColor,
+                  fontSize: 16,
+                ),
               ),
             ),
           );

@@ -27,7 +27,10 @@ class RootView extends GetView<SideBarController> {
         () => Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInQuart,
+              transform: Matrix4.identity(),
               width: width >= 920
                   ? show.value == false
                       ? width * 0.15
