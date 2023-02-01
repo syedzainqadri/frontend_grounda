@@ -9,9 +9,12 @@ const kDarkLightColor = Color(0x96404553);
 const kFadedColor = Color(0xffF7F6F2);
 const kRedColor = Colors.red;
 const kPrimaryColor = Color(0xffBC902D);
+const kGoldenColor = Color(0xffF2C94C);
 const kShadowColor = Color(0XFFCCCCCC);
 const kInputBgColor = Color(0XFFF8F8F8);
 const kLabelColor = Color(0XFF333333);
+
+const kFrameColor = Color(0XFFF8F8F8);
 
 // responsive
 

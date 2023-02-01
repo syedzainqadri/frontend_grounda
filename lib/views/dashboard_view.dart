@@ -5,17 +5,19 @@ import 'package:frontend_grounda/views/pages/category/category_page.dart';
 import 'package:frontend_grounda/views/pages/customer/customer_page.dart';
 import 'package:frontend_grounda/views/pages/dashboard/dashboard_page.dart';
 import 'package:frontend_grounda/views/pages/developer/developer_page.dart';
+import 'package:frontend_grounda/views/pages/forum/forum_page.dart';
 import 'package:frontend_grounda/views/pages/post/post_page.dart';
 import 'package:frontend_grounda/views/pages/product/product_page.dart';
 import 'package:frontend_grounda/views/pages/project/project_page.dart';
+import 'package:frontend_grounda/views/pages/support/support_page.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
 import '../utils/global_variable.dart';
 import 'sidebar/mobile_sidebar.dart';
 
-class RootView extends GetView<SideBarController> {
-  const RootView({super.key});
+class DashboardView extends GetView<SideBarController> {
+  const DashboardView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class RootView extends GetView<SideBarController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 400),
               curve: Curves.easeInQuart,
               transform: Matrix4.identity(),
               width: width >= 920
@@ -67,7 +69,8 @@ class RootView extends GetView<SideBarController> {
                   ProjectPage(),
                   AgencyPage(),
                   DeveloperPage(),
-                  ProductPage(),
+                  ForumPage(),
+                  SupportPage(),
                 ],
               ),
             ),

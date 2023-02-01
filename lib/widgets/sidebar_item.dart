@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend_grounda/controllers/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/utils/values_manager.dart';
+
 import 'package:get/get.dart';
 
 class SidebarItem extends GetView<ThemeChangeController> {
@@ -33,7 +33,7 @@ class SidebarItem extends GetView<ThemeChangeController> {
             ))
         : ListTile(
             onTap: press,
-            horizontalTitleGap: AppSize.s0,
+            horizontalTitleGap: 0,
             leading: Padding(
               padding: const EdgeInsets.only(left: 12.0),
               child: SvgPicture.asset(
