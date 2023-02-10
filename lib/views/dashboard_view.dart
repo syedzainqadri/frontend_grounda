@@ -37,16 +37,16 @@ class DashboardView extends GetView<SideBarController> {
                   ? show.value == false
                       ? width * 0.15
                       : width * 0.05
-                  : width > 600
+                  : width < 920
                       ? show.value == false
-                          ? width * 0.1
+                          ? width * 0.13
                           : width * 0.25
                       : 0,
               child: width >= 920
                   ? show.value == false
                       ? DesktopSidebar(sideBarController: controller)
                       : TabletSidebar(sideBarController: controller)
-                  : width > 600
+                  : width < 920
                       ? show.value == false
                           ? TabletSidebar(sideBarController: controller)
                           : MobileSidebar(sideBarController: controller)
@@ -56,21 +56,21 @@ class DashboardView extends GetView<SideBarController> {
               child: PageView(
                 controller: controller.pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
+                children: [
                   DashboardPage(),
-                  CustomerPage(),
-                  CategoryPage(),
-                  PostPage(),
-                  ProjectPage(),
-                  AgencyPage(),
-                  DeveloperPage(),
-                  ProductPage(),
-                  PostPage(),
-                  ProjectPage(),
-                  AgencyPage(),
-                  DeveloperPage(),
-                  ForumPage(),
-                  SupportPage(),
+                  const CustomerPage(),
+                  const CategoryPage(),
+                  const PostPage(),
+                  const ProjectPage(),
+                  const AgencyPage(),
+                  const DeveloperPage(),
+                  const ProductPage(),
+                  const PostPage(),
+                  const ProjectPage(),
+                  const AgencyPage(),
+                  const DeveloperPage(),
+                  const ForumPage(),
+                  const SupportPage(),
                 ],
               ),
             ),

@@ -4,15 +4,15 @@ import 'package:frontend_grounda/utils/constants.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class DashboardSmallWidget extends StatelessWidget {
-  DashboardSmallWidget({
-    super.key,
-    required this.title,
-    required this.subTitle,
-    required this.width,
-    required this.percentage,
-    required this.svgIconPath,
-    required this.color,
-  });
+  DashboardSmallWidget(
+      {super.key,
+      required this.title,
+      required this.subTitle,
+      required this.width,
+      required this.percentage,
+      required this.svgIconPath,
+      required this.color,
+      required this.isMobile});
 
   var width;
   var percentage;
@@ -20,11 +20,12 @@ class DashboardSmallWidget extends StatelessWidget {
   String subTitle;
   String svgIconPath;
   Color color;
+  bool isMobile = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width / 4,
+      width: isMobile ? width : width / 4,
       decoration: const BoxDecoration(
         color: kFrameColor,
         borderRadius: BorderRadius.all(

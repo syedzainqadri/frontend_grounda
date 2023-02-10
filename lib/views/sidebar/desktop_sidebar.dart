@@ -15,7 +15,7 @@ class DesktopSidebar extends GetView<ThemeChangeController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Drawer(
-        backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
+        backgroundColor: controller.isDarkMode.value ? kDarkColor : kFrameColor,
         child: Column(
           children: [
             const SizedBox(height: 10),
