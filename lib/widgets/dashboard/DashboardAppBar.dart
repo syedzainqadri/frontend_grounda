@@ -16,6 +16,7 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
         super(key: key);
 
   final String title;
+  final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,7 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
                 child: Padding(
                   padding: const EdgeInsets.only(top: 5.0),
                   child: DefaultTextField(
+                    textEditingController: searchController,
                     hintText: "Search",
                     labelText: "",
                     isPassword: false,

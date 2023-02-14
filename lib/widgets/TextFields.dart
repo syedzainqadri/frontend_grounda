@@ -9,6 +9,7 @@ class DefaultTextField extends GetView<ThemeChangeController> {
     required this.hintText,
     required this.labelText,
     required this.isPassword,
+    required this.textEditingController,
     this.suffixIcon,
     this.prefixIcon,
   });
@@ -18,10 +19,12 @@ class DefaultTextField extends GetView<ThemeChangeController> {
   bool isPassword;
   Widget? prefixIcon;
   Widget? suffixIcon;
+  TextEditingController? textEditingController;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: textEditingController,
       obscureText: isPassword,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
