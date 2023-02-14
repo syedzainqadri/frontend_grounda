@@ -1,67 +1,43 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/bindings/all_bindings.dart';
+import 'package:frontend_grounda/controllers/AuthController.dart';
+import 'package:frontend_grounda/firebase_options.dart';
+import 'package:frontend_grounda/services/navigationService.dart';
+import 'package:frontend_grounda/theme/theme.dart';
+import 'package:frontend_grounda/utils/constants.dart';
+import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'controllers/theme_change_controller.dart';
+import 'controllers/theme_controller.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await Hive.initFlutter();
+  await Hive.openBox('settings');
+  Get.put(AuthController());
+  Get.put(ThemeController());
+  Get.put(ThemeChangeController());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  final ThemeController _themeController = Get.put(ThemeController());
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    return GetMaterialApp(
+      initialBinding: AllBindings(),
+      debugShowCheckedModeBanner: false,
+      themeMode: _themeController.themeStateFromHiveSettingBox,
+      title: ProjectName,
+      initialRoute: '/dashboard',
+      getPages: appRoutes(),
+      theme: CustomTheme().lightTheme,
+      darkTheme: CustomTheme().darkTheme,
     );
   }
 }

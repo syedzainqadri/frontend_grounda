@@ -4,14 +4,17 @@ import 'package:frontend_grounda/utils/constants.dart';
 
 // ignore: non_constant_identifier_names
 ThemeData LightThemeData() {
+  CustomTextTheme textTheme = CustomTextTheme();
+
   return ThemeData(
-    primaryColor: kBrightColor,
+    cardColor: kDarkLightColor,
+    primaryColor: kWhiteColor,
     brightness: Brightness
         .light, //Setting the Brightness to light  so that this can be used as Light ThemeData
     scaffoldBackgroundColor: Colors.white,
     splashColor: Colors.orange,
-    textTheme: CustomTextTheme
-        .textThemeLight, //Setting the Text Theme to LightTextTheme
+    textTheme:
+        textTheme.textThemeLight, //Setting the Text Theme to LightTextTheme
 
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,

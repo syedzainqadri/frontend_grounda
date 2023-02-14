@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.frontend_grounda">
+    package="com.grounda.admin">
    <application
         android:label="frontend_grounda"
         android:name="${applicationName}"

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "349828504920",
+    "project_id": "ground-admin-22692",
+    "storage_bucket": "ground-admin-22692.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349828504920:android:135cad359a0425650e992d",
+        "android_client_info": {
+          "package_name": "com.grounda.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349828504920-8g91vfrvfhjh0psfe482prsf0a5nvv0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNPpNbO5NtlNer8don2owixbrYHhNWd78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349828504920-8g91vfrvfhjh0psfe482prsf0a5nvv0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

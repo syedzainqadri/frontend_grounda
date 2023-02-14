@@ -1,4 +1,4 @@
-package com.example.frontend_grounda
+package com.grounda.admin
 
 import io.flutter.embedding.android.FlutterActivity
 
