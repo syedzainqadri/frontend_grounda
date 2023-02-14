@@ -7,7 +7,7 @@ errorSnackbar(title, message) {
     message,
     snackPosition: SnackPosition.BOTTOM,
     backgroundColor: kRedColor,
-    colorText: kBrightColor,
+    colorText: kWhiteColor,
   );
 }
 
@@ -17,6 +17,6 @@ successSnackbar(title, message) {
     message,
     snackPosition: SnackPosition.BOTTOM,
     backgroundColor: kPrimaryColor,
-    colorText: kBrightColor,
+    colorText: kWhiteColor,
   );
 }

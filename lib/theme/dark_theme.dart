@@ -5,6 +5,7 @@ import '../utils/constants.dart';
 
 // ignore: non_constant_identifier_names
 ThemeData DarkThemeData() {
+  CustomTextTheme textTheme = CustomTextTheme();
   return ThemeData(
     primaryColor: kDarkColor,
     brightness: Brightness
@@ -12,7 +13,7 @@ ThemeData DarkThemeData() {
     scaffoldBackgroundColor: Colors.black,
     splashColor: Colors.grey,
     textTheme:
-        CustomTextTheme.textThemeDark, //Setting the Text Theme to DarkTextTheme
+        textTheme.textThemeDark, //Setting the Text Theme to DarkTextTheme
 
     appBarTheme: const AppBarTheme(
       centerTitle: true,

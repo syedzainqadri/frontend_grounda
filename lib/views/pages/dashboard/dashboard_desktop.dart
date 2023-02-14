@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/controllers/theme_change_controller.dart';
 import 'package:frontend_grounda/models/VisitsData.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/dashboard/DashboardSmallWidget.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class DashboardDesktop extends StatelessWidget {
+class DashboardDesktop extends GetView<ThemeChangeController> {
   DashboardDesktop({super.key, required this.visitSeriesData});
 
   List<AreaSeries<VisitsChartData?, DateTime?>> visitSeriesData;

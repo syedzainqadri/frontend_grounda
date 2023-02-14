@@ -5,6 +5,7 @@ import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/dashboard/dashboard_desktop.dart';
 import 'package:frontend_grounda/views/pages/dashboard/dashboard_mobile.dart';
 import 'package:frontend_grounda/views/responsive/responsive_layout.dart';
+import 'package:frontend_grounda/widgets/dashboard/DashboardAppBar.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -27,32 +28,17 @@ class DashboardPage extends GetView<ThemeChangeController> {
     var width = Get.width;
     // var height = Get.height;
 
-    return Scaffold(
-      backgroundColor: kWhiteColor,
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.all(2),
-          child: Text(
-            "DashBoard",
-            style: Theme.of(context).textTheme.headlineSmall,
+    return Obx(
+      () => Scaffold(
+        backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
+        appBar: DashBoardAppBar(title: "Dashboard"),
+        body: SingleChildScrollView(
+          child: ResponsiveLayout(
+            desktopBody:
+                DashboardDesktop(visitSeriesData: getDefaultPanningSeries()),
+            mobileBody:
+                DashboardMobile(visitSeriesData: getDefaultPanningSeries()),
           ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              controller.isDarkMode.value = !controller.isDarkMode.value;
-              print(controller.isDarkMode.value);
-            },
-            icon: const Icon(Icons.lightbulb),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: ResponsiveLayout(
-          desktopBody:
-              DashboardDesktop(visitSeriesData: getDefaultPanningSeries()),
-          mobileBody:
-              DashboardMobile(visitSeriesData: getDefaultPanningSeries()),
         ),
       ),
     );

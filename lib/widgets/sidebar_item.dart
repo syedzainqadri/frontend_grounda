@@ -46,9 +46,9 @@ class SidebarItem extends GetView<ThemeChangeController> {
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
                 title!,
+                //style: Theme.of(context).textTheme.bodyMedium,
                 style: TextStyle(
-                  color:
-                      controller.isDarkMode.value ? kBrightColor : kDarkColor,
+                  color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
                   fontSize: 16,
                 ),
               ),

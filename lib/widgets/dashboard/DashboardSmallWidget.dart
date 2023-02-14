@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend_grounda/controllers/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class DashboardSmallWidget extends StatelessWidget {
+class DashboardSmallWidget extends GetView<ThemeChangeController> {
   DashboardSmallWidget(
       {super.key,
       required this.title,
@@ -26,12 +28,12 @@ class DashboardSmallWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: isMobile ? width : width / 4,
-      decoration: const BoxDecoration(
-        color: kFrameColor,
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        color: controller.isDarkMode.value ? kDarkCardColor : kCardColor,
+        borderRadius: const BorderRadius.all(
           Radius.circular(15),
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: kShadowColor,
             blurRadius: 2,

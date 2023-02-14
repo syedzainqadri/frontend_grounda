@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-const kMainColor = Color.fromARGB(255, 170, 3, 156);
-const kBrightColor = Colors.white;
-const kWhiteColor = Colors.white;
-const kDarkColor = Color(0xFF404553);
-const kDarkLightColor = Color(0x96404553);
+// const kMainColor = Color.fromARGB(255, 170, 3, 156);
+// const kBrightColor = Colors.white;
+const kWhiteColor = Color.fromARGB(255, 229, 229, 229);
 const kFadedColor = Color(0xffF7F6F2);
 const kRedColor = Colors.red;
 const kPrimaryColor = Color(0xffBC902D);
@@ -13,9 +11,16 @@ const kGoldenColor = Color(0xffF2C94C);
 const kShadowColor = Color(0XFFCCCCCC);
 const kInputBgColor = Color(0XFFF8F8F8);
 const kLabelColor = Color(0XFF333333);
-
 const kFrameColor = Color(0XFFF8F8F8);
+const kCardColor = Color(0XFFF8F8F8);
+const kTextColor = Color.fromARGB(255, 0, 0, 0);
 
+// Dark Theme
+const kDarkColor = Color(0xFF404553);
+const kDarkLightColor = Color(0xFF4a4e5e);
+const kDarkShadowColor = Color.fromARGB(255, 0, 0, 0);
+const kDarkTextColor = Color.fromARGB(255, 255, 255, 255);
+const kDarkCardColor = Color(0xFF4a4e5e);
 // responsive
 
 // font Size

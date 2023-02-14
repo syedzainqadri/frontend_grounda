@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/controllers/theme_change_controller.dart';
 import 'package:frontend_grounda/models/VisitsData.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/footer/footer.dart';
@@ -6,7 +7,7 @@ import 'package:frontend_grounda/widgets/dashboard/DashboardSmallWidget.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class DashboardMobile extends StatelessWidget {
+class DashboardMobile extends GetView<ThemeChangeController> {
   DashboardMobile({super.key, required this.visitSeriesData});
 
   List<AreaSeries<VisitsChartData?, DateTime?>> visitSeriesData;
@@ -28,24 +29,26 @@ class DashboardMobile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DashboardSmallWidget(
-                  title: "Posts",
-                  subTitle: "Published Posts",
-                  width: width * .8,
-                  percentage: 80,
-                  svgIconPath: "assets/icons/post-list.svg",
-                  color: kGoldenColor,
-                  isMobile: isMobile),
+                title: "Posts",
+                subTitle: "Published Posts",
+                width: width * .8,
+                percentage: 80,
+                svgIconPath: "assets/icons/post-list.svg",
+                color: kGoldenColor,
+                isMobile: isMobile,
+              ),
               const SizedBox(
                 height: 24,
               ),
               DashboardSmallWidget(
-                  title: "Orders",
-                  subTitle: "Active Orders",
-                  width: width * .8,
-                  percentage: 65,
-                  svgIconPath: "assets/icons/order-list.svg",
-                  color: kDarkColor,
-                  isMobile: isMobile),
+                title: "Orders",
+                subTitle: "Active Orders",
+                width: width * .8,
+                percentage: 65,
+                svgIconPath: "assets/icons/order-list.svg",
+                color: kDarkColor,
+                isMobile: isMobile,
+              ),
               const SizedBox(
                 height: 24,
               ),
