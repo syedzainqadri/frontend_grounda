@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/controllers/AuthController.dart';
+import 'package:frontend_grounda/controllers/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/Buttons.dart';
 import 'package:frontend_grounda/widgets/TextFields.dart';
 import 'package:get/get.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends GetView<ThemeChangeController> {
   LoginView({Key? key}) : super(key: key);
 
   double height = Get.height;
   double width = Get.width;
 
   RxBool isObsecure = true.obs;
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +111,7 @@ class LoginView extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 40),
                                   child: DefaultTextField(
+                                    textEditingController: emailController,
                                     hintText: "Username",
                                     labelText: "Username",
                                     isPassword: false,
@@ -115,6 +123,7 @@ class LoginView extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 40, vertical: 20),
                                     child: DefaultTextField(
+                                      textEditingController: passwordController,
                                       hintText: "Password",
                                       labelText: "Password",
                                       isPassword: isObsecure.value,
@@ -136,7 +145,13 @@ class LoginView extends StatelessWidget {
                                   primaryColor: kPrimaryColor,
                                   hoverColor: kDarkColor,
                                   buttonText: "Sign In",
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    print(emailController.text);
+                                    print(passwordController.text);
+                                    authController.registerUser(
+                                        emailController.text.trim(),
+                                        passwordController.text);
+                                  },
                                   width:
                                       media.width < 768 ? width / 9 : width / 5,
                                   height: height / 20,

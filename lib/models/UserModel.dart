@@ -5,38 +5,39 @@
 import 'dart:convert';
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
+
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
   UserModel({
-    required this.id,
-    required this.email,
-    required this.role,
-    required this.password,
+    this.id,
+    this.email,
+    this.role,
+    this.password,
     this.fcmtoken,
-    required this.salt,
-    required this.preferencesEmailNotification,
-    required this.preferencesNewsletter,
-    required this.preferencesAutomatedReport,
-    required this.currency,
-    required this.areaUnit,
-    required this.createdAt,
-    required this.updatedAt,
+    this.salt,
+    this.preferencesEmailNotification,
+    this.preferencesNewsletter,
+    this.preferencesAutomatedReport,
+    this.currency,
+    this.areaUnit,
+    this.createdAt,
+    this.updatedAt,
   });
 
-  int id;
-  String email;
-  String role;
-  String password;
+  int? id;
+  String? email;
+  String? role;
+  String? password;
   dynamic fcmtoken;
-  String salt;
-  bool preferencesEmailNotification;
-  bool preferencesNewsletter;
-  bool preferencesAutomatedReport;
-  String currency;
-  String areaUnit;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String? salt;
+  bool? preferencesEmailNotification;
+  bool? preferencesNewsletter;
+  bool? preferencesAutomatedReport;
+  String? currency;
+  String? areaUnit;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
@@ -66,7 +67,7 @@ class UserModel {
         "preferencesAutomatedReport": preferencesAutomatedReport,
         "currency": currency,
         "AreaUnit": areaUnit,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        "createdAt": createdAt.toString(),
+        "updatedAt": updatedAt.toString(),
       };
 }
