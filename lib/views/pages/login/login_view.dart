@@ -148,7 +148,7 @@ class LoginView extends GetView<ThemeChangeController> {
                                   onPressed: () {
                                     print(emailController.text);
                                     print(passwordController.text);
-                                    authController.registerUser(
+                                    authController.signIn(
                                         emailController.text.trim(),
                                         passwordController.text);
                                   },

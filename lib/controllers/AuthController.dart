@@ -113,4 +113,15 @@ class AuthController extends GetxController {
     print(response.body);
     userModel.value = userModelFromJson(response.body);
   }
+
+  void signIn(String email, String password) async {
+    var bodyPrepare = {
+      "email": email,
+      "password": password,
+    };
+    var response = await http.post(Uri.parse(baseUrl + userLogin),
+        body: jsonEncode(bodyPrepare));
+    print(response.body);
+    token.value = response.body;
+  }
 }
