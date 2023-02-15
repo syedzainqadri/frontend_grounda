@@ -13,7 +13,7 @@ import 'package:frontend_grounda/views/pages/support/support_page.dart';
 import 'package:get/route_manager.dart';
 
 appRoutes() => [
-      GetPage(name: '/', page: () => const InitialNavigation()),
+      GetPage(name: '/', page: () => InitialNavigation()),
       GetPage(name: '/dashboard', page: () => const DashboardView()),
       GetPage(name: '/category', page: () => const CategoryPage()),
       GetPage(name: '/post', page: () => const PostPage()),
