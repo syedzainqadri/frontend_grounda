@@ -4,17 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:frontend_grounda/models/UserModel.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class AuthController extends GetxController {
-  RxString token = ''.obs;
-
   FirebaseAuth auth = FirebaseAuth.instance;
   Rxn<User> firebaseUser = Rxn<User>();
 
   User? get userGetter => firebaseUser.value;
 
   var userModel = UserModel().obs;
+  final Box<dynamic> tokenHiveBox = Hive.box('token');
 
   // @override
   // void onInit() {
@@ -122,6 +122,10 @@ class AuthController extends GetxController {
     var response = await http.post(Uri.parse(baseUrl + userLogin),
         body: jsonEncode(bodyPrepare));
     print(response.body);
-    token.value = response.body;
+    _updateHiveTokeng(response.body);
+  }
+
+  void _updateHiveTokeng(String token) {
+    tokenHiveBox.put('token', token);
   }
 }

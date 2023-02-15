@@ -18,6 +18,7 @@ void main() async {
   );
   await Hive.initFlutter();
   await Hive.openBox('settings');
+  await Hive.openBox('token');
   Get.put(AuthController());
   Get.put(ThemeController());
   Get.put(ThemeChangeController());
