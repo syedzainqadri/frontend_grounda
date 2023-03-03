@@ -15,7 +15,7 @@ import 'package:get/route_manager.dart';
 appRoutes() => [
       GetPage(name: '/', page: () => InitialNavigation()),
       GetPage(name: '/dashboard', page: () => const DashboardView()),
-      GetPage(name: '/category', page: () => const CategoryPage()),
+      GetPage(name: '/category', page: () => CategoryPage()),
       GetPage(name: '/post', page: () => const PostPage()),
       GetPage(name: '/project', page: () => const ProjectPage()),
       GetPage(name: '/developer', page: () => const DeveloperPage()),

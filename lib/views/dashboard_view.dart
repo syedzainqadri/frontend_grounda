@@ -59,7 +59,7 @@ class DashboardView extends GetView<SideBarController> {
                 children: [
                   DashboardPage(),
                   const CustomerPage(),
-                  const CategoryPage(),
+                  CategoryPage(),
                   const PostPage(),
                   const ProjectPage(),
                   const AgencyPage(),

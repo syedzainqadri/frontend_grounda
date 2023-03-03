@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: _themeController.themeStateFromHiveSettingBox,
       title: ProjectName,
-      initialRoute: '/',
+      initialRoute: '/dashboard',
       getPages: appRoutes(),
       theme: CustomTheme().lightTheme,
       darkTheme: CustomTheme().darkTheme,
