@@ -51,6 +51,7 @@ dependencies:
   hive_flutter: ^1.1.0
   syncfusion_flutter_charts: ^20.4.44
   syncfusion_flutter_gauges: ^20.4.48
+  pull_to_refresh: ^2.0.0
 
 
 dev_dependencies:

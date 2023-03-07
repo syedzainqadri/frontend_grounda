@@ -43,7 +43,7 @@ class CategoryPage extends GetView<ThemeChangeController> {
                 boxShadow: [
                   BoxShadow(
                     color: controller.isDarkMode.value
-                        ? kDarkShadowColor.withOpacity(.5)
+                        ? kDarkShadowColor.withOpacity(.9)
                         : kShadowColor.withOpacity(.5),
                     spreadRadius: 3,
                     blurRadius: 4,
