@@ -1,4 +1,4 @@
-import 'package:frontend_grounda/services/intialNavigation.dart';
+import 'package:frontend_grounda/services/intial_navigation.dart';
 import 'package:frontend_grounda/views/pages/agency/agency_page.dart';
 import 'package:frontend_grounda/views/pages/category/category_page.dart';
 import 'package:frontend_grounda/views/pages/customer/customer_page.dart';

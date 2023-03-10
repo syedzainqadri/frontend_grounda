@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:frontend_grounda/models/UserModel.dart';
+import 'package:frontend_grounda/models/userModel/user_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -110,7 +110,6 @@ class AuthController extends GetxController {
     };
     var response = await http.post(Uri.parse(baseUrl + createUser),
         body: jsonEncode(bodyPrepare));
-    print(response.body);
     userModel.value = userModelFromJson(response.body);
   }
 
@@ -121,7 +120,6 @@ class AuthController extends GetxController {
     };
     var response = await http.post(Uri.parse(baseUrl + userLogin),
         body: jsonEncode(bodyPrepare));
-    print(response.body);
     _updateHiveTokeng(response.body);
   }
 

@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/bindings/all_bindings.dart';
-import 'package:frontend_grounda/controllers/AuthController.dart';
+import 'package:frontend_grounda/controllers/auth_controller.dart';
 import 'package:frontend_grounda/firebase_options.dart';
-import 'package:frontend_grounda/services/navigationService.dart';
+import 'package:frontend_grounda/services/navigation_service.dart';
 import 'package:frontend_grounda/theme/theme.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:get/get.dart';

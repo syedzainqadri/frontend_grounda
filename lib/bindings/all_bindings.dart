@@ -6,7 +6,6 @@ import 'package:get/instance_manager.dart';
 class AllBindings implements Bindings {
   @override
   void dependencies() {
-    // TODO: implement dependencies
     Get.lazyPut(() => ThemeChangeController());
     Get.lazyPut(() => ThemeController());
     Get.lazyPut<SideBarController>(() => SideBarController());

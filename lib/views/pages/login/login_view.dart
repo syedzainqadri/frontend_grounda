@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_grounda/controllers/AuthController.dart';
+import 'package:frontend_grounda/controllers/auth_controller.dart';
 import 'package:frontend_grounda/controllers/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/Buttons.dart';
-import 'package:frontend_grounda/widgets/TextFields.dart';
+import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class LoginView extends GetView<ThemeChangeController> {

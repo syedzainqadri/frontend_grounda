@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/theme_change_controller.dart';
-import 'package:frontend_grounda/models/VisitsData.dart';
+import 'package:frontend_grounda/models/visits_data.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/dashboard/dashboard_desktop.dart';
 import 'package:frontend_grounda/views/pages/dashboard/dashboard_mobile.dart';
 import 'package:frontend_grounda/views/responsive/responsive_layout.dart';
-import 'package:frontend_grounda/widgets/dashboard/DashboardAppBar.dart';
+import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
