@@ -14,16 +14,13 @@ class CustomerPage extends GetView<ThemeChangeController> {
           IconButton(
             onPressed: () {
               controller.isDarkMode.value = !controller.isDarkMode.value;
-              print(controller.isDarkMode.value);
             },
             icon: const Icon(Icons.lightbulb),
           ),
         ],
       ),
-      body: Container(
-        child: const Center(
-          child: Text('CustomerPage'),
-        ),
+      body: const Center(
+        child: Text('CustomerPage'),
       ),
     );
   }

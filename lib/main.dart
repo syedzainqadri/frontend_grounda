@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       initialBinding: AllBindings(),
       debugShowCheckedModeBanner: false,
       themeMode: _themeController.themeStateFromHiveSettingBox,
-      title: ProjectName,
+      title: projectName,
       initialRoute: '/',
       getPages: appRoutes(),
       theme: CustomTheme().lightTheme,

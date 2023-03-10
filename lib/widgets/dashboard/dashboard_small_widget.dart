@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend_grounda/controllers/theme_change_controller.dart';
@@ -16,8 +18,8 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
       required this.color,
       required this.isMobile});
 
-  var width;
-  var percentage;
+  dynamic width;
+  dynamic percentage;
   String title;
   String subTitle;
   String svgIconPath;

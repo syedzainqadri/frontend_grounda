@@ -5,9 +5,7 @@ class Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("copyrights 2023 - all data rights reserved by Ghrounda.pk",
-          style: Theme.of(context).textTheme.labelMedium),
-    );
+    return Text("copyrights 2023 - all data rights reserved by Ghrounda.pk",
+        style: Theme.of(context).textTheme.labelMedium);
   }
 }

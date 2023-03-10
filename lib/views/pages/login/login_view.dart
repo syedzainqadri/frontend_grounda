@@ -1,8 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/auth_controller.dart';
 import 'package:frontend_grounda/controllers/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/widgets/Buttons.dart';
+import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
@@ -53,7 +55,7 @@ class LoginView extends GetView<ThemeChangeController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          ProjectName,
+                          projectName,
                           style: Theme.of(context).textTheme.displayMedium,
                         ),
                         const Padding(
@@ -146,8 +148,6 @@ class LoginView extends GetView<ThemeChangeController> {
                                   hoverColor: kDarkColor,
                                   buttonText: "Sign In",
                                   onPressed: () {
-                                    print(emailController.text);
-                                    print(passwordController.text);
                                     authController.signIn(
                                         emailController.text.trim(),
                                         passwordController.text);
@@ -170,7 +170,7 @@ class LoginView extends GetView<ThemeChangeController> {
               height: 30,
             ),
             Text(
-              "Copyrights 2022 - all rights reserved by $ProjectName",
+              "Copyrights 2022 - all rights reserved by $projectName",
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],

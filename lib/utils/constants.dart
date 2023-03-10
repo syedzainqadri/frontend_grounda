@@ -55,4 +55,4 @@ Rxn<String> visitUserID = Rxn<String>();
 Rx<bool> isLoading = false.obs;
 Rx<bool> isFirstLoad = true.obs;
 
-const ProjectName = "Gharounda.pk";
+const projectName = "Gharounda.pk";
