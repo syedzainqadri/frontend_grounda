@@ -1,26 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/menuController.dart/sidebar_controller.dart';
-import 'package:frontend_grounda/views/pages/agency/agency_page.dart';
-import 'package:frontend_grounda/views/pages/agency/agency_view.dart';
-import 'package:frontend_grounda/views/pages/category/category_view.dart';
-import 'package:frontend_grounda/views/pages/customer/customer_view.dart';
-import 'package:frontend_grounda/views/pages/dashboard/dashboard_page.dart';
-import 'package:frontend_grounda/views/pages/developer/developer_page.dart';
-import 'package:frontend_grounda/views/pages/post/post_page.dart';
-import 'package:frontend_grounda/views/pages/post/post_view.dart';
-import 'package:frontend_grounda/views/pages/product/product_page.dart';
-import 'package:frontend_grounda/views/pages/project/project_page.dart';
-import 'package:frontend_grounda/views/pages/project/project_view.dart';
-import 'package:frontend_grounda/views/pages/settings/settings.dart';
-import 'package:frontend_grounda/views/pages/support/support_page.dart';
+import 'package:frontend_grounda/views/pages/category/category_page.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
-import '../utils/global_variable.dart';
-import 'sidebar/mobile_sidebar.dart';
+import '../../../utils/global_variable.dart';
+import '../../sidebar/mobile_sidebar.dart';
 
-class DashboardView extends GetView<SideBarController> {
-  const DashboardView({super.key});
+class CategoryView extends GetView<SideBarController> {
+  const CategoryView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,21 +47,8 @@ class DashboardView extends GetView<SideBarController> {
               child: PageView(
                 controller: controller.pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  DashboardPage(),
-                  const CustomerView(),
-                  const CategoryView(),
-                  const PostPage(),
-                  const ProjectPage(),
-                  const AgencyView(),
-                  const DeveloperPage(),
-                  const ProductPage(),
-                  const PostView(),
-                  const ProjectView(),
-                  const AgencyPage(),
-                  const DeveloperPage(),
-                  const SettingsPage(),
-                  const SupportPage(),
+                children: const [
+                  CategoryPage(),
                 ],
               ),
             ),

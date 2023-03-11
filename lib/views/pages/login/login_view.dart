@@ -147,7 +147,13 @@ class LoginView extends GetView<ThemeChangeController> {
                                   primaryColor: kPrimaryColor,
                                   hoverColor: kDarkColor,
                                   buttonText: "Sign In",
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    await Get.defaultDialog(
+                                      title: 'Signing In',
+                                      content: const CircularProgressIndicator(
+                                        color: kPrimaryColor,
+                                      ),
+                                    );
                                     authController.signIn(
                                         emailController.text.trim(),
                                         passwordController.text);

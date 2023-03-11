@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController.dart/theme_change_controller.dart';
 import 'package:get/get.dart';
 
-class ForumPage extends GetView<ThemeChangeController> {
-  const ForumPage({Key? key}) : super(key: key);
+class HelpPage extends GetView<ThemeChangeController> {
+  const HelpPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ForumPage extends GetView<ThemeChangeController> {
         ],
       ),
       body: const Center(
-        child: Text('Forum Page'),
+        child: Text('HelpPage'),
       ),
     );
   }

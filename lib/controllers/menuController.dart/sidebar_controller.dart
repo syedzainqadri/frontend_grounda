@@ -46,6 +46,47 @@ class SideBarController extends GetxController {
   GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
 
   onSelected(int index) {
+    switch (index) {
+      case 0:
+        Get.toNamed('/dashboard');
+        break;
+      case 1:
+        Get.toNamed('/customer');
+        break;
+      case 2:
+        Get.toNamed('/category');
+        break;
+      case 3:
+        Get.toNamed('/post');
+        break;
+      case 4:
+        Get.toNamed('/project');
+        break;
+      case 5:
+        Get.toNamed('/agency');
+        break;
+      case 6:
+        Get.toNamed('/developer');
+        break;
+      case 7:
+        Get.toNamed('/product');
+        break;
+      case 8:
+        Get.toNamed('/order');
+        break;
+      case 9:
+        Get.toNamed('/blog');
+        break;
+      case 10:
+        Get.toNamed('/forum');
+        break;
+      case 11:
+        Get.toNamed('/help');
+        break;
+      case 12:
+        Get.toNamed('/settings');
+        break;
+    }
     _pageController.value.jumpToPage(index);
     _pageController.value = pageController;
   }
