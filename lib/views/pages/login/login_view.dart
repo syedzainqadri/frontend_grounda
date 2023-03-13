@@ -148,7 +148,7 @@ class LoginView extends GetView<ThemeChangeController> {
                                   hoverColor: kDarkColor,
                                   buttonText: "Sign In",
                                   onPressed: () async {
-                                    await Get.defaultDialog(
+                                    Get.defaultDialog(
                                       title: 'Signing In',
                                       content: const CircularProgressIndicator(
                                         color: kPrimaryColor,

@@ -51,6 +51,8 @@ dependencies:
   hive_flutter: ^1.1.0
   syncfusion_flutter_charts: ^20.4.44
   syncfusion_flutter_gauges: ^20.4.48
+  country_picker: ^2.0.20
+  country_list_pick: ^1.0.1+6
 
 
 dev_dependencies:

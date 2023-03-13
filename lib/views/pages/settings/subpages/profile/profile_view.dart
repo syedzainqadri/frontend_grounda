@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/menuController.dart/sidebar_controller.dart';
-import 'package:frontend_grounda/views/pages/agency/agency_view.dart';
-import 'package:frontend_grounda/views/pages/category/category_view.dart';
-import 'package:frontend_grounda/views/pages/customer/customer_view.dart';
-import 'package:frontend_grounda/views/pages/dashboard/dashboard_page.dart';
-import 'package:frontend_grounda/views/pages/developer/developer_view.dart';
-import 'package:frontend_grounda/views/pages/post/post_view.dart';
-import 'package:frontend_grounda/views/pages/product/product_view.dart';
-import 'package:frontend_grounda/views/pages/project/project_view.dart';
-import 'package:frontend_grounda/views/pages/settings/setting_view.dart';
+import 'package:frontend_grounda/utils/global_variable.dart';
+import 'package:frontend_grounda/views/pages/settings/subpages/profile/profile_edit.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
+import 'package:frontend_grounda/views/sidebar/mobile_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
-import '../utils/global_variable.dart';
-import 'pages/help/help_view.dart';
-import 'sidebar/mobile_sidebar.dart';
 
-class DashboardView extends GetView<SideBarController> {
-  const DashboardView({super.key});
+class ProfileEditingView extends GetView<SideBarController> {
+  const ProfileEditingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +48,7 @@ class DashboardView extends GetView<SideBarController> {
                 controller: controller.pageController,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  DashboardPage(),
-                  const CustomerView(),
-                  const CategoryView(),
-                  const PostView(),
-                  const ProjectView(),
-                  const AgencyView(),
-                  const DeveloperView(),
-                  const ProductView(),
-                  const PostView(),
-                  const ProjectView(),
-                  const AgencyView(),
-                  const DeveloperView(),
-                  const SettingsView(),
-                  const HelpView(),
+                  ProfileEditPage(),
                 ],
               ),
             ),

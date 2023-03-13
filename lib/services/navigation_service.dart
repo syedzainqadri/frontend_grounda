@@ -9,13 +9,14 @@ import 'package:frontend_grounda/views/pages/order/order_view.dart';
 import 'package:frontend_grounda/views/pages/post/post_view.dart';
 import 'package:frontend_grounda/views/pages/product/product_view.dart';
 import 'package:frontend_grounda/views/pages/project/project_view.dart';
-import 'package:frontend_grounda/views/pages/support/support_page.dart';
+import 'package:frontend_grounda/views/pages/settings/subpages/profile/profile_view.dart';
 import 'package:get/route_manager.dart';
 
 import '../views/pages/blog/blog_view.dart';
 import '../views/pages/customer/customer_view.dart';
 import '../views/pages/help/help_view.dart';
 import '../views/pages/settings/setting_view.dart';
+import '../views/pages/settings/subpages/profile/profile_edit.dart';
 
 appRoutes() => [
       GetPage(name: '/', page: () => InitialNavigation()),
@@ -98,14 +99,14 @@ appRoutes() => [
         transitionDuration: const Duration(milliseconds: 1000),
       ),
       GetPage(
-        name: '/support',
-        page: () => const SupportPage(),
+        name: '/login',
+        page: () => LoginView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
       GetPage(
-        name: '/login',
-        page: () => LoginView(),
+        name: '/profile',
+        page: () => const ProfileEditingView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
