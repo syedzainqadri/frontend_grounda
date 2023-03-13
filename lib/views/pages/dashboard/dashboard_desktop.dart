@@ -1,8 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:frontend_grounda/controllers/theme_change_controller.dart';
-import 'package:frontend_grounda/models/VisitsData.dart';
+import 'package:frontend_grounda/controllers/themeController.dart/theme_change_controller.dart';
+import 'package:frontend_grounda/models/visits_data.dart';
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/widgets/dashboard/DashboardSmallWidget.dart';
+import 'package:frontend_grounda/widgets/dashboard/dashboard_small_widget.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend_grounda/controllers/theme_change_controller.dart';
+import 'package:frontend_grounda/controllers/themeController.dart/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/widgets/TextFields.dart';
+import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class DashBoardAppBar extends GetView<ThemeChangeController>

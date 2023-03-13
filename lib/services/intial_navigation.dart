@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_grounda/controllers/AuthController.dart';
+import 'package:frontend_grounda/controllers/authController.dart/auth_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/login/login_view.dart';
 import 'package:frontend_grounda/views/dashboard_view.dart';
