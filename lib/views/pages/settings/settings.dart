@@ -3,7 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController.dart/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
+import 'package:frontend_grounda/views/pages/settings/widgets/settings_menu_card.dart';
 import 'package:get/get.dart';
+
+import '../../../widgets/dashboard/dashboard_app_bar.dart';
 
 class SettingsPage extends GetView<ThemeChangeController> {
   SettingsPage({Key? key}) : super(key: key);
@@ -13,23 +16,83 @@ class SettingsPage extends GetView<ThemeChangeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              controller.isDarkMode.value = !controller.isDarkMode.value;
-            },
-            icon: const Icon(Icons.lightbulb),
-          ),
-        ],
-      ),
+      backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
+      appBar: DashBoardAppBar(title: "Settings"),
       body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), color: kWhiteColor),
-          width: width * .8,
+        child: SizedBox(
           height: height * .9,
+          width: width * .8,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SettingsMenuCard(
+                  height: height,
+                  width: width,
+                  text: 'Profile Settings',
+                  icon: 'assets/icons/person.svg',
+                  onPressed: () {
+                    Get.toNamed('/profile');
+                  },
+                ),
+                SettingsMenuCard(
+                  height: height,
+                  width: width,
+                  text: 'Profile Settings',
+                  icon: 'assets/icons/person.svg',
+                  onPressed: () {},
+                ),
+                SettingsMenuCard(
+                  height: height,
+                  width: width,
+                  text: 'Profile Settings',
+                  icon: 'assets/icons/person.svg',
+                  onPressed: () {},
+                ),
+                SettingsMenuCard(
+                  height: height,
+                  width: width,
+                  text: 'Profile Settings',
+                  icon: 'assets/icons/person.svg',
+                  onPressed: () {},
+                ),
+                SettingsMenuCard(
+                  height: height,
+                  width: width,
+                  text: 'Profile Settings',
+                  icon: 'assets/icons/person.svg',
+                  onPressed: () {},
+                ),
+                SettingsMenuCard(
+                  height: height,
+                  width: width,
+                  text: 'Profile Settings',
+                  icon: 'assets/icons/person.svg',
+                  onPressed: () {},
+                ),
+                SettingsMenuCard(
+                  height: height,
+                  width: width,
+                  text: 'Profile Settings',
+                  icon: 'assets/icons/person.svg',
+                  onPressed: () {},
+                ),
+                SettingsMenuCard(
+                  height: height,
+                  width: width,
+                  text: 'Profile Settings',
+                  icon: 'assets/icons/person.svg',
+                  onPressed: () {},
+                ),
+                SettingsMenuCard(
+                  height: height,
+                  width: width,
+                  text: 'Profile Settings',
+                  icon: 'assets/icons/person.svg',
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
