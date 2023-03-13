@@ -47,7 +47,7 @@ class SettingsView extends GetView<SideBarController> {
               child: PageView(
                 controller: controller.pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
+                children: [
                   SettingsPage(),
                 ],
               ),
