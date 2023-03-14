@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController.dart/theme_change_controller.dart';
-
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
@@ -17,11 +16,20 @@ class CategoryForm extends GetView<ThemeChangeController> {
   TextEditingController categoryParentController = TextEditingController();
   TextEditingController categoryStatusController = TextEditingController();
 
+  final List<String> list = <String>[
+    'Select Parent Category',
+    'Two',
+    'Three',
+    'Four'
+  ];
+
   @override
   Widget build(BuildContext context) {
+    String dropdownValue = list.first;
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -30,6 +38,33 @@ class CategoryForm extends GetView<ThemeChangeController> {
           style: Theme.of(context).textTheme.bodyLarge,
           textAlign: TextAlign.start,
         ),
+        SizedBox(
+          height: height * 0.03,
+        ),
+
+        DropdownButton<String>(
+          borderRadius: BorderRadius.circular(15),
+          hint: const Text("Parent Category"),
+          isExpanded: true,
+          value: dropdownValue,
+          icon: const Icon(Icons.arrow_downward),
+          elevation: 16,
+          style: Theme.of(context).textTheme.bodyMedium,
+          underline: Container(
+            height: 2,
+            color: kDarkColor,
+          ),
+          onChanged: (String? value) {
+            // This is called when the user selects an item.
+          },
+          items: list.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+
         SizedBox(
           height: height * 0.03,
         ),
