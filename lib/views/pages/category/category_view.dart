@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/menuController.dart/sidebar_controller.dart';
-import 'package:frontend_grounda/views/pages/category/category_page.dart';
+import 'package:frontend_grounda/views/pages/category/category_page_desktop.dart';
+import 'package:frontend_grounda/views/pages/category/category_page_mobile.dart';
+import 'package:frontend_grounda/views/responsive/responsive_layout.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
@@ -47,8 +49,11 @@ class CategoryView extends GetView<SideBarController> {
               child: PageView(
                 controller: controller.pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  CategoryPage(),
+                children: [
+                  ResponsiveLayout(
+                    desktopBody: CategoryPageDesktop(),
+                    mobileBody: const CategoryPageMobile(),
+                  ),
                 ],
               ),
             ),

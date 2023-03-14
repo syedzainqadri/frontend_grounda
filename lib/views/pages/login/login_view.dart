@@ -161,7 +161,7 @@ class LoginView extends GetView<ThemeChangeController> {
                                   width:
                                       media.width < 768 ? width / 9 : width / 5,
                                   height: height / 20,
-                                )
+                                ),
                               ],
                             ),
                           ),
