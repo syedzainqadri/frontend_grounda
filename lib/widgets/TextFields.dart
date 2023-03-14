@@ -12,11 +12,13 @@ class DefaultTextField extends GetView<ThemeChangeController> {
     required this.textEditingController,
     this.suffixIcon,
     this.prefixIcon,
+    this.isMultiLine,
   });
 
   String hintText;
   String labelText;
   bool isPassword;
+  bool? isMultiLine;
   Widget? prefixIcon;
   Widget? suffixIcon;
   TextEditingController? textEditingController;
@@ -26,6 +28,8 @@ class DefaultTextField extends GetView<ThemeChangeController> {
     return TextField(
       controller: textEditingController,
       obscureText: isPassword,
+      textInputAction:
+          isMultiLine == true ? TextInputAction.newline : TextInputAction.none,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         suffixIconColor: controller.isDarkMode.value ? kWhiteColor : kDarkColor,

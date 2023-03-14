@@ -4,18 +4,19 @@ import 'package:frontend_grounda/utils/constants.dart';
 import 'package:get/get.dart';
 
 class DefaultTextField extends GetView<ThemeChangeController> {
-  DefaultTextField({
-    super.key,
-    required this.hintText,
-    required this.labelText,
-    required this.isPassword,
-    this.suffixIcon,
-    this.prefixIcon,
-  });
+  DefaultTextField(
+      {super.key,
+      required this.hintText,
+      required this.labelText,
+      required this.isPassword,
+      this.suffixIcon,
+      this.prefixIcon,
+      this.isMultiLine});
 
   String hintText;
   String labelText;
   bool isPassword;
+  bool? isMultiLine;
   Widget? prefixIcon;
   Widget? suffixIcon;
 
@@ -23,6 +24,8 @@ class DefaultTextField extends GetView<ThemeChangeController> {
   Widget build(BuildContext context) {
     return TextField(
       obscureText: isPassword,
+      textInputAction:
+          isMultiLine == true ? TextInputAction.newline : TextInputAction.none,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         suffixIconColor: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
@@ -35,7 +38,7 @@ class DefaultTextField extends GetView<ThemeChangeController> {
           style: TextStyle(
               color: controller.isDarkMode.value ? kDarkColor : kWhiteColor),
         ),
-        fillColor: controller.isDarkMode.value ? kDarkColor : kInputBgColor,
+        fillColor: controller.isDarkMode.value ? kDarkColor : kInputBgGrayColor,
         filled: true,
         border: OutlineInputBorder(
           borderSide: controller.isDarkMode.value

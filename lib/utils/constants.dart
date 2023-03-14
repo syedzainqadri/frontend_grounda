@@ -10,6 +10,7 @@ const kPrimaryColor = Color(0xffBC902D);
 const kGoldenColor = Color(0xffF2C94C);
 const kShadowColor = Color(0XFFCCCCCC);
 const kInputBgColor = Color(0XFFF8F8F8);
+const kInputBgGrayColor = Color.fromARGB(255, 232, 232, 232);
 const kLabelColor = Color(0XFF333333);
 const kFrameColor = Color(0XFFF8F8F8);
 const kCardColor = Color(0XFFF8F8F8);
