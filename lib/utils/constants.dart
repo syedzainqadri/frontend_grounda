@@ -9,13 +9,14 @@ const kRedColor = Colors.red;
 const kPrimaryColor = Color(0xffBC902D);
 const kGoldenColor = Color(0xffF2C94C);
 const kShadowColor = Color(0XFFCCCCCC);
-const kInputBgColor = Color(0XFFF8F8F8);
+const kInputBgColor = Color.fromARGB(255, 255, 255, 255);
 const kLabelColor = Color(0XFF333333);
 const kFrameColor = Color(0XFFF8F8F8);
-const kCardColor = Color(0XFFF8F8F8);
+const kCardColor = Color.fromARGB(255, 255, 255, 255);
 const kTextColor = Color.fromARGB(255, 0, 0, 0);
 
 // Dark Theme
+const kDarkFrameColor = Color.fromARGB(255, 106, 108, 115);
 const kDarkColor = Color(0xFF404553);
 const kDarkLightColor = Color(0xFF4a4e5e);
 const kDarkShadowColor = Color.fromARGB(255, 0, 0, 0);
