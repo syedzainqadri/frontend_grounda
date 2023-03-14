@@ -53,6 +53,9 @@ dependencies:
   syncfusion_flutter_gauges: ^20.4.48
   country_picker: ^2.0.20
   country_list_pick: ^1.0.1+6
+  slugify: ^2.0.0
+  quill_html_editor: ^2.1.5
+
 
 
 dev_dependencies:
