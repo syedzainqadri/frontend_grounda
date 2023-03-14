@@ -3,18 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController.dart/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
+import 'package:frontend_grounda/widgets/text_ediotor.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
 import 'package:get/get.dart';
+import 'package:quill_html_editor/quill_html_editor.dart';
 
 class CategoryForm extends GetView<ThemeChangeController> {
   CategoryForm({super.key});
 
   TextEditingController categoryNameController = TextEditingController();
-  TextEditingController categoryDescriptionController = TextEditingController();
   TextEditingController categorySlugController = TextEditingController();
   TextEditingController categoryParentController = TextEditingController();
   TextEditingController categoryStatusController = TextEditingController();
+
+  QuillEditorController descriptionController = QuillEditorController();
 
   final List<String> list = <String>[
     'Select Parent Category',
@@ -87,6 +90,7 @@ class CategoryForm extends GetView<ThemeChangeController> {
           height: height * .02,
         ),
         // TODO; Add rich text editor
+        Expanded(child: TextEditor(controller: descriptionController)),
         // DefaultTextField(
         //   hintText: "Category Description",
         //   labelText: "Category Description",
