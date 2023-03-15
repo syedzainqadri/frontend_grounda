@@ -7,7 +7,7 @@ import '../../utils/global_variable.dart';
 class ProfileController extends GetxController {
   var profile = ProfileModel().obs;
 
-  void createUserProfile(
+  Future<void> createUserProfile(
     String firstName,
     String lastName,
     String addressLine1,
@@ -38,7 +38,11 @@ class ProfileController extends GetxController {
       "user": user
     };
     var response = await http.post(Uri.parse(baseUrl + userLogin),
-        body: jsonEncode(bodyPrepare));
+        body: jsonEncode(bodyPrepare),
+        headers: {
+          "Content-Type": "application/json",
+          "Autherization": "Bearer $token"
+        });
     print(response.body);
     profile.value = profileModelFromJson(response.body);
   }

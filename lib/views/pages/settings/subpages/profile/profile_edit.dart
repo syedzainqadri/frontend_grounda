@@ -1,13 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:country_list_pick/country_list_pick.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend_grounda/controllers/authController.dart/auth_controller.dart';
 import 'package:frontend_grounda/controllers/profileController.dart/profile_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 
 class ProfileEditPage extends StatelessWidget {
@@ -22,6 +25,7 @@ class ProfileEditPage extends StatelessWidget {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController postCodeController = TextEditingController();
   final ProfileController profileController = Get.find<ProfileController>();
+  final AuthController authController = Get.find<AuthController>();
   var countryName = 'PK'.obs;
   var countryCode = ''.obs;
   double height = Get.height;
@@ -30,12 +34,11 @@ class ProfileEditPage extends StatelessWidget {
   late bool _serviceEnabled;
   late PermissionStatus _permissionGranted;
   late LocationData _locationData;
-  final ImagePicker _imagePicker = ImagePicker();
-  List<XFile>? _imageFileList;
 
   var latitude = 0.0.obs;
   var longitude = 0.0.obs;
   var userId = 1.obs;
+  var imageUrl = ''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -49,17 +52,34 @@ class ProfileEditPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundColor: kWhiteColor,
-                radius: 100,
-                child: Center(
-                  child: SvgPicture.asset(
-                    '/images/logo.svg',
-                    fit: BoxFit.cover,
-                    height: 100,
-                    width: 100,
+              InkWell(
+                child: Obx(
+                  () => CircleAvatar(
+                    backgroundColor: kWhiteColor,
+                    radius: 100,
+                    backgroundImage:
+                        const AssetImage('/images/dashboard-logo.png'),
+                    foregroundImage: NetworkImage(
+                      imageUrl.value,
+                    ),
+                    // child: Center(
+                    //   child: imageUrl.value != ''
+                    //       ? Image.network(
+                    //           imageUrl.value,
+                    //           height: 180,
+                    //         )
+                    //       : SvgPicture.asset(
+                    //           '/images/logo.svg',
+                    //           fit: BoxFit.cover,
+                    //           height: 100,
+                    //           width: 100,
+                    //         ),
+                    // ),
                   ),
                 ),
+                onTap: () async {
+                  await getImage();
+                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -215,8 +235,9 @@ class ProfileEditPage extends StatelessWidget {
                     primaryColor: kPrimaryColor,
                     hoverColor: kDarkColor,
                     buttonText: 'Update',
-                    onPressed: () {
-                      profileController.createUserProfile(
+                    onPressed: () async {
+                      await getLocation();
+                      await profileController.createUserProfile(
                         firstNameController.text,
                         lastNameController.text,
                         address1Controller.text,
@@ -228,9 +249,10 @@ class ProfileEditPage extends StatelessWidget {
                         postCodeController.text,
                         longitude.value.toString(),
                         latitude.value.toString(),
-                        _imageFileList.toString(),
-                        userId.value.toString(),
+                        imageUrl.value,
+                        authController.userModel.value.id.toString(),
                       );
+                      print('process started');
                       //TODO: Create an Update function
                     },
                     width: width * .05,
@@ -249,7 +271,7 @@ class ProfileEditPage extends StatelessWidget {
     );
   }
 
-  void getLocation() async {
+  Future<void> getLocation() async {
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
@@ -271,11 +293,21 @@ class ProfileEditPage extends StatelessWidget {
     longitude.value = _locationData.longitude!;
   }
 
-//TODO: upload file to firebase and then save the link.
   getImage() async {
-    final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
-    print(image!.path.toString());
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      Uint8List fileBytes = result.files.first.bytes!;
+      String fileName = result.files.first.name;
+
+      // Upload file
+      print(fileName);
+      var upload = await FirebaseStorage.instance
+          .ref('uploads/users/profileImages/$fileName')
+          .putData(fileBytes);
+      final url =
+          upload.ref.getDownloadURL().then((value) => imageUrl.value = value);
+      print(imageUrl.value);
+    }
   }
 }
 

@@ -57,6 +57,7 @@ dependencies:
   quill_html_editor: ^2.1.5
   location: ^4.4.0
   image_picker: ^0.8.7
+  file_picker: ^5.2.6
 
 
 
