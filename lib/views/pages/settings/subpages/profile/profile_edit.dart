@@ -1,11 +1,14 @@
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend_grounda/controllers/profileController.dart/profile_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 
 class ProfileEditPage extends StatelessWidget {
   ProfileEditPage({super.key});
@@ -18,10 +21,22 @@ class ProfileEditPage extends StatelessWidget {
   final TextEditingController countryNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController postCodeController = TextEditingController();
+  final ProfileController profileController = Get.find<ProfileController>();
   var countryName = 'PK'.obs;
   var countryCode = ''.obs;
   double height = Get.height;
   double width = Get.width;
+  Location location = Location();
+  late bool _serviceEnabled;
+  late PermissionStatus _permissionGranted;
+  late LocationData _locationData;
+  final ImagePicker _imagePicker = ImagePicker();
+  List<XFile>? _imageFileList;
+
+  var latitude = 0.0.obs;
+  var longitude = 0.0.obs;
+  var userId = 1.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,6 +216,21 @@ class ProfileEditPage extends StatelessWidget {
                     hoverColor: kDarkColor,
                     buttonText: 'Update',
                     onPressed: () {
+                      profileController.createUserProfile(
+                        firstNameController.text,
+                        lastNameController.text,
+                        address1Controller.text,
+                        address2Controller.text,
+                        cityNameController.text,
+                        stateNameController.text,
+                        countryName.value,
+                        countryCode.value + phoneNumberController.text,
+                        postCodeController.text,
+                        longitude.value.toString(),
+                        latitude.value.toString(),
+                        _imageFileList.toString(),
+                        userId.value.toString(),
+                      );
                       //TODO: Create an Update function
                     },
                     width: width * .05,
@@ -217,6 +247,35 @@ class ProfileEditPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void getLocation() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+    latitude.value = _locationData.latitude!;
+    longitude.value = _locationData.longitude!;
+  }
+
+//TODO: upload file to firebase and then save the link.
+  getImage() async {
+    final XFile? image =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
+    print(image!.path.toString());
   }
 }
 
