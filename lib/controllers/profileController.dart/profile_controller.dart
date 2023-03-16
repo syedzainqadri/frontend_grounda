@@ -37,13 +37,13 @@ class ProfileController extends GetxController {
       "images": images,
       "user": user
     };
-    var response = await http.post(Uri.parse(baseUrl + userLogin),
+    var response = await http.post(Uri.parse(baseUrl + createProfile),
         body: jsonEncode(bodyPrepare),
         headers: {
           "Content-Type": "application/json",
-          "Autherization": "Bearer $token"
+          "Authorization":
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzI4MzYsImV4cCI6MTY4MTU2NDgzNiwic3ViIjoiMTAiLCJpc3MiOiJodHRwOy8vbG9jYWxob3N0In0.SxhWctAbnqAtVluGBLzW3KffSKt8fOFkZv2Kn-ibbsQ"
         });
-    print(response.body);
     profile.value = profileModelFromJson(response.body);
   }
 }

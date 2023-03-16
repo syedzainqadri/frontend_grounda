@@ -237,6 +237,7 @@ class ProfileEditPage extends StatelessWidget {
                     buttonText: 'Update',
                     onPressed: () async {
                       await getLocation();
+                      print('process started');
                       await profileController.createUserProfile(
                         firstNameController.text,
                         lastNameController.text,
@@ -252,7 +253,6 @@ class ProfileEditPage extends StatelessWidget {
                         imageUrl.value,
                         authController.userModel.value.id.toString(),
                       );
-                      print('process started');
                       //TODO: Create an Update function
                     },
                     width: width * .05,
