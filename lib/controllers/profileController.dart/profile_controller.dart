@@ -20,7 +20,7 @@ class ProfileController extends GetxController {
     String longitude,
     String latitude,
     String images,
-    String user,
+    int user,
   ) async {
     var bodyPrepare = {
       "firstName": firstName,
@@ -41,9 +41,12 @@ class ProfileController extends GetxController {
         body: jsonEncode(bodyPrepare),
         headers: {
           "Content-Type": "application/json",
-          "Authorization":
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzI4MzYsImV4cCI6MTY4MTU2NDgzNiwic3ViIjoiMTAiLCJpc3MiOiJodHRwOy8vbG9jYWxob3N0In0.SxhWctAbnqAtVluGBLzW3KffSKt8fOFkZv2Kn-ibbsQ"
+          "Authorization": "Bearer $token"
         });
-    profile.value = profileModelFromJson(response.body);
+    if (response.statusCode == 200) {
+      profile.value = profileModelFromJson(response.body);
+    } else {
+      print(response.body);
+    }
   }
 }
