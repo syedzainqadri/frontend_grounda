@@ -11,6 +11,7 @@ import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:location/location.dart';
 
 class ProfileEditPage extends StatelessWidget {
@@ -26,6 +27,7 @@ class ProfileEditPage extends StatelessWidget {
   final TextEditingController postCodeController = TextEditingController();
   final ProfileController profileController = Get.find<ProfileController>();
   final AuthController authController = Get.find<AuthController>();
+  final Box<dynamic> tokenHiveBox = Hive.box('token');
   var countryName = 'PK'.obs;
   var countryCode = ''.obs;
   double height = Get.height;
@@ -37,7 +39,6 @@ class ProfileEditPage extends StatelessWidget {
 
   var latitude = 0.0.obs;
   var longitude = 0.0.obs;
-  var userId = 1.obs;
   var imageUrl = ''.obs;
 
   @override
@@ -186,9 +187,10 @@ class ProfileEditPage extends StatelessWidget {
                               isDownIcon: false,
                               showEnglishName: true,
                             ),
-                            onChanged: (value) {
+                            onChanged: (value) async {
                               countryName.value = value!.name!;
                               countryCode.value = value.dialCode!;
+                              await getLocation();
                               print(
                                   'country name: $countryName + country Code: $countryCode');
                             },
@@ -236,24 +238,24 @@ class ProfileEditPage extends StatelessWidget {
                     hoverColor: kDarkColor,
                     buttonText: 'Update',
                     onPressed: () async {
-                      await getLocation();
                       print('process started');
-                      print(authController.userModel.value.id);
+                      var userId = tokenHiveBox.get('userId');
+                      int userId0 = int.parse(userId);
+                      print(userId0);
                       await profileController.createUserProfile(
-                        firstNameController.text,
-                        lastNameController.text,
-                        address1Controller.text,
-                        address2Controller.text,
-                        cityNameController.text,
-                        stateNameController.text,
-                        countryName.value,
-                        countryCode.value + phoneNumberController.text,
-                        postCodeController.text,
-                        longitude.value.toString(),
-                        latitude.value.toString(),
-                        imageUrl.value,
-                        authController.userModel.value.id!,
-                      );
+                          firstNameController.text,
+                          lastNameController.text,
+                          address1Controller.text,
+                          address2Controller.text,
+                          cityNameController.text,
+                          stateNameController.text,
+                          countryName.value,
+                          countryCode.value + phoneNumberController.text,
+                          postCodeController.text,
+                          longitude.value.toString(),
+                          latitude.value.toString(),
+                          imageUrl.value,
+                          userId0);
                       //TODO: Create an Update function
                     },
                     width: width * .05,
