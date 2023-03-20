@@ -41,22 +41,30 @@ class ProfileEditPage extends StatelessWidget {
             children: [
               InkWell(
                 child: Obx(
-                  () => CircleAvatar(
-                    radius: 100,
-                    backgroundColor: Colors.transparent,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: profileController.profile.value.images != null
-                          ? Image.network(
-                              profileController.profile.value.images!,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.network(
-                              profileController.imageUrl.value,
-                              fit: BoxFit.cover,
-                            ),
-                    ),
-                  ),
+                  () => profileController.profile.value.images == null
+                      ? Center(
+                          child: SizedBox(
+                              width: width * .05,
+                              child: const CircularProgressIndicator(
+                                  color: kPrimaryColor)),
+                        )
+                      : CircleAvatar(
+                          radius: 100,
+                          backgroundColor: Colors.transparent,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child:
+                                profileController.profile.value.images != null
+                                    ? Image.network(
+                                        profileController.profile.value.images!,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.network(
+                                        profileController.imageUrl.value,
+                                        fit: BoxFit.cover,
+                                      ),
+                          ),
+                        ),
                 ),
                 onTap: () async {
                   Get.defaultDialog(

@@ -14,6 +14,7 @@ class ProfileController extends GetxController {
   var countryCode = ''.obs;
   var countryName = 'PK'.obs;
   var imageUrl = ''.obs;
+  var isLoading = false.obs;
   final Rx<TextEditingController> firstNameController =
       TextEditingController().obs;
   final Rx<TextEditingController> lastNameController =
@@ -133,6 +134,7 @@ class ProfileController extends GetxController {
   }
 
   void getProfile(String id) async {
+    isLoading.value = true;
     var response = await http.get(Uri.parse(baseUrl + profileById + id),
         headers: {
           "Content-Type": "application/json",
@@ -151,8 +153,10 @@ class ProfileController extends GetxController {
       postCodeController.value.text = profile.value.postCode!;
       countryName.value = profile.value.country!;
       imageUrl.value = profile.value.images!;
+      isLoading.value = false;
     } else {
       print('the response is: ${response.body}');
+      isLoading.value = false;
     }
   }
 
