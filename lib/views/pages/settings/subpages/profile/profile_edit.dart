@@ -11,25 +11,12 @@ import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:location/location.dart';
 
 class ProfileEditPage extends StatelessWidget {
   ProfileEditPage({super.key});
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController address1Controller = TextEditingController();
-  final TextEditingController address2Controller = TextEditingController();
-  final TextEditingController cityNameController = TextEditingController();
-  final TextEditingController stateNameController = TextEditingController();
-  final TextEditingController countryNameController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController postCodeController = TextEditingController();
   final ProfileController profileController = Get.find<ProfileController>();
   final AuthController authController = Get.find<AuthController>();
-  final Box<dynamic> tokenHiveBox = Hive.box('token');
-  var countryName = 'PK'.obs;
-  var countryCode = ''.obs;
   double height = Get.height;
   double width = Get.width;
   Location location = Location();
@@ -39,7 +26,6 @@ class ProfileEditPage extends StatelessWidget {
 
   var latitude = 0.0.obs;
   var longitude = 0.0.obs;
-  var imageUrl = ''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -56,43 +42,44 @@ class ProfileEditPage extends StatelessWidget {
               InkWell(
                 child: Obx(
                   () => CircleAvatar(
-                    backgroundColor: kWhiteColor,
                     radius: 100,
-                    backgroundImage:
-                        const AssetImage('/images/dashboard-logo.png'),
-                    foregroundImage: NetworkImage(
-                      imageUrl.value,
+                    backgroundColor: Colors.transparent,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: profileController.profile.value.images != null
+                          ? Image.network(
+                              profileController.profile.value.images!,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              profileController.imageUrl.value,
+                              fit: BoxFit.cover,
+                            ),
                     ),
-                    // child: Center(
-                    //   child: imageUrl.value != ''
-                    //       ? Image.network(
-                    //           imageUrl.value,
-                    //           height: 180,
-                    //         )
-                    //       : SvgPicture.asset(
-                    //           '/images/logo.svg',
-                    //           fit: BoxFit.cover,
-                    //           height: 100,
-                    //           width: 100,
-                    //         ),
-                    // ),
                   ),
                 ),
                 onTap: () async {
+                  Get.defaultDialog(
+                    title: 'Uploading Picture',
+                    content: const CircularProgressIndicator(
+                      color: kPrimaryColor,
+                    ),
+                  );
                   await getImage();
+                  Navigator.pop(context);
                 },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ProfileScreenTextField(
-                    controller: firstNameController,
+                    controller: profileController.firstNameController.value,
                     hintText: 'Enter First Name',
                     lableText: 'First Name',
                     icon: const Icon(Icons.person),
                   ),
                   ProfileScreenTextField(
-                    controller: lastNameController,
+                    controller: profileController.lastNameController.value,
                     hintText: 'Enter Last Name',
                     lableText: 'Last Name',
                     icon: const Icon(Icons.person),
@@ -103,49 +90,47 @@ class ProfileEditPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ProfileScreenTextField(
-                    controller: address1Controller,
+                    controller: profileController.address1Controller.value,
                     hintText: 'Enter Address',
                     lableText: 'Address Line 1',
                     icon: const Icon(Icons.mail),
                   ),
                   ProfileScreenTextField(
-                    controller: address2Controller,
+                    controller: profileController.address2Controller.value,
                     hintText: 'Enter Address',
                     lableText: 'Address Line 2',
                     icon: const Icon(Icons.mail),
                   ),
                 ],
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ProfileScreenTextField(
-                    controller: cityNameController,
+                    controller: profileController.cityNameController.value,
                     hintText: 'Enter City',
                     lableText: 'City',
                     icon: const Icon(Icons.location_city),
                   ),
                   ProfileScreenTextField(
-                    controller: stateNameController,
+                    controller: profileController.stateNameController.value,
                     hintText: 'Enter State',
                     lableText: 'State',
                     icon: const Icon(Icons.location_city_sharp),
                   ),
                 ],
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ProfileScreenTextField(
-                    controller: phoneNumberController,
+                    controller: profileController.phoneNumberController.value,
                     hintText: 'Enter Phone Number',
                     lableText: 'Phone Number',
                     icon: const Icon(Icons.phone),
                   ),
                   ProfileScreenTextField(
-                    controller: postCodeController,
+                    controller: profileController.postCodeController.value,
                     hintText: 'Enter Post Code',
                     lableText: 'Post Code',
                     icon: const Icon(Icons.local_post_office),
@@ -166,17 +151,19 @@ class ProfileEditPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          countryName == 'PK'
+                          profileController.countryName.value == ''
                               ? const Text(
                                   'Select Your Country',
                                   style: TextStyle(color: kWhiteColor),
                                 )
                               : Text(
-                                  countryName.string,
+                                  profileController.countryName.value,
                                   style: const TextStyle(color: kWhiteColor),
                                 ),
                           CountryListPick(
-                            initialSelection: countryName.value,
+                            initialSelection: profileController
+                                .countryName.value
+                                .toLowerCase(),
                             useSafeArea: true,
                             useUiOverlay: true,
                             theme: CountryTheme(
@@ -188,11 +175,13 @@ class ProfileEditPage extends StatelessWidget {
                               showEnglishName: true,
                             ),
                             onChanged: (value) async {
-                              countryName.value = value!.name!;
-                              countryCode.value = value.dialCode!;
+                              profileController.countryNameController.value
+                                  .text = value!.code!;
+                              profileController.countryCode.value =
+                                  value.dialCode!;
                               await getLocation();
                               print(
-                                  'country name: $countryName + country Code: $countryCode');
+                                  'country name: ${profileController.countryNameController.value.text} + country Code: ${profileController.countryCode.value}');
                             },
                           ),
                         ],
@@ -223,9 +212,18 @@ class ProfileEditPage extends StatelessWidget {
                   DefaultButton(
                     primaryColor: kRedColor,
                     hoverColor: kDarkColor,
-                    buttonText: 'Delete Profile',
-                    onPressed: () {
-                      //TODO: Create a Delete Profile Function.
+                    buttonText: 'Delete',
+                    onPressed: () async {
+                      Get.defaultDialog(
+                        title: 'Deleting Profile',
+                        content: const CircularProgressIndicator(
+                          color: kPrimaryColor,
+                        ),
+                      );
+                      await profileController.delete(
+                          profileController.profile.value.id!.toString());
+                      Navigator.pop(context);
+                      Get.toNamed('/settings');
                     },
                     width: width * .07,
                     height: height * .02,
@@ -233,40 +231,86 @@ class ProfileEditPage extends StatelessWidget {
                   SizedBox(
                     width: width * .02,
                   ),
-                  DefaultButton(
-                    primaryColor: kPrimaryColor,
-                    hoverColor: kDarkColor,
-                    buttonText: 'Update',
-                    onPressed: () async {
-                      print('process started');
-                      var userId = tokenHiveBox.get('userId');
-                      int userId0 = int.parse(userId);
-                      print(userId0);
-                      await profileController.createUserProfile(
-                          firstNameController.text,
-                          lastNameController.text,
-                          address1Controller.text,
-                          address2Controller.text,
-                          cityNameController.text,
-                          stateNameController.text,
-                          countryName.value,
-                          countryCode.value + phoneNumberController.text,
-                          postCodeController.text,
-                          longitude.value.toString(),
-                          latitude.value.toString(),
-                          imageUrl.value,
-                          userId0);
-                      //TODO: Create an Update function
-                    },
-                    width: width * .05,
-                    height: height * .02,
-                  ),
+                  profileController.firstNameController.value.text != ''
+                      ? DefaultButton(
+                          primaryColor: kPrimaryColor,
+                          hoverColor: kDarkColor,
+                          buttonText: 'Create',
+                          onPressed: () async {
+                            Get.defaultDialog(
+                              title: 'Creating Profile',
+                              content: const CircularProgressIndicator(
+                                color: kPrimaryColor,
+                              ),
+                            );
+                            print('process started');
+                            var userId =
+                                profileController.tokenHiveBox.get('userId');
+                            int userId0 = int.parse(userId);
+                            await profileController.createUserProfile(
+                                profileController
+                                    .firstNameController.value.text,
+                                profileController.lastNameController.value.text,
+                                profileController.address1Controller.value.text,
+                                profileController.address2Controller.value.text,
+                                profileController.cityNameController.value.text,
+                                profileController
+                                    .stateNameController.value.text,
+                                profileController
+                                    .countryNameController.value.text,
+                                profileController.countryCode.value +
+                                    profileController
+                                        .phoneNumberController.value.text,
+                                profileController.postCodeController.value.text,
+                                longitude.value.toString(),
+                                latitude.value.toString(),
+                                profileController.imageUrl.value,
+                                userId0);
+                          },
+                          width: width * .05,
+                          height: height * .02,
+                        )
+                      : DefaultButton(
+                          primaryColor: kPrimaryColor,
+                          hoverColor: kDarkColor,
+                          buttonText: 'Update',
+                          onPressed: () async {
+                            Get.defaultDialog(
+                              title: 'Updating Profile',
+                              content: const CircularProgressIndicator(
+                                color: kPrimaryColor,
+                              ),
+                            );
+                            print('process started');
+                            var userId =
+                                profileController.tokenHiveBox.get('userId');
+                            int userId0 = int.parse(userId);
+                            await profileController.updateUserProfile(
+                                profileController
+                                    .firstNameController.value.text,
+                                profileController.lastNameController.value.text,
+                                profileController.address1Controller.value.text,
+                                profileController.address2Controller.value.text,
+                                profileController.cityNameController.value.text,
+                                profileController
+                                    .stateNameController.value.text,
+                                profileController
+                                    .countryNameController.value.text,
+                                profileController.countryCode.value +
+                                    profileController
+                                        .phoneNumberController.value.text,
+                                profileController.postCodeController.value.text,
+                                longitude.value.toString(),
+                                latitude.value.toString(),
+                                profileController.imageUrl.value,
+                                profileController.profile.value.id!);
+                            Navigator.pop(context);
+                          },
+                          width: width * .05,
+                          height: height * .02,
+                        ),
                 ],
               ),
-              //TODO: Add Image uploading machanisim
-              //TODO: Pick Longitude & Latitude
-              //Set ispublish as per user decision.
-              //Set user Id.
             ],
           ),
         ),
@@ -307,9 +351,10 @@ class ProfileEditPage extends StatelessWidget {
       var upload = await FirebaseStorage.instance
           .ref('uploads/users/profileImages/$fileName')
           .putData(fileBytes);
-      final url =
-          upload.ref.getDownloadURL().then((value) => imageUrl.value = value);
-      print(imageUrl.value);
+      final url = upload.ref.getDownloadURL().then((value) {
+        profileController.imageUrl.value = value;
+        print(profileController.imageUrl.value);
+      });
     }
   }
 }
