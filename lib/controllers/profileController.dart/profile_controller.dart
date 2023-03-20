@@ -7,24 +7,22 @@ import '../../utils/global_variable.dart';
 
 class ProfileController extends GetxController {
   var profile = ProfileModel().obs;
-  final Box<dynamic> settingsHiveBox = Hive.box('consts');
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
+  var id = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
+    id.value = tokenHiveBox.get('uid');
     print(token.value);
-    _getHiveConst();
-  }
-
-  void _getHiveConst() {
-    if (settingsHiveBox.get('pid') != null) {
-      pid.value = settingsHiveBox.get('pid');
-      print(pid.value);
-      getProfile(int.parse(pid.value));
-    } else {}
+    print(id.value);
+    if (id.value == '') {
+    } else {
+      var uid = int.parse(id.value);
+      getProfile(uid);
+    }
   }
 
   Future<void> createUserProfile(
@@ -65,17 +63,10 @@ class ProfileController extends GetxController {
         });
     if (response.statusCode == 200) {
       profile.value = profileModelFromJson(response.body);
-      var pid = profile.value.id.toString();
-      _updateHiveConst(pid);
-      print(pid);
       print(response.body);
     } else {
       print(response.body);
     }
-  }
-
-  void _updateHiveConst(String id) {
-    settingsHiveBox.put('pid', id);
   }
 
   Future<void> getProfile(int id) async {
