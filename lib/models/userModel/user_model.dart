@@ -11,63 +11,51 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 class UserModel {
   UserModel({
     this.id,
+    this.token,
     this.email,
+    this.areaUnit,
+    this.fcmToken,
     this.role,
-    this.password,
-    this.fcmtoken,
-    this.salt,
     this.preferencesEmailNotification,
     this.preferencesNewsletter,
     this.preferencesAutomatedReport,
-    this.currency,
-    this.areaUnit,
-    this.createdAt,
-    this.updatedAt,
+    this.memberSince,
   });
 
   int? id;
+  String? token;
   String? email;
+  String? areaUnit;
+  dynamic fcmToken;
   String? role;
-  String? password;
-  dynamic fcmtoken;
-  String? salt;
   bool? preferencesEmailNotification;
   bool? preferencesNewsletter;
   bool? preferencesAutomatedReport;
-  String? currency;
-  String? areaUnit;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  DateTime? memberSince;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
+        token: json["token"],
         email: json["email"],
+        areaUnit: json["areaUnit"],
+        fcmToken: json["fcmToken"],
         role: json["role"],
-        password: json["password"],
-        fcmtoken: json["fcmtoken"],
-        salt: json["salt"],
         preferencesEmailNotification: json["preferencesEmailNotification"],
         preferencesNewsletter: json["preferencesNewsletter"],
         preferencesAutomatedReport: json["preferencesAutomatedReport"],
-        currency: json["currency"],
-        areaUnit: json["AreaUnit"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        memberSince: DateTime.parse(json["memberSince"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "token": token,
         "email": email,
+        "areaUnit": areaUnit,
+        "fcmToken": fcmToken,
         "role": role,
-        "password": password,
-        "fcmtoken": fcmtoken,
-        "salt": salt,
         "preferencesEmailNotification": preferencesEmailNotification,
         "preferencesNewsletter": preferencesNewsletter,
         "preferencesAutomatedReport": preferencesAutomatedReport,
-        "currency": currency,
-        "AreaUnit": areaUnit,
-        "createdAt": createdAt.toString(),
-        "updatedAt": updatedAt.toString(),
+        "memberSince": memberSince!.toIso8601String(),
       };
 }

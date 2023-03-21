@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_grounda/controllers/menuController.dart/sidebar_controller.dart';
+import 'package:frontend_grounda/controllers/menuController/sidebar_controller.dart';
 import 'package:frontend_grounda/views/pages/agency/agency_view.dart';
 import 'package:frontend_grounda/views/pages/category/category_view.dart';
 import 'package:frontend_grounda/views/pages/customer/customer_view.dart';

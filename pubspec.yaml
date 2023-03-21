@@ -55,6 +55,9 @@ dependencies:
   country_list_pick: ^1.0.1+6
   slugify: ^2.0.0
   quill_html_editor: ^2.1.5
+  location: ^4.4.0
+  image_picker: ^0.8.7
+  file_picker: ^5.2.6
 
 
 

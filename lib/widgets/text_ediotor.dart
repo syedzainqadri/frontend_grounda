@@ -31,37 +31,20 @@ class TextEditor extends StatelessWidget {
         ToolBar(
           toolBarColor: _toolbarColor,
           padding: const EdgeInsets.all(8),
-          iconSize: 25,
+          iconSize: 15,
           iconColor: _toolbarIconColor,
           activeIconColor: Colors.purple.shade300,
           controller: controller,
-          customButtons: const [
-            // InkWell(
-            //     onTap: () => unFocusEditor(),
-            //     child: const Icon(
-            //       Icons.favorite,
-            //       color: Colors.black,
-            //     )),
-            // InkWell(
-            //     onTap: () async {
-            //       var selectedText = await controller.getSelectedText();
-            //       debugPrint('selectedText $selectedText');
-            //       controller.replaceText('Replaced Text');
-            //     },
-            //     child: const Icon(
-            //       Icons.add_circle,
-            //       color: Colors.black,
-            //     )),
-          ],
+          customButtons: const [],
         ),
         Flexible(
           fit: FlexFit.tight,
           child: QuillHtmlEditor(
-            text: "<h1>Hello</h1>This is a quill html editor example 😊",
-            hintText: 'Hint text goes here',
+            text: "",
+            hintText: 'Add Description here',
             controller: controller,
             isEnabled: true,
-            minHeight: 300,
+            minHeight: 400,
             textStyle: _editorTextStyle,
             hintTextStyle: _hintTextStyle,
             hintTextAlign: TextAlign.start,

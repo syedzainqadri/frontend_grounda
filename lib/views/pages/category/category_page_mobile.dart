@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend_grounda/controllers/themeController.dart/theme_change_controller.dart';
+import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
+import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
 
 class CategoryPageMobile extends GetView<ThemeChangeController> {
-  const CategoryPageMobile({super.key});
+  CategoryPageMobile({super.key});
+  final CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class CategoryPageMobile extends GetView<ThemeChangeController> {
               height: height * .8,
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: 5,
+                itemCount: categoryController.category.value.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     color: controller.isDarkMode.value
@@ -39,18 +41,37 @@ class CategoryPageMobile extends GetView<ThemeChangeController> {
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: width * .09,
-                                    child: SvgPicture.asset(
-                                        "assets/images/logo.svg"),
+                                    width: width * .06,
+                                    child: CircleAvatar(
+                                      backgroundColor: kWhiteColor,
+                                      radius: 30,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(30),
+                                        child: categoryController
+                                                    .category[index].image !=
+                                                null
+                                            ? Image.network(categoryController
+                                                .category[index].image!)
+                                            : SvgPicture.asset(
+                                                '/images/logo.svg',
+                                                fit: BoxFit.cover,
+                                                width: 30,
+                                                height: 30,
+                                              ),
+                                      ),
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Title",
+                                          categoryController
+                                              .category.value[index].name!,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge,
@@ -58,11 +79,35 @@ class CategoryPageMobile extends GetView<ThemeChangeController> {
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        Text(
-                                          "Status:",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall,
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Status: ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall,
+                                            ),
+                                            categoryController.category[index]
+                                                        .published ==
+                                                    true
+                                                ? Text(
+                                                    "Active",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .copyWith(
+                                                            color:
+                                                                Colors.green),
+                                                  )
+                                                : Text(
+                                                    'UnPublished',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .copyWith(
+                                                            color: Colors.red),
+                                                  ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -91,7 +136,7 @@ class CategoryPageMobile extends GetView<ThemeChangeController> {
                                 ],
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),

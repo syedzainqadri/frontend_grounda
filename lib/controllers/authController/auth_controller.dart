@@ -120,9 +120,10 @@ class AuthController extends GetxController {
     };
     var response = await http.post(Uri.parse(baseUrl + userLogin),
         body: jsonEncode(bodyPrepare));
-    print(response.body);
     if (response.statusCode == 200) {
-      _updateHiveTokeng(response.body);
+      userModel.value = userModelFromJson(response.body);
+      _updateHiveTokeng(
+          userModel.value.token.toString(), userModel.value.id.toString());
       await Get.offAndToNamed('/dashboard');
     } else {
       Get.snackbar('Error', response.body,
@@ -130,7 +131,8 @@ class AuthController extends GetxController {
     }
   }
 
-  void _updateHiveTokeng(String token) {
+  void _updateHiveTokeng(String token, String id) {
     tokenHiveBox.put('token', token);
+    tokenHiveBox.put('userId', id);
   }
 }
