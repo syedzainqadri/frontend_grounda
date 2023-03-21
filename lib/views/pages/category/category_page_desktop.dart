@@ -20,9 +20,11 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
   QuillEditorController descriptionController = QuillEditorController();
   TextEditingController categoryNameController = TextEditingController();
   TextEditingController categorySlugController = TextEditingController();
-  TextEditingController categoryParentController = TextEditingController();
   TextEditingController categoryStatusController = TextEditingController();
   List<CategoryModel> categoryModel = [];
+
+  var selectedItemId = 0.obs;
+  var isPublished = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -57,23 +59,63 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: CategoryForm(
-                    categoryNameController: categoryNameController,
-                    categorySlugController: categorySlugController,
-                    categoryParentController: categoryParentController,
-                    categoryStatusController: categoryStatusController,
-                    descriptionController: descriptionController,
-                    dropDownList: categoryModel.map((value) {
-                      return DropdownMenuItem(
-                        value: categoryController.selectedItem.value,
-                        child: Text(value.name!),
-                      );
-                    }).toList(),
-                    dropDownValue: categoryController.selectedItem.value,
-                    onChange: (selectedValue) {
-                      categoryController.selectedItem.value = selectedValue;
-                    },
-                  ),
+                  child: categoryController.category.value.isEmpty
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: kPrimaryColor,
+                          ),
+                        )
+                      : CategoryForm(
+                          categoryNameController: categoryNameController,
+                          categorySlugController: categorySlugController,
+                          categoryStatusController: categoryStatusController,
+                          descriptionController: descriptionController,
+                          dropDownList: categoryController.category
+                              .map<DropdownMenuItem<String>>((value) {
+                            return DropdownMenuItem<String>(
+                              value: value.name,
+                              child: Text(value.name!),
+                            );
+                          }).toList(),
+                          dropDownValue:
+                              categoryController.category.first.name!,
+                          onChange: (selectedValue) {
+                            categoryController.selectedItemName.value =
+                                selectedValue;
+                            for (int i = 0;
+                                i < categoryController.category.length;
+                                i++) {
+                              if (categoryController.selectedItemName ==
+                                  categoryController.category[i].name) {
+                                selectedItemId.value =
+                                    categoryController.category[i].id!;
+                              }
+                            }
+                            print(categoryController.selectedItemName.value);
+                            print(selectedItemId.value);
+                          },
+                          formSubmit: () async {
+                            print(selectedItemId);
+                            var description =
+                                await descriptionController.getText();
+                            print(description);
+                            categoryController.createNewCategory(
+                                categoryController.imageUrl.value,
+                                categoryNameController.text,
+                                categorySlugController.text,
+                                description,
+                                selectedItemId.value,
+                                isPublished.value);
+                          },
+                          uploadImages: () {
+                            categoryController.getImage();
+                          },
+                          statusValue: isPublished.value,
+                          statusChanges: (value) {
+                            isPublished.value = value;
+                            print(isPublished);
+                          },
+                        ),
                 ),
               ),
               SizedBox(

@@ -16,38 +16,32 @@ class CategoryForm extends GetView<ThemeChangeController> {
       {required this.categoryNameController,
       required this.categorySlugController,
       required this.categoryStatusController,
-      required this.categoryParentController,
       required this.descriptionController,
       required this.dropDownList,
       required this.dropDownValue,
       required this.onChange,
+      required this.statusChanges,
+      required this.formSubmit,
+      required this.statusValue,
+      required this.uploadImages,
       super.key});
   double width = Get.width;
   double height = Get.height;
   String dropDownValue;
-  var onChange;
+  dynamic onChange;
+  dynamic statusChanges;
+  dynamic formSubmit;
+  bool statusValue;
+  dynamic uploadImages;
   List<DropdownMenuItem<String>> dropDownList;
   TextEditingController categoryNameController;
   TextEditingController categorySlugController;
-  TextEditingController categoryParentController;
   TextEditingController categoryStatusController;
 
   QuillEditorController descriptionController;
 
-  // final List<String> list = <String>[
-  //   'Select Parent Category',
-  //   'Two',
-  //   'Three',
-  //   'Four'
-  // ];
-
   @override
   Widget build(BuildContext context) {
-    // String dropdownValue = list.first;
-    // double width = Get.width;
-    // double height = Get.height;
-    // const bool isMobile = false;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -74,12 +68,6 @@ class CategoryForm extends GetView<ThemeChangeController> {
           ),
           onChanged: onChange,
           items: dropDownList,
-          // items: dropDownList.map<DropdownMenuItem<String>>((String value) {
-          //   return DropdownMenuItem<String>(
-          //     value: value,
-          //     child: Text(value),
-          //   );
-          // }).toList(),
         ),
 
         SizedBox(
@@ -98,35 +86,14 @@ class CategoryForm extends GetView<ThemeChangeController> {
           hintText: "Category Slug",
           labelText: "Category Slug",
           isPassword: false,
-          textEditingController: categoryNameController,
+          textEditingController: categorySlugController,
         ),
         SizedBox(
           height: height * .02,
         ),
         // TODO; Add rich text editor
         Expanded(child: TextEditor(controller: descriptionController)),
-        // DefaultTextField(
-        //   hintText: "Category Description",
-        //   labelText: "Category Description",
-        //   isPassword: false,
-        //   isMultiLine: true,
-        //   textEditingController: categoryNameController,
-        // ),
 
-        //TODO; Create meta title field
-        // DefaultTextField(
-        //   hintText: "Meta Title",
-        //   labelText: "Meta Title",
-        //   isPassword: false,
-        //   textEditingController: categoryNameController,
-        // ),
-        //TODO; Create meta descriptioin field
-        // DefaultTextField(
-        //   hintText: "Meta Description",
-        //   labelText: "Meta Description",
-        //   isPassword: false,
-        //   textEditingController: categoryNameController,
-        // ),
         Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
           child: Transform.scale(
@@ -141,17 +108,27 @@ class CategoryForm extends GetView<ThemeChangeController> {
                   width: width * .01,
                 ),
                 CupertinoSwitch(
-                    activeColor: kPrimaryColor,
-                    value: controller.isDarkMode.value,
-                    onChanged: (val) {
-                      controller.isDarkMode.value = val;
-                    }),
+                  activeColor: kPrimaryColor,
+                  value: statusValue,
+                  onChanged: statusChanges,
+                ),
               ],
             ),
           ),
         ),
         SizedBox(
+          height: height * .02,
+        ),
+        DefaultButton(
+          primaryColor: kPrimaryColor,
+          hoverColor: kDarkColor,
+          buttonText: "Add Picture",
+          width: width * .2,
           height: height * .05,
+          onPressed: uploadImages,
+        ),
+        SizedBox(
+          height: height * .02,
         ),
         DefaultButton(
           primaryColor: kPrimaryColor,
@@ -159,7 +136,7 @@ class CategoryForm extends GetView<ThemeChangeController> {
           buttonText: "Submit",
           width: width * .2,
           height: height * .05,
-          onPressed: () async {},
+          onPressed: formSubmit,
         ),
       ],
     );

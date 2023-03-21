@@ -13,4 +13,5 @@ String updateProfile = '/profile/updateProfile';
 String profileById = '/profile/';
 String deleteProfile = '/profile/deleteProfile/';
 String allCategory = '/category/';
+String createCategory = '/category/createCategory';
 // RxBool themeMode = ThemeChangeController().isDarkMode;
