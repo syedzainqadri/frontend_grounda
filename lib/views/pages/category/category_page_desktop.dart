@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
@@ -79,7 +81,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                             );
                           }).toList(),
                           dropDownValue:
-                              categoryController.category.first.name!,
+                              categoryController.selectedItemName.value,
                           onChange: (selectedValue) {
                             categoryController.selectedItemName.value =
                                 selectedValue;
@@ -413,4 +415,3 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
     );
   }
 }
-//TODO: Drop Down is not showing current value

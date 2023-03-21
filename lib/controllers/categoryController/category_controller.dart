@@ -68,7 +68,6 @@ class CategoryController extends GetxController {
       Get.snackbar(
           'Category Created', 'Category Name: $categoryName has been created',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      // singleCategory.value = createCategoryModelFromJson(response.body);
     } else {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
