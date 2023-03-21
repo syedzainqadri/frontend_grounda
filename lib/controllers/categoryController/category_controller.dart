@@ -7,6 +7,9 @@ import 'package:http/http.dart' as http;
 class CategoryController extends GetxController {
   var token = ''.obs;
   var category = <CategoryModel>[].obs;
+  var selectedItem = ''.obs;
+  var selectedItemId = 0.obs;
+  List<String> items = <String>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
 
   @override
@@ -23,9 +26,7 @@ class CategoryController extends GetxController {
       "Authorization": "Bearer $token"
     });
     if (response.statusCode == 200) {
-      print(response.body);
       category.value = categoryModelFromJson(response.body);
-      print(category.length);
     } else {
       print(response.body);
     }

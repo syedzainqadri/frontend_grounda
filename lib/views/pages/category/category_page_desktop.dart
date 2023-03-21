@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
+import 'package:frontend_grounda/models/categoryModel/category_model.dart';
 
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/category/category_form.dart';
@@ -9,12 +10,19 @@ import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
 import 'package:get/get.dart';
+import 'package:quill_html_editor/quill_html_editor.dart';
 
 class CategoryPageDesktop extends GetView<ThemeChangeController> {
   CategoryPageDesktop({super.key});
 
   final TextEditingController searchCategory = TextEditingController();
   final CategoryController categoryController = Get.find<CategoryController>();
+  QuillEditorController descriptionController = QuillEditorController();
+  TextEditingController categoryNameController = TextEditingController();
+  TextEditingController categorySlugController = TextEditingController();
+  TextEditingController categoryParentController = TextEditingController();
+  TextEditingController categoryStatusController = TextEditingController();
+  List<CategoryModel> categoryModel = [];
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +57,23 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: CategoryForm(),
+                  child: CategoryForm(
+                    categoryNameController: categoryNameController,
+                    categorySlugController: categorySlugController,
+                    categoryParentController: categoryParentController,
+                    categoryStatusController: categoryStatusController,
+                    descriptionController: descriptionController,
+                    dropDownList: categoryModel.map((value) {
+                      return DropdownMenuItem(
+                        value: categoryController.selectedItem.value,
+                        child: Text(value.name!),
+                      );
+                    }).toList(),
+                    dropDownValue: categoryController.selectedItem.value,
+                    onChange: (selectedValue) {
+                      categoryController.selectedItem.value = selectedValue;
+                    },
+                  ),
                 ),
               ),
               SizedBox(

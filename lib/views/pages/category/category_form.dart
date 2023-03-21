@@ -12,28 +12,41 @@ import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class CategoryForm extends GetView<ThemeChangeController> {
-  CategoryForm({super.key});
+  CategoryForm(
+      {required this.categoryNameController,
+      required this.categorySlugController,
+      required this.categoryStatusController,
+      required this.categoryParentController,
+      required this.descriptionController,
+      required this.dropDownList,
+      required this.dropDownValue,
+      required this.onChange,
+      super.key});
+  double width = Get.width;
+  double height = Get.height;
+  String dropDownValue;
+  var onChange;
+  List<DropdownMenuItem<String>> dropDownList;
+  TextEditingController categoryNameController;
+  TextEditingController categorySlugController;
+  TextEditingController categoryParentController;
+  TextEditingController categoryStatusController;
 
-  TextEditingController categoryNameController = TextEditingController();
-  TextEditingController categorySlugController = TextEditingController();
-  TextEditingController categoryParentController = TextEditingController();
-  TextEditingController categoryStatusController = TextEditingController();
+  QuillEditorController descriptionController;
 
-  QuillEditorController descriptionController = QuillEditorController();
-
-  final List<String> list = <String>[
-    'Select Parent Category',
-    'Two',
-    'Three',
-    'Four'
-  ];
+  // final List<String> list = <String>[
+  //   'Select Parent Category',
+  //   'Two',
+  //   'Three',
+  //   'Four'
+  // ];
 
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = list.first;
-    double width = Get.width;
-    double height = Get.height;
-    const bool isMobile = false;
+    // String dropdownValue = list.first;
+    // double width = Get.width;
+    // double height = Get.height;
+    // const bool isMobile = false;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,11 +60,11 @@ class CategoryForm extends GetView<ThemeChangeController> {
           height: height * 0.03,
         ),
 
-        DropdownButton<String>(
+        DropdownButton(
           borderRadius: BorderRadius.circular(15),
-          hint: const Text("Parent Category"),
+          hint: const Text("Select Parent Category"),
           isExpanded: true,
-          value: dropdownValue,
+          value: dropDownValue,
           icon: const Icon(Icons.arrow_downward),
           elevation: 16,
           style: Theme.of(context).textTheme.bodyMedium,
@@ -59,15 +72,14 @@ class CategoryForm extends GetView<ThemeChangeController> {
             height: 2,
             color: kDarkColor,
           ),
-          onChanged: (String? value) {
-            // This is called when the user selects an item.
-          },
-          items: list.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
+          onChanged: onChange,
+          items: dropDownList,
+          // items: dropDownList.map<DropdownMenuItem<String>>((String value) {
+          //   return DropdownMenuItem<String>(
+          //     value: value,
+          //     child: Text(value),
+          //   );
+          // }).toList(),
         ),
 
         SizedBox(
