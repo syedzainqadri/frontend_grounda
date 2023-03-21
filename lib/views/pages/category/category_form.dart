@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend_grounda/controllers/themeController.dart/theme_change_controller.dart';
+import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/text_ediotor.dart';

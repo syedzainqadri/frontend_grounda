@@ -1,7 +1,7 @@
-import 'package:frontend_grounda/controllers/menuController.dart/sidebar_controller.dart';
-import 'package:frontend_grounda/controllers/profileController.dart/profile_controller.dart';
-import 'package:frontend_grounda/controllers/themeController.dart/theme_change_controller.dart';
-import 'package:frontend_grounda/controllers/themeController.dart/theme_controller.dart';
+import 'package:frontend_grounda/controllers/menuController/sidebar_controller.dart';
+import 'package:frontend_grounda/controllers/profileController/profile_controller.dart';
+import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
+import 'package:frontend_grounda/controllers/themeController/theme_controller.dart';
 import 'package:get/instance_manager.dart';
 
 class AllBindings implements Bindings {
