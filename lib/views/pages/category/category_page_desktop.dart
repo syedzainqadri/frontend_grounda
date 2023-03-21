@@ -25,6 +25,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
 
   var selectedItemId = 0.obs;
   var isPublished = false.obs;
+  var catId = ''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -94,28 +95,69 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                             print(categoryController.selectedItemName.value);
                             print(selectedItemId.value);
                           },
+                          buttonText: catId.value == '' ? 'Submit' : 'Update',
                           formSubmit: () async {
-                            Get.defaultDialog(
-                              title: 'Creating Category',
-                              content: const Center(
-                                child: CircularProgressIndicator(
-                                    color: kPrimaryColor),
-                              ),
-                            );
-                            print(selectedItemId);
-                            var description =
-                                await descriptionController.getText();
-                            print(description);
-                            await categoryController.createNewCategory(
-                                categoryController.imageUrl.value,
-                                categoryNameController.text,
-                                categorySlugController.text,
-                                description,
-                                selectedItemId.value,
-                                isPublished.value);
-                            await categoryController.getCategories();
-                            Navigator.pop(context);
+                            if (catId.value == '') {
+                              Get.defaultDialog(
+                                title: 'Creating Category',
+                                content: const Center(
+                                  child: CircularProgressIndicator(
+                                      color: kPrimaryColor),
+                                ),
+                              );
+                              print(selectedItemId);
+                              var description =
+                                  await descriptionController.getText();
+                              print(description);
+                              await categoryController.createNewCategory(
+                                  categoryController.imageUrl.value,
+                                  categoryNameController.text,
+                                  categorySlugController.text,
+                                  description,
+                                  selectedItemId.value,
+                                  isPublished.value);
+                              await categoryController.getCategories();
+                              Navigator.pop(context);
+                            } else {
+                              Get.defaultDialog(
+                                title: 'Updating Category',
+                                content: const Center(
+                                  child: CircularProgressIndicator(
+                                      color: kPrimaryColor),
+                                ),
+                              );
+                              var description =
+                                  await descriptionController.getText();
+                              await categoryController.updateThisCategory(
+                                  int.parse(catId.value),
+                                  categoryController.imageUrl.value,
+                                  categoryNameController.text,
+                                  categorySlugController.text,
+                                  description,
+                                  selectedItemId.value,
+                                  isPublished.value);
+                              categoryNameController.text = '';
+                              categorySlugController.text = '';
+                              descriptionController.clear();
+                              selectedItemId.value = 0;
+                              catId.value = '';
+                              await categoryController.getCategories();
+                              Navigator.pop(context);
+                            }
                           },
+                          cancelText: catId.value == '' ? '' : 'Cancel Update',
+                          onTap: () async {
+                            categoryNameController.text = '';
+                            categorySlugController.text = '';
+                            descriptionController.clear();
+                            selectedItemId.value = 0;
+                            catId.value = '';
+                            await categoryController.getCategories();
+                          },
+                          pictureButtonText:
+                              categoryController.imageUrl.value.isEmpty
+                                  ? 'Add Picture'
+                                  : 'Update Picture',
                           uploadImages: () async {
                             Get.defaultDialog(
                               title: 'Uploading Image',
@@ -291,7 +333,35 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                         Row(
                                           children: [
                                             IconButton(
-                                              onPressed: () {},
+                                              onPressed: () async {
+                                                descriptionController.clear();
+                                                categoryNameController.text =
+                                                    categoryController
+                                                        .category[index].name!;
+                                                categorySlugController.text =
+                                                    categoryController
+                                                        .category[index].slug!;
+                                                descriptionController
+                                                    .insertText(
+                                                        categoryController
+                                                            .category[index]
+                                                            .description!);
+                                                isPublished.value =
+                                                    categoryController
+                                                        .category[index]
+                                                        .published!;
+                                                selectedItemId.value =
+                                                    categoryController
+                                                        .category[index]
+                                                        .parentId!;
+                                                catId.value = categoryController
+                                                    .category[index].id
+                                                    .toString();
+                                                categoryController
+                                                        .imageUrl.value =
+                                                    categoryController
+                                                        .category[index].image!;
+                                              },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/edit.svg"),
                                             ),
@@ -343,3 +413,4 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
     );
   }
 }
+//TODO: Drop Down is not showing current value

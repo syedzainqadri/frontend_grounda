@@ -15,4 +15,5 @@ String deleteProfile = '/profile/deleteProfile/';
 String allCategory = '/category/';
 String createCategory = '/category/createCategory';
 String deleteCategory = '/category/deleteCategory/';
+String updateCategory = '/category/updateCategory';
 // RxBool themeMode = ThemeChangeController().isDarkMode;

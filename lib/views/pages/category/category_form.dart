@@ -24,6 +24,10 @@ class CategoryForm extends GetView<ThemeChangeController> {
       required this.formSubmit,
       required this.statusValue,
       required this.uploadImages,
+      required this.buttonText,
+      required this.pictureButtonText,
+      required this.cancelText,
+      required this.onTap,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -33,6 +37,10 @@ class CategoryForm extends GetView<ThemeChangeController> {
   dynamic formSubmit;
   bool statusValue;
   dynamic uploadImages;
+  dynamic onTap;
+  String buttonText;
+  String pictureButtonText;
+  String cancelText;
   List<DropdownMenuItem<String>> dropDownList;
   TextEditingController categoryNameController;
   TextEditingController categorySlugController;
@@ -122,7 +130,7 @@ class CategoryForm extends GetView<ThemeChangeController> {
         DefaultButton(
           primaryColor: kPrimaryColor,
           hoverColor: kDarkColor,
-          buttonText: "Add Picture",
+          buttonText: pictureButtonText,
           width: width * .2,
           height: height * .05,
           onPressed: uploadImages,
@@ -133,10 +141,23 @@ class CategoryForm extends GetView<ThemeChangeController> {
         DefaultButton(
           primaryColor: kPrimaryColor,
           hoverColor: kDarkColor,
-          buttonText: "Submit",
+          buttonText: buttonText,
           width: width * .2,
           height: height * .05,
           onPressed: formSubmit,
+        ),
+        SizedBox(
+          height: height * .02,
+        ),
+        InkWell(
+          onTap: onTap,
+          child: Text(
+            cancelText,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: kPrimaryColor),
+          ),
         ),
       ],
     );

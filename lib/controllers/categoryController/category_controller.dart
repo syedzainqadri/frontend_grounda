@@ -75,6 +75,45 @@ class CategoryController extends GetxController {
     }
   }
 
+  Future<void> updateThisCategory(
+    int id,
+    String image,
+    String name,
+    String slug,
+    String description,
+    int parentId,
+    bool published,
+  ) async {
+    var bodyPrepare = {
+      'id': id,
+      'image': image,
+      'name': name,
+      'slug': slug,
+      'description': description,
+      'parentId': parentId,
+      'published': published
+    };
+    print(jsonEncode(bodyPrepare));
+    var response = await http.put(Uri.parse(baseUrl + updateCategory),
+        body: jsonEncode(bodyPrepare),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        });
+    if (response.statusCode == 200) {
+      print(response.body);
+      var createdCategory = jsonDecode(response.body);
+      var categoryName = createdCategory['name'];
+      Get.snackbar(
+          'Category Updated', 'Category Name: $categoryName has been Updated',
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      // singleCategory.value = createCategoryModelFromJson(response.body);
+    } else {
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+    }
+  }
+
   Future<void> deleteThisCategory(int id) async {
     var uid = id.toString();
     var response = await http.delete(Uri.parse(baseUrl + deleteCategory + uid),
