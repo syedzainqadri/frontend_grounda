@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
 
 class CategoryPageMobile extends GetView<ThemeChangeController> {
-  const CategoryPageMobile({super.key});
+  CategoryPageMobile({super.key});
+  final CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {

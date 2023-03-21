@@ -52,7 +52,7 @@ class CategoryView extends GetView<SideBarController> {
                 children: [
                   ResponsiveLayout(
                     desktopBody: CategoryPageDesktop(),
-                    mobileBody: const CategoryPageMobile(),
+                    mobileBody: CategoryPageMobile(),
                   ),
                 ],
               ),

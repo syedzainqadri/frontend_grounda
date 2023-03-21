@@ -134,7 +134,5 @@ class AuthController extends GetxController {
   void _updateHiveTokeng(String token, String id) {
     tokenHiveBox.put('token', token);
     tokenHiveBox.put('userId', id);
-    print(tokenHiveBox.get('token'));
-    print(tokenHiveBox.get('userId'));
   }
 }

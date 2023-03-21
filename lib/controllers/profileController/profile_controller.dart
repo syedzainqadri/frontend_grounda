@@ -39,8 +39,6 @@ class ProfileController extends GetxController {
     super.onInit();
     token.value = tokenHiveBox.get('token');
     id.value = tokenHiveBox.get('userId');
-    print(token.value);
-    print(id.value);
     if (id.value == '') {
     } else {
       getProfile(id.value);
@@ -86,7 +84,8 @@ class ProfileController extends GetxController {
     if (response.statusCode == 200) {
       profile.value = profileModelFromJson(response.body);
     } else {
-      print(response.body);
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
     }
   }
 
@@ -129,7 +128,8 @@ class ProfileController extends GetxController {
     if (response.statusCode == 200) {
       profile.value = profileModelFromJson(response.body);
     } else {
-      print(response.body);
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
     }
   }
 
@@ -155,7 +155,8 @@ class ProfileController extends GetxController {
       imageUrl.value = profile.value.images!;
       isLoading.value = false;
     } else {
-      print('the response is: ${response.body}');
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     }
   }
@@ -177,5 +178,6 @@ class ProfileController extends GetxController {
     phoneNumberController.value.text = profile.value.phone!;
     postCodeController.value.text = profile.value.postCode!;
     countryName.value = profile.value.country!;
+    Get.toNamed('/settings');
   }
 }

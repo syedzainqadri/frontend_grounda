@@ -1,13 +1,11 @@
-// To parse this JSON data, do
-//
-//     final categoryModel = categoryModelFromJson(jsonString);
-
 import 'dart:convert';
 
-CategoryModel categoryModelFromJson(String str) =>
-    CategoryModel.fromJson(json.decode(str));
+List<CategoryModel> categoryModelFromJson(String str) =>
+    List<CategoryModel>.from(
+        json.decode(str).map((x) => CategoryModel.fromJson(x)));
 
-String categoryModelToJson(CategoryModel data) => json.encode(data.toJson());
+String categoryModelToJson(List<CategoryModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CategoryModel {
   CategoryModel({
@@ -16,6 +14,7 @@ class CategoryModel {
     this.slug,
     this.description,
     this.parentId,
+    this.image,
     this.published,
     this.createdAt,
     this.updatedAt,
@@ -26,6 +25,7 @@ class CategoryModel {
   String? slug;
   String? description;
   int? parentId;
+  String? image;
   bool? published;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -35,6 +35,7 @@ class CategoryModel {
         name: json["name"],
         slug: json["slug"],
         description: json["description"],
+        image: json["image"],
         parentId: json["parentId"],
         published: json["published"],
         createdAt: DateTime.parse(json["createdAt"]),
@@ -46,6 +47,7 @@ class CategoryModel {
         "name": name,
         "slug": slug,
         "description": description,
+        "image": image,
         "parentId": parentId,
         "published": published,
         "createdAt": createdAt!.toIso8601String(),
