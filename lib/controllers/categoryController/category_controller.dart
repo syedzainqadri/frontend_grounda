@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 class CategoryController extends GetxController {
   var token = ''.obs;
   var category = <CategoryModel>[].obs;
+  // var singleCategory = CreateCategoryModel().obs;
   var selectedItemName = ''.obs;
   var imageUrl = ''.obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
@@ -37,7 +38,7 @@ class CategoryController extends GetxController {
     }
   }
 
-  void createNewCategory(
+  Future<void> createNewCategory(
     String image,
     String name,
     String slug,
@@ -62,7 +63,31 @@ class CategoryController extends GetxController {
         });
     if (response.statusCode == 200) {
       print(response.body);
-      category.value = categoryModelFromJson(response.body);
+      var createdCategory = jsonDecode(response.body);
+      var categoryName = createdCategory['name'];
+      Get.snackbar(
+          'Category Created', 'Category Name: $categoryName has been created',
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      // singleCategory.value = createCategoryModelFromJson(response.body);
+    } else {
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+    }
+  }
+
+  Future<void> deleteThisCategory(int id) async {
+    var uid = id.toString();
+    var response = await http.delete(Uri.parse(baseUrl + deleteCategory + uid),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        });
+    if (response.statusCode == 200) {
+      var deletedCategory = jsonDecode(response.body);
+      var categoryName = deletedCategory['name'];
+      Get.snackbar(
+          'Category Remved', 'Category name: $categoryName Has been deleted',
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
     } else {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);

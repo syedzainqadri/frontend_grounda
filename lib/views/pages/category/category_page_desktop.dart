@@ -95,20 +95,37 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                             print(selectedItemId.value);
                           },
                           formSubmit: () async {
+                            Get.defaultDialog(
+                              title: 'Creating Category',
+                              content: const Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor),
+                              ),
+                            );
                             print(selectedItemId);
                             var description =
                                 await descriptionController.getText();
                             print(description);
-                            categoryController.createNewCategory(
+                            await categoryController.createNewCategory(
                                 categoryController.imageUrl.value,
                                 categoryNameController.text,
                                 categorySlugController.text,
                                 description,
                                 selectedItemId.value,
                                 isPublished.value);
+                            await categoryController.getCategories();
+                            Navigator.pop(context);
                           },
-                          uploadImages: () {
-                            categoryController.getImage();
+                          uploadImages: () async {
+                            Get.defaultDialog(
+                              title: 'Uploading Image',
+                              content: const Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor),
+                              ),
+                            );
+                            await categoryController.getImage();
+                            Navigator.pop(context);
                           },
                           statusValue: isPublished.value,
                           statusChanges: (value) {
@@ -282,7 +299,25 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                               width: 20,
                                             ),
                                             IconButton(
-                                              onPressed: () {},
+                                              onPressed: () async {
+                                                Get.defaultDialog(
+                                                  title: 'Deleting Category',
+                                                  content: const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            color:
+                                                                kPrimaryColor),
+                                                  ),
+                                                );
+                                                await categoryController
+                                                    .deleteThisCategory(
+                                                        categoryController
+                                                            .category[index]
+                                                            .id!);
+                                                await categoryController
+                                                    .getCategories();
+                                                Navigator.pop(context);
+                                              },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/trash.svg"),
                                             ),
