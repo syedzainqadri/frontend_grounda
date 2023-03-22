@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
@@ -21,7 +23,6 @@ class CategoryController extends GetxController {
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
-    print(token.value);
     getCategories();
   }
 
@@ -33,9 +34,7 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       category.value = categoryModelFromJson(response.body);
       selectedItemName.value = category.first.name!;
-    } else {
-      print(response.body);
-    }
+    } else {}
   }
 
   Future<void> createNewCategory(
@@ -54,7 +53,6 @@ class CategoryController extends GetxController {
       'parentId': parentId,
       'published': published
     };
-    print(jsonEncode(bodyPrepare));
     var response = await http.post(Uri.parse(baseUrl + createCategory),
         body: jsonEncode(bodyPrepare),
         headers: {
@@ -62,7 +60,6 @@ class CategoryController extends GetxController {
           "Authorization": "Bearer $token"
         });
     if (response.statusCode == 200) {
-      print(response.body);
       var createdCategory = jsonDecode(response.body);
       var categoryName = createdCategory['name'];
       Get.snackbar(
@@ -92,7 +89,6 @@ class CategoryController extends GetxController {
       'parentId': parentId,
       'published': published
     };
-    print(jsonEncode(bodyPrepare));
     var response = await http.put(Uri.parse(baseUrl + updateCategory),
         body: jsonEncode(bodyPrepare),
         headers: {
@@ -100,7 +96,6 @@ class CategoryController extends GetxController {
           "Authorization": "Bearer $token"
         });
     if (response.statusCode == 200) {
-      print(response.body);
       var createdCategory = jsonDecode(response.body);
       var categoryName = createdCategory['name'];
       Get.snackbar(
@@ -139,13 +134,11 @@ class CategoryController extends GetxController {
       String fileName = result.files.first.name;
 
       // Upload file
-      print(fileName);
       var upload = await FirebaseStorage.instance
           .ref('uploads/categories/images/$fileName')
           .putData(fileBytes);
       final url = upload.ref.getDownloadURL().then((value) {
         imageUrl.value = value;
-        print(imageUrl.value);
       });
     }
   }

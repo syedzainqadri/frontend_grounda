@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -62,7 +62,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: categoryController.category.value.isEmpty
+                  child: categoryController.category.isEmpty
                       ? const Center(
                           child: CircularProgressIndicator(
                             color: kPrimaryColor,
@@ -94,8 +94,6 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                     categoryController.category[i].id!;
                               }
                             }
-                            print(categoryController.selectedItemName.value);
-                            print(selectedItemId.value);
                           },
                           buttonText: catId.value == '' ? 'Submit' : 'Update',
                           formSubmit: () async {
@@ -107,10 +105,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                       color: kPrimaryColor),
                                 ),
                               );
-                              print(selectedItemId);
                               var description =
                                   await descriptionController.getText();
-                              print(description);
                               await categoryController.createNewCategory(
                                   categoryController.imageUrl.value,
                                   categoryNameController.text,
@@ -174,7 +170,6 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                           statusValue: isPublished.value,
                           statusChanges: (value) {
                             isPublished.value = value;
-                            print(isPublished);
                           },
                         ),
                 ),
@@ -228,7 +223,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                         height: height * .6,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
-                          itemCount: categoryController.category.value.length,
+                          itemCount: categoryController.category.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               color: controller.isDarkMode.value
@@ -279,8 +274,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    categoryController.category
-                                                        .value[index].name!,
+                                                    categoryController
+                                                        .category[index].name!,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyLarge,

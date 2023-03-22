@@ -16,7 +16,6 @@ import '../views/pages/blog/blog_view.dart';
 import '../views/pages/customer/customer_view.dart';
 import '../views/pages/help/help_view.dart';
 import '../views/pages/settings/setting_view.dart';
-import '../views/pages/settings/subpages/profile/profile_edit.dart';
 
 appRoutes() => [
       GetPage(name: '/', page: () => InitialNavigation()),

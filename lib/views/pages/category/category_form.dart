@@ -61,7 +61,6 @@ class CategoryForm extends GetView<ThemeChangeController> {
         SizedBox(
           height: height * 0.03,
         ),
-
         DropdownButton(
           borderRadius: BorderRadius.circular(15),
           hint: const Text("Select Parent Category"),
@@ -77,7 +76,6 @@ class CategoryForm extends GetView<ThemeChangeController> {
           onChanged: onChange,
           items: dropDownList,
         ),
-
         SizedBox(
           height: height * 0.03,
         ),
@@ -99,9 +97,7 @@ class CategoryForm extends GetView<ThemeChangeController> {
         SizedBox(
           height: height * .02,
         ),
-        // TODO; Add rich text editor
         Expanded(child: TextEditor(controller: descriptionController)),
-
         Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
           child: Transform.scale(
