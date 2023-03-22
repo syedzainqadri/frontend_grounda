@@ -17,4 +17,5 @@ String createCategory = '/category/createCategory';
 String deleteCategory = '/category/deleteCategory/';
 String updateCategory = '/category/updateCategory';
 String getAllPost = '/post';
+String createPost = '/createPost';
 // RxBool themeMode = ThemeChangeController().isDarkMode;
