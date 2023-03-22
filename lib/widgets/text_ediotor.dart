@@ -33,7 +33,7 @@ class TextEditor extends StatelessWidget {
         ToolBar(
           toolBarColor: _toolbarColor,
           padding: const EdgeInsets.all(8),
-          iconSize: 15,
+          iconSize: 10,
           iconColor: _toolbarIconColor,
           activeIconColor: Colors.purple.shade300,
           controller: controller,
@@ -46,7 +46,7 @@ class TextEditor extends StatelessWidget {
             hintText: 'Add Description here',
             controller: controller,
             isEnabled: true,
-            minHeight: 400,
+            minHeight: 200,
             textStyle: _editorTextStyle,
             hintTextStyle: _hintTextStyle,
             hintTextAlign: TextAlign.start,
