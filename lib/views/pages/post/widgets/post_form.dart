@@ -37,6 +37,15 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.installmentStatusChanges,
       required this.posessionChanges,
       required this.posessionValue,
+      required this.contactPersonsLandlineController,
+      required this.contactPersonEmailController,
+      required this.contactPersonNameController,
+      required this.contactPersonsMobileController,
+      required this.bathRoomController,
+      required this.bedRoomController,
+      required this.advanceController,
+      required this.noOfInstallmentController,
+      required this.monthlyInstallmentValueController,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -63,13 +72,22 @@ class PostForm extends GetView<ThemeChangeController> {
   TextEditingController areaController;
   TextEditingController plotNumberController;
   TextEditingController priceController;
+  TextEditingController contactPersonsLandlineController;
+  TextEditingController contactPersonsMobileController;
+  TextEditingController contactPersonEmailController;
+  TextEditingController contactPersonNameController;
+  TextEditingController bathRoomController;
+  TextEditingController bedRoomController;
+  TextEditingController advanceController;
+  TextEditingController noOfInstallmentController;
+  TextEditingController monthlyInstallmentValueController;
   QuillEditorController contentController;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SizedBox(
-        height: 1700,
+        height: hasInstallmentValue ? height * 1.8 : height * 1.5,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -227,33 +245,45 @@ class PostForm extends GetView<ThemeChangeController> {
                 ),
               ),
             ),
-            SizedBox(
-              height: height * 0.015,
-            ),
-            DefaultTextField(
-              hintText: "Enter Advance Ammount",
-              labelText: "Advance Ammount",
-              isPassword: false,
-              textEditingController: priceController,
-            ),
-            SizedBox(
-              height: height * 0.015,
-            ),
-            DefaultTextField(
-              hintText: "Number of Installments",
-              labelText: "No of Installments",
-              isPassword: false,
-              textEditingController: priceController,
-            ),
-            SizedBox(
-              height: height * 0.015,
-            ),
-            DefaultTextField(
-              hintText: "Monthly Installment Value",
-              labelText: "Monthly Installement Value",
-              isPassword: false,
-              textEditingController: priceController,
-            ),
+            hasInstallmentValue
+                ? SizedBox(
+                    height: height * 0.015,
+                  )
+                : const Offstage(),
+            hasInstallmentValue
+                ? DefaultTextField(
+                    hintText: "Enter Advance Ammount",
+                    labelText: "Advance Ammount",
+                    isPassword: false,
+                    textEditingController: advanceController,
+                  )
+                : const Offstage(),
+            hasInstallmentValue
+                ? SizedBox(
+                    height: height * 0.015,
+                  )
+                : const Offstage(),
+            hasInstallmentValue
+                ? DefaultTextField(
+                    hintText: "Number of Installments",
+                    labelText: "No of Installments",
+                    isPassword: false,
+                    textEditingController: noOfInstallmentController,
+                  )
+                : const Offstage(),
+            hasInstallmentValue
+                ? SizedBox(
+                    height: height * 0.015,
+                  )
+                : const Offstage(),
+            hasInstallmentValue
+                ? DefaultTextField(
+                    hintText: "Monthly Installment Value",
+                    labelText: "Monthly Installement Value",
+                    isPassword: false,
+                    textEditingController: monthlyInstallmentValueController,
+                  )
+                : const Offstage(),
             SizedBox(
               height: height * 0.015,
             ),
@@ -279,24 +309,32 @@ class PostForm extends GetView<ThemeChangeController> {
                 ),
               ),
             ),
-            SizedBox(
-              height: height * 0.015,
-            ),
-            DefaultTextField(
-              hintText: "Enter Number of Bedrooms",
-              labelText: "Bedrooms",
-              isPassword: false,
-              textEditingController: priceController,
-            ),
-            SizedBox(
-              height: height * 0.015,
-            ),
-            DefaultTextField(
-              hintText: "Enter Number of Bath Rooms",
-              labelText: "Bathrooms",
-              isPassword: false,
-              textEditingController: priceController,
-            ),
+            posessionValue
+                ? SizedBox(
+                    height: height * 0.015,
+                  )
+                : const Offstage(),
+            posessionValue
+                ? DefaultTextField(
+                    hintText: "Enter Number of Bedrooms",
+                    labelText: "Bedrooms",
+                    isPassword: false,
+                    textEditingController: bedRoomController,
+                  )
+                : const Offstage(),
+            posessionValue
+                ? SizedBox(
+                    height: height * 0.015,
+                  )
+                : const Offstage(),
+            posessionValue
+                ? DefaultTextField(
+                    hintText: "Enter Number of Bath Rooms",
+                    labelText: "Bathrooms",
+                    isPassword: false,
+                    textEditingController: bathRoomController,
+                  )
+                : const Offstage(),
             SizedBox(
               height: height * 0.015,
             ),
@@ -304,7 +342,7 @@ class PostForm extends GetView<ThemeChangeController> {
               hintText: "Contact Person's Name",
               labelText: "Contact Person's Name",
               isPassword: false,
-              textEditingController: priceController,
+              textEditingController: contactPersonNameController,
             ),
             SizedBox(
               height: height * 0.015,
@@ -313,7 +351,7 @@ class PostForm extends GetView<ThemeChangeController> {
               hintText: "Contact Person's Email",
               labelText: "Contact Person's Email",
               isPassword: false,
-              textEditingController: priceController,
+              textEditingController: contactPersonEmailController,
             ),
             SizedBox(
               height: height * 0.015,
@@ -322,7 +360,7 @@ class PostForm extends GetView<ThemeChangeController> {
               hintText: "Contact Person's Mobile",
               labelText: "Contact Person's Mobile",
               isPassword: false,
-              textEditingController: priceController,
+              textEditingController: contactPersonsMobileController,
             ),
             SizedBox(
               height: height * 0.015,
@@ -331,16 +369,7 @@ class PostForm extends GetView<ThemeChangeController> {
               hintText: "Contact Person's Landline",
               labelText: "Contact Person's Landline",
               isPassword: false,
-              textEditingController: priceController,
-            ),
-            SizedBox(
-              height: height * 0.015,
-            ),
-            DefaultTextField(
-              hintText: "Enter Number of Bath Rooms",
-              labelText: "Bathrooms",
-              isPassword: false,
-              textEditingController: priceController,
+              textEditingController: contactPersonsLandlineController,
             ),
             SizedBox(
               height: height * 0.015,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
+import 'package:frontend_grounda/controllers/postController/post_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/post/widgets/post_form.dart';
@@ -14,13 +15,26 @@ class PostPage extends GetView<ThemeChangeController> {
   final TextEditingController searchCategory = TextEditingController();
   QuillEditorController contentController = QuillEditorController();
   TextEditingController categoryNameController = TextEditingController();
-  TextEditingController categorySlugController = TextEditingController();
+  TextEditingController postShortDescriptionController =
+      TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController areaController = TextEditingController();
   TextEditingController plotNumberController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController videoUrlController = TextEditingController();
+  TextEditingController advanceController = TextEditingController();
+  TextEditingController noOfInstallmentController = TextEditingController();
+  TextEditingController monthlyInstallmentController = TextEditingController();
+  TextEditingController contactPersonsLandlineController =
+      TextEditingController();
+  TextEditingController contactPersonsMobileController =
+      TextEditingController();
+  TextEditingController contactPersonsEmailController = TextEditingController();
+  TextEditingController contactPersonsNameController = TextEditingController();
+  TextEditingController bedroomController = TextEditingController();
+  TextEditingController bathroomController = TextEditingController();
   CategoryController categoryController = Get.find<CategoryController>();
+  PostController postController = Get.find<PostController>();
   var selectedItemId = 0.obs;
   var isPublished = false.obs;
   var hasInstallments = false.obs;
@@ -70,7 +84,7 @@ class PostPage extends GetView<ThemeChangeController> {
                           imageListUrl: const [],
                           postTitleController: categoryNameController,
                           postShortDescriptionController:
-                              categorySlugController,
+                              postShortDescriptionController,
                           contentController: contentController,
                           dropDownList: categoryController.category
                               .map<DropdownMenuItem<String>>((value) {
@@ -109,7 +123,7 @@ class PostPage extends GetView<ThemeChangeController> {
                               await categoryController.createNewCategory(
                                   categoryController.imageUrl.value,
                                   categoryNameController.text,
-                                  categorySlugController.text,
+                                  postShortDescriptionController.text,
                                   description,
                                   selectedItemId.value,
                                   isPublished.value);
@@ -129,12 +143,12 @@ class PostPage extends GetView<ThemeChangeController> {
                                   int.parse(catId.value),
                                   categoryController.imageUrl.value,
                                   categoryNameController.text,
-                                  categorySlugController.text,
+                                  postShortDescriptionController.text,
                                   description,
                                   selectedItemId.value,
                                   isPublished.value);
                               categoryNameController.text = '';
-                              categorySlugController.text = '';
+                              postShortDescriptionController.text = '';
                               contentController.clear();
                               selectedItemId.value = 0;
                               catId.value = '';
@@ -145,7 +159,7 @@ class PostPage extends GetView<ThemeChangeController> {
                           cancelText: catId.value == '' ? '' : 'Cancel Update',
                           onTap: () async {
                             categoryNameController.text = '';
-                            categorySlugController.text = '';
+                            postShortDescriptionController.text = '';
                             contentController.clear();
                             selectedItemId.value = 0;
                             catId.value = '';
@@ -175,14 +189,28 @@ class PostPage extends GetView<ThemeChangeController> {
                           areaController: areaController,
                           plotNumberController: plotNumberController,
                           priceController: priceController,
-                          installmentStatusChanges: (value) {
-                            //TODO:impelment bool update
-                          },
                           hasInstallmentValue: hasInstallments.value,
+                          installmentStatusChanges: (value) {
+                            hasInstallments.value = value;
+                          },
                           posessionValue: posessionReady.value,
                           posessionChanges: (value) {
-                            //TODO: implement bool update
+                            posessionReady.value = value;
                           },
+                          contactPersonEmailController:
+                              contactPersonsEmailController,
+                          contactPersonNameController:
+                              contactPersonsNameController,
+                          contactPersonsLandlineController:
+                              contactPersonsLandlineController,
+                          contactPersonsMobileController:
+                              contactPersonsMobileController,
+                          noOfInstallmentController: noOfInstallmentController,
+                          monthlyInstallmentValueController:
+                              monthlyInstallmentController,
+                          advanceController: advanceController,
+                          bedRoomController: bedroomController,
+                          bathRoomController: bathroomController,
                         ),
                 ),
               ),
@@ -219,7 +247,7 @@ class PostPage extends GetView<ThemeChangeController> {
                             width: width * .45,
                             child: DefaultTextField(
                               textEditingController: searchCategory,
-                              hintText: "Search Category",
+                              hintText: "Search Post",
                               labelText: "Search",
                               isPassword: false,
                               suffixIcon:
@@ -235,7 +263,7 @@ class PostPage extends GetView<ThemeChangeController> {
                         height: height * .6,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
-                          itemCount: categoryController.category.length,
+                          itemCount: postController.post.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               color: controller.isDarkMode.value
@@ -259,14 +287,14 @@ class PostPage extends GetView<ThemeChangeController> {
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(30),
-                                                  child: categoryController
-                                                              .category[index]
-                                                              .image !=
+                                                  child: postController
+                                                              .post[index]
+                                                              .galleryImages !=
                                                           null
                                                       ? Image.network(
-                                                          categoryController
-                                                              .category[index]
-                                                              .image!)
+                                                          postController
+                                                              .post[index]
+                                                              .galleryImages!)
                                                       : SvgPicture.asset(
                                                           '/images/logo.svg',
                                                           fit: BoxFit.cover,
@@ -286,8 +314,8 @@ class PostPage extends GetView<ThemeChangeController> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    categoryController
-                                                        .category[index].name!,
+                                                    postController
+                                                        .post[index].title!,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyLarge,
@@ -303,11 +331,9 @@ class PostPage extends GetView<ThemeChangeController> {
                                                             .textTheme
                                                             .bodySmall,
                                                       ),
-                                                      categoryController
-                                                                  .category[
-                                                                      index]
-                                                                  .published ==
-                                                              true
+                                                      postController.post[index]
+                                                                  .status ==
+                                                              'PUBLISH'
                                                           ? Text(
                                                               "Active",
                                                               style: Theme.of(
@@ -343,32 +369,7 @@ class PostPage extends GetView<ThemeChangeController> {
                                           children: [
                                             IconButton(
                                               onPressed: () async {
-                                                contentController.clear();
-                                                categoryNameController.text =
-                                                    categoryController
-                                                        .category[index].name!;
-                                                categorySlugController.text =
-                                                    categoryController
-                                                        .category[index].slug!;
-                                                contentController.insertText(
-                                                    categoryController
-                                                        .category[index]
-                                                        .description!);
-                                                isPublished.value =
-                                                    categoryController
-                                                        .category[index]
-                                                        .published!;
-                                                selectedItemId.value =
-                                                    categoryController
-                                                        .category[index]
-                                                        .parentId!;
-                                                catId.value = categoryController
-                                                    .category[index].id
-                                                    .toString();
-                                                categoryController
-                                                        .imageUrl.value =
-                                                    categoryController
-                                                        .category[index].image!;
+                                                //TODO: implement Post edit
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/edit.svg"),
@@ -378,23 +379,7 @@ class PostPage extends GetView<ThemeChangeController> {
                                             ),
                                             IconButton(
                                               onPressed: () async {
-                                                Get.defaultDialog(
-                                                  title: 'Deleting Category',
-                                                  content: const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                            color:
-                                                                kPrimaryColor),
-                                                  ),
-                                                );
-                                                await categoryController
-                                                    .deleteThisCategory(
-                                                        categoryController
-                                                            .category[index]
-                                                            .id!);
-                                                await categoryController
-                                                    .getCategories();
-                                                Navigator.pop(context);
+                                                //Todo Implement Post Delete
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/trash.svg"),
