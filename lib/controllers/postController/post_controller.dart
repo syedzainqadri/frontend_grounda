@@ -142,7 +142,7 @@ class PostController extends GetxController {
       for (var i = 0; i < files.length; i++) {
         String fileName = result.files[i].name;
         var upload = await FirebaseStorage.instance
-            .ref('uploads/categories/images/$fileName')
+            .ref('uploads/post/images/$fileName')
             .putFile(files[i]);
         final url = upload.ref.getDownloadURL().then((value) {
           imageUrl.add(value);

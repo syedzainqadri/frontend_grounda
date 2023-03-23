@@ -47,7 +47,7 @@ class TextEditor extends StatelessWidget {
                 'Add Description here n Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum',
             controller: controller,
             isEnabled: true,
-            minHeight: 500,
+            minHeight: 800,
             textStyle: _editorTextStyle,
             hintTextStyle: _hintTextStyle,
             hintTextAlign: TextAlign.start,

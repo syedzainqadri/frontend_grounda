@@ -7,6 +7,7 @@ import 'package:frontend_grounda/views/pages/login/login_view.dart';
 import 'package:frontend_grounda/views/dashboard_view.dart';
 import 'package:frontend_grounda/views/pages/order/order_view.dart';
 import 'package:frontend_grounda/views/pages/post/post_view.dart';
+import 'package:frontend_grounda/views/pages/post/sub_pages/post_create_view.dart';
 import 'package:frontend_grounda/views/pages/product/product_view.dart';
 import 'package:frontend_grounda/views/pages/project/project_view.dart';
 import 'package:frontend_grounda/views/pages/settings/subpages/profile/profile_view.dart';
@@ -34,6 +35,12 @@ appRoutes() => [
       GetPage(
         name: '/post',
         page: () => const PostView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
+        name: '/post/create',
+        page: () => const PostCreateView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
