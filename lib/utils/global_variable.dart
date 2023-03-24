@@ -28,9 +28,13 @@ String allProject = '/project/';
 String deleteProject = '/project/deleteProject';
 String createProjectNearByPlaces =
     '/projectNearByPlaces/createProjectNearByPlace';
-String updateProjectNearByPlaces =
+String updateProjectNearByPlacesUrl =
     '/projectNearByPlaces/updateProjectNearByPlace';
 String getProjectNearByPlaces = '/projectNearByPlaces/';
 String deleteProjectNearByPlaces =
     '/projectNearByPlaces/deleteProjectNearByPlace';
+String getAgency = '/agency';
+String createAgency = '/agency/createAgency';
+String updateAgencyUrl = '/agency/updateAgency';
+String deleteAgency = '/agency/deleteAgency';
 // RxBool themeMode = ThemeChangeController().isDarkMode;

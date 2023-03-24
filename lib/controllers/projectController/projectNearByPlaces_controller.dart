@@ -99,7 +99,8 @@ class ProjectNearByPlacesController extends GetxController {
     }
   }
 
-  Future<void> updateAmenities(
+  Future<void> updateProjectNearByPlaces(
+    int id,
     String title,
     String longitude,
     String latitude,
@@ -108,6 +109,7 @@ class ProjectNearByPlacesController extends GetxController {
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
+      "id": id,
       "title": title,
       "longitude": longitude,
       "latitude": latitude,
@@ -117,7 +119,7 @@ class ProjectNearByPlacesController extends GetxController {
 
     var response = await http.put(
       Uri.parse(
-        baseUrl + updateProjectNearByPlaces,
+        baseUrl + updateProjectNearByPlacesUrl,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {

@@ -1,13 +1,12 @@
 import 'dart:convert';
-
-import 'package:frontend_grounda/models/projectModel/project_model.dart';
+import 'package:frontend_grounda/models/agencyModel/agency_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 
-class ProjectController extends GetxController {
-  var project = <ProjectsModel>[].obs;
+class AgencyController extends GetxController {
+  var agencies = <AgencyModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
@@ -22,7 +21,7 @@ class ProjectController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allProject,
+        baseUrl + getAgency,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +29,7 @@ class ProjectController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      project.value = projectsModelFromJson(response.body);
+      agencies.value = agencyModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -43,7 +42,7 @@ class ProjectController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allProject + id,
+        baseUrl + getAgency + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +50,7 @@ class ProjectController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      project.value = projectsModelFromJson(response.body);
+      agencies.value = agencyModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -62,33 +61,51 @@ class ProjectController extends GetxController {
 
   Future<void> create(
     String title,
+    String companyTitle,
+    String ownerName,
+    String ownerMessage,
+    String ownerProfilePic,
+    String ownerDesignation,
+    String country,
+    String email,
+    String website,
     String address,
+    String description,
+    String mobile,
+    String landLine,
+    String whatsApp,
+    int userId,
     String featuredImage,
-    String gallery,
-    String locality,
-    String city,
-    int categoryId,
-    int developerId,
-    double startingPrice,
-    double endingPrice,
+    String logoImage,
+    String slug,
+    int refrenceId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "title": title,
+      "companyTitle": companyTitle,
+      "ownerName": ownerName,
+      "ownerMessage": ownerMessage,
+      "ownerProfilePic": ownerProfilePic,
+      "ownerDesignation": ownerDesignation,
+      "country": country,
+      "email": email,
+      "website": website,
       "address": address,
+      "description": description,
+      "mobile": mobile,
+      "landLine": landLine,
+      "whatsapp": whatsApp,
+      "userID": 1,
       "featuredImage": featuredImage,
-      "gallery": gallery,
-      "locality": locality,
-      "city": city,
-      "categoryId": categoryId,
-      "developerId": developerId,
-      "startingPrice": startingPrice,
-      "endingPrice": endingPrice
+      "logoImage": logoImage,
+      "slug": slug,
+      "refrenceId": refrenceId
     };
 
     var response = await http.post(
       Uri.parse(
-        baseUrl + createProject,
+        baseUrl + createAgency,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -97,7 +114,7 @@ class ProjectController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      project.addAll(projectsModelFromJson(response.body));
+      agencies.addAll(agencyModelFromJson(response.body));
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -106,37 +123,53 @@ class ProjectController extends GetxController {
     }
   }
 
-  Future<void> updateProject(
+  Future<void> updateAgency(
     int id,
     String title,
+    String companyTitle,
+    String ownerName,
+    String ownerMessage,
+    String ownerProfilePic,
+    String ownerDesignation,
+    String country,
+    String email,
+    String website,
     String address,
+    String description,
+    String mobile,
+    String landLine,
+    String whatsApp,
+    int userId,
     String featuredImage,
-    String gallery,
-    String locality,
-    String city,
-    int categoryId,
-    int developerId,
-    double startingPrice,
-    double endingPrice,
+    String logoImage,
+    String slug,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
       "title": title,
+      "companyTitle": companyTitle,
+      "ownerName": ownerName,
+      "ownerMessage": ownerMessage,
+      "ownerProfilePic": ownerProfilePic,
+      "ownerDesignation": ownerDesignation,
+      "country": country,
+      "email": email,
+      "website": website,
       "address": address,
+      "description": description,
+      "mobile": mobile,
+      "landLine": landLine,
+      "whatsapp": whatsApp,
+      "userID": 1,
       "featuredImage": featuredImage,
-      "gallery": gallery,
-      "locality": locality,
-      "city": city,
-      "categoryId": categoryId,
-      "developerId": developerId,
-      "startingPrice": startingPrice,
-      "endingPrice": endingPrice
+      "logoImage": logoImage,
+      "slug": slug,
     };
 
     var response = await http.put(
       Uri.parse(
-        baseUrl + updateProjectUrl,
+        baseUrl + updateAgencyUrl,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -160,7 +193,7 @@ class ProjectController extends GetxController {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteProject + id,
+        baseUrl + deleteAgency + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -169,10 +202,10 @@ class ProjectController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      var deletedProjects = jsonDecode(response.body);
-      var projects = deletedProjects['name'];
-      Get.snackbar('Amenity Deleted',
-          'The Amenity with name: $projects has been deleted',
+      var deletedAency = jsonDecode(response.body);
+      var agency = deletedAency['name'];
+      Get.snackbar(
+          'Amenity Deleted', 'The Amenity with name: $agency has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {
