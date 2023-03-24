@@ -1,15 +1,17 @@
 // To parse this JSON data, do
 //
-//     final pageModel = pageModelFromJson(jsonString);
+//     final pagesModel = pagesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-PageModel pageModelFromJson(String str) => PageModel.fromJson(json.decode(str));
+List<PagesModel> pagesModelFromJson(String str) =>
+    List<PagesModel>.from(json.decode(str).map((x) => PagesModel.fromJson(x)));
 
-String pageModelToJson(PageModel data) => json.encode(data.toJson());
+String pagesModelToJson(List<PagesModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class PageModel {
-  PageModel({
+class PagesModel {
+  PagesModel({
     this.id,
     this.title,
     this.content,
@@ -29,7 +31,7 @@ class PageModel {
   bool? status;
   int? slugId;
 
-  factory PageModel.fromJson(Map<String, dynamic> json) => PageModel(
+  factory PagesModel.fromJson(Map<String, dynamic> json) => PagesModel(
         id: json["id"],
         title: json["title"],
         content: json["content"],
