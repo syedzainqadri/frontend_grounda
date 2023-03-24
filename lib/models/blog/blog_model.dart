@@ -1,15 +1,17 @@
 // To parse this JSON data, do
 //
-//     final blogModel = blogModelFromJson(jsonString);
+//     final blogsModel = blogsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-BlogModel blogModelFromJson(String str) => BlogModel.fromJson(json.decode(str));
+List<BlogsModel> blogsModelFromJson(String str) =>
+    List<BlogsModel>.from(json.decode(str).map((x) => BlogsModel.fromJson(x)));
 
-String blogModelToJson(BlogModel data) => json.encode(data.toJson());
+String blogsModelToJson(List<BlogsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class BlogModel {
-  BlogModel({
+class BlogsModel {
+  BlogsModel({
     this.id,
     this.title,
     this.content,
@@ -33,7 +35,7 @@ class BlogModel {
   int? slugId;
   int? authorId;
 
-  factory BlogModel.fromJson(Map<String, dynamic> json) => BlogModel(
+  factory BlogsModel.fromJson(Map<String, dynamic> json) => BlogsModel(
         id: json["id"],
         title: json["title"],
         content: json["content"],

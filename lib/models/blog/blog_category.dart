@@ -4,11 +4,12 @@
 
 import 'dart:convert';
 
-BlogCategoryModel blogCategoryModelFromJson(String str) =>
-    BlogCategoryModel.fromJson(json.decode(str));
+List<BlogCategoryModel> blogCategoryModelFromJson(String str) =>
+    List<BlogCategoryModel>.from(
+        json.decode(str).map((x) => BlogCategoryModel.fromJson(x)));
 
-String blogCategoryModelToJson(BlogCategoryModel data) =>
-    json.encode(data.toJson());
+String blogCategoryModelToJson(List<BlogCategoryModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class BlogCategoryModel {
   BlogCategoryModel({

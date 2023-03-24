@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:frontend_grounda/models/projectModel/project_model.dart';
+import 'package:frontend_grounda/models/blog/blog_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
-class ProjectController extends GetxController {
-  var project = <ProjectsModel>[].obs;
+class BlogController extends GetxController {
+  var blogs = <BlogsModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
@@ -22,7 +22,7 @@ class ProjectController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allProject,
+        baseUrl + allBlogs,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ class ProjectController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      project.value = projectsModelFromJson(response.body);
+      blogs.value = blogsModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -43,7 +43,7 @@ class ProjectController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allProject + id,
+        baseUrl + allBlogs + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ class ProjectController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      project.value = projectsModelFromJson(response.body);
+      blogs.value = blogsModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -62,33 +62,29 @@ class ProjectController extends GetxController {
 
   Future<void> create(
     String title,
-    String address,
+    String content,
     String featuredImage,
-    String gallery,
-    String locality,
-    String city,
-    int categoryId,
-    int developerId,
-    double startingPrice,
-    double endingPrice,
+    bool status,
+    int blogCategory,
+    String slug,
+    int autherId,
+    int refrenceId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "title": title,
-      "address": address,
+      "content": content,
       "featuredImage": featuredImage,
-      "gallery": gallery,
-      "locality": locality,
-      "city": city,
-      "categoryId": categoryId,
-      "developerId": developerId,
-      "startingPrice": startingPrice,
-      "endingPrice": endingPrice
+      "status": status,
+      "blogCategory": blogCategory,
+      "slug": slug,
+      "authorId": autherId,
+      "refrenceId": refrenceId
     };
 
     var response = await http.post(
       Uri.parse(
-        baseUrl + createProject,
+        baseUrl + createBlog,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -97,7 +93,7 @@ class ProjectController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      project.addAll(projectsModelFromJson(response.body));
+      blogs.addAll(blogsModelFromJson(response.body));
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -106,37 +102,33 @@ class ProjectController extends GetxController {
     }
   }
 
-  Future<void> updateProject(
+  Future<void> updateBlog(
     int id,
     String title,
-    String address,
+    String content,
     String featuredImage,
-    String gallery,
-    String locality,
-    String city,
-    int categoryId,
-    int developerId,
-    double startingPrice,
-    double endingPrice,
+    bool status,
+    int blogCategory,
+    String slug,
+    int autherId,
+    int refrenceId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
       "title": title,
-      "address": address,
+      "content": content,
       "featuredImage": featuredImage,
-      "gallery": gallery,
-      "locality": locality,
-      "city": city,
-      "categoryId": categoryId,
-      "developerId": developerId,
-      "startingPrice": startingPrice,
-      "endingPrice": endingPrice
+      "status": status,
+      "blogCategory": blogCategory,
+      "slug": slug,
+      "authorId": autherId,
+      "refrenceId": refrenceId
     };
 
     var response = await http.put(
       Uri.parse(
-        baseUrl + updateProjectUrl,
+        baseUrl + updateBlogUrl,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -160,7 +152,7 @@ class ProjectController extends GetxController {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteProject + id,
+        baseUrl + deleteBlog + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -169,10 +161,9 @@ class ProjectController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      var deletedProjects = jsonDecode(response.body);
-      var projects = deletedProjects['name'];
-      Get.snackbar('Project Deleted',
-          'The Project with name: $projects has been deleted',
+      var deletedblog = jsonDecode(response.body);
+      var blog = deletedblog['title'];
+      Get.snackbar('Blog Deleted', 'The Blog with name: $blog has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

@@ -202,10 +202,10 @@ class AgencyController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      var deletedAency = jsonDecode(response.body);
-      var agency = deletedAency['name'];
+      var deletedAgency = jsonDecode(response.body);
+      var agency = deletedAgency['name'];
       Get.snackbar(
-          'Amenity Deleted', 'The Amenity with name: $agency has been deleted',
+          'Agency Deleted', 'The Agency with name: $agency has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

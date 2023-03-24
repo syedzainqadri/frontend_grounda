@@ -154,8 +154,8 @@ class ProjectNearByPlacesController extends GetxController {
       getAll();
       var deletedProjectNearByPlaces = jsonDecode(response.body);
       var projectNearByPlaces = deletedProjectNearByPlaces['name'];
-      Get.snackbar('Amenity Deleted',
-          'The Amenity with name: $projectNearByPlaces has been deleted',
+      Get.snackbar('Project Place Deleted',
+          'The Project Place with name: $projectNearByPlaces has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

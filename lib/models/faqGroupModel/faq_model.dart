@@ -1,15 +1,17 @@
 // To parse this JSON data, do
 //
-//     final faqModel = faqModelFromJson(jsonString);
+//     final faqsModel = faqsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-FaqModel faqModelFromJson(String str) => FaqModel.fromJson(json.decode(str));
+List<FaqsModel> faqsModelFromJson(String str) =>
+    List<FaqsModel>.from(json.decode(str).map((x) => FaqsModel.fromJson(x)));
 
-String faqModelToJson(FaqModel data) => json.encode(data.toJson());
+String faqsModelToJson(List<FaqsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class FaqModel {
-  FaqModel({
+class FaqsModel {
+  FaqsModel({
     this.id,
     this.qusestion,
     this.answer,
@@ -29,7 +31,7 @@ class FaqModel {
   DateTime? updatedAt;
   int? faqGroupId;
 
-  factory FaqModel.fromJson(Map<String, dynamic> json) => FaqModel(
+  factory FaqsModel.fromJson(Map<String, dynamic> json) => FaqsModel(
         id: json["id"],
         qusestion: json["qusestion"],
         answer: json["answer"],
