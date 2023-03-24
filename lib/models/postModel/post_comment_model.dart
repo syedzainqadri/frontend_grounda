@@ -1,24 +1,24 @@
 // To parse this JSON data, do
 //
-//     final forumPostCommentModel = forumPostCommentModelFromJson(jsonString);
+//     final postCommentModel = postCommentModelFromJson(jsonString);
 
 import 'dart:convert';
 
-List<ForumPostCommentModel> forumPostCommentModelFromJson(String str) =>
-    List<ForumPostCommentModel>.from(
-        json.decode(str).map((x) => ForumPostCommentModel.fromJson(x)));
+List<PostCommentModel> postCommentModelFromJson(String str) =>
+    List<PostCommentModel>.from(
+        json.decode(str).map((x) => PostCommentModel.fromJson(x)));
 
-String forumPostCommentModelToJson(List<ForumPostCommentModel> data) =>
+String postCommentModelToJson(List<PostCommentModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ForumPostCommentModel {
-  ForumPostCommentModel({
+class PostCommentModel {
+  PostCommentModel({
     this.id,
     this.postReplyTitle,
     this.postReplyDescription,
     this.createdAt,
     this.updatedAt,
-    this.forumPostId,
+    this.postId,
     this.userId,
   });
 
@@ -27,17 +27,17 @@ class ForumPostCommentModel {
   String? postReplyDescription;
   DateTime? createdAt;
   DateTime? updatedAt;
-  int? forumPostId;
+  int? postId;
   int? userId;
 
-  factory ForumPostCommentModel.fromJson(Map<String, dynamic> json) =>
-      ForumPostCommentModel(
+  factory PostCommentModel.fromJson(Map<String, dynamic> json) =>
+      PostCommentModel(
         id: json["id"],
         postReplyTitle: json["postReplyTitle"],
         postReplyDescription: json["postReplyDescription"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        forumPostId: json["forumPostId"],
+        postId: json["postId"],
         userId: json["userId"],
       );
 
@@ -47,7 +47,7 @@ class ForumPostCommentModel {
         "postReplyDescription": postReplyDescription,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
-        "forumPostId": forumPostId,
+        "postId": postId,
         "userId": userId,
       };
 }

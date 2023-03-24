@@ -1,16 +1,18 @@
 // To parse this JSON data, do
 //
-//     final floorPlanModel = floorPlanModelFromJson(jsonString);
+//     final floorPlansModel = floorPlansModelFromJson(jsonString);
 
 import 'dart:convert';
 
-FloorPlanModel floorPlanModelFromJson(String str) =>
-    FloorPlanModel.fromJson(json.decode(str));
+List<FloorPlansModel> floorPlansModelFromJson(String str) =>
+    List<FloorPlansModel>.from(
+        json.decode(str).map((x) => FloorPlansModel.fromJson(x)));
 
-String floorPlanModelToJson(FloorPlanModel data) => json.encode(data.toJson());
+String floorPlansModelToJson(List<FloorPlansModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class FloorPlanModel {
-  FloorPlanModel({
+class FloorPlansModel {
+  FloorPlansModel({
     this.id,
     this.title,
     this.floorPlanPath,
@@ -22,7 +24,8 @@ class FloorPlanModel {
   String? floorPlanPath;
   int? projectId;
 
-  factory FloorPlanModel.fromJson(Map<String, dynamic> json) => FloorPlanModel(
+  factory FloorPlansModel.fromJson(Map<String, dynamic> json) =>
+      FloorPlansModel(
         id: json["id"],
         title: json["title"],
         floorPlanPath: json["floorPlanPath"],

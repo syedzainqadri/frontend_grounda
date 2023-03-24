@@ -4,10 +4,11 @@
 
 import 'dart:convert';
 
-AgencyModel agencyModelFromJson(String str) =>
-    AgencyModel.fromJson(json.decode(str));
+List<AgencyModel> agencyModelFromJson(String str) => List<AgencyModel>.from(
+    json.decode(str).map((x) => AgencyModel.fromJson(x)));
 
-String agencyModelToJson(AgencyModel data) => json.encode(data.toJson());
+String agencyModelToJson(List<AgencyModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class AgencyModel {
   AgencyModel({

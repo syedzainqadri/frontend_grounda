@@ -1,17 +1,18 @@
 // To parse this JSON data, do
 //
-//     final projectNearByPlacesModel = projectNearByPlacesModelFromJson(jsonString);
+//     final projectsNearByPlacesModel = projectsNearByPlacesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ProjectNearByPlacesModel projectNearByPlacesModelFromJson(String str) =>
-    ProjectNearByPlacesModel.fromJson(json.decode(str));
+List<ProjectsNearByPlacesModel> projectsNearByPlacesModelFromJson(String str) =>
+    List<ProjectsNearByPlacesModel>.from(
+        json.decode(str).map((x) => ProjectsNearByPlacesModel.fromJson(x)));
 
-String projectNearByPlacesModelToJson(ProjectNearByPlacesModel data) =>
-    json.encode(data.toJson());
+String projectsNearByPlacesModelToJson(List<ProjectsNearByPlacesModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ProjectNearByPlacesModel {
-  ProjectNearByPlacesModel({
+class ProjectsNearByPlacesModel {
+  ProjectsNearByPlacesModel({
     this.id,
     this.title,
     this.latitude,
@@ -25,8 +26,8 @@ class ProjectNearByPlacesModel {
   String? longitude;
   String? placeCategory;
 
-  factory ProjectNearByPlacesModel.fromJson(Map<String, dynamic> json) =>
-      ProjectNearByPlacesModel(
+  factory ProjectsNearByPlacesModel.fromJson(Map<String, dynamic> json) =>
+      ProjectsNearByPlacesModel(
         id: json["id"],
         title: json["title"],
         latitude: json["latitude"],

@@ -1,16 +1,18 @@
 // To parse this JSON data, do
 //
-//     final projectModel = projectModelFromJson(jsonString);
+//     final projectsModel = projectsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ProjectModel projectModelFromJson(String str) =>
-    ProjectModel.fromJson(json.decode(str));
+List<ProjectsModel> projectsModelFromJson(String str) =>
+    List<ProjectsModel>.from(
+        json.decode(str).map((x) => ProjectsModel.fromJson(x)));
 
-String projectModelToJson(ProjectModel data) => json.encode(data.toJson());
+String projectsModelToJson(List<ProjectsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ProjectModel {
-  ProjectModel({
+class ProjectsModel {
+  ProjectsModel({
     this.id,
     this.title,
     this.address,
@@ -42,9 +44,9 @@ class ProjectModel {
   DateTime? updatedAt;
   int? developerId;
   int? categoryId;
-  dynamic projectNearByPlaceId;
+  int? projectNearByPlaceId;
 
-  factory ProjectModel.fromJson(Map<String, dynamic> json) => ProjectModel(
+  factory ProjectsModel.fromJson(Map<String, dynamic> json) => ProjectsModel(
         id: json["id"],
         title: json["title"],
         address: json["address"],

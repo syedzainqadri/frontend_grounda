@@ -1,16 +1,18 @@
 // To parse this JSON data, do
 //
-//     final developerModel = developerModelFromJson(jsonString);
+//     final developersModel = developersModelFromJson(jsonString);
 
 import 'dart:convert';
 
-DeveloperModel developerModelFromJson(String str) =>
-    DeveloperModel.fromJson(json.decode(str));
+List<DevelopersModel> developersModelFromJson(String str) =>
+    List<DevelopersModel>.from(
+        json.decode(str).map((x) => DevelopersModel.fromJson(x)));
 
-String developerModelToJson(DeveloperModel data) => json.encode(data.toJson());
+String developersModelToJson(List<DevelopersModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class DeveloperModel {
-  DeveloperModel({
+class DevelopersModel {
+  DevelopersModel({
     this.id,
     this.title,
     this.createdAt,
@@ -22,7 +24,8 @@ class DeveloperModel {
   DateTime? createdAt;
   DateTime? updatedAt;
 
-  factory DeveloperModel.fromJson(Map<String, dynamic> json) => DeveloperModel(
+  factory DevelopersModel.fromJson(Map<String, dynamic> json) =>
+      DevelopersModel(
         id: json["id"],
         title: json["title"],
         createdAt: DateTime.parse(json["createdAt"]),
