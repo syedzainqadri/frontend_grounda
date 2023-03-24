@@ -13,6 +13,7 @@ class DefaultTextField extends GetView<ThemeChangeController> {
     required this.isPassword,
     this.suffixIcon,
     this.prefixIcon,
+    required TextEditingController textEditingController,
   });
 
   String hintText;

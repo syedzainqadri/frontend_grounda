@@ -25,7 +25,7 @@ class CategoryPageMobile extends GetView<ThemeChangeController> {
               height: height * .8,
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: categoryController.category.value.length,
+                itemCount: categoryController.category.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     color: controller.isDarkMode.value
@@ -71,7 +71,7 @@ class CategoryPageMobile extends GetView<ThemeChangeController> {
                                       children: [
                                         Text(
                                           categoryController
-                                              .category.value[index].name!,
+                                              .category[index].name!,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge,

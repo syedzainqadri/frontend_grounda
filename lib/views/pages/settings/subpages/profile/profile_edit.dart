@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, unused_local_variable
+
 import 'dart:typed_data';
 
 import 'package:country_list_pick/country_list_pick.dart';
@@ -188,8 +190,6 @@ class ProfileEditPage extends StatelessWidget {
                               profileController.countryCode.value =
                                   value.dialCode!;
                               await getLocation();
-                              print(
-                                  'country name: ${profileController.countryNameController.value.text} + country Code: ${profileController.countryCode.value}');
                             },
                           ),
                         ],
@@ -251,7 +251,6 @@ class ProfileEditPage extends StatelessWidget {
                                 color: kPrimaryColor,
                               ),
                             );
-                            print('process started');
                             var userId =
                                 profileController.tokenHiveBox.get('userId');
                             int userId0 = int.parse(userId);
@@ -289,10 +288,7 @@ class ProfileEditPage extends StatelessWidget {
                                 color: kPrimaryColor,
                               ),
                             );
-                            print('process started');
-                            var userId =
-                                profileController.tokenHiveBox.get('userId');
-                            int userId0 = int.parse(userId);
+
                             await profileController.updateUserProfile(
                                 profileController
                                     .firstNameController.value.text,
@@ -353,15 +349,11 @@ class ProfileEditPage extends StatelessWidget {
     if (result != null) {
       Uint8List fileBytes = result.files.first.bytes!;
       String fileName = result.files.first.name;
-
-      // Upload file
-      print(fileName);
       var upload = await FirebaseStorage.instance
           .ref('uploads/users/profileImages/$fileName')
           .putData(fileBytes);
       final url = upload.ref.getDownloadURL().then((value) {
         profileController.imageUrl.value = value;
-        print(profileController.imageUrl.value);
       });
     }
   }

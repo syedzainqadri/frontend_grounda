@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
@@ -31,7 +33,7 @@ class TextEditor extends StatelessWidget {
         ToolBar(
           toolBarColor: _toolbarColor,
           padding: const EdgeInsets.all(8),
-          iconSize: 15,
+          iconSize: 25,
           iconColor: _toolbarIconColor,
           activeIconColor: Colors.purple.shade300,
           controller: controller,
@@ -41,14 +43,15 @@ class TextEditor extends StatelessWidget {
           fit: FlexFit.tight,
           child: QuillHtmlEditor(
             text: "",
-            hintText: 'Add Description here',
+            hintText:
+                'Add Description here n Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum',
             controller: controller,
             isEnabled: true,
             minHeight: 400,
             textStyle: _editorTextStyle,
             hintTextStyle: _hintTextStyle,
             hintTextAlign: TextAlign.start,
-            padding: const EdgeInsets.only(left: 10, top: 5),
+            padding: const EdgeInsets.only(left: 10, top: 5, bottom: 400),
             hintTextPadding: EdgeInsets.zero,
             backgroundColor: _backgroundColor,
             onFocusChanged: (hasFocus) => debugPrint('has focus $hasFocus'),

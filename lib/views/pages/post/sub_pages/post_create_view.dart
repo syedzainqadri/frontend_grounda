@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/menuController/sidebar_controller.dart';
-import 'package:frontend_grounda/views/pages/post/post_page.dart';
+import 'package:frontend_grounda/utils/global_variable.dart';
+import 'package:frontend_grounda/views/pages/post/sub_pages/create_post_page.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
+import 'package:frontend_grounda/views/sidebar/mobile_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
-import '../../../utils/global_variable.dart';
-import '../../sidebar/mobile_sidebar.dart';
 
-class PostView extends GetView<SideBarController> {
-  const PostView({super.key});
+class PostCreateView extends GetView<SideBarController> {
+  const PostCreateView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class PostView extends GetView<SideBarController> {
                 controller: controller.pageController,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  PostPage(),
+                  CreatePostPage(),
                 ],
               ),
             ),
