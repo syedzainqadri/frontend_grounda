@@ -1,16 +1,18 @@
 // To parse this JSON data, do
 //
-//     final amenetiesModel = amenetiesModelFromJson(jsonString);
+//     final amenitiesModel = amenitiesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-AmenetiesModel amenetiesModelFromJson(String str) =>
-    AmenetiesModel.fromJson(json.decode(str));
+List<AmenitiesModel> amenitiesModelFromJson(String str) =>
+    List<AmenitiesModel>.from(
+        json.decode(str).map((x) => AmenitiesModel.fromJson(x)));
 
-String amenetiesModelToJson(AmenetiesModel data) => json.encode(data.toJson());
+String amenitiesModelToJson(List<AmenitiesModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class AmenetiesModel {
-  AmenetiesModel({
+class AmenitiesModel {
+  AmenitiesModel({
     this.id,
     this.name,
     this.slug,
@@ -30,7 +32,7 @@ class AmenetiesModel {
   bool? published;
   int? categoryId;
 
-  factory AmenetiesModel.fromJson(Map<String, dynamic> json) => AmenetiesModel(
+  factory AmenitiesModel.fromJson(Map<String, dynamic> json) => AmenitiesModel(
         id: json["id"],
         name: json["name"],
         slug: json["slug"],

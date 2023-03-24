@@ -18,4 +18,19 @@ String deleteCategory = '/category/deleteCategory/';
 String updateCategory = '/category/updateCategory';
 String getAllPost = '/post';
 String createPost = '/createPost';
+String getAmenities = '/amenity/';
+String createAmenities = '/amenity/createAmenity';
+String updateAmenites = '/amenity/updateAmenity';
+String deleteAmenities = '/amenity/deleteAmenity';
+String createProject = '/project/createProject';
+String updateProjectUrl = '/project/updateProject';
+String allProject = '/project/';
+String deleteProject = '/project/deleteProject';
+String createProjectNearByPlaces =
+    '/projectNearByPlaces/createProjectNearByPlace';
+String updateProjectNearByPlaces =
+    '/projectNearByPlaces/updateProjectNearByPlace';
+String getProjectNearByPlaces = '/projectNearByPlaces/';
+String deleteProjectNearByPlaces =
+    '/projectNearByPlaces/deleteProjectNearByPlace';
 // RxBool themeMode = ThemeChangeController().isDarkMode;
