@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:frontend_grounda/models/faqGroupModel/faq_group_model.dart';
+import 'package:frontend_grounda/models/forumPost.dart/forum_post_comment_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
-class FaqGroupController extends GetxController {
-  var faqGroup = <FaqGroupsModel>[].obs;
+class ForumPostCommentController extends GetxController {
+  var forumPostsComments = <ForumPostCommentModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
@@ -22,7 +22,7 @@ class FaqGroupController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allFaqGroup,
+        baseUrl + allForumPostComment,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ class FaqGroupController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      faqGroup.value = faqGroupsModelFromJson(response.body);
+      forumPostsComments.value = forumPostCommentModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -43,7 +43,7 @@ class FaqGroupController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allFaqGroup + id,
+        baseUrl + allForumPostComment + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ class FaqGroupController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      faqGroup.value = faqGroupsModelFromJson(response.body);
+      forumPostsComments.value = forumPostCommentModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -61,20 +61,24 @@ class FaqGroupController extends GetxController {
   }
 
   Future<void> create(
-    String name,
-    int sortOrder,
-    bool status,
+    String title,
+    String postType,
+    String description,
+    int userId,
+    int forumPostId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
-      "faqGroupName": name,
-      "sortOrder": sortOrder,
-      "status": status
+      "postReplyTitle": title,
+      "postReplyType": postType,
+      "postReplyDescription": description,
+      "userId": userId,
+      "forumPostId": forumPostId
     };
 
     var response = await http.post(
       Uri.parse(
-        baseUrl + createFaqGroup,
+        baseUrl + createForumPostComment,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -83,7 +87,7 @@ class FaqGroupController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      faqGroup.addAll(faqGroupsModelFromJson(response.body));
+      forumPostsComments.addAll(forumPostCommentModelFromJson(response.body));
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -92,23 +96,27 @@ class FaqGroupController extends GetxController {
     }
   }
 
-  Future<void> updateFaqGroup(
+  Future<void> updateFloorPlan(
     int id,
-    String name,
-    int sortOrder,
-    bool status,
+    String title,
+    String postType,
+    String description,
+    int userId,
+    int forumPostId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
-      "faqGroupName": name,
-      "sortOrder": sortOrder,
-      "status": status
+      "postReplyTitle": title,
+      "postReplyType": postType,
+      "postReplyDescription": description,
+      "userId": userId,
+      "forumPostId": forumPostId
     };
 
     var response = await http.put(
       Uri.parse(
-        baseUrl + updateFaqGroupUrl,
+        baseUrl + updateForumPostCommentUrl,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -132,7 +140,7 @@ class FaqGroupController extends GetxController {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteFaqGroup + id,
+        baseUrl + deleteForumPostComment + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -141,9 +149,10 @@ class FaqGroupController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      var deletedFaqGroup = jsonDecode(response.body);
-      var faqGroup = deletedFaqGroup['name'];
-      Get.snackbar('FAQGroup Deleted', 'The FAQ: $faqGroup has been deleted',
+      var deletedForumPostComment = jsonDecode(response.body);
+      var forumPostComment = deletedForumPostComment['title'];
+      Get.snackbar(
+          'Comment Deleted', 'The FAQ: $forumPostComment has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

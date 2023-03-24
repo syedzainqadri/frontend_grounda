@@ -96,7 +96,7 @@ class FaqController extends GetxController {
     }
   }
 
-  Future<void> updateDeveloper(
+  Future<void> updateFaq(
     int id,
     String question,
     String answer,

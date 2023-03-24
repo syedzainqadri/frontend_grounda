@@ -1,17 +1,18 @@
 // To parse this JSON data, do
 //
-//     final formPostComment = formPostCommentFromJson(jsonString);
+//     final forumPostCommentModel = forumPostCommentModelFromJson(jsonString);
 
 import 'dart:convert';
 
-FormPostComment formPostCommentFromJson(String str) =>
-    FormPostComment.fromJson(json.decode(str));
+List<ForumPostCommentModel> forumPostCommentModelFromJson(String str) =>
+    List<ForumPostCommentModel>.from(
+        json.decode(str).map((x) => ForumPostCommentModel.fromJson(x)));
 
-String formPostCommentToJson(FormPostComment data) =>
-    json.encode(data.toJson());
+String forumPostCommentModelToJson(List<ForumPostCommentModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class FormPostComment {
-  FormPostComment({
+class ForumPostCommentModel {
+  ForumPostCommentModel({
     this.id,
     this.postReplyTitle,
     this.postReplyDescription,
@@ -29,8 +30,8 @@ class FormPostComment {
   int? forumPostId;
   int? userId;
 
-  factory FormPostComment.fromJson(Map<String, dynamic> json) =>
-      FormPostComment(
+  factory ForumPostCommentModel.fromJson(Map<String, dynamic> json) =>
+      ForumPostCommentModel(
         id: json["id"],
         postReplyTitle: json["postReplyTitle"],
         postReplyDescription: json["postReplyDescription"],

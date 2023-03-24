@@ -1,15 +1,18 @@
 // To parse this JSON data, do
 //
-//     final formPost = formPostFromJson(jsonString);
+//     final forumPostModel = forumPostModelFromJson(jsonString);
 
 import 'dart:convert';
 
-FormPost formPostFromJson(String str) => FormPost.fromJson(json.decode(str));
+List<ForumPostModel> forumPostModelFromJson(String str) =>
+    List<ForumPostModel>.from(
+        json.decode(str).map((x) => ForumPostModel.fromJson(x)));
 
-String formPostToJson(FormPost data) => json.encode(data.toJson());
+String forumPostModelToJson(List<ForumPostModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class FormPost {
-  FormPost({
+class ForumPostModel {
+  ForumPostModel({
     this.id,
     this.postTitle,
     this.postType,
@@ -29,7 +32,7 @@ class FormPost {
   int? userId;
   int? slugId;
 
-  factory FormPost.fromJson(Map<String, dynamic> json) => FormPost(
+  factory ForumPostModel.fromJson(Map<String, dynamic> json) => ForumPostModel(
         id: json["id"],
         postTitle: json["postTitle"],
         postType: json["postType"],

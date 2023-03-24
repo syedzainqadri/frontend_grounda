@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:frontend_grounda/models/faqGroupModel/faq_group_model.dart';
+import 'package:frontend_grounda/models/floorPlanModel/floor_plan_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
-class FaqGroupController extends GetxController {
-  var faqGroup = <FaqGroupsModel>[].obs;
+class FloorPlanController extends GetxController {
+  var floorPlans = <FloorPlansModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
@@ -22,7 +22,7 @@ class FaqGroupController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allFaqGroup,
+        baseUrl + allFloorPlan,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ class FaqGroupController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      faqGroup.value = faqGroupsModelFromJson(response.body);
+      floorPlans.value = floorPlansModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -43,7 +43,7 @@ class FaqGroupController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allFaqGroup + id,
+        baseUrl + allFloorPlan + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ class FaqGroupController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      faqGroup.value = faqGroupsModelFromJson(response.body);
+      floorPlans.value = floorPlansModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -61,20 +61,20 @@ class FaqGroupController extends GetxController {
   }
 
   Future<void> create(
-    String name,
-    int sortOrder,
-    bool status,
+    String title,
+    String floorPlanPath,
+    int projectId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
-      "faqGroupName": name,
-      "sortOrder": sortOrder,
-      "status": status
+      "title": title,
+      "floorPlanPath": floorPlanPath,
+      "projectId": projectId
     };
 
     var response = await http.post(
       Uri.parse(
-        baseUrl + createFaqGroup,
+        baseUrl + createFloorPlan,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -83,7 +83,7 @@ class FaqGroupController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      faqGroup.addAll(faqGroupsModelFromJson(response.body));
+      floorPlans.addAll(floorPlansModelFromJson(response.body));
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -92,23 +92,23 @@ class FaqGroupController extends GetxController {
     }
   }
 
-  Future<void> updateFaqGroup(
+  Future<void> updateFloorPlan(
     int id,
-    String name,
-    int sortOrder,
-    bool status,
+    String title,
+    String floorPlanPath,
+    int projectId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
-      "faqGroupName": name,
-      "sortOrder": sortOrder,
-      "status": status
+      "title": title,
+      "floorPlanPath": floorPlanPath,
+      "projectId": projectId
     };
 
     var response = await http.put(
       Uri.parse(
-        baseUrl + updateFaqGroupUrl,
+        baseUrl + updateFloorPlanUrl,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -132,7 +132,7 @@ class FaqGroupController extends GetxController {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteFaqGroup + id,
+        baseUrl + deleteFloorPlan + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -141,9 +141,9 @@ class FaqGroupController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      var deletedFaqGroup = jsonDecode(response.body);
-      var faqGroup = deletedFaqGroup['name'];
-      Get.snackbar('FAQGroup Deleted', 'The FAQ: $faqGroup has been deleted',
+      var deletedFloorPlan = jsonDecode(response.body);
+      var floorPlan = deletedFloorPlan['title'];
+      Get.snackbar('Floor Plan Deleted', 'The FAQ: $floorPlan has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {
