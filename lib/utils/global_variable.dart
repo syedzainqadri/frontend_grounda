@@ -82,24 +82,21 @@ String allPages = '/page/';
 String createPage = '/page/createPage';
 String updatePageUrl = '/page/updatePage';
 String deletePage = '/page/deletePage';
-//------
 String allPaymentMethod = '/paymentMethod/';
 String createPaymentMethod = '/paymentMethod/createPaymentMethod';
 String updatePaymentMethodUrl = '/paymentMethod/updatePaymentMethod';
 String deletePaymentMethod = '/paymentMethod/deletePaymentMethod';
-//-----
 String allProduct = '/product/';
 String createProduct = '/product/createProduct';
 String updateProductUrl = '/product/updateProduct';
 String deleteProduct = '/product/deleteProduct';
+String wishListByUserId = '/wishlist/user/';
+String addToWishListUrl = '/wishlist/addToWishlist';
+String removeFromWishListUrl = '/wishlist/deleteFromWishlit';
 //---
 String allReview = '/review';
 String createReview = '/createReview';
 String reviewByPostId = '/post/';
 String updateReviewUrl = '/updateReview';
 String deleteReview = '/deleteReview/';
-//---
-String wishListByUserId = '/wishlist/user/';
-String addToWishListUrl = '/wishlist/addToWishlist';
-String removeFromWishListUrl = '/wishlist/deleteFromWishlit';
 // RxBool themeMode = ThemeChangeController().isDarkMode;
