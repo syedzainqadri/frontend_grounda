@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:frontend_grounda/models/forumPost.dart/forum_post_model.dart';
+import 'package:frontend_grounda/models/productModel/product_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
-class ForumPostController extends GetxController {
-  var forumPosts = <ForumPostModel>[].obs;
+class ProductsController extends GetxController {
+  var products = <ProductsModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
@@ -22,7 +22,7 @@ class ForumPostController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allForumPost,
+        baseUrl + allProduct,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ class ForumPostController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      forumPosts.value = forumPostModelFromJson(response.body);
+      products.value = productsModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -43,7 +43,7 @@ class ForumPostController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allForumPost + id,
+        baseUrl + allProduct + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ class ForumPostController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      forumPosts.value = forumPostModelFromJson(response.body);
+      products.value = productsModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -62,25 +62,29 @@ class ForumPostController extends GetxController {
 
   Future<void> create(
     String title,
-    String postType,
-    int refrenceId,
+    double price,
+    double salesPrice,
+    String image,
+    int productLifeInDays,
+    String productType,
     String description,
-    int userId,
-    String slug,
+    String status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
-      "postTitle": title,
-      "postType": postType,
-      "postDescription": description,
-      "slug": slug,
-      "refrenceId": refrenceId,
-      "userId": userId
+      "title": title,
+      "price": price,
+      "salePrice": salesPrice,
+      "image": image,
+      "productLifeInDays": productLifeInDays,
+      "productType": productType,
+      "description": description,
+      "status": status
     };
 
     var response = await http.post(
       Uri.parse(
-        baseUrl + createForumPost,
+        baseUrl + createProduct,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -89,7 +93,7 @@ class ForumPostController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      forumPosts.addAll(forumPostModelFromJson(response.body));
+      products.addAll(productsModelFromJson(response.body));
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -98,29 +102,33 @@ class ForumPostController extends GetxController {
     }
   }
 
-  Future<void> updateForumPost(
+  Future<void> updatePaymentMethod(
     int id,
     String title,
-    String postType,
-    int refrenceId,
+    double price,
+    double salesPrice,
+    String image,
+    int productLifeInDays,
+    String productType,
     String description,
-    int userId,
-    String slug,
+    String status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
-      "postTitle": title,
-      "postType": postType,
-      "postDescription": description,
-      "slug": slug,
-      "refrenceId": refrenceId,
-      "userId": userId
+      "title": title,
+      "price": price,
+      "salePrice": salesPrice,
+      "image": image,
+      "productLifeInDays": productLifeInDays,
+      "productType": productType,
+      "description": description,
+      "status": status
     };
 
     var response = await http.put(
       Uri.parse(
-        baseUrl + updateForumPostUrl,
+        baseUrl + updateProductUrl,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -144,7 +152,7 @@ class ForumPostController extends GetxController {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteForumPost + id,
+        baseUrl + deleteProduct + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -153,10 +161,9 @@ class ForumPostController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      var deletedForumPost = jsonDecode(response.body);
-      var forumPost = deletedForumPost['title'];
-      Get.snackbar(
-          'Forum Post Deleted', 'The Forum Post: $forumPost has been deleted',
+      var deletedProduct = jsonDecode(response.body);
+      var product = deletedProduct['title'];
+      Get.snackbar('Product Deleted', 'The Product: $product has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

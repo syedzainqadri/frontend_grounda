@@ -152,7 +152,7 @@ class ForumPostCommentController extends GetxController {
       var deletedForumPostComment = jsonDecode(response.body);
       var forumPostComment = deletedForumPostComment['title'];
       Get.snackbar(
-          'Comment Deleted', 'The FAQ: $forumPostComment has been deleted',
+          'Comment Deleted', 'The Comment: $forumPostComment has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

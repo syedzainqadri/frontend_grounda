@@ -143,7 +143,8 @@ class FloorPlanController extends GetxController {
       getAll();
       var deletedFloorPlan = jsonDecode(response.body);
       var floorPlan = deletedFloorPlan['title'];
-      Get.snackbar('Floor Plan Deleted', 'The FAQ: $floorPlan has been deleted',
+      Get.snackbar(
+          'Floor Plan Deleted', 'The FloorPlan: $floorPlan has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

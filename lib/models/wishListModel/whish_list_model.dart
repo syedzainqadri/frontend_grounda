@@ -4,10 +4,12 @@
 
 import 'dart:convert';
 
-WishListModel wishListModelFromJson(String str) =>
-    WishListModel.fromJson(json.decode(str));
+List<WishListModel> wishListModelFromJson(String str) =>
+    List<WishListModel>.from(
+        json.decode(str).map((x) => WishListModel.fromJson(x)));
 
-String wishListModelToJson(WishListModel data) => json.encode(data.toJson());
+String wishListModelToJson(List<WishListModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class WishListModel {
   WishListModel({
