@@ -143,7 +143,8 @@ class FaqGroupController extends GetxController {
       getAll();
       var deletedFaqGroup = jsonDecode(response.body);
       var faqGroup = deletedFaqGroup['name'];
-      Get.snackbar('FAQGroup Deleted', 'The FAQ: $faqGroup has been deleted',
+      Get.snackbar(
+          'FAQGroup Deleted', 'The FAQ Group: $faqGroup has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

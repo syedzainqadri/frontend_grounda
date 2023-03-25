@@ -159,7 +159,7 @@ class OrderController extends GetxController {
       getAll();
       var deletedOrder = jsonDecode(response.body);
       var order = deletedOrder['id'];
-      Get.snackbar('Order Deleted', 'The FAQ: $order has been deleted',
+      Get.snackbar('Order Deleted', 'The Order: $order has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

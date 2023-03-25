@@ -150,7 +150,8 @@ class PostCommentController extends GetxController {
       var postID = post['id'];
       var postTitle = post['postReplyTitle'];
       getByPostId(postID);
-      Get.snackbar('Order Deleted', 'The FAQ: $postTitle has been deleted',
+      Get.snackbar(
+          'Order Deleted', 'The Post Comment: $postTitle has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

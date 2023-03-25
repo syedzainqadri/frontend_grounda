@@ -100,7 +100,7 @@ class PageController extends GetxController {
     }
   }
 
-  Future<void> updateForumPost(
+  Future<void> updatePage(
     int id,
     String title,
     String content,
@@ -124,7 +124,7 @@ class PageController extends GetxController {
 
     var response = await http.put(
       Uri.parse(
-        baseUrl + updatePage,
+        baseUrl + updatePageUrl,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -159,7 +159,7 @@ class PageController extends GetxController {
       getAll();
       var deletedPage = jsonDecode(response.body);
       var page = deletedPage['title'];
-      Get.snackbar('Page Deleted', 'The FAQ: $pages has been deleted',
+      Get.snackbar('Page Deleted', 'The Page: $pages has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

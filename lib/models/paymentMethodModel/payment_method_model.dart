@@ -1,17 +1,18 @@
 // To parse this JSON data, do
 //
-//     final paymentMethodModel = paymentMethodModelFromJson(jsonString);
+//     final allPaymentMethodsModel = allPaymentMethodsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-PaymentMethodModel paymentMethodModelFromJson(String str) =>
-    PaymentMethodModel.fromJson(json.decode(str));
+List<AllPaymentMethodsModel> allPaymentMethodsModelFromJson(String str) =>
+    List<AllPaymentMethodsModel>.from(
+        json.decode(str).map((x) => AllPaymentMethodsModel.fromJson(x)));
 
-String paymentMethodModelToJson(PaymentMethodModel data) =>
-    json.encode(data.toJson());
+String allPaymentMethodsModelToJson(List<AllPaymentMethodsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class PaymentMethodModel {
-  PaymentMethodModel({
+class AllPaymentMethodsModel {
+  AllPaymentMethodsModel({
     this.id,
     this.name,
     this.apiKey,
@@ -29,8 +30,8 @@ class PaymentMethodModel {
   DateTime? updatedAt;
   String? status;
 
-  factory PaymentMethodModel.fromJson(Map<String, dynamic> json) =>
-      PaymentMethodModel(
+  factory AllPaymentMethodsModel.fromJson(Map<String, dynamic> json) =>
+      AllPaymentMethodsModel(
         id: json["id"],
         name: json["name"],
         apiKey: json["apiKey"],

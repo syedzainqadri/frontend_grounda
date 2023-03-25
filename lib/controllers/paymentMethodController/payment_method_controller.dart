@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:frontend_grounda/models/forumPost.dart/forum_post_model.dart';
+import 'package:frontend_grounda/models/paymentMethodModel/payment_method_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
-class ForumPostController extends GetxController {
-  var forumPosts = <ForumPostModel>[].obs;
+class PaymentMethodController extends GetxController {
+  var paymentMethods = <AllPaymentMethodsModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
@@ -22,7 +22,7 @@ class ForumPostController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allForumPost,
+        baseUrl + allPaymentMethod,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ class ForumPostController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      forumPosts.value = forumPostModelFromJson(response.body);
+      paymentMethods.value = allPaymentMethodsModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -43,7 +43,7 @@ class ForumPostController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + allForumPost + id,
+        baseUrl + allPaymentMethod + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ class ForumPostController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      forumPosts.value = forumPostModelFromJson(response.body);
+      paymentMethods.value = allPaymentMethodsModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -61,26 +61,22 @@ class ForumPostController extends GetxController {
   }
 
   Future<void> create(
-    String title,
-    String postType,
-    int refrenceId,
-    String description,
-    int userId,
-    String slug,
+    String name,
+    String apiKey,
+    String apiSecret,
+    bool status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
-      "postTitle": title,
-      "postType": postType,
-      "postDescription": description,
-      "slug": slug,
-      "refrenceId": refrenceId,
-      "userId": userId
+      "name": name,
+      "apiKey": apiKey,
+      "secret": apiSecret,
+      "status": status
     };
 
     var response = await http.post(
       Uri.parse(
-        baseUrl + createForumPost,
+        baseUrl + createPaymentMethod,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -89,7 +85,7 @@ class ForumPostController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      forumPosts.addAll(forumPostModelFromJson(response.body));
+      paymentMethods.addAll(allPaymentMethodsModelFromJson(response.body));
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -98,29 +94,25 @@ class ForumPostController extends GetxController {
     }
   }
 
-  Future<void> updateForumPost(
+  Future<void> updatePaymentMethod(
     int id,
-    String title,
-    String postType,
-    int refrenceId,
-    String description,
-    int userId,
-    String slug,
+    String name,
+    String apiKey,
+    String apiSecret,
+    bool status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
-      "postTitle": title,
-      "postType": postType,
-      "postDescription": description,
-      "slug": slug,
-      "refrenceId": refrenceId,
-      "userId": userId
+      "name": name,
+      "apiKey": apiKey,
+      "secret": apiSecret,
+      "status": status
     };
 
     var response = await http.put(
       Uri.parse(
-        baseUrl + updateForumPostUrl,
+        baseUrl + updatePaymentMethodUrl,
       ),
       body: jsonEncode(bodyPrepare),
       headers: {
@@ -144,7 +136,7 @@ class ForumPostController extends GetxController {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteForumPost + id,
+        baseUrl + deletePaymentMethod + id,
       ),
       headers: {
         "Content-Type": "application/json",
@@ -153,10 +145,10 @@ class ForumPostController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      var deletedForumPost = jsonDecode(response.body);
-      var forumPost = deletedForumPost['title'];
+      var deletedPM = jsonDecode(response.body);
+      var pm = deletedPM['name'];
       Get.snackbar(
-          'Forum Post Deleted', 'The Forum Post: $forumPost has been deleted',
+          'Payment Method Deleted', 'The Payment Method: $pm has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {
