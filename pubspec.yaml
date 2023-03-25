@@ -56,8 +56,13 @@ dependencies:
   slugify: ^2.0.0
   quill_html_editor: ^2.1.5
   location: ^4.4.0
-  image_picker: ^0.8.7
   file_picker: ^5.2.6
+  map_picker: ^0.0.3
+  country_currency_pickers: ^2.0.0
+  google_maps_flutter: ^2.2.5
+  map_pin_picker: ^0.0.1
+  geocoding: ^2.1.0
+
 
 
 

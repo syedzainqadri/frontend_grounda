@@ -1,14 +1,18 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:country_currency_pickers/country.dart';
+import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
+import 'package:frontend_grounda/widgets/google_map_picker.dart';
 import 'package:frontend_grounda/widgets/text_ediotor.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
 import 'package:get/get.dart';
+import 'package:map_picker/map_picker.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class PostForm extends GetView<ThemeChangeController> {
@@ -49,6 +53,8 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.purposeController,
       required this.propertyTypeController,
       required this.propertySubTypeController,
+      required this.mapPickerController,
+      required this.mapTextController,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -89,8 +95,13 @@ class PostForm extends GetView<ThemeChangeController> {
   TextEditingController propertySubTypeController;
   QuillEditorController contentController;
 
+  MapPickerController mapPickerController;
+  TextEditingController mapTextController;
+
   @override
   Widget build(BuildContext context) {
+    var buildDialogItem = [];
+    bool filtered = false;
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
@@ -116,15 +127,7 @@ class PostForm extends GetView<ThemeChangeController> {
               SizedBox(
                 height: height * 0.015,
               ),
-              DefaultTextField(
-                hintText: "Post Slug",
-                labelText: "Post Slug",
-                isPassword: false,
-                textEditingController: postShortDescriptionController,
-              ),
-              SizedBox(
-                height: height * 0.015,
-              ),
+
               Text(
                 "Select Post Category",
                 style: Theme.of(context)
@@ -133,10 +136,12 @@ class PostForm extends GetView<ThemeChangeController> {
                     .copyWith(color: kPrimaryColor),
                 textAlign: TextAlign.start,
               ),
+              // category / currency / plot number
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: width * 0.25,
+                    width: width * 0.20,
                     child: DropdownButton(
                       borderRadius: BorderRadius.circular(15),
                       hint: const Text("Select Post Category"),
@@ -156,108 +161,35 @@ class PostForm extends GetView<ThemeChangeController> {
                   SizedBox(
                     width: width * 0.012,
                   ),
+                  // property type / Price / currency
                   SizedBox(
-                    width: width * 0.25,
+                    width: width * 0.135,
                     child: DefaultTextField(
-                      hintText: "Enter Area",
-                      labelText: "Area",
-                      isPassword: false,
-                      textEditingController: postTitleController,
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.012,
-                  ),
-                  SizedBox(
-                    width: width * 0.2,
-                    child: DefaultTextField(
-                      hintText: "Enter Price Title",
+                      hintText: "Enter Price",
                       labelText: "Price",
                       isPassword: false,
                       textEditingController: postTitleController,
-                      prefixIcon: const Icon(Icons.currency_rupee_rounded),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.015,
-              ),
-              SizedBox(
-                height: height * 0.015,
-              ),
-              DefaultTextField(
-                hintText: "Add video url here",
-                labelText: "Video",
-                isPassword: false,
-                textEditingController: videoUrlController,
-              ),
-              SizedBox(
-                height: height * 0.015,
-              ),
-              Expanded(
-                child: TextEditor(controller: contentController),
-              ),
-              SizedBox(
-                height: height * 0.015,
-              ),
-              imageListUrl.isEmpty
-                  ? Text(
-                      'Please add Images',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    )
-                  : Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: imageListUrl.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            height: height * 1,
-                            width: width * 1,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Image.network(imageListUrl[index]),
-                          );
-                        },
-                      ),
-                    ),
-              SizedBox(
-                height: height * 0.015,
-              ),
-              Row(
-                children: [
-                  DefaultButton(
-                    primaryColor: kPrimaryColor,
-                    hoverColor: kDarkColor,
-                    buttonText: pictureButtonText,
-                    width: width * .2,
-                    height: height * .05,
-                    onPressed: uploadImages,
                   ),
                   SizedBox(
-                    width: width * 0.02,
+                    width: width * 0.015,
                   ),
-                  DefaultButton(
-                    primaryColor: kPrimaryColor,
-                    hoverColor: kDarkColor,
-                    buttonText: pictureButtonText,
-                    width: width * .2,
-                    height: height * .05,
-                    onPressed: uploadImages,
+                  SizedBox(
+                    width: width * 0.13,
+                    child: CountryPickerDropdown(
+                      initialValue: 'PK',
+                      itemBuilder: _buildDropdownItem,
+                      itemFilter: filtered
+                          ? (c) => ['PK', 'DE', 'GB', 'CN'].contains(c.isoCode)
+                          : null,
+                      onValuePicked: (Country? country) {
+                        print("${country?.name}");
+                      },
+                    ),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.015,
-              ),
-
-              // Plot Number / Has Installment / ready to Possession
-
-              Row(
-                children: [
+                  SizedBox(
+                    width: width * 0.015,
+                  ),
                   SizedBox(
                     width: width * 0.22,
                     child: DefaultTextField(
@@ -267,10 +199,247 @@ class PostForm extends GetView<ThemeChangeController> {
                       textEditingController: plotNumberController,
                     ),
                   ),
+                ],
+              ),
+
+              SizedBox(
+                height: height * 0.015,
+              ),
+              // text editor
+              Expanded(
+                child: TextEditor(controller: contentController),
+              ),
+
+              SizedBox(
+                height: height * 0.04,
+              ),
+
+              // Video URL
+              DefaultTextField(
+                hintText: "Add video url here",
+                labelText: "Video URL",
+                isPassword: false,
+                textEditingController: videoUrlController,
+              ),
+
+              SizedBox(
+                height: height * 0.015,
+              ),
+
+              // Gallery Heading and button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Gallery",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.015,
+              ),
+              // gallery preview
+              Row(
+                children: [
                   SizedBox(
-                    width: width * 0.22,
+                    width: width * .1,
+                    height: height * .14,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        right: 8.0,
+                      ),
+                      child: InkWell(
+                        onTap: uploadImages,
+                        child: Container(
+                          alignment: Alignment.center,
+                          color: controller.isDarkMode == true
+                              ? kDarkCardColor
+                              : kCardColor,
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(Icons.add_a_photo),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  imageListUrl.isEmpty
+                      ? Text(
+                          'Please add Images',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: imageListUrl.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                height: height * 1,
+                                width: width * 1,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Image.network(imageListUrl[index]),
+                              );
+                            },
+                          ),
+                        ),
+                ],
+              ),
+
+              SizedBox(
+                height: height * 0.04,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: width * .25,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Select Purpose",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: kPrimaryColor),
+                          textAlign: TextAlign.start,
+                        ),
+                        DropdownButton(
+                          borderRadius: BorderRadius.circular(15),
+                          hint: const Text("Purpose"),
+                          isExpanded: true,
+                          value: dropDownValue,
+                          icon: const Icon(Icons.arrow_downward),
+                          elevation: 16,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          underline: Container(
+                            height: 2,
+                            color: kDarkColor,
+                          ),
+                          onChanged: onChange,
+                          items: dropDownList,
+                        ),
+                        SizedBox(
+                          height: height * 0.025,
+                        ),
+                        Text(
+                          "Select Property Type",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: kPrimaryColor),
+                          textAlign: TextAlign.start,
+                        ),
+                        DropdownButton(
+                          borderRadius: BorderRadius.circular(15),
+                          hint: const Text("Property Type"),
+                          isExpanded: true,
+                          value: dropDownValue,
+                          icon: const Icon(Icons.arrow_downward),
+                          elevation: 16,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          underline: Container(
+                            height: 2,
+                            color: kDarkColor,
+                          ),
+                          onChanged: onChange,
+                          items: dropDownList,
+                        ),
+                        SizedBox(
+                          height: height * 0.025,
+                        ),
+                        Text(
+                          "Select Property Sub-Type",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: kPrimaryColor),
+                          textAlign: TextAlign.start,
+                        ),
+                        DropdownButton(
+                          borderRadius: BorderRadius.circular(15),
+                          hint: const Text("Property Sub-Type"),
+                          isExpanded: true,
+                          value: dropDownValue,
+                          icon: const Icon(Icons.arrow_downward),
+                          elevation: 16,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          underline: Container(
+                            height: 2,
+                            color: kDarkColor,
+                          ),
+                          onChanged: onChange,
+                          items: dropDownList,
+                        ),
+                        SizedBox(
+                          height: height * 0.025,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: width * .02,
+                  ),
+
+                  // bedrooms / bathrooms
+                  SizedBox(
+                    width: width * .25,
                     child: Column(
                       children: [
+                        DefaultTextField(
+                          hintText: "Enter Number of Bedrooms",
+                          labelText: "Number of Bedrooms",
+                          isPassword: false,
+                          textEditingController: bedRoomController,
+                        ),
+                        SizedBox(
+                          height: height * 0.025,
+                        ),
+                        DefaultTextField(
+                          hintText: "Enter Number of Bedrooms",
+                          labelText: "Number of Bedrooms",
+                          isPassword: false,
+                          textEditingController: bedRoomController,
+                        ),
+                        SizedBox(
+                          height: height * 0.025,
+                        ),
+                        DefaultTextField(
+                          hintText: "Property Area ",
+                          labelText: "Property Area",
+                          isPassword: false,
+                          textEditingController: bedRoomController,
+                        ),
+                        SizedBox(
+                          height: height * 0.025,
+                        ),
+                        DefaultTextField(
+                          hintText: "Property Unit ",
+                          labelText: "Property Unit",
+                          isPassword: false,
+                          textEditingController: bedRoomController,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: width * .02,
+                  ),
+
+                  SizedBox(
+                    width: width * .2,
+                    child: Column(
+                      children: [
+                        // Has Installments
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                           child: Transform.scale(
@@ -334,13 +503,9 @@ class PostForm extends GetView<ThemeChangeController> {
                                     monthlyInstallmentValueController,
                               )
                             : const Offstage(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.22,
-                    child: Column(
-                      children: [
+                        // Has Installments end
+
+                        // Ready for Possession
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                           child: Transform.scale(
@@ -389,6 +554,7 @@ class PostForm extends GetView<ThemeChangeController> {
                                 textEditingController: bathRoomController,
                               )
                             : const Offstage(),
+                        // Ready for Possession end
                       ],
                     ),
                   ),
@@ -396,104 +562,10 @@ class PostForm extends GetView<ThemeChangeController> {
               ),
 
               SizedBox(
-                height: height * 0.015,
+                height: height * 0.04,
               ),
 
-              Row(
-                children: [
-                  SizedBox(
-                    width: width * .24,
-                    child: DefaultTextField(
-                      hintText: "Purpose",
-                      labelText: "Purpose",
-                      isPassword: false,
-                      textEditingController: purposeController,
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.015,
-                  ),
-                  SizedBox(
-                    width: width * .24,
-                    child: DefaultTextField(
-                      hintText: "Property Type",
-                      labelText: "Property Type",
-                      isPassword: false,
-                      textEditingController: propertyTypeController,
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.015,
-                  ),
-                  SizedBox(
-                    width: width * .24,
-                    child: DefaultTextField(
-                      hintText: "Property Sub-Type",
-                      labelText: "Property Sub-Type",
-                      isPassword: false,
-                      textEditingController: propertySubTypeController,
-                    ),
-                  ),
-                ],
-              ),
-
-              SizedBox(
-                height: height * 0.015,
-              ),
-
-              Row(
-                children: [
-                  SizedBox(
-                    width: width * .18,
-                    child: DefaultTextField(
-                      hintText: "Enter Number of Bedrooms",
-                      labelText: "Number of Bedrooms",
-                      isPassword: false,
-                      textEditingController: bedRoomController,
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.015,
-                  ),
-                  SizedBox(
-                    width: width * .18,
-                    child: DefaultTextField(
-                      hintText: "Enter Number of Bedrooms",
-                      labelText: "Number of Bedrooms",
-                      isPassword: false,
-                      textEditingController: bedRoomController,
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.015,
-                  ),
-                  SizedBox(
-                    width: width * .175,
-                    child: DefaultTextField(
-                      hintText: "Property Type ",
-                      labelText: "Property Type",
-                      isPassword: false,
-                      textEditingController: bedRoomController,
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.015,
-                  ),
-                  SizedBox(
-                    width: width * .17,
-                    child: DefaultTextField(
-                      hintText: "Property Unit ",
-                      labelText: "Property Unit",
-                      isPassword: false,
-                      textEditingController: bedRoomController,
-                    ),
-                  ),
-                ],
-              ),
-
-              SizedBox(
-                height: height * 0.05,
-              ),
+              // Plot Number / Has Installment / ready to Possession
 
               // Location / Amenities / contact Details
               Row(
@@ -610,6 +682,36 @@ class PostForm extends GetView<ThemeChangeController> {
                 height: height * 0.015,
               ),
 
+              Row(
+                children: [
+                  SizedBox(
+                    width: width * .3,
+                    child: Column(
+                      children: [
+                        DefaultTextField(
+                          hintText: "Address",
+                          labelText: "Enter Address of Property",
+                          isPassword: false,
+                          textEditingController: bedRoomController,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * .3,
+                    height: height * .4,
+                    child: Column(
+                      children: [
+                        GoogleMapPicker(
+                          mapPickerController: mapPickerController,
+                          textController: mapTextController,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                 child: Transform.scale(
@@ -662,4 +764,16 @@ class PostForm extends GetView<ThemeChangeController> {
       ),
     );
   }
+
+  Widget _buildDropdownItem(Country country) => Container(
+        child: Row(
+          children: <Widget>[
+            CountryPickerUtils.getDefaultFlagImage(country),
+            const SizedBox(
+              width: 8.0,
+            ),
+            Text("+${country.phoneCode}(${country.isoCode})"),
+          ],
+        ),
+      );
 }
