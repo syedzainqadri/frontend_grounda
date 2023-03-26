@@ -642,7 +642,7 @@ class PostForm extends GetView<ThemeChangeController> {
                   // Map
                   SizedBox(
                     width: width * .2,
-                    height: height,
+                    height: height * .4,
                     child: OpenStreetMap(
                       onPicked: (pickedData) {
                         print(pickedData.latLong.latitude);
