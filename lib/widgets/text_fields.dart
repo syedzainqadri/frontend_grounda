@@ -33,12 +33,15 @@ class DefaultTextField extends GetView<ThemeChangeController> {
         suffixIconColor: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
         prefixIcon: prefixIcon,
         prefixIconColor: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
-        hintStyle: Theme.of(context).textTheme.labelLarge,
+        hintStyle: Theme.of(context)
+            .textTheme
+            .labelLarge!
+            .copyWith(color: Colors.black12),
         hintText: hintText,
         label: Text(
           labelText,
           style: TextStyle(
-              color: controller.isDarkMode.value ? kDarkColor : kWhiteColor),
+              color: controller.isDarkMode.value ? kWhiteColor : kDarkColor),
         ),
         fillColor: controller.isDarkMode.value ? kDarkColor : kInputBgColor,
         filled: true,

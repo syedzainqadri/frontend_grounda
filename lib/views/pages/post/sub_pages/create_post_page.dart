@@ -6,6 +6,7 @@ import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/post/widgets/post_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
+import 'package:map_picker/map_picker.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class CreatePostPage extends GetView<ThemeChangeController> {
@@ -35,6 +36,9 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   TextEditingController purposeController = TextEditingController();
   TextEditingController propertyTypeController = TextEditingController();
   TextEditingController propertySubTypeController = TextEditingController();
+
+  MapPickerController mapPickerController = MapPickerController();
+  TextEditingController mapTextController = TextEditingController();
 
   CategoryController categoryController = Get.find<CategoryController>();
   PostController postController = Get.find<PostController>();
@@ -84,6 +88,8 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           ),
                         )
                       : PostForm(
+                          mapPickerController: mapPickerController,
+                          mapTextController: mapTextController,
                           purposeController: purposeController,
                           propertyTypeController: propertyTypeController,
                           propertySubTypeController: propertySubTypeController,

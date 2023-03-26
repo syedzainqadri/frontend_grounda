@@ -58,3 +58,16 @@ class PostCreateView extends GetView<SideBarController> {
     );
   }
 }
+
+
+
+// Hover color effect on test field
+// price icon svg 
+// space evenly in price row
+// remove one upload button and alight to right side and increase heading side
+// add google map 
+// address
+// re arrange the has installment etc
+// columns based
+// add plus button for images uploads
+
