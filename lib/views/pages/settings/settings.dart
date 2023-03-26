@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/settings/widgets/settings_menu_card.dart';
+import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
-
-import '../../../widgets/dashboard/dashboard_app_bar.dart';
 
 class SettingsPage extends GetView<ThemeChangeController> {
   SettingsPage({Key? key}) : super(key: key);
@@ -37,9 +36,11 @@ class SettingsPage extends GetView<ThemeChangeController> {
                 SettingsMenuCard(
                   height: height,
                   width: width,
-                  text: 'Profile Settings',
+                  text: 'payment Methods',
                   icon: 'assets/icons/person.svg',
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed('/settings/payment-methods');
+                  },
                 ),
                 SettingsMenuCard(
                   height: height,

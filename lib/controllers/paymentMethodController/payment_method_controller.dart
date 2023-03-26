@@ -16,6 +16,7 @@ class PaymentMethodController extends GetxController {
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
+    getAll();
   }
 
   Future<void> getAll() async {
@@ -29,7 +30,11 @@ class PaymentMethodController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
+
     if (response.statusCode == 200 && response.body != 'null') {
+      print("Payment Method Response");
+      print(response.body);
+
       paymentMethods.value = allPaymentMethodsModelFromJson(response.body);
       isLoading.value = false;
     } else {
@@ -64,7 +69,7 @@ class PaymentMethodController extends GetxController {
     String name,
     String apiKey,
     String apiSecret,
-    bool status,
+    String status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
@@ -99,7 +104,7 @@ class PaymentMethodController extends GetxController {
     String name,
     String apiKey,
     String apiSecret,
-    bool status,
+    String status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
@@ -131,12 +136,12 @@ class PaymentMethodController extends GetxController {
   }
 
   Future<void> delete(
-    String id,
+    int id,
   ) async {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deletePaymentMethod + id,
+        baseUrl + deletePaymentMethod + id.toString(),
       ),
       headers: {
         "Content-Type": "application/json",
