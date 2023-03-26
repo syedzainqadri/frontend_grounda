@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
-import 'package:frontend_grounda/widgets/google_map_picker.dart';
+import 'package:frontend_grounda/widgets/open_street_map.dart';
 import 'package:frontend_grounda/widgets/text_ediotor.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
@@ -381,64 +381,6 @@ class PostForm extends GetView<ThemeChangeController> {
                         SizedBox(
                           height: height * 0.025,
                         ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(
-                    width: width * .02,
-                  ),
-
-                  // bedrooms / bathrooms
-                  SizedBox(
-                    width: width * .25,
-                    child: Column(
-                      children: [
-                        DefaultTextField(
-                          hintText: "Enter Number of Bedrooms",
-                          labelText: "Number of Bedrooms",
-                          isPassword: false,
-                          textEditingController: bedRoomController,
-                        ),
-                        SizedBox(
-                          height: height * 0.025,
-                        ),
-                        DefaultTextField(
-                          hintText: "Enter Number of Bedrooms",
-                          labelText: "Number of Bedrooms",
-                          isPassword: false,
-                          textEditingController: bedRoomController,
-                        ),
-                        SizedBox(
-                          height: height * 0.025,
-                        ),
-                        DefaultTextField(
-                          hintText: "Property Area ",
-                          labelText: "Property Area",
-                          isPassword: false,
-                          textEditingController: bedRoomController,
-                        ),
-                        SizedBox(
-                          height: height * 0.025,
-                        ),
-                        DefaultTextField(
-                          hintText: "Property Unit ",
-                          labelText: "Property Unit",
-                          isPassword: false,
-                          textEditingController: bedRoomController,
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(
-                    width: width * .02,
-                  ),
-
-                  SizedBox(
-                    width: width * .2,
-                    child: Column(
-                      children: [
                         // Has Installments
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
@@ -469,8 +411,8 @@ class PostForm extends GetView<ThemeChangeController> {
                             : const Offstage(),
                         hasInstallmentValue
                             ? DefaultTextField(
-                                hintText: "Enter Advance Ammount",
-                                labelText: "Advance Ammount",
+                                hintText: "Enter Advance Amount",
+                                labelText: "Advance Amount",
                                 isPassword: false,
                                 textEditingController: advanceController,
                               )
@@ -555,55 +497,9 @@ class PostForm extends GetView<ThemeChangeController> {
                               )
                             : const Offstage(),
                         // Ready for Possession end
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-
-              SizedBox(
-                height: height * 0.04,
-              ),
-
-              // Plot Number / Has Installment / ready to Possession
-
-              // Location / Amenities / contact Details
-              Row(
-                children: [
-                  SizedBox(
-                    width: width * .23,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text("Location"),
                         SizedBox(
-                          height: height * 0.15,
+                          height: height * 0.4,
                         ),
-                        Container(
-                          width: width * .22,
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("List of Location"),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.015,
-                  ),
-                  // Amenities
-                  SizedBox(
-                    width: width * .23,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
                         const Text("Amenities"),
                         SizedBox(
                           height: height * 0.15,
@@ -622,15 +518,54 @@ class PostForm extends GetView<ThemeChangeController> {
                       ],
                     ),
                   ),
+
                   SizedBox(
-                    width: width * 0.015,
+                    width: width * .02,
                   ),
-                  // Contact Details
+
+                  // bedrooms / bathrooms / Contact Details / Near By Location
                   SizedBox(
                     width: width * .25,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        DefaultTextField(
+                          hintText: "Enter Number of Bedrooms",
+                          labelText: "Number of Bedrooms",
+                          isPassword: false,
+                          textEditingController: bedRoomController,
+                        ),
+                        SizedBox(
+                          height: height * 0.025,
+                        ),
+                        DefaultTextField(
+                          hintText: "Enter Number of Bedrooms",
+                          labelText: "Number of Bedrooms",
+                          isPassword: false,
+                          textEditingController: bedRoomController,
+                        ),
+                        SizedBox(
+                          height: height * 0.025,
+                        ),
+                        DefaultTextField(
+                          hintText: "Property Area ",
+                          labelText: "Property Area",
+                          isPassword: false,
+                          textEditingController: bedRoomController,
+                        ),
+                        SizedBox(
+                          height: height * 0.025,
+                        ),
+                        DefaultTextField(
+                          hintText: "Property Unit ",
+                          labelText: "Property Unit",
+                          isPassword: false,
+                          textEditingController: bedRoomController,
+                        ),
+                        // Contact Details
+                        SizedBox(
+                          height: height * 0.04,
+                        ),
                         Text(
                           "Contact Person Details",
                           style: Theme.of(context).textTheme.bodyLarge,
@@ -672,44 +607,55 @@ class PostForm extends GetView<ThemeChangeController> {
                           textEditingController:
                               contactPersonsLandlineController,
                         ),
+                        // Near by Location
+                        SizedBox(
+                          height: height * 0.04,
+                        ),
+                        Text(
+                          "Near By Location",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        SizedBox(
+                          height: height * 0.15,
+                        ),
+                        Container(
+                          width: width * .22,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("List of Location"),
+                          ),
+                        ),
                       ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: width * .02,
+                  ),
+
+                  // Map
+                  SizedBox(
+                    width: width * .2,
+                    height: height,
+                    child: OpenStreetMap(
+                      onPicked: (pickedData) {
+                        print(pickedData.latLong.latitude);
+                        print(pickedData.latLong.longitude);
+                        print(pickedData.address);
+                      },
                     ),
                   ),
                 ],
               ),
 
               SizedBox(
-                height: height * 0.015,
-              ),
-
-              Row(
-                children: [
-                  SizedBox(
-                    width: width * .3,
-                    child: Column(
-                      children: [
-                        DefaultTextField(
-                          hintText: "Address",
-                          labelText: "Enter Address of Property",
-                          isPassword: false,
-                          textEditingController: bedRoomController,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * .3,
-                    height: height * .4,
-                    child: Column(
-                      children: [
-                        GoogleMapPicker(
-                          mapPickerController: mapPickerController,
-                          textController: mapTextController,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                height: height * 0.04,
               ),
 
               Padding(
