@@ -381,15 +381,19 @@ class PostForm extends GetView<ThemeChangeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      DefaultTextField(
-                        hintText: "Property Area",
-                        labelText: "Enter Total Area",
-                        isPassword: false,
-                        textEditingController: postTitleController,
-                      ),
-                    ],
+                  SizedBox(
+                    height: 500,
+                    width: 300,
+                    child: Column(
+                      children: [
+                        DefaultTextField(
+                          hintText: "Property Area",
+                          labelText: "Enter Total Area",
+                          isPassword: false,
+                          textEditingController: postTitleController,
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     width: width * .02,
