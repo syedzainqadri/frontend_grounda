@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/controllers/amenitiesController/amenities_controller.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 import 'package:frontend_grounda/controllers/postController/post_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
@@ -42,11 +43,15 @@ class CreatePostPage extends GetView<ThemeChangeController> {
 
   CategoryController categoryController = Get.find<CategoryController>();
   PostController postController = Get.find<PostController>();
+  AmenitiesController amenitiesController = Get.find<AmenitiesController>();
   var selectedItemId = 0.obs;
+  var subCategorySelectedItemId = 0.obs;
   var isPublished = false.obs;
   var hasInstallments = false.obs;
   var posessionReady = false.obs;
   var catId = ''.obs;
+  RxBool amenitiesBoolValue = false.obs;
+  RxList selectedAmenities = [].obs;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +112,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           }).toList(),
                           categoryDropDownValue:
                               categoryController.selectedItemName.value,
-                          categoryOnChange: (selectedValue) {
+                          categoryOnChange: (selectedValue) async {
                             categoryController.selectedItemName.value =
                                 selectedValue;
                             for (int i = 0;
@@ -117,31 +122,59 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                                   categoryController.category[i].name) {
                                 selectedItemId.value =
                                     categoryController.category[i].id!;
+                                print(selectedItemId.value);
                               }
                             }
+                            await categoryController.getSubCategories(
+                                selectedItemId.value.toString());
                           },
-                          //TODO: //create the sub category crud and add it here
-                          subCategoryDropDownList: categoryController.category
+                          //subCategory
+                          subCategoryDropDownList: categoryController
+                              .subCategory
                               .map<DropdownMenuItem<String>>((value) {
                             return DropdownMenuItem<String>(
                               value: value.name,
                               child: Text(value.name!),
                             );
                           }).toList(),
-                          subCategoryDropDownValue:
-                              categoryController.selectedItemName.value,
+                          subCategoryDropDownValue: categoryController
+                              .subCategorySelectedItemName.value,
                           subCategoryOnChange: (selectedValue) {
-                            categoryController.selectedItemName.value =
-                                selectedValue;
+                            categoryController.subCategorySelectedItemName
+                                .value = selectedValue;
                             for (int i = 0;
-                                i < categoryController.category.length;
+                                i < categoryController.subCategory.length;
                                 i++) {
-                              if (categoryController.selectedItemName ==
-                                  categoryController.category[i].name) {
-                                selectedItemId.value =
-                                    categoryController.category[i].id!;
+                              if (categoryController
+                                      .subCategorySelectedItemName ==
+                                  categoryController.subCategory[i].name) {
+                                subCategorySelectedItemId.value =
+                                    categoryController.subCategory[i].id!;
                               }
                             }
+                          },
+                          //amenities
+                          amenitiesCount: amenitiesController.amenities.length,
+                          amenitiesBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Obx(
+                                  () => Checkbox(
+                                    activeColor: Colors.blue,
+                                    value: amenitiesBoolValue.value,
+                                    onChanged: (value) {
+                                      amenitiesBoolValue.value = value!;
+                                      selectedAmenities.add(amenitiesController
+                                          .amenities[index].id);
+                                      print(amenitiesController
+                                          .amenities[index].id);
+                                      print(selectedAmenities);
+                                    },
+                                  ),
+                                ),
+                                Text(amenitiesController.amenities[index].name!)
+                              ],
+                            );
                           },
                           buttonText: catId.value == '' ? 'Submit' : 'Update',
                           formSubmit: () async {

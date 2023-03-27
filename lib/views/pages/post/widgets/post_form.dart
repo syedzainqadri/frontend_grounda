@@ -57,6 +57,8 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.propertySubTypeController,
       required this.mapPickerController,
       required this.mapTextController,
+      required this.amenitiesCount,
+      required this.amenitiesBuilder,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -99,6 +101,8 @@ class PostForm extends GetView<ThemeChangeController> {
   TextEditingController propertyTypeController;
   TextEditingController propertySubTypeController;
   QuillEditorController contentController;
+  Widget? Function(BuildContext, int) amenitiesBuilder;
+  int amenitiesCount;
 
   MapPickerController mapPickerController;
   TextEditingController mapTextController;
@@ -260,12 +264,13 @@ class PostForm extends GetView<ThemeChangeController> {
                 height: height * 0.04,
               ),
               //TODO : adjust structure here
+              //Category section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
                     height: 100,
-                    width: 200,
+                    width: width * .19,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -278,28 +283,40 @@ class PostForm extends GetView<ThemeChangeController> {
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
                         ),
-                        DropdownButton(
-                          borderRadius: BorderRadius.circular(15),
-                          hint: const Text("Purpose"),
-                          isExpanded: true,
-                          value: purposeValue.value,
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          underline: Container(
-                            height: 2,
-                            color: kDarkColor,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: controller.isDarkMode == true
+                                ? kDarkCardColor
+                                : kCardColor,
                           ),
-                          onChanged: (value) {
-                            purposeValue.value = value.toString();
-                          },
-                          items: purposeList
-                              .map<DropdownMenuItem<String>>((value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              hint: const Text("Purpose"),
+                              isExpanded: true,
+                              value: purposeValue.value,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: (value) {
+                                purposeValue.value = value.toString();
+                              },
+                              items: purposeList
+                                  .map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -309,7 +326,7 @@ class PostForm extends GetView<ThemeChangeController> {
                   ),
                   SizedBox(
                     height: 100,
-                    width: 200,
+                    width: width * .19,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -322,20 +339,32 @@ class PostForm extends GetView<ThemeChangeController> {
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
                         ),
-                        DropdownButton(
-                          borderRadius: BorderRadius.circular(15),
-                          hint: const Text("Select Post Type"),
-                          isExpanded: true,
-                          value: categoryDropDownValue,
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          underline: Container(
-                            height: 2,
-                            color: kDarkColor,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: controller.isDarkMode == true
+                                ? kDarkCardColor
+                                : kCardColor,
                           ),
-                          onChanged: categoryOnChange,
-                          items: categoryDropDownList,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              hint: const Text("Select Post Type"),
+                              isExpanded: true,
+                              value: categoryDropDownValue,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: categoryOnChange,
+                              items: categoryDropDownList,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -345,7 +374,7 @@ class PostForm extends GetView<ThemeChangeController> {
                   ),
                   SizedBox(
                     height: 100,
-                    width: 200,
+                    width: width * .19,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -358,20 +387,32 @@ class PostForm extends GetView<ThemeChangeController> {
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
                         ),
-                        DropdownButton(
-                          borderRadius: BorderRadius.circular(15),
-                          hint: const Text("Select Post Sub-Type"),
-                          isExpanded: true,
-                          value: subCategoryDropDownValue,
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          underline: Container(
-                            height: 2,
-                            color: Colors.transparent,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: controller.isDarkMode == true
+                                ? kDarkCardColor
+                                : kCardColor,
                           ),
-                          onChanged: subCategoryOnChange,
-                          items: subCategoryDropDownList,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              hint: const Text("Select Post Sub-Type"),
+                              isExpanded: true,
+                              value: subCategoryDropDownValue,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: subCategoryOnChange,
+                              items: subCategoryDropDownList,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -379,14 +420,15 @@ class PostForm extends GetView<ThemeChangeController> {
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
                     height: 500,
-                    width: 300,
+                    width: width * .19,
                     child: Column(
                       children: [
                         DefaultTextField(
+                          prefixIcon: const Icon(Icons.aspect_ratio),
                           hintText: "Property Area",
                           labelText: "Enter Total Area",
                           isPassword: false,
@@ -403,7 +445,7 @@ class PostForm extends GetView<ThemeChangeController> {
                       Container(
                         color: Colors.white,
                         height: 500,
-                        width: width * 1 / 4.2,
+                        width: width * .19,
                       ),
                     ],
                   ),
@@ -415,7 +457,11 @@ class PostForm extends GetView<ThemeChangeController> {
                       Container(
                         color: Colors.white,
                         height: 500,
-                        width: width * 1 / 4.2,
+                        width: width * .19,
+                        child: ListView.builder(
+                          itemBuilder: amenitiesBuilder,
+                          itemCount: amenitiesCount,
+                        ),
                       ),
                     ],
                   )

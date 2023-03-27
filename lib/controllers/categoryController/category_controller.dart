@@ -14,8 +14,10 @@ import 'package:http/http.dart' as http;
 class CategoryController extends GetxController {
   var token = ''.obs;
   var category = <CategoryModel>[].obs;
+  var subCategory = <SubCategoryModel>[].obs;
   // var singleCategory = CreateCategoryModel().obs;
   var selectedItemName = ''.obs;
+  var subCategorySelectedItemName = '3bhk'.obs;
   var imageUrl = ''.obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
 
@@ -34,6 +36,19 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       category.value = categoryModelFromJson(response.body);
       selectedItemName.value = category.first.name!;
+    } else {}
+  }
+
+  Future<void> getSubCategories(String id) async {
+    var response = await http
+        .get(Uri.parse(baseUrl + allCategory + subCategoryUrl + id), headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    });
+    if (response.statusCode == 200) {
+      print(response.body);
+      subCategory.value = subCategoryModelFromJson(response.body);
+      subCategorySelectedItemName.value = subCategory.first.name!;
     } else {}
   }
 

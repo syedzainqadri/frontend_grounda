@@ -13,6 +13,7 @@ String updateProfile = '/profile/updateProfile';
 String profileById = '/profile/';
 String deleteProfile = '/profile/deleteProfile/';
 String allCategory = '/category/';
+String subCategoryUrl = 'subCategories/';
 String createCategory = '/category/createCategory';
 String deleteCategory = '/category/deleteCategory/';
 String updateCategory = '/category/updateCategory';
