@@ -98,16 +98,39 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           postShortDescriptionController:
                               postShortDescriptionController,
                           contentController: contentController,
-                          dropDownList: categoryController.category
+                          categoryDropDownList: categoryController.category
                               .map<DropdownMenuItem<String>>((value) {
                             return DropdownMenuItem<String>(
                               value: value.name,
                               child: Text(value.name!),
                             );
                           }).toList(),
-                          dropDownValue:
+                          categoryDropDownValue:
                               categoryController.selectedItemName.value,
-                          onChange: (selectedValue) {
+                          categoryOnChange: (selectedValue) {
+                            categoryController.selectedItemName.value =
+                                selectedValue;
+                            for (int i = 0;
+                                i < categoryController.category.length;
+                                i++) {
+                              if (categoryController.selectedItemName ==
+                                  categoryController.category[i].name) {
+                                selectedItemId.value =
+                                    categoryController.category[i].id!;
+                              }
+                            }
+                          },
+                          //TODO: //create the sub category crud and add it here
+                          subCategoryDropDownList: categoryController.category
+                              .map<DropdownMenuItem<String>>((value) {
+                            return DropdownMenuItem<String>(
+                              value: value.name,
+                              child: Text(value.name!),
+                            );
+                          }).toList(),
+                          subCategoryDropDownValue:
+                              categoryController.selectedItemName.value,
+                          subCategoryOnChange: (selectedValue) {
                             categoryController.selectedItemName.value =
                                 selectedValue;
                             for (int i = 0;
