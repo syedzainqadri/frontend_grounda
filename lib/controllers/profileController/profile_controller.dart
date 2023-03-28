@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/models/contactPersonModel/contact_person_model.dart';
 import 'package:frontend_grounda/models/userModel/profile_model.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,6 +9,7 @@ import '../../utils/global_variable.dart';
 
 class ProfileController extends GetxController {
   var profile = ProfileModel().obs;
+  var contactPerson = ContactPerson().obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var id = ''.obs;
@@ -32,6 +34,13 @@ class ProfileController extends GetxController {
   final Rx<TextEditingController> phoneNumberController =
       TextEditingController().obs;
   final Rx<TextEditingController> postCodeController =
+      TextEditingController().obs;
+  final Rx<TextEditingController> landlineController =
+      TextEditingController().obs;
+  final Rx<TextEditingController> emailController = TextEditingController().obs;
+  final Rx<TextEditingController> contactPersonNameController =
+      TextEditingController().obs;
+  final Rx<TextEditingController> contactMobileNumberCodeController =
       TextEditingController().obs;
 
   @override
@@ -59,6 +68,11 @@ class ProfileController extends GetxController {
     String latitude,
     String images,
     int user,
+    String email,
+    String mobilePhone,
+    String landLine,
+    String contactPersonName,
+    String contactPersonType,
   ) async {
     var bodyPrepare = {
       "firstName": firstName,
@@ -73,7 +87,12 @@ class ProfileController extends GetxController {
       "longitude": longitude,
       "latitude": latitude,
       "images": images,
-      "user": user
+      "user": user,
+      "email": email,
+      "mobilePhone": mobilePhone,
+      "landLine": landLine,
+      "contactPersonName": contactPersonName,
+      "contactPersonType": contactPersonType
     };
     var response = await http.post(Uri.parse(baseUrl + createProfile),
         body: jsonEncode(bodyPrepare),
@@ -103,6 +122,11 @@ class ProfileController extends GetxController {
     String latitude,
     String images,
     int pid,
+    String email,
+    String mobilePhone,
+    String landLine,
+    String contactPersonName,
+    String contactPersonType,
   ) async {
     var bodyPrepare = {
       'id': pid,
@@ -118,6 +142,11 @@ class ProfileController extends GetxController {
       "longitude": longitude,
       "latitude": latitude,
       "images": images,
+      "email": email,
+      "mobilePhone": mobilePhone,
+      "landLine": landLine,
+      "contactPersonName": contactPersonName,
+      "contactPersonType": contactPersonType
     };
     var response = await http.put(Uri.parse(baseUrl + updateProfile),
         body: jsonEncode(bodyPrepare),
@@ -142,6 +171,8 @@ class ProfileController extends GetxController {
         });
     if (response.statusCode == 200 && response.body != 'null') {
       profile.value = profileModelFromJson(response.body);
+      var cpid = profile.value.postContactId!;
+      await getContactPersonDetails(cpid.toString());
       firstNameController.value.text = profile.value.firstName!;
       lastNameController.value.text = profile.value.lastName!;
       address1Controller.value.text = profile.value.addressLine1!;
@@ -158,6 +189,24 @@ class ProfileController extends GetxController {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
+    }
+  }
+
+  Future<void> getContactPersonDetails(String id) async {
+    var response = await http
+        .get(Uri.parse(baseUrl + getContactDetailsUrl + id), headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token"
+    });
+    if (response.statusCode == 200 && response.body != 'null') {
+      contactPerson.value = contactPersonFromJson(response.body);
+      emailController.value.text = contactPerson.value.email!;
+      landlineController.value.text = contactPerson.value.landLine!;
+      contactMobileNumberCodeController.value.text = contactPerson.value.phone!;
+      contactPersonNameController.value.text = contactPerson.value.name!;
+    } else {
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
     }
   }
 

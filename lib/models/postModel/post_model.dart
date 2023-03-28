@@ -22,12 +22,12 @@ class PostModel {
     this.longDescription,
     this.longitude,
     this.latitude,
-    this.content,
     this.plotNumber,
     this.price,
     this.city,
     this.area,
     this.isInstallmentAvailable,
+    this.showContactDetails,
     this.advanceAmount,
     this.noOfInstallments,
     this.monthlyInstallments,
@@ -35,9 +35,6 @@ class PostModel {
     this.areaSizeUnit,
     this.bedroooms,
     this.bathroom,
-    this.contactEmail,
-    this.contactMobile,
-    this.contactLandline,
     this.featureAndAmenities,
     this.categoryId,
     this.authorId,
@@ -57,12 +54,12 @@ class PostModel {
   String? longDescription;
   String? longitude;
   String? latitude;
-  String? content;
   String? plotNumber;
   int? price;
   String? city;
   String? area;
   bool? isInstallmentAvailable;
+  bool? showContactDetails;
   int? advanceAmount;
   int? noOfInstallments;
   int? monthlyInstallments;
@@ -70,9 +67,6 @@ class PostModel {
   String? areaSizeUnit;
   int? bedroooms;
   int? bathroom;
-  String? contactEmail;
-  String? contactMobile;
-  String? contactLandline;
   String? featureAndAmenities;
   int? categoryId;
   int? authorId;
@@ -92,12 +86,12 @@ class PostModel {
         longDescription: json["longDescription"],
         longitude: json["longitude"],
         latitude: json["latitude"],
-        content: json["content"],
         plotNumber: json["plotNumber"],
         price: json["price"],
         city: json["city"],
         area: json["area"],
         isInstallmentAvailable: json["isInstallmentAvailable"],
+        showContactDetails: json["showContactDetails"],
         advanceAmount: json["advanceAmount"],
         noOfInstallments: json["noOfInstallments"],
         monthlyInstallments: json["monthlyInstallments"],
@@ -105,9 +99,6 @@ class PostModel {
         areaSizeUnit: json["areaSizeUnit"],
         bedroooms: json["bedroooms"],
         bathroom: json["bathroom"],
-        contactEmail: json["contactEmail"],
-        contactMobile: json["contactMobile"],
-        contactLandline: json["contactLandline"],
         featureAndAmenities: json["featureAndAmenities"],
         categoryId: json["categoryId"],
         authorId: json["authorId"],
@@ -128,12 +119,12 @@ class PostModel {
         "longDescription": longDescription,
         "longitude": longitude,
         "latitude": latitude,
-        "content": content,
         "plotNumber": plotNumber,
         "price": price,
         "city": city,
         "area": area,
         "isInstallmentAvailable": isInstallmentAvailable,
+        "showContactDetails": showContactDetails,
         "advanceAmount": advanceAmount,
         "noOfInstallments": noOfInstallments,
         "monthlyInstallments": monthlyInstallments,
@@ -141,9 +132,6 @@ class PostModel {
         "areaSizeUnit": areaSizeUnit,
         "bedroooms": bedroooms,
         "bathroom": bathroom,
-        "contactEmail": contactEmail,
-        "contactMobile": contactMobile,
-        "contactLandline": contactLandline,
         "featureAndAmenities": featureAndAmenities,
         "categoryId": categoryId,
         "authorId": authorId,

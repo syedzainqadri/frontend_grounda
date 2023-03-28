@@ -101,3 +101,4 @@ String reviewByPostId = '/post/';
 String updateReviewUrl = '/updateReview';
 String deleteReview = '/deleteReview/';
 // RxBool themeMode = ThemeChangeController().isDarkMode;
+String getContactDetailsUrl = '/postContact/';

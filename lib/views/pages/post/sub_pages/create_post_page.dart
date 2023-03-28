@@ -49,6 +49,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   var isPublished = false.obs;
   var hasInstallments = false.obs;
   var posessionReady = false.obs;
+  var showContactDetials = false.obs;
   var catId = ''.obs;
   RxBool amenitiesBoolValue = false.obs;
   RxList selectedAmenities = [].obs;
@@ -176,7 +177,13 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                               ],
                             );
                           },
+                          //show contact details
+                          showContactDetails: showContactDetials.value,
+                          showContactDetailsChanges: (value) {
+                            showContactDetials.value = value;
+                          },
                           buttonText: catId.value == '' ? 'Submit' : 'Update',
+                          //TODO: edit functions here
                           formSubmit: () async {
                             if (catId.value == '') {
                               Get.defaultDialog(

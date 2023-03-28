@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
+import 'package:frontend_grounda/widgets/open_street_map.dart';
 import 'package:frontend_grounda/widgets/text_ediotor.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
@@ -59,6 +60,8 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.mapTextController,
       required this.amenitiesCount,
       required this.amenitiesBuilder,
+      required this.showContactDetails,
+      required this.showContactDetailsChanges,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -68,9 +71,11 @@ class PostForm extends GetView<ThemeChangeController> {
   dynamic subCategoryOnChange;
   dynamic statusChanges;
   dynamic posessionChanges;
+  dynamic showContactDetailsChanges;
   dynamic installmentStatusChanges;
   dynamic formSubmit;
   bool posessionValue;
+  bool showContactDetails;
   bool statusValue;
   bool hasInstallmentValue;
   dynamic uploadImages;
@@ -120,7 +125,7 @@ class PostForm extends GetView<ThemeChangeController> {
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         child: SizedBox(
-          height: hasInstallmentValue ? height * 1.8 : height * 1.8,
+          height: height * 2.2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -467,28 +472,6 @@ class PostForm extends GetView<ThemeChangeController> {
                                   value: hasInstallmentValue,
                                   onChanged: installmentStatusChanges,
                                 ),
-                                // SizedBox(
-                                //   height: height * .02,
-                                // ),
-                                // //hasINstallment
-                                // hasInstallmentValue
-                                //     ? DefaultTextField(
-                                //         hintText: "Number of Installments",
-                                //         labelText: "No of Installments",
-                                //         isPassword: false,
-                                //         textEditingController:
-                                //             noOfInstallmentController,
-                                //       )
-                                //     : const Offstage(),
-                                // hasInstallmentValue
-                                //     ? DefaultTextField(
-                                //         hintText: "Monthly Installment Value",
-                                //         labelText: "Monthly Installement Value",
-                                //         isPassword: false,
-                                //         textEditingController:
-                                //             monthlyInstallmentValueController,
-                                //       )
-                                //     : const Offstage(),
                               ],
                             ),
                           ),
@@ -642,6 +625,28 @@ class PostForm extends GetView<ThemeChangeController> {
                                 textEditingController: bathRoomController,
                               )
                             : const Offstage(),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0, left: 0.0),
+                          child: Transform.scale(
+                            scale: .8,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Show Contact Details",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                SizedBox(
+                                  width: width * .01,
+                                ),
+                                CupertinoSwitch(
+                                  activeColor: kPrimaryColor,
+                                  value: showContactDetails,
+                                  onChanged: showContactDetailsChanges,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -652,11 +657,14 @@ class PostForm extends GetView<ThemeChangeController> {
                     children: [
                       Container(
                         color: Colors.white,
-                        height: 500,
+                        height: 300,
                         width: width * .19,
-                        child: ListView.builder(
-                          itemBuilder: amenitiesBuilder,
-                          itemCount: amenitiesCount,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListView.builder(
+                            itemBuilder: amenitiesBuilder,
+                            itemCount: amenitiesCount,
+                          ),
                         ),
                       ),
                     ],
@@ -664,140 +672,55 @@ class PostForm extends GetView<ThemeChangeController> {
                 ],
               ),
 
-              // SizedBox(
-              //   width: width * 0.015,
-              // ),
-              // SizedBox(
-              //   width: width * 0.13,
-              //   child: CountryPickerDropdown(
-              //     initialValue: 'PK',
-              //     itemBuilder: _buildDropdownItem,
-              //     itemFilter: filtered
-              //         ? (c) => ['PK', 'DE', 'GB', 'CN'].contains(c.isoCode)
-              //         : null,
-              //     onValuePicked: (Country? country) {
-              //       print("${country?.name}");
-              //     },
-              //   ),
-              // ),
-
-              //     SizedBox(
-              //       width: width * .02,
-              //     ),
-
-              //           // Contact Details
-              //           SizedBox(
-              //             height: height * 0.04,
-              //           ),
-              //           Text(
-              //             "Contact Person Details",
-              //             style: Theme.of(context).textTheme.bodyLarge,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.015,
-              //           ),
-              //           DefaultTextField(
-              //             hintText: "Contact Person's Name",
-              //             labelText: "Contact Person's Name",
-              //             isPassword: false,
-              //             textEditingController: contactPersonNameController,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.015,
-              //           ),
-              //           DefaultTextField(
-              //             hintText: "Contact Person's Email",
-              //             labelText: "Contact Person's Email",
-              //             isPassword: false,
-              //             textEditingController: contactPersonEmailController,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.015,
-              //           ),
-              //           DefaultTextField(
-              //             hintText: "Contact Person's Mobile",
-              //             labelText: "Contact Person's Mobile",
-              //             isPassword: false,
-              //             textEditingController: contactPersonsMobileController,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.015,
-              //           ),
-              //           DefaultTextField(
-              //             hintText: "Contact Person's Landline",
-              //             labelText: "Contact Person's Landline",
-              //             isPassword: false,
-              //             textEditingController:
-              //                 contactPersonsLandlineController,
-              //           ),
-              //           // Near by Location
-              //           SizedBox(
-              //             height: height * 0.04,
-              //           ),
-              //           Text(
-              //             "Near By Location",
-              //             style: Theme.of(context).textTheme.bodyLarge,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.15,
-              //           ),
-              //           Container(
-              //             width: width * .22,
-              //             decoration: const BoxDecoration(
-              //               color: Colors.white,
-              //               borderRadius: BorderRadius.all(
-              //                 Radius.circular(15),
-              //               ),
-              //             ),
-              //             child: const Padding(
-              //               padding: EdgeInsets.all(8.0),
-              //               child: Text("List of Location"),
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-
-              //     SizedBox(
-              //       width: width * .02,
-              //     ),
-
-              //     // Map
-              //     SizedBox(
-              //       width: width * .2,
-              //       height: height * .4,
-              //       child: OpenStreetMap(
-              //         onPicked: (pickedData) {
-              //           print(pickedData.latLong.latitude);
-              //           print(pickedData.latLong.longitude);
-              //           print(pickedData.address);
-              //         },
-              //       ),
-              //     ),
-              //   ],
-              // ),
-
               SizedBox(
                 height: height * 0.04,
               ),
-
+              Center(
+                child: SizedBox(
+                  width: width * .4,
+                  height: height * .4,
+                  child: OpenStreetMap(
+                    onPicked: (pickedData) {
+                      print(pickedData.latLong.latitude);
+                      print(pickedData.latLong.longitude);
+                      print(pickedData.address);
+                    },
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: height * 0.04,
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                 child: Transform.scale(
                   scale: 1,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                        "Status",
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      Row(
+                        children: [
+                          Text(
+                            "Status",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          SizedBox(
+                            width: width * .01,
+                          ),
+                          CupertinoSwitch(
+                            activeColor: kPrimaryColor,
+                            value: statusValue,
+                            onChanged: statusChanges,
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: width * .01,
-                      ),
-                      CupertinoSwitch(
-                        activeColor: kPrimaryColor,
-                        value: statusValue,
-                        onChanged: statusChanges,
+                      DefaultButton(
+                        primaryColor: kPrimaryColor,
+                        hoverColor: kDarkColor,
+                        buttonText: buttonText,
+                        width: width * .2,
+                        height: height * .05,
+                        onPressed: formSubmit,
                       ),
                     ],
                   ),
@@ -806,25 +729,16 @@ class PostForm extends GetView<ThemeChangeController> {
               SizedBox(
                 height: height * 0.015,
               ),
-              DefaultButton(
-                primaryColor: kPrimaryColor,
-                hoverColor: kDarkColor,
-                buttonText: buttonText,
-                width: width * .2,
-                height: height * .05,
-                onPressed: formSubmit,
-              ),
-              SizedBox(
-                height: height * 0.015,
-              ),
-              InkWell(
-                onTap: onTap,
-                child: Text(
-                  cancelText,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: kPrimaryColor),
+              Center(
+                child: InkWell(
+                  onTap: onTap,
+                  child: Text(
+                    cancelText,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: kPrimaryColor),
+                  ),
                 ),
               ),
             ],
