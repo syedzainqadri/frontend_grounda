@@ -11,6 +11,7 @@ import 'package:frontend_grounda/controllers/forumPost/forum_post_controller.dar
 import 'package:frontend_grounda/controllers/menuController/sidebar_controller.dart';
 import 'package:frontend_grounda/controllers/orderController/order_controller.dart';
 import 'package:frontend_grounda/controllers/pageController.dart/page_controller.dart';
+import 'package:frontend_grounda/controllers/paymentMethodController/payment_method_controller.dart';
 import 'package:frontend_grounda/controllers/postController/post_comment_controller.dart';
 import 'package:frontend_grounda/controllers/postController/post_controller.dart';
 import 'package:frontend_grounda/controllers/productsController/products_controller.dart';
@@ -49,5 +50,7 @@ class AllBindings implements Bindings {
     Get.lazyPut<ReviewsController>(() => ReviewsController(), fenix: true);
     Get.lazyPut<ProjectController>(() => ProjectController(), fenix: true);
     Get.lazyPut<WishListController>(() => WishListController(), fenix: true);
+    Get.lazyPut<PaymentMethodController>(() => PaymentMethodController(),
+        fenix: true);
   }
 }

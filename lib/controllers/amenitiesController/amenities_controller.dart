@@ -63,18 +63,16 @@ class AmenitiesController extends GetxController {
 
   Future<void> create(
     String name,
-    String slug,
-    bool isPublished,
-    int catId,
     String description,
+    String icon,
+    bool status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "name": name,
-      "slug": slug,
       "description": description,
-      "published": isPublished,
-      "categoryId": catId
+      "status": status,
+      "icon": icon
     };
 
     var response = await http.post(
@@ -100,19 +98,17 @@ class AmenitiesController extends GetxController {
   Future<void> updateAmenities(
     int id,
     String name,
-    String slug,
-    bool isPublished,
-    int catId,
     String description,
+    String icon,
+    bool status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
       "name": name,
-      "slug": slug,
       "description": description,
-      "published": isPublished,
-      "categoryId": catId
+      "status": status,
+      "icon": icon
     };
 
     var response = await http.put(
@@ -136,12 +132,12 @@ class AmenitiesController extends GetxController {
   }
 
   Future<void> delete(
-    String id,
+    int id,
   ) async {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteAmenities + id,
+        baseUrl + deleteAmenities + id.toString(),
       ),
       headers: {
         "Content-Type": "application/json",
