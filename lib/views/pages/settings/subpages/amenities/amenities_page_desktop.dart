@@ -21,8 +21,6 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
       Get.find<AmenitiesController>();
   TextEditingController amenityTitleController = TextEditingController();
   TextEditingController amenityDescriptionController = TextEditingController();
-  TextEditingController amenityIconController = TextEditingController();
-  TextEditingController amenityStatusController = TextEditingController();
   List<AmenitiesModel> allamenitiesModel = [];
 
   var selectedItemId = 0.obs;
@@ -72,8 +70,20 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                           amenityTitleController: amenityTitleController,
                           amenityDescriptionController:
                               amenityDescriptionController,
-                          amenityIconController: amenityIconController,
-                          amenityStatusController: amenityStatusController,
+                          iconButtonText: "Upload Icon",
+                          iconImageUrl: amenitiesController.iconImageUrl.value,
+                          onIconPress: () {
+                            Get.defaultDialog(
+                              barrierDismissible: false,
+                              title: 'Uploading Amenity Icon',
+                              content: const Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor),
+                              ),
+                            );
+                            amenitiesController.getIcon();
+                            Navigator.pop(context);
+                          },
                           buttonText:
                               amenityId.value == '' ? 'Submit' : 'Update',
                           formSubmit: () async {
@@ -89,7 +99,7 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                               await amenitiesController.create(
                                   amenityTitleController.text,
                                   amenityDescriptionController.text,
-                                  amenityIconController.text,
+                                  amenitiesController.iconImageUrl.value,
                                   isPublished.value);
                               await amenitiesController.getAll();
                               Navigator.pop(context);
@@ -106,12 +116,12 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                 int.parse(amenityId.value),
                                 amenityTitleController.text,
                                 amenityDescriptionController.text,
-                                amenityIconController.text,
+                                amenitiesController.iconImageUrl.value,
                                 isPublished.value,
                               );
                               amenityTitleController.text = '';
                               amenityDescriptionController.text = '';
-                              amenityIconController.text = '';
+                              amenitiesController.iconImageUrl.value = '';
                               amenityId.value = '';
                               await amenitiesController.getAll();
                               Navigator.pop(context);
@@ -122,13 +132,12 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                           onTap: () async {
                             amenityTitleController.text = '';
                             amenityDescriptionController.text = '';
-                            amenityIconController.text = '';
+                            amenitiesController.iconImageUrl.value = '';
                             selectedItemId.value = 0;
                             amenityId.value = '';
                             await amenitiesController.getAll();
                           },
-                          statusValue:
-                              isPublished.value == 'ACTIVE' ? true : false,
+                          statusValue: isPublished.value,
                           statusChanges: (value) {
                             isPublished.value = value;
                           },
@@ -275,7 +284,8 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                         .amenities[index]
                                                         .description!;
 
-                                                amenityIconController.text =
+                                                amenitiesController
+                                                        .iconImageUrl.value =
                                                     amenitiesController
                                                         .amenities[index].icon!;
 
