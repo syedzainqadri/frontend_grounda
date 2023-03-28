@@ -45,9 +45,11 @@ class SettingsPage extends GetView<ThemeChangeController> {
                 SettingsMenuCard(
                   height: height,
                   width: width,
-                  text: 'Profile Settings',
+                  text: 'Amenities',
                   icon: 'assets/icons/person.svg',
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed('/settings/amenities');
+                  },
                 ),
                 SettingsMenuCard(
                   height: height,
