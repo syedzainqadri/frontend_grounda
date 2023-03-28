@@ -44,7 +44,7 @@ class ProfileEditPage extends StatelessWidget {
               children: [
                 InkWell(
                   child: Obx(
-                    () => profileController.profile.value.images == null
+                    () => profileController.profile.value.images == ''
                         ? Center(
                             child: SizedBox(
                                 width: width * .05,
@@ -294,13 +294,14 @@ class ProfileEditPage extends StatelessWidget {
                     SizedBox(
                       width: width * .02,
                     ),
-                    profileController.firstNameController.value.text != ''
+                    profileController.profile.value.id == ''
                         ? DefaultButton(
                             primaryColor: kPrimaryColor,
                             hoverColor: kDarkColor,
                             buttonText: 'Create',
                             onPressed: () async {
                               Get.defaultDialog(
+                                barrierDismissible: false,
                                 title: 'Creating Profile',
                                 content: const CircularProgressIndicator(
                                   color: kPrimaryColor,
@@ -353,6 +354,7 @@ class ProfileEditPage extends StatelessWidget {
                             buttonText: 'Update',
                             onPressed: () async {
                               Get.defaultDialog(
+                                barrierDismissible: false,
                                 title: 'Updating Profile',
                                 content: const CircularProgressIndicator(
                                   color: kPrimaryColor,

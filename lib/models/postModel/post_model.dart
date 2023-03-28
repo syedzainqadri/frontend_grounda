@@ -46,7 +46,7 @@ class PostModel {
 
   int? id;
   String? title;
-  dynamic propertyNumber;
+  int? propertyNumber;
   String? description;
   String? featuredImages;
   String? galleryImages;
@@ -55,14 +55,14 @@ class PostModel {
   String? longitude;
   String? latitude;
   String? plotNumber;
-  int? price;
+  double? price;
   String? city;
   String? area;
   bool? isInstallmentAvailable;
   bool? showContactDetails;
-  int? advanceAmount;
+  double? advanceAmount;
   int? noOfInstallments;
-  int? monthlyInstallments;
+  double? monthlyInstallments;
   bool? readyForPossession;
   String? areaSizeUnit;
   int? bedroooms;
@@ -71,7 +71,7 @@ class PostModel {
   int? categoryId;
   int? authorId;
   int? slugId;
-  String? status;
+  bool? status;
   DateTime? createdAt;
   DateTime? updatedAt;
 

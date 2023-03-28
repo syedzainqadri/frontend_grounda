@@ -25,7 +25,7 @@ class ProfileModel {
     this.images,
     this.longitude,
     this.latitude,
-    this.published,
+    this.status,
     this.postContactId,
     this.userId,
   });
@@ -44,7 +44,7 @@ class ProfileModel {
   String? images;
   String? longitude;
   String? latitude;
-  bool? published;
+  bool? status;
   int? postContactId;
   int? userId;
 
@@ -63,7 +63,7 @@ class ProfileModel {
         images: json["images"],
         longitude: json["longitude"],
         latitude: json["latitude"],
-        published: json["published"],
+        status: json["status"],
         postContactId: json["postContactId"],
         userId: json["userId"],
       );
@@ -83,7 +83,7 @@ class ProfileModel {
         "images": images,
         "longitude": longitude,
         "latitude": latitude,
-        "published": published,
+        "status": status,
         "postContactId": postContactId,
         "userId": userId,
       };

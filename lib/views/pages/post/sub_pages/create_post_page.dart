@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/amenitiesController/amenities_controller.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 import 'package:frontend_grounda/controllers/postController/post_controller.dart';
+import 'package:frontend_grounda/controllers/profileController/profile_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/post/widgets/post_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
+import 'package:frontend_grounda/widgets/open_street_map.dart';
 import 'package:get/get.dart';
 import 'package:map_picker/map_picker.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
@@ -13,8 +17,8 @@ import 'package:quill_html_editor/quill_html_editor.dart';
 class CreatePostPage extends GetView<ThemeChangeController> {
   CreatePostPage({Key? key}) : super(key: key);
   final TextEditingController searchCategory = TextEditingController();
-  QuillEditorController contentController = QuillEditorController();
-  TextEditingController categoryNameController = TextEditingController();
+  QuillEditorController descriptionController = QuillEditorController();
+  TextEditingController postTitleController = TextEditingController();
   TextEditingController postShortDescriptionController =
       TextEditingController();
   TextEditingController cityController = TextEditingController();
@@ -44,6 +48,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   CategoryController categoryController = Get.find<CategoryController>();
   PostController postController = Get.find<PostController>();
   AmenitiesController amenitiesController = Get.find<AmenitiesController>();
+  ProfileController profileController = Get.find<ProfileController>();
   var selectedItemId = 0.obs;
   var subCategorySelectedItemId = 0.obs;
   var isPublished = false.obs;
@@ -51,6 +56,8 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   var posessionReady = false.obs;
   var showContactDetials = false.obs;
   var catId = ''.obs;
+  var longitude = ''.obs;
+  var latitude = ''.obs;
   RxBool amenitiesBoolValue = false.obs;
   RxList selectedAmenities = [].obs;
 
@@ -94,16 +101,25 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           ),
                         )
                       : PostForm(
+                          map: OpenStreetMap(
+                            onPicked: (pickedData) {
+                              print(pickedData.latLong.latitude);
+                              print(pickedData.latLong.longitude);
+                              print(pickedData.address);
+                              longitude.value = pickedData.latLong.longitude;
+                              latitude.value = pickedData.latLong.latitude;
+                            },
+                          ),
                           mapPickerController: mapPickerController,
                           mapTextController: mapTextController,
                           purposeController: purposeController,
                           propertyTypeController: propertyTypeController,
                           propertySubTypeController: propertySubTypeController,
                           imageListUrl: const [],
-                          postTitleController: categoryNameController,
+                          postTitleController: postTitleController,
                           postShortDescriptionController:
                               postShortDescriptionController,
-                          contentController: contentController,
+                          contentController: descriptionController,
                           categoryDropDownList: categoryController.category
                               .map<DropdownMenuItem<String>>((value) {
                             return DropdownMenuItem<String>(
@@ -187,58 +203,82 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           formSubmit: () async {
                             if (catId.value == '') {
                               Get.defaultDialog(
-                                title: 'Creating Category',
+                                title: 'Creating Post',
                                 content: const Center(
                                   child: CircularProgressIndicator(
                                       color: kPrimaryColor),
                                 ),
                               );
                               var description =
-                                  await contentController.getText();
-                              await categoryController.createNewCategory(
-                                  categoryController.imageUrl.value,
-                                  categoryNameController.text,
-                                  postShortDescriptionController.text,
-                                  description,
-                                  selectedItemId.value,
-                                  isPublished.value);
-                              await categoryController.getCategories();
+                                  await descriptionController.getText();
+                              var propertyNumber = Random().nextInt(10000000);
+                              await postController.create(
+                                postTitleController.text,
+                                propertyNumber,
+                                description,
+                                postController.imageUrl.first,
+                                postController.imageUrl.toString(),
+                                videoUrlController.text,
+                                description,
+                                longitude.value,
+                                latitude.value,
+                                plotNumberController.text,
+                                //TODO: convert price to double
+                                double.parse(priceController.text),
+                                cityController.text,
+                                areaController.text,
+                                hasInstallments.value,
+                                showContactDetials.value,
+                                double.parse(advanceController.text),
+                                int.parse(noOfInstallmentController.text),
+                                double.parse(monthlyInstallmentController.text),
+                                posessionReady.value,
+                                "",
+                                int.parse(bedroomController.text),
+                                int.parse(bathroomController.text),
+                                selectedAmenities.toString(),
+                                int.parse(userID.toString()),
+                                int.parse(catId.toString()),
+                                isPublished.value,
+                                postTitleController.text +
+                                    propertyNumber.toString(),
+                              );
                               Navigator.pop(context);
                             } else {
-                              Get.defaultDialog(
-                                title: 'Updating Category',
-                                content: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kPrimaryColor),
-                                ),
-                              );
-                              var description =
-                                  await contentController.getText();
-                              await categoryController.updateThisCategory(
-                                  int.parse(catId.value),
-                                  categoryController.imageUrl.value,
-                                  categoryNameController.text,
-                                  postShortDescriptionController.text,
-                                  description,
-                                  selectedItemId.value,
-                                  isPublished.value);
-                              categoryNameController.text = '';
-                              postShortDescriptionController.text = '';
-                              contentController.clear();
-                              selectedItemId.value = 0;
-                              catId.value = '';
-                              await categoryController.getCategories();
-                              Navigator.pop(context);
+                              // Get.defaultDialog(
+                              //   title: 'Updating Category',
+                              //   content: const Center(
+                              //     child: CircularProgressIndicator(
+                              //         color: kPrimaryColor),
+                              //   ),
+                              // );
+                              // var description =
+                              //     await contentController.getText();
+                              // await categoryController.updateThisCategory(
+                              //     int.parse(catId.value),
+                              //     categoryController.imageUrl.value,
+                              //     categoryNameController.text,
+                              //     postShortDescriptionController.text,
+                              //     description,
+                              //     selectedItemId.value,
+                              //     isPublished.value);
+                              // categoryNameController.text = '';
+                              // postShortDescriptionController.text = '';
+                              // contentController.clear();
+                              // selectedItemId.value = 0;
+                              // catId.value = '';
+                              // await categoryController.getCategories();
+                              // Navigator.pop(context);
                             }
                           },
                           cancelText: catId.value == '' ? '' : 'Cancel Update',
                           onTap: () async {
-                            categoryNameController.text = '';
-                            postShortDescriptionController.text = '';
-                            contentController.clear();
-                            selectedItemId.value = 0;
-                            catId.value = '';
-                            await categoryController.getCategories();
+                            // categoryNameController.text = '';
+                            // postShortDescriptionController.text = '';
+                            // contentController.clear();
+                            // selectedItemId.value = 0;
+                            // catId.value = '';
+                            // await categoryController.getCategories();
                           },
                           pictureButtonText:
                               categoryController.imageUrl.value.isEmpty
@@ -252,7 +292,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                                     color: kPrimaryColor),
                               ),
                             );
-                            await categoryController.getImage();
+                            await postController.getImage();
                             Navigator.pop(context);
                           },
                           statusValue: isPublished.value,

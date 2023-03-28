@@ -65,6 +65,7 @@ dependencies:
   open_street_map_search_and_pick: ^0.0.16
   permission_handler: ^10.2.0
   geolocator: ^9.0.2
+  image_picker_web: ^3.0.0+1
 
 
 

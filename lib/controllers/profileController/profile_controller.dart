@@ -15,7 +15,9 @@ class ProfileController extends GetxController {
   var id = ''.obs;
   var countryCode = ''.obs;
   var countryName = 'PK'.obs;
-  var imageUrl = ''.obs;
+  var imageUrl =
+      'https://static.vecteezy.com/system/resources/previews/009/734/564/large_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg'
+          .obs;
   var isLoading = false.obs;
   final Rx<TextEditingController> firstNameController =
       TextEditingController().obs;
@@ -92,7 +94,8 @@ class ProfileController extends GetxController {
       "mobilePhone": mobilePhone,
       "landLine": landLine,
       "contactPersonName": contactPersonName,
-      "contactPersonType": contactPersonType
+      "contactPersonType": contactPersonType,
+      "status": true
     };
     var response = await http.post(Uri.parse(baseUrl + createProfile),
         body: jsonEncode(bodyPrepare),
@@ -156,6 +159,8 @@ class ProfileController extends GetxController {
         });
     if (response.statusCode == 200) {
       profile.value = profileModelFromJson(response.body);
+      Get.snackbar('Success', 'Profile Updated',
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
     } else {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);

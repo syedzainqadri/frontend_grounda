@@ -62,6 +62,7 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.amenitiesBuilder,
       required this.showContactDetails,
       required this.showContactDetailsChanges,
+      required this.map,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -108,6 +109,7 @@ class PostForm extends GetView<ThemeChangeController> {
   QuillEditorController contentController;
   Widget? Function(BuildContext, int) amenitiesBuilder;
   int amenitiesCount;
+  OpenStreetMap map;
 
   MapPickerController mapPickerController;
   TextEditingController mapTextController;
@@ -679,13 +681,7 @@ class PostForm extends GetView<ThemeChangeController> {
                 child: SizedBox(
                   width: width * .4,
                   height: height * .4,
-                  child: OpenStreetMap(
-                    onPicked: (pickedData) {
-                      print(pickedData.latLong.latitude);
-                      print(pickedData.latLong.longitude);
-                      print(pickedData.address);
-                    },
-                  ),
+                  child: map,
                 ),
               ),
               SizedBox(
