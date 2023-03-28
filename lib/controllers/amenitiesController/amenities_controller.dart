@@ -78,7 +78,7 @@ class AmenitiesController extends GetxController {
       "status": status,
       "icon": icon
     };
-
+    print(bodyPrepare);
     var response = await http.post(
       Uri.parse(
         baseUrl + createAmenities,
@@ -178,6 +178,7 @@ class AmenitiesController extends GetxController {
           .putData(fileBytes);
       final url = upload.ref.getDownloadURL().then((value) {
         iconImageUrl.value = value;
+        print(iconImageUrl.value);
       });
     }
   }

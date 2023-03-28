@@ -25,7 +25,7 @@ class AmenitiesModel {
   int? id;
   String? name;
   String? description;
-  dynamic icon;
+  String? icon;
   DateTime? createdAt;
   DateTime? updatedAt;
   bool? status;

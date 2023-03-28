@@ -60,88 +60,79 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: amenitiesController.amenities.isEmpty
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: kPrimaryColor,
-                          ),
-                        )
-                      : AmenitiesForm(
-                          amenityTitleController: amenityTitleController,
-                          amenityDescriptionController:
-                              amenityDescriptionController,
-                          iconButtonText: "Upload Icon",
-                          iconImageUrl: amenitiesController.iconImageUrl.value,
-                          onIconPress: () {
-                            Get.defaultDialog(
-                              barrierDismissible: false,
-                              title: 'Uploading Amenity Icon',
-                              content: const Center(
-                                child: CircularProgressIndicator(
-                                    color: kPrimaryColor),
-                              ),
-                            );
-                            amenitiesController.getIcon();
-                            Navigator.pop(context);
-                          },
-                          buttonText:
-                              amenityId.value == '' ? 'Submit' : 'Update',
-                          formSubmit: () async {
-                            if (amenityId.value == '') {
-                              Get.defaultDialog(
-                                title: 'Creating Amenity',
-                                content: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kPrimaryColor),
-                                ),
-                              );
-
-                              await amenitiesController.create(
-                                  amenityTitleController.text,
-                                  amenityDescriptionController.text,
-                                  amenitiesController.iconImageUrl.value,
-                                  isPublished.value);
-                              await amenitiesController.getAll();
-                              Navigator.pop(context);
-                            } else {
-                              Get.defaultDialog(
-                                title: 'Updating Amenity',
-                                content: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kPrimaryColor),
-                                ),
-                              );
-
-                              await amenitiesController.updateAmenities(
-                                int.parse(amenityId.value),
-                                amenityTitleController.text,
-                                amenityDescriptionController.text,
-                                amenitiesController.iconImageUrl.value,
-                                isPublished.value,
-                              );
-                              amenityTitleController.text = '';
-                              amenityDescriptionController.text = '';
-                              amenitiesController.iconImageUrl.value = '';
-                              amenityId.value = '';
-                              await amenitiesController.getAll();
-                              Navigator.pop(context);
-                            }
-                          },
-                          cancelText:
-                              amenityId.value == '' ? '' : 'Cancel Update',
-                          onTap: () async {
-                            amenityTitleController.text = '';
-                            amenityDescriptionController.text = '';
-                            amenitiesController.iconImageUrl.value = '';
-                            selectedItemId.value = 0;
-                            amenityId.value = '';
-                            await amenitiesController.getAll();
-                          },
-                          statusValue: isPublished.value,
-                          statusChanges: (value) {
-                            isPublished.value = value;
-                          },
+                  child: AmenitiesForm(
+                    amenityTitleController: amenityTitleController,
+                    amenityDescriptionController: amenityDescriptionController,
+                    iconButtonText: "Upload Icon",
+                    iconImageUrl: amenitiesController.iconImageUrl.value,
+                    onIconPress: () async {
+                      Get.defaultDialog(
+                        barrierDismissible: false,
+                        title: 'Uploading Amenity Icon',
+                        content: const Center(
+                          child:
+                              CircularProgressIndicator(color: kPrimaryColor),
                         ),
+                      );
+                      await amenitiesController.getIcon();
+                      Navigator.pop(context);
+                    },
+                    buttonText: amenityId.value == '' ? 'Submit' : 'Update',
+                    formSubmit: () async {
+                      if (amenityId.value == '') {
+                        Get.defaultDialog(
+                          title: 'Creating Amenity',
+                          content: const Center(
+                            child:
+                                CircularProgressIndicator(color: kPrimaryColor),
+                          ),
+                        );
+
+                        await amenitiesController.create(
+                            amenityTitleController.text,
+                            amenityDescriptionController.text,
+                            amenitiesController.iconImageUrl.value,
+                            isPublished.value);
+                        await amenitiesController.getAll();
+                        Navigator.pop(context);
+                      } else {
+                        Get.defaultDialog(
+                          title: 'Updating Amenity',
+                          content: const Center(
+                            child:
+                                CircularProgressIndicator(color: kPrimaryColor),
+                          ),
+                        );
+
+                        await amenitiesController.updateAmenities(
+                          int.parse(amenityId.value),
+                          amenityTitleController.text,
+                          amenityDescriptionController.text,
+                          amenitiesController.iconImageUrl.value,
+                          isPublished.value,
+                        );
+                        amenityTitleController.text = '';
+                        amenityDescriptionController.text = '';
+                        amenitiesController.iconImageUrl.value = '';
+                        amenityId.value = '';
+                        await amenitiesController.getAll();
+                        Navigator.pop(context);
+                      }
+                    },
+                    cancelText: amenityId.value == '' ? '' : 'Cancel Update',
+                    onTap: () async {
+                      amenityTitleController.text = '';
+                      amenityDescriptionController.text = '';
+                      amenitiesController.iconImageUrl.value = '';
+                      selectedItemId.value = 0;
+                      amenityId.value = '';
+                      await amenitiesController.getAll();
+                    },
+                    statusValue: isPublished.value,
+                    statusChanges: (value) {
+                      isPublished.value = value;
+                    },
+                  ),
                 ),
               ),
               SizedBox(
@@ -191,151 +182,168 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                       ),
                       SizedBox(
                         height: height * .6,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: amenitiesController.amenities.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Card(
-                              color: controller.isDarkMode.value
-                                  ? kDarkCardColor
-                                  : kCardColor,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                        child: amenitiesController.amenities.isEmpty
+                            ? const Offstage()
+                            : ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: amenitiesController.amenities.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Card(
+                                    color: controller.isDarkMode.value
+                                        ? kDarkCardColor
+                                        : kCardColor,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Row(
                                                 children: [
-                                                  Text(
-                                                    amenitiesController
-                                                        .amenities[index].name!,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        "Status: ",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall,
-                                                      ),
-                                                      amenitiesController
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          amenitiesController
                                                               .amenities[index]
-                                                              .status!
-                                                          ? Text(
-                                                              "Active",
+                                                              .name!,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyLarge,
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              "Status: ",
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .bodySmall!
-                                                                  .copyWith(
-                                                                      color: Colors
-                                                                          .green),
-                                                            )
-                                                          : Text(
-                                                              'UnPublished',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodySmall!
-                                                                  .copyWith(
-                                                                      color: Colors
-                                                                          .red),
+                                                                  .bodySmall,
                                                             ),
-                                                    ],
+                                                            amenitiesController
+                                                                    .amenities[
+                                                                        index]
+                                                                    .status!
+                                                                ? Text(
+                                                                    "Active",
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .bodySmall!
+                                                                        .copyWith(
+                                                                            color:
+                                                                                Colors.green),
+                                                                  )
+                                                                : Text(
+                                                                    'UnPublished',
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .bodySmall!
+                                                                        .copyWith(
+                                                                            color:
+                                                                                Colors.red),
+                                                                  ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            IconButton(
-                                              onPressed: () async {
-                                                amenityTitleController.text =
-                                                    amenitiesController
-                                                        .amenities[index].name!;
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  IconButton(
+                                                    onPressed: () async {
+                                                      amenityTitleController
+                                                              .text =
+                                                          amenitiesController
+                                                              .amenities[index]
+                                                              .name!;
 
-                                                amenityDescriptionController
-                                                        .text =
-                                                    amenitiesController
-                                                        .amenities[index]
-                                                        .description!;
+                                                      amenityDescriptionController
+                                                              .text =
+                                                          amenitiesController
+                                                              .amenities[index]
+                                                              .description!;
 
-                                                amenitiesController
-                                                        .iconImageUrl.value =
-                                                    amenitiesController
-                                                        .amenities[index].icon!;
+                                                      amenitiesController
+                                                              .iconImageUrl
+                                                              .value =
+                                                          amenitiesController
+                                                              .amenities[index]
+                                                              .icon!;
 
-                                                isPublished.value =
-                                                    amenitiesController
-                                                        .amenities[index]
-                                                        .status!;
+                                                      isPublished.value =
+                                                          amenitiesController
+                                                              .amenities[index]
+                                                              .status!;
 
-                                                amenityId.value =
-                                                    amenitiesController
-                                                        .amenities[index].id
-                                                        .toString();
-                                              },
-                                              icon: SvgPicture.asset(
-                                                  "assets/icons/edit.svg"),
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            IconButton(
-                                              onPressed: () async {
-                                                Get.defaultDialog(
-                                                  title: 'Deleting Category',
-                                                  content: const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                            color:
-                                                                kPrimaryColor),
+                                                      amenityId.value =
+                                                          amenitiesController
+                                                              .amenities[index]
+                                                              .id
+                                                              .toString();
+                                                    },
+                                                    icon: SvgPicture.asset(
+                                                        "assets/icons/edit.svg"),
                                                   ),
-                                                );
-                                                await amenitiesController
-                                                    .delete(amenitiesController
-                                                        .amenities[index].id!);
-                                                await amenitiesController
-                                                    .getAll();
-                                                Navigator.pop(context);
-                                              },
-                                              icon: SvgPicture.asset(
-                                                  "assets/icons/trash.svg"),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                                  const SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  IconButton(
+                                                    onPressed: () async {
+                                                      Get.defaultDialog(
+                                                        title:
+                                                            'Deleting Category',
+                                                        content: const Center(
+                                                          child: CircularProgressIndicator(
+                                                              color:
+                                                                  kPrimaryColor),
+                                                        ),
+                                                      );
+                                                      await amenitiesController
+                                                          .delete(
+                                                              amenitiesController
+                                                                  .amenities[
+                                                                      index]
+                                                                  .id!);
+                                                      await amenitiesController
+                                                          .getAll();
+                                                      Navigator.pop(context);
+                                                    },
+                                                    icon: SvgPicture.asset(
+                                                        "assets/icons/trash.svg"),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ],
-                                ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       ),
                     ],
                   ),
