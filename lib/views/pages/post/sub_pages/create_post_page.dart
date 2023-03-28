@@ -260,6 +260,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           hasInstallmentValue: hasInstallments.value,
                           installmentStatusChanges: (value) {
                             hasInstallments.value = value;
+                            print(hasInstallments.value);
                           },
                           posessionValue: posessionReady.value,
                           posessionChanges: (value) {

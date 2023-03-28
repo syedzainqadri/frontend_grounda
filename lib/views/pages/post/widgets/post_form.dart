@@ -108,7 +108,9 @@ class PostForm extends GetView<ThemeChangeController> {
   TextEditingController mapTextController;
 
   List purposeList = ["For Sell", "For Rent"];
+  List propertyAreaUnitList = ["Marla", "SQFT", "SQMT"];
   RxString purposeValue = 'For Sell'.obs;
+  RxString propertyAreaUnitValue = 'SQFT'.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -419,6 +421,7 @@ class PostForm extends GetView<ThemeChangeController> {
                   ),
                 ],
               ),
+              //amenities and other fields
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -434,20 +437,213 @@ class PostForm extends GetView<ThemeChangeController> {
                           isPassword: false,
                           textEditingController: postTitleController,
                         ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
+                        DefaultTextField(
+                          hintText: "Add video url here",
+                          labelText: "Video URL",
+                          isPassword: false,
+                          textEditingController: videoUrlController,
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0, left: 0.0),
+                          child: Transform.scale(
+                            scale: .8,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Has Installments",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                SizedBox(
+                                  width: width * .01,
+                                ),
+                                CupertinoSwitch(
+                                  activeColor: kPrimaryColor,
+                                  value: hasInstallmentValue,
+                                  onChanged: installmentStatusChanges,
+                                ),
+                                // SizedBox(
+                                //   height: height * .02,
+                                // ),
+                                // //hasINstallment
+                                // hasInstallmentValue
+                                //     ? DefaultTextField(
+                                //         hintText: "Number of Installments",
+                                //         labelText: "No of Installments",
+                                //         isPassword: false,
+                                //         textEditingController:
+                                //             noOfInstallmentController,
+                                //       )
+                                //     : const Offstage(),
+                                // hasInstallmentValue
+                                //     ? DefaultTextField(
+                                //         hintText: "Monthly Installment Value",
+                                //         labelText: "Monthly Installement Value",
+                                //         isPassword: false,
+                                //         textEditingController:
+                                //             monthlyInstallmentValueController,
+                                //       )
+                                //     : const Offstage(),
+                              ],
+                            ),
+                          ),
+                        ),
+                        hasInstallmentValue
+                            ? SizedBox(
+                                height: height * .02,
+                              )
+                            : const Offstage(),
+                        hasInstallmentValue
+                            ? DefaultTextField(
+                                hintText: "Enter Advance Amount",
+                                labelText: "Advance Amount",
+                                isPassword: false,
+                                textEditingController: advanceController,
+                              )
+                            : const Offstage(),
+                        hasInstallmentValue
+                            ? SizedBox(
+                                height: height * .02,
+                              )
+                            : const Offstage(),
+                        hasInstallmentValue
+                            ? DefaultTextField(
+                                hintText: "Number of Installments",
+                                labelText: "No of Installments",
+                                isPassword: false,
+                                textEditingController:
+                                    noOfInstallmentController,
+                              )
+                            : const Offstage(),
+                        hasInstallmentValue
+                            ? SizedBox(
+                                height: height * .02,
+                              )
+                            : const Offstage(),
+                        hasInstallmentValue
+                            ? DefaultTextField(
+                                hintText: "Monthly Installment Value",
+                                labelText: "Monthly Installement Value",
+                                isPassword: false,
+                                textEditingController:
+                                    monthlyInstallmentValueController,
+                              )
+                            : const Offstage(),
                       ],
                     ),
                   ),
                   SizedBox(
                     width: width * .02,
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        height: 500,
-                        width: width * .19,
-                      ),
-                    ],
+                  SizedBox(
+                    height: 500,
+                    width: width * .19,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: controller.isDarkMode == true
+                                ? kDarkCardColor
+                                : kCardColor,
+                          ),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              hint: const Text("Property Area Unit"),
+                              isExpanded: true,
+                              value: propertyAreaUnitValue.value,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: (value) {
+                                propertyAreaUnitValue.value = value.toString();
+                              },
+                              items: propertyAreaUnitList
+                                  .map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
+                        DefaultTextField(
+                          hintText: "Plot Number",
+                          labelText: "Plot Number",
+                          isPassword: false,
+                          textEditingController: plotNumberController,
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0, left: 0.0),
+                          child: Transform.scale(
+                            scale: .8,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Ready for Possession",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                SizedBox(
+                                  width: width * .01,
+                                ),
+                                CupertinoSwitch(
+                                  activeColor: kPrimaryColor,
+                                  value: posessionValue,
+                                  onChanged: posessionChanges,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        //possession
+                        posessionValue
+                            ? SizedBox(
+                                height: height * 0.02,
+                              )
+                            : const Offstage(),
+                        posessionValue
+                            ? DefaultTextField(
+                                hintText: "Enter Number of Bedrooms",
+                                labelText: "Bedrooms",
+                                isPassword: false,
+                                textEditingController: bedRoomController,
+                              )
+                            : const Offstage(),
+                        posessionValue
+                            ? SizedBox(
+                                height: height * 0.02,
+                              )
+                            : const Offstage(),
+                        posessionValue
+                            ? DefaultTextField(
+                                hintText: "Enter Number of Bath Rooms",
+                                labelText: "Bathrooms",
+                                isPassword: false,
+                                textEditingController: bathRoomController,
+                              )
+                            : const Offstage(),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     width: width * .02,
@@ -467,42 +663,6 @@ class PostForm extends GetView<ThemeChangeController> {
                   )
                 ],
               ),
-              // SizedBox(
-              //   width: width * 0.20,
-              //   child: DropdownButton(
-              //     borderRadius: BorderRadius.circular(15),
-              //     hint: const Text("Select Post Category"),
-              //     isExpanded: true,
-              //     value: dropDownValue,
-              //     icon: const Icon(Icons.arrow_downward),
-              //     elevation: 16,
-              //     style: Theme.of(context).textTheme.bodyMedium,
-              //     underline: Container(
-              //       height: 2,
-              //       color: kDarkColor,
-              //     ),
-              //     onChanged: onChange,
-              //     items: dropDownList,
-              //   ),
-              // ),
-
-              // Text(
-              //   "Select Post Category",
-              //   style: Theme.of(context)
-              //       .textTheme
-              //       .bodySmall!
-              //       .copyWith(color: kPrimaryColor),
-              //   textAlign: TextAlign.start,
-              // ),
-              // category / currency / plot number
-
-              // Video URL
-              // DefaultTextField(
-              //   hintText: "Add video url here",
-              //   labelText: "Video URL",
-              //   isPassword: false,
-              //   textEditingController: videoUrlController,
-              // ),
 
               // SizedBox(
               //   width: width * 0.015,
@@ -520,291 +680,11 @@ class PostForm extends GetView<ThemeChangeController> {
               //     },
               //   ),
               // ),
-              // SizedBox(
-              //   width: width * 0.015,
-              // ),
-              // SizedBox(
-              //   width: width * 0.22,
-              //   child: DefaultTextField(
-              //     hintText: "Plot Number",
-              //     labelText: "Plot Number",
-              //     isPassword: false,
-              //     textEditingController: plotNumberController,
-              //   ),
-              // ),
-
-              // SizedBox(
-              //   height: height * 0.015,
-              // ),
-
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     SizedBox(
-              //       width: width * .25,
-              //       child: Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           Text(
-              //             "Select Purpose",
-              //             style: Theme.of(context)
-              //                 .textTheme
-              //                 .bodyMedium!
-              //                 .copyWith(color: kPrimaryColor),
-              //             textAlign: TextAlign.start,
-              //           ),
-              //           DropdownButton(
-              //             borderRadius: BorderRadius.circular(15),
-              //             hint: const Text("Purpose"),
-              //             isExpanded: true,
-              //             value: dropDownValue,
-              //             icon: const Icon(Icons.arrow_downward),
-              //             elevation: 16,
-              //             style: Theme.of(context).textTheme.bodyMedium,
-              //             underline: Container(
-              //               height: 2,
-              //               color: kDarkColor,
-              //             ),
-              //             onChanged: onChange,
-              //             items: dropDownList,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.025,
-              //           ),
-              //           Text(
-              //             "Select Property Type",
-              //             style: Theme.of(context)
-              //                 .textTheme
-              //                 .bodyMedium!
-              //                 .copyWith(color: kPrimaryColor),
-              //             textAlign: TextAlign.start,
-              //           ),
-              //           DropdownButton(
-              //             borderRadius: BorderRadius.circular(15),
-              //             hint: const Text("Property Type"),
-              //             isExpanded: true,
-              //             value: dropDownValue,
-              //             icon: const Icon(Icons.arrow_downward),
-              //             elevation: 16,
-              //             style: Theme.of(context).textTheme.bodyMedium,
-              //             underline: Container(
-              //               height: 2,
-              //               color: kDarkColor,
-              //             ),
-              //             onChanged: onChange,
-              //             items: dropDownList,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.025,
-              //           ),
-              //           Text(
-              //             "Select Property Sub-Type",
-              //             style: Theme.of(context)
-              //                 .textTheme
-              //                 .bodyMedium!
-              //                 .copyWith(color: kPrimaryColor),
-              //             textAlign: TextAlign.start,
-              //           ),
-              //           DropdownButton(
-              //             borderRadius: BorderRadius.circular(15),
-              //             hint: const Text("Property Sub-Type"),
-              //             isExpanded: true,
-              //             value: dropDownValue,
-              //             icon: const Icon(Icons.arrow_downward),
-              //             elevation: 16,
-              //             style: Theme.of(context).textTheme.bodyMedium,
-              //             underline: Container(
-              //               height: 2,
-              //               color: kDarkColor,
-              //             ),
-              //             onChanged: onChange,
-              //             items: dropDownList,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.025,
-              //           ),
-              //           // Has Installments
-              //           Padding(
-              //             padding: const EdgeInsets.only(top: 8.0, left: 0.0),
-              //             child: Transform.scale(
-              //               scale: .8,
-              //               child: Row(
-              //                 children: [
-              //                   Text(
-              //                     "Has Installments",
-              //                     style: Theme.of(context).textTheme.bodyMedium,
-              //                   ),
-              //                   SizedBox(
-              //                     width: width * .01,
-              //                   ),
-              //                   CupertinoSwitch(
-              //                     activeColor: kPrimaryColor,
-              //                     value: hasInstallmentValue,
-              //                     onChanged: installmentStatusChanges,
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //           ),
-              //           hasInstallmentValue
-              //               ? SizedBox(
-              //                   height: height * 0.015,
-              //                 )
-              //               : const Offstage(),
-              //           hasInstallmentValue
-              //               ? DefaultTextField(
-              //                   hintText: "Enter Advance Amount",
-              //                   labelText: "Advance Amount",
-              //                   isPassword: false,
-              //                   textEditingController: advanceController,
-              //                 )
-              //               : const Offstage(),
-              //           hasInstallmentValue
-              //               ? SizedBox(
-              //                   height: height * 0.015,
-              //                 )
-              //               : const Offstage(),
-              //           hasInstallmentValue
-              //               ? DefaultTextField(
-              //                   hintText: "Number of Installments",
-              //                   labelText: "No of Installments",
-              //                   isPassword: false,
-              //                   textEditingController:
-              //                       noOfInstallmentController,
-              //                 )
-              //               : const Offstage(),
-              //           hasInstallmentValue
-              //               ? SizedBox(
-              //                   height: height * 0.015,
-              //                 )
-              //               : const Offstage(),
-              //           hasInstallmentValue
-              //               ? DefaultTextField(
-              //                   hintText: "Monthly Installment Value",
-              //                   labelText: "Monthly Installement Value",
-              //                   isPassword: false,
-              //                   textEditingController:
-              //                       monthlyInstallmentValueController,
-              //                 )
-              //               : const Offstage(),
-              //           // Has Installments end
-
-              //           // Ready for Possession
-              //           Padding(
-              //             padding: const EdgeInsets.only(top: 8.0, left: 0.0),
-              //             child: Transform.scale(
-              //               scale: .8,
-              //               child: Row(
-              //                 children: [
-              //                   Text(
-              //                     "Ready for Possession",
-              //                     style: Theme.of(context).textTheme.bodyMedium,
-              //                   ),
-              //                   SizedBox(
-              //                     width: width * .01,
-              //                   ),
-              //                   CupertinoSwitch(
-              //                     activeColor: kPrimaryColor,
-              //                     value: posessionValue,
-              //                     onChanged: posessionChanges,
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //           ),
-              //           posessionValue
-              //               ? SizedBox(
-              //                   height: height * 0.015,
-              //                 )
-              //               : const Offstage(),
-              //           posessionValue
-              //               ? DefaultTextField(
-              //                   hintText: "Enter Number of Bedrooms",
-              //                   labelText: "Bedrooms",
-              //                   isPassword: false,
-              //                   textEditingController: bedRoomController,
-              //                 )
-              //               : const Offstage(),
-              //           posessionValue
-              //               ? SizedBox(
-              //                   height: height * 0.015,
-              //                 )
-              //               : const Offstage(),
-              //           posessionValue
-              //               ? DefaultTextField(
-              //                   hintText: "Enter Number of Bath Rooms",
-              //                   labelText: "Bathrooms",
-              //                   isPassword: false,
-              //                   textEditingController: bathRoomController,
-              //                 )
-              //               : const Offstage(),
-              //           // Ready for Possession end
-              //           SizedBox(
-              //             height: height * 0.4,
-              //           ),
-              //           const Text("Amenities"),
-              //           SizedBox(
-              //             height: height * 0.15,
-              //           ),
-              //           Container(
-              //             width: width * .22,
-              //             decoration: const BoxDecoration(
-              //                 color: Colors.white,
-              //                 borderRadius:
-              //                     BorderRadius.all(Radius.circular(15))),
-              //             child: const Padding(
-              //               padding: EdgeInsets.all(8.0),
-              //               child: Text("List of Amenities"),
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
 
               //     SizedBox(
               //       width: width * .02,
               //     ),
 
-              //     // bedrooms / bathrooms / Contact Details / Near By Location
-              //     SizedBox(
-              //       width: width * .25,
-              //       child: Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           DefaultTextField(
-              //             hintText: "Enter Number of Bedrooms",
-              //             labelText: "Number of Bedrooms",
-              //             isPassword: false,
-              //             textEditingController: bedRoomController,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.025,
-              //           ),
-              //           DefaultTextField(
-              //             hintText: "Enter Number of Bedrooms",
-              //             labelText: "Number of Bedrooms",
-              //             isPassword: false,
-              //             textEditingController: bedRoomController,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.025,
-              //           ),
-              //           DefaultTextField(
-              //             hintText: "Property Area ",
-              //             labelText: "Property Area",
-              //             isPassword: false,
-              //             textEditingController: bedRoomController,
-              //           ),
-              //           SizedBox(
-              //             height: height * 0.025,
-              //           ),
-              //           DefaultTextField(
-              //             hintText: "Property Unit ",
-              //             labelText: "Property Unit",
-              //             isPassword: false,
-              //             textEditingController: bedRoomController,
-              //           ),
               //           // Contact Details
               //           SizedBox(
               //             height: height * 0.04,
