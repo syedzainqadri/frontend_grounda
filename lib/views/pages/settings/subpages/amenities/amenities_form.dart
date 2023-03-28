@@ -11,10 +11,10 @@ import 'package:get/get.dart';
 
 class AmenitiesForm extends GetView<ThemeChangeController> {
   AmenitiesForm(
-      {required this.paymentMethodNameController,
-      required this.paymentMethodClientKeyController,
-      required this.paymentMethodSecretKeyController,
-      required this.paymentMethodStatusController,
+      {required this.amenityTitleController,
+      required this.amenityDescriptionController,
+      required this.amenityIconController,
+      required this.amenityStatusController,
       required this.statusChanges,
       required this.formSubmit,
       required this.statusValue,
@@ -34,10 +34,10 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
 
   String cancelText;
 
-  TextEditingController paymentMethodNameController;
-  TextEditingController paymentMethodClientKeyController;
-  TextEditingController paymentMethodSecretKeyController;
-  TextEditingController paymentMethodStatusController;
+  TextEditingController amenityTitleController;
+  TextEditingController amenityDescriptionController;
+  TextEditingController amenityIconController;
+  TextEditingController amenityStatusController;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Create Payment Method",
+          "Create Amenity",
           style: Theme.of(context).textTheme.bodyLarge,
           textAlign: TextAlign.start,
         ),
@@ -53,28 +53,28 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
           height: height * 0.04,
         ),
         DefaultTextField(
-          hintText: "Payment Method Name",
-          labelText: "Payment Method Name",
+          hintText: "Amenity Title",
+          labelText: "Amenity Title",
           isPassword: false,
-          textEditingController: paymentMethodNameController,
+          textEditingController: amenityTitleController,
         ),
         SizedBox(
           height: height * 0.04,
         ),
         DefaultTextField(
-          hintText: "Client Key / API Key",
-          labelText: "Client Key / API Key",
+          hintText: "Amenity Description",
+          labelText: "Amenity Description",
           isPassword: false,
-          textEditingController: paymentMethodClientKeyController,
+          textEditingController: amenityDescriptionController,
         ),
         SizedBox(
           height: height * 0.04,
         ),
         DefaultTextField(
-          hintText: "Secret Key",
-          labelText: "Secret Key",
+          hintText: "Amenity Icon",
+          labelText: "Amenity Icon",
           isPassword: false,
-          textEditingController: paymentMethodSecretKeyController,
+          textEditingController: amenityIconController,
         ),
         SizedBox(
           height: height * .02,

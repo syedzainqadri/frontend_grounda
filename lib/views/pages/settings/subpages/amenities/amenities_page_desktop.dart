@@ -2,37 +2,32 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend_grounda/controllers/paymentMethodController/payment_method_controller.dart';
+import 'package:frontend_grounda/controllers/amenitiesController/amenities_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
-
-import 'package:frontend_grounda/models/paymentMethodModel/payment_method_model.dart';
+import 'package:frontend_grounda/models/amenetiesModel/ameneties_model.dart';
 
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/views/pages/settings/subpages/payment_methods/payment_method_form.dart';
+import 'package:frontend_grounda/views/pages/settings/subpages/amenities/amenities_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
 import 'package:get/get.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
 
 class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
   AmenitiesPageDesktop({super.key});
 
   final TextEditingController searchPaymentMethod = TextEditingController();
-  final PaymentMethodController paymentMethodController =
-      Get.find<PaymentMethodController>();
-  QuillEditorController descriptionController = QuillEditorController();
-  TextEditingController paymentMethodNameController = TextEditingController();
-  TextEditingController paymentMethodClientKeyController =
-      TextEditingController();
-  TextEditingController paymentMethodSecretKeyController =
-      TextEditingController();
-  TextEditingController paymentMethodStatusController = TextEditingController();
-  List<AllPaymentMethodsModel> allPaymentMethodsModel = [];
+  final AmenitiesController amenitiesController =
+      Get.find<AmenitiesController>();
+  TextEditingController amenityTitleController = TextEditingController();
+  TextEditingController amenityDescriptionController = TextEditingController();
+  TextEditingController amenityIconController = TextEditingController();
+  TextEditingController amenityStatusController = TextEditingController();
+  List<AmenitiesModel> allamenitiesModel = [];
 
   var selectedItemId = 0.obs;
-  var isPublished = ''.obs;
-  var paymentMethodId = ''.obs;
+  var isPublished = false.obs;
+  var amenityId = ''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +35,7 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
     double height = Get.height;
     const bool isMobile = false;
     return Scaffold(
-      appBar: DashBoardAppBar(title: 'Payment Method'),
+      appBar: DashBoardAppBar(title: 'Amenities'),
       body: Obx(
         () => Center(
           child: Row(
@@ -67,74 +62,70 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: paymentMethodController.paymentMethods.isEmpty
+                  child: amenitiesController.amenities.isEmpty
                       ? const Center(
                           child: CircularProgressIndicator(
                             color: kPrimaryColor,
                           ),
                         )
-                      : PaymentMethodForm(
-                          paymentMethodNameController:
-                              paymentMethodNameController,
-                          paymentMethodClientKeyController:
-                              paymentMethodClientKeyController,
-                          paymentMethodSecretKeyController:
-                              paymentMethodSecretKeyController,
-                          paymentMethodStatusController:
-                              paymentMethodStatusController,
+                      : AmenitiesForm(
+                          amenityTitleController: amenityTitleController,
+                          amenityDescriptionController:
+                              amenityDescriptionController,
+                          amenityIconController: amenityIconController,
+                          amenityStatusController: amenityStatusController,
                           buttonText:
-                              paymentMethodId.value == '' ? 'Submit' : 'Update',
+                              amenityId.value == '' ? 'Submit' : 'Update',
                           formSubmit: () async {
-                            if (paymentMethodId.value == '') {
+                            if (amenityId.value == '') {
                               Get.defaultDialog(
-                                title: 'Creating Category',
+                                title: 'Creating Amenity',
                                 content: const Center(
                                   child: CircularProgressIndicator(
                                       color: kPrimaryColor),
                                 ),
                               );
 
-                              await paymentMethodController.create(
-                                  paymentMethodNameController.text,
-                                  paymentMethodClientKeyController.text,
-                                  paymentMethodSecretKeyController.text,
+                              await amenitiesController.create(
+                                  amenityTitleController.text,
+                                  amenityDescriptionController.text,
+                                  amenityIconController.text,
                                   isPublished.value);
-                              await paymentMethodController.getAll();
+                              await amenitiesController.getAll();
                               Navigator.pop(context);
                             } else {
                               Get.defaultDialog(
-                                title: 'Updating Payment Method',
+                                title: 'Updating Amenity',
                                 content: const Center(
                                   child: CircularProgressIndicator(
                                       color: kPrimaryColor),
                                 ),
                               );
 
-                              await paymentMethodController.updatePaymentMethod(
-                                  int.parse(paymentMethodId.value),
-                                  paymentMethodNameController.text,
-                                  paymentMethodClientKeyController.text,
-                                  paymentMethodSecretKeyController.text,
-                                  isPublished.value);
-                              paymentMethodNameController.text = '';
-                              paymentMethodClientKeyController.text = '';
-                              paymentMethodSecretKeyController.text = '';
-                              paymentMethodId.value = '';
-                              await paymentMethodController.getAll();
+                              await amenitiesController.updateAmenities(
+                                int.parse(amenityId.value),
+                                amenityTitleController.text,
+                                amenityDescriptionController.text,
+                                amenityIconController.text,
+                                isPublished.value,
+                              );
+                              amenityTitleController.text = '';
+                              amenityDescriptionController.text = '';
+                              amenityIconController.text = '';
+                              amenityId.value = '';
+                              await amenitiesController.getAll();
                               Navigator.pop(context);
                             }
                           },
-                          cancelText: paymentMethodId.value == ''
-                              ? ''
-                              : 'Cancel Update',
+                          cancelText:
+                              amenityId.value == '' ? '' : 'Cancel Update',
                           onTap: () async {
-                            paymentMethodNameController.text = '';
-                            paymentMethodClientKeyController.text = '';
-                            paymentMethodSecretKeyController.text = '';
-                            descriptionController.clear();
+                            amenityTitleController.text = '';
+                            amenityDescriptionController.text = '';
+                            amenityIconController.text = '';
                             selectedItemId.value = 0;
-                            paymentMethodId.value = '';
-                            await paymentMethodController.getAll();
+                            amenityId.value = '';
+                            await amenitiesController.getAll();
                           },
                           statusValue:
                               isPublished.value == 'ACTIVE' ? true : false,
@@ -177,7 +168,7 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                             width: width * .45,
                             child: DefaultTextField(
                               textEditingController: searchPaymentMethod,
-                              hintText: "Search Payment Method",
+                              hintText: "Search Amenity",
                               labelText: "Search",
                               isPassword: false,
                               suffixIcon:
@@ -193,8 +184,7 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                         height: height * .6,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
-                          itemCount:
-                              paymentMethodController.paymentMethods.length,
+                          itemCount: amenitiesController.amenities.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               color: controller.isDarkMode.value
@@ -220,9 +210,8 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    paymentMethodController
-                                                        .paymentMethods[index]
-                                                        .name!,
+                                                    amenitiesController
+                                                        .amenities[index].name!,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyLarge,
@@ -238,11 +227,9 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                             .textTheme
                                                             .bodySmall,
                                                       ),
-                                                      paymentMethodController
-                                                                  .paymentMethods[
-                                                                      index]
-                                                                  .status ==
-                                                              'ACTIVE'
+                                                      amenitiesController
+                                                              .amenities[index]
+                                                              .status!
                                                           ? Text(
                                                               "Active",
                                                               style: Theme.of(
@@ -278,34 +265,28 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                           children: [
                                             IconButton(
                                               onPressed: () async {
-                                                descriptionController.clear();
-                                                paymentMethodNameController
-                                                        .text =
-                                                    paymentMethodController
-                                                        .paymentMethods[index]
-                                                        .name!;
+                                                amenityTitleController.text =
+                                                    amenitiesController
+                                                        .amenities[index].name!;
 
-                                                paymentMethodClientKeyController
+                                                amenityDescriptionController
                                                         .text =
-                                                    paymentMethodController
-                                                        .paymentMethods[index]
-                                                        .apiKey!;
+                                                    amenitiesController
+                                                        .amenities[index]
+                                                        .description!;
 
-                                                paymentMethodSecretKeyController
-                                                        .text =
-                                                    paymentMethodController
-                                                        .paymentMethods[index]
-                                                        .secret!;
+                                                amenityIconController.text =
+                                                    amenitiesController
+                                                        .amenities[index].icon!;
 
                                                 isPublished.value =
-                                                    paymentMethodController
-                                                        .paymentMethods[index]
+                                                    amenitiesController
+                                                        .amenities[index]
                                                         .status!;
 
-                                                paymentMethodId.value =
-                                                    paymentMethodController
-                                                        .paymentMethods[index]
-                                                        .id
+                                                amenityId.value =
+                                                    amenitiesController
+                                                        .amenities[index].id
                                                         .toString();
                                               },
                                               icon: SvgPicture.asset(
@@ -325,13 +306,10 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                                 kPrimaryColor),
                                                   ),
                                                 );
-                                                await paymentMethodController
-                                                    .delete(
-                                                        paymentMethodController
-                                                            .paymentMethods[
-                                                                index]
-                                                            .id!);
-                                                await paymentMethodController
+                                                await amenitiesController
+                                                    .delete(amenitiesController
+                                                        .amenities[index].id!);
+                                                await amenitiesController
                                                     .getAll();
                                                 Navigator.pop(context);
                                               },

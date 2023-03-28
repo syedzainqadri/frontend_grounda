@@ -16,7 +16,7 @@ class AmenitiesPageMobile extends GetView<ThemeChangeController> {
     double height = Get.height;
     const bool isMobile = false;
     return Scaffold(
-      appBar: DashBoardAppBar(title: 'Category'),
+      appBar: DashBoardAppBar(title: 'Amenity'),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

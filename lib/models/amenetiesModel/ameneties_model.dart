@@ -15,42 +15,38 @@ class AmenitiesModel {
   AmenitiesModel({
     this.id,
     this.name,
-    this.slug,
     this.description,
+    this.icon,
     this.createdAt,
     this.updatedAt,
-    this.published,
-    this.categoryId,
+    this.status,
   });
 
   int? id;
   String? name;
-  String? slug;
   String? description;
+  dynamic icon;
   DateTime? createdAt;
   DateTime? updatedAt;
-  bool? published;
-  int? categoryId;
+  bool? status;
 
   factory AmenitiesModel.fromJson(Map<String, dynamic> json) => AmenitiesModel(
         id: json["id"],
         name: json["name"],
-        slug: json["slug"],
         description: json["description"],
+        icon: json["icon"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        published: json["published"],
-        categoryId: json["categoryId"],
+        status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "slug": slug,
         "description": description,
+        "icon": icon,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
-        "published": published,
-        "categoryId": categoryId,
+        "status": status,
       };
 }

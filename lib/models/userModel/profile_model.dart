@@ -25,7 +25,7 @@ class ProfileModel {
     this.images,
     this.longitude,
     this.latitude,
-    this.published,
+    this.status,
     this.userId,
   });
 
@@ -43,7 +43,7 @@ class ProfileModel {
   String? images;
   String? longitude;
   String? latitude;
-  bool? published;
+  bool? status;
   int? userId;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
@@ -61,7 +61,7 @@ class ProfileModel {
         images: json["images"],
         longitude: json["longitude"],
         latitude: json["latitude"],
-        published: json["published"],
+        status: json["status"],
         userId: json["userId"],
       );
 
@@ -80,7 +80,7 @@ class ProfileModel {
         "images": images,
         "longitude": longitude,
         "latitude": latitude,
-        "published": published,
+        "status": status,
         "userId": userId,
       };
 }
