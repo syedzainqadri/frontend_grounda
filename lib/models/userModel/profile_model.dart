@@ -26,6 +26,7 @@ class ProfileModel {
     this.longitude,
     this.latitude,
     this.status,
+    this.postContactId,
     this.userId,
   });
 
@@ -44,6 +45,7 @@ class ProfileModel {
   String? longitude;
   String? latitude;
   bool? status;
+  int? postContactId;
   int? userId;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
@@ -62,6 +64,7 @@ class ProfileModel {
         longitude: json["longitude"],
         latitude: json["latitude"],
         status: json["status"],
+        postContactId: json["postContactId"],
         userId: json["userId"],
       );
 
@@ -81,6 +84,7 @@ class ProfileModel {
         "longitude": longitude,
         "latitude": latitude,
         "status": status,
+        "postContactId": postContactId,
         "userId": userId,
       };
 }

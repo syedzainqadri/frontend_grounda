@@ -20,9 +20,12 @@ class PostForm extends GetView<ThemeChangeController> {
       {required this.postTitleController,
       required this.postShortDescriptionController,
       required this.contentController,
-      required this.dropDownList,
-      required this.dropDownValue,
-      required this.onChange,
+      required this.categoryDropDownList,
+      required this.categoryDropDownValue,
+      required this.categoryOnChange,
+      required this.subCategoryDropDownList,
+      required this.subCategoryDropDownValue,
+      required this.subCategoryOnChange,
       required this.statusChanges,
       required this.formSubmit,
       required this.statusValue,
@@ -55,16 +58,25 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.propertySubTypeController,
       required this.mapPickerController,
       required this.mapTextController,
+      required this.amenitiesCount,
+      required this.amenitiesBuilder,
+      required this.showContactDetails,
+      required this.showContactDetailsChanges,
+      required this.map,
       super.key});
   double width = Get.width;
   double height = Get.height;
-  String dropDownValue;
-  dynamic onChange;
+  String categoryDropDownValue;
+  String subCategoryDropDownValue;
+  dynamic categoryOnChange;
+  dynamic subCategoryOnChange;
   dynamic statusChanges;
   dynamic posessionChanges;
+  dynamic showContactDetailsChanges;
   dynamic installmentStatusChanges;
   dynamic formSubmit;
   bool posessionValue;
+  bool showContactDetails;
   bool statusValue;
   bool hasInstallmentValue;
   dynamic uploadImages;
@@ -73,7 +85,8 @@ class PostForm extends GetView<ThemeChangeController> {
   String pictureButtonText;
   String cancelText;
   List imageListUrl;
-  List<DropdownMenuItem<String>> dropDownList;
+  List<DropdownMenuItem<String>> categoryDropDownList;
+  List<DropdownMenuItem<String>> subCategoryDropDownList;
   TextEditingController postTitleController;
   TextEditingController postShortDescriptionController;
   TextEditingController videoUrlController;
@@ -94,9 +107,17 @@ class PostForm extends GetView<ThemeChangeController> {
   TextEditingController propertyTypeController;
   TextEditingController propertySubTypeController;
   QuillEditorController contentController;
+  Widget? Function(BuildContext, int) amenitiesBuilder;
+  int amenitiesCount;
+  OpenStreetMap map;
 
   MapPickerController mapPickerController;
   TextEditingController mapTextController;
+
+  List purposeList = ["For Sell", "For Rent"];
+  List propertyAreaUnitList = ["Marla", "SQFT", "SQMT"];
+  RxString purposeValue = 'For Sell'.obs;
+  RxString propertyAreaUnitValue = 'SQFT'.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +127,7 @@ class PostForm extends GetView<ThemeChangeController> {
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         child: SizedBox(
-          height: hasInstallmentValue ? height * 1.8 : height * 1.5,
+          height: height * 2.2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -128,34 +149,16 @@ class PostForm extends GetView<ThemeChangeController> {
                 height: height * 0.015,
               ),
 
-              Text(
-                "Select Post Category",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: kPrimaryColor),
-                textAlign: TextAlign.start,
-              ),
-              // category / currency / plot number
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: width * 0.20,
-                    child: DropdownButton(
-                      borderRadius: BorderRadius.circular(15),
-                      hint: const Text("Select Post Category"),
-                      isExpanded: true,
-                      value: dropDownValue,
-                      icon: const Icon(Icons.arrow_downward),
-                      elevation: 16,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      underline: Container(
-                        height: 2,
-                        color: kDarkColor,
-                      ),
-                      onChanged: onChange,
-                      items: dropDownList,
+                    width: width * 0.23,
+                    child: DefaultTextField(
+                      hintText: "Enter City",
+                      labelText: "City",
+                      isPassword: false,
+                      textEditingController: cityController,
                     ),
                   ),
                   SizedBox(
@@ -163,40 +166,25 @@ class PostForm extends GetView<ThemeChangeController> {
                   ),
                   // property type / Price / currency
                   SizedBox(
-                    width: width * 0.135,
+                    width: width * 0.23,
+                    child: DefaultTextField(
+                      hintText: "Enter Area",
+                      labelText: "Area",
+                      isPassword: false,
+                      textEditingController: areaController,
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.012,
+                  ),
+                  // property type / Price / currency
+                  SizedBox(
+                    width: width * 0.23,
                     child: DefaultTextField(
                       hintText: "Enter Price",
                       labelText: "Price",
                       isPassword: false,
-                      textEditingController: postTitleController,
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.015,
-                  ),
-                  SizedBox(
-                    width: width * 0.13,
-                    child: CountryPickerDropdown(
-                      initialValue: 'PK',
-                      itemBuilder: _buildDropdownItem,
-                      itemFilter: filtered
-                          ? (c) => ['PK', 'DE', 'GB', 'CN'].contains(c.isoCode)
-                          : null,
-                      onValuePicked: (Country? country) {
-                        print("${country?.name}");
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.015,
-                  ),
-                  SizedBox(
-                    width: width * 0.22,
-                    child: DefaultTextField(
-                      hintText: "Plot Number",
-                      labelText: "Plot Number",
-                      isPassword: false,
-                      textEditingController: plotNumberController,
+                      textEditingController: priceController,
                     ),
                   ),
                 ],
@@ -206,24 +194,15 @@ class PostForm extends GetView<ThemeChangeController> {
                 height: height * 0.015,
               ),
               // text editor
-              Expanded(
-                child: TextEditor(controller: contentController),
+              SizedBox(
+                height: 250,
+                child: Expanded(
+                  child: TextEditor(controller: contentController),
+                ),
               ),
 
               SizedBox(
                 height: height * 0.04,
-              ),
-
-              // Video URL
-              DefaultTextField(
-                hintText: "Add video url here",
-                labelText: "Video URL",
-                isPassword: false,
-                textEditingController: videoUrlController,
-              ),
-
-              SizedBox(
-                height: height * 0.015,
               ),
 
               // Gallery Heading and button
@@ -293,15 +272,17 @@ class PostForm extends GetView<ThemeChangeController> {
               SizedBox(
                 height: height * 0.04,
               ),
-
+              //TODO : adjust structure here
+              //Category section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: width * .25,
+                    height: 100,
+                    width: width * .19,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "Select Purpose",
@@ -311,77 +292,170 @@ class PostForm extends GetView<ThemeChangeController> {
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
                         ),
-                        DropdownButton(
-                          borderRadius: BorderRadius.circular(15),
-                          hint: const Text("Purpose"),
-                          isExpanded: true,
-                          value: dropDownValue,
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          underline: Container(
-                            height: 2,
-                            color: kDarkColor,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: controller.isDarkMode == true
+                                ? kDarkCardColor
+                                : kCardColor,
                           ),
-                          onChanged: onChange,
-                          items: dropDownList,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              hint: const Text("Purpose"),
+                              isExpanded: true,
+                              value: purposeValue.value,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: (value) {
+                                purposeValue.value = value.toString();
+                              },
+                              items: purposeList
+                                  .map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
                         ),
-                        SizedBox(
-                          height: height * 0.025,
-                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * .02,
+                  ),
+                  SizedBox(
+                    height: 100,
+                    width: width * .19,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
                         Text(
-                          "Select Property Type",
+                          "Post Type",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
                         ),
-                        DropdownButton(
-                          borderRadius: BorderRadius.circular(15),
-                          hint: const Text("Property Type"),
-                          isExpanded: true,
-                          value: dropDownValue,
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          underline: Container(
-                            height: 2,
-                            color: kDarkColor,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: controller.isDarkMode == true
+                                ? kDarkCardColor
+                                : kCardColor,
                           ),
-                          onChanged: onChange,
-                          items: dropDownList,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              hint: const Text("Select Post Type"),
+                              isExpanded: true,
+                              value: categoryDropDownValue,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: categoryOnChange,
+                              items: categoryDropDownList,
+                            ),
+                          ),
                         ),
-                        SizedBox(
-                          height: height * 0.025,
-                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * .02,
+                  ),
+                  SizedBox(
+                    height: 100,
+                    width: width * .19,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
                         Text(
-                          "Select Property Sub-Type",
+                          "Select Post Sub-Type",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
                         ),
-                        DropdownButton(
-                          borderRadius: BorderRadius.circular(15),
-                          hint: const Text("Property Sub-Type"),
-                          isExpanded: true,
-                          value: dropDownValue,
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          underline: Container(
-                            height: 2,
-                            color: kDarkColor,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: controller.isDarkMode == true
+                                ? kDarkCardColor
+                                : kCardColor,
                           ),
-                          onChanged: onChange,
-                          items: dropDownList,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              hint: const Text("Select Post Sub-Type"),
+                              isExpanded: true,
+                              value: subCategoryDropDownValue,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: subCategoryOnChange,
+                              items: subCategoryDropDownList,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              //amenities and other fields
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    height: 500,
+                    width: width * .19,
+                    child: Column(
+                      children: [
+                        DefaultTextField(
+                          prefixIcon: const Icon(Icons.aspect_ratio),
+                          hintText: "Property Area",
+                          labelText: "Enter Total Area",
+                          isPassword: false,
+                          textEditingController: postTitleController,
                         ),
                         SizedBox(
-                          height: height * 0.025,
+                          height: height * .02,
                         ),
-                        // Has Installments
+                        DefaultTextField(
+                          hintText: "Add video url here",
+                          labelText: "Video URL",
+                          isPassword: false,
+                          textEditingController: videoUrlController,
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                           child: Transform.scale(
@@ -406,7 +480,7 @@ class PostForm extends GetView<ThemeChangeController> {
                         ),
                         hasInstallmentValue
                             ? SizedBox(
-                                height: height * 0.015,
+                                height: height * .02,
                               )
                             : const Offstage(),
                         hasInstallmentValue
@@ -419,7 +493,7 @@ class PostForm extends GetView<ThemeChangeController> {
                             : const Offstage(),
                         hasInstallmentValue
                             ? SizedBox(
-                                height: height * 0.015,
+                                height: height * .02,
                               )
                             : const Offstage(),
                         hasInstallmentValue
@@ -433,7 +507,7 @@ class PostForm extends GetView<ThemeChangeController> {
                             : const Offstage(),
                         hasInstallmentValue
                             ? SizedBox(
-                                height: height * 0.015,
+                                height: height * .02,
                               )
                             : const Offstage(),
                         hasInstallmentValue
@@ -445,9 +519,65 @@ class PostForm extends GetView<ThemeChangeController> {
                                     monthlyInstallmentValueController,
                               )
                             : const Offstage(),
-                        // Has Installments end
-
-                        // Ready for Possession
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * .02,
+                  ),
+                  SizedBox(
+                    height: 500,
+                    width: width * .19,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: controller.isDarkMode == true
+                                ? kDarkCardColor
+                                : kCardColor,
+                          ),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              hint: const Text("Property Area Unit"),
+                              isExpanded: true,
+                              value: propertyAreaUnitValue.value,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: (value) {
+                                propertyAreaUnitValue.value = value.toString();
+                              },
+                              items: propertyAreaUnitList
+                                  .map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
+                        DefaultTextField(
+                          hintText: "Plot Number",
+                          labelText: "Plot Number",
+                          isPassword: false,
+                          textEditingController: plotNumberController,
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                           child: Transform.scale(
@@ -470,9 +600,10 @@ class PostForm extends GetView<ThemeChangeController> {
                             ),
                           ),
                         ),
+                        //possession
                         posessionValue
                             ? SizedBox(
-                                height: height * 0.015,
+                                height: height * 0.02,
                               )
                             : const Offstage(),
                         posessionValue
@@ -485,7 +616,7 @@ class PostForm extends GetView<ThemeChangeController> {
                             : const Offstage(),
                         posessionValue
                             ? SizedBox(
-                                height: height * 0.015,
+                                height: height * 0.02,
                               )
                             : const Offstage(),
                         posessionValue
@@ -496,185 +627,96 @@ class PostForm extends GetView<ThemeChangeController> {
                                 textEditingController: bathRoomController,
                               )
                             : const Offstage(),
-                        // Ready for Possession end
-                        SizedBox(
-                          height: height * 0.4,
-                        ),
-                        const Text("Amenities"),
-                        SizedBox(
-                          height: height * 0.15,
-                        ),
-                        Container(
-                          width: width * .22,
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("List of Amenities"),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(
-                    width: width * .02,
-                  ),
-
-                  // bedrooms / bathrooms / Contact Details / Near By Location
-                  SizedBox(
-                    width: width * .25,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DefaultTextField(
-                          hintText: "Enter Number of Bedrooms",
-                          labelText: "Number of Bedrooms",
-                          isPassword: false,
-                          textEditingController: bedRoomController,
-                        ),
-                        SizedBox(
-                          height: height * 0.025,
-                        ),
-                        DefaultTextField(
-                          hintText: "Enter Number of Bedrooms",
-                          labelText: "Number of Bedrooms",
-                          isPassword: false,
-                          textEditingController: bedRoomController,
-                        ),
-                        SizedBox(
-                          height: height * 0.025,
-                        ),
-                        DefaultTextField(
-                          hintText: "Property Area ",
-                          labelText: "Property Area",
-                          isPassword: false,
-                          textEditingController: bedRoomController,
-                        ),
-                        SizedBox(
-                          height: height * 0.025,
-                        ),
-                        DefaultTextField(
-                          hintText: "Property Unit ",
-                          labelText: "Property Unit",
-                          isPassword: false,
-                          textEditingController: bedRoomController,
-                        ),
-                        // Contact Details
-                        SizedBox(
-                          height: height * 0.04,
-                        ),
-                        Text(
-                          "Contact Person Details",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        SizedBox(
-                          height: height * 0.015,
-                        ),
-                        DefaultTextField(
-                          hintText: "Contact Person's Name",
-                          labelText: "Contact Person's Name",
-                          isPassword: false,
-                          textEditingController: contactPersonNameController,
-                        ),
-                        SizedBox(
-                          height: height * 0.015,
-                        ),
-                        DefaultTextField(
-                          hintText: "Contact Person's Email",
-                          labelText: "Contact Person's Email",
-                          isPassword: false,
-                          textEditingController: contactPersonEmailController,
-                        ),
-                        SizedBox(
-                          height: height * 0.015,
-                        ),
-                        DefaultTextField(
-                          hintText: "Contact Person's Mobile",
-                          labelText: "Contact Person's Mobile",
-                          isPassword: false,
-                          textEditingController: contactPersonsMobileController,
-                        ),
-                        SizedBox(
-                          height: height * 0.015,
-                        ),
-                        DefaultTextField(
-                          hintText: "Contact Person's Landline",
-                          labelText: "Contact Person's Landline",
-                          isPassword: false,
-                          textEditingController:
-                              contactPersonsLandlineController,
-                        ),
-                        // Near by Location
-                        SizedBox(
-                          height: height * 0.04,
-                        ),
-                        Text(
-                          "Near By Location",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        SizedBox(
-                          height: height * 0.15,
-                        ),
-                        Container(
-                          width: width * .22,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0, left: 0.0),
+                          child: Transform.scale(
+                            scale: .8,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Show Contact Details",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                SizedBox(
+                                  width: width * .01,
+                                ),
+                                CupertinoSwitch(
+                                  activeColor: kPrimaryColor,
+                                  value: showContactDetails,
+                                  onChanged: showContactDetailsChanges,
+                                ),
+                              ],
                             ),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("List of Location"),
-                          ),
                         ),
                       ],
                     ),
                   ),
-
                   SizedBox(
                     width: width * .02,
                   ),
-
-                  // Map
-                  SizedBox(
-                    width: width * .2,
-                    height: height,
-                    child: OpenStreetMap(
-                      onPicked: (pickedData) {
-                        print(pickedData.latLong.latitude);
-                        print(pickedData.latLong.longitude);
-                        print(pickedData.address);
-                      },
-                    ),
-                  ),
+                  Column(
+                    children: [
+                      Container(
+                        color: Colors.white,
+                        height: 300,
+                        width: width * .19,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListView.builder(
+                            itemBuilder: amenitiesBuilder,
+                            itemCount: amenitiesCount,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
 
               SizedBox(
                 height: height * 0.04,
               ),
-
+              Center(
+                child: SizedBox(
+                  width: width * .4,
+                  height: height * .4,
+                  child: map,
+                ),
+              ),
+              SizedBox(
+                height: height * 0.04,
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                 child: Transform.scale(
                   scale: 1,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                        "Status",
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      Row(
+                        children: [
+                          Text(
+                            "Status",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          SizedBox(
+                            width: width * .01,
+                          ),
+                          CupertinoSwitch(
+                            activeColor: kPrimaryColor,
+                            value: statusValue,
+                            onChanged: statusChanges,
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: width * .01,
-                      ),
-                      CupertinoSwitch(
-                        activeColor: kPrimaryColor,
-                        value: statusValue,
-                        onChanged: statusChanges,
+                      DefaultButton(
+                        primaryColor: kPrimaryColor,
+                        hoverColor: kDarkColor,
+                        buttonText: buttonText,
+                        width: width * .2,
+                        height: height * .05,
+                        onPressed: formSubmit,
                       ),
                     ],
                   ),
@@ -683,25 +725,16 @@ class PostForm extends GetView<ThemeChangeController> {
               SizedBox(
                 height: height * 0.015,
               ),
-              DefaultButton(
-                primaryColor: kPrimaryColor,
-                hoverColor: kDarkColor,
-                buttonText: buttonText,
-                width: width * .2,
-                height: height * .05,
-                onPressed: formSubmit,
-              ),
-              SizedBox(
-                height: height * 0.015,
-              ),
-              InkWell(
-                onTap: onTap,
-                child: Text(
-                  cancelText,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: kPrimaryColor),
+              Center(
+                child: InkWell(
+                  onTap: onTap,
+                  child: Text(
+                    cancelText,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: kPrimaryColor),
+                  ),
                 ),
               ),
             ],

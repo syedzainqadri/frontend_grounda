@@ -16,6 +16,7 @@ class AmenitiesController extends GetxController {
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
+    getAll();
   }
 
   Future<void> getAll() async {
