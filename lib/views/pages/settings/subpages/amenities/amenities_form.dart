@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
@@ -13,31 +14,34 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
   AmenitiesForm(
       {required this.amenityTitleController,
       required this.amenityDescriptionController,
-      required this.amenityIconController,
-      required this.amenityStatusController,
       required this.statusChanges,
+      required this.iconImageUrl,
+      required this.onIconPress,
       required this.formSubmit,
       required this.statusValue,
       required this.buttonText,
+      required this.iconButtonText,
       required this.cancelText,
       required this.onTap,
       super.key});
+
   double width = Get.width;
   double height = Get.height;
 
+  dynamic onIconPress;
   dynamic onChange;
   dynamic statusChanges;
   dynamic formSubmit;
-  bool statusValue;
   dynamic onTap;
-  String buttonText;
 
+  String iconButtonText;
+  String buttonText;
+  String iconImageUrl;
   String cancelText;
+  bool statusValue;
 
   TextEditingController amenityTitleController;
   TextEditingController amenityDescriptionController;
-  TextEditingController amenityIconController;
-  TextEditingController amenityStatusController;
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +74,28 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
         SizedBox(
           height: height * 0.04,
         ),
-        DefaultTextField(
-          hintText: "Amenity Icon",
-          labelText: "Amenity Icon",
-          isPassword: false,
-          textEditingController: amenityIconController,
+
+        Row(
+          children: [
+            SvgPicture.network(iconImageUrl),
+            DefaultButton(
+              primaryColor: kPrimaryColor,
+              hoverColor: kDarkColor,
+              buttonText: iconButtonText,
+              onPressed: onIconPress,
+              width: width * .1,
+              height: height * .05,
+            ),
+          ],
         ),
+
+        // DefaultTextField(
+        //   hintText: "Amenity Icon",
+        //   labelText: "Amenity Icon",
+        //   isPassword: false,
+        //   textEditingController: amenityIconController,
+        // ),
+
         SizedBox(
           height: height * .02,
         ),
