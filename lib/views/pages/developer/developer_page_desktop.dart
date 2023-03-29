@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend_grounda/controllers/developerController/developer_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
-import 'package:frontend_grounda/models/categoryModel/category_model.dart';
+import 'package:frontend_grounda/models/developerModel.dart/developer_model.dart';
 
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/developer/developer_form.dart';
@@ -25,7 +25,7 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
   TextEditingController developerNameController = TextEditingController();
 
   TextEditingController categoryStatusController = TextEditingController();
-  List<CategoryModel> categoryModel = [];
+  List<DevelopersModel> developersModel = [];
 
   var selectedItemId = 0.obs;
   var status = false.obs;
@@ -37,7 +37,7 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
     double height = Get.height;
     const bool isMobile = false;
     return Scaffold(
-      appBar: DashBoardAppBar(title: 'Category'),
+      appBar: DashBoardAppBar(title: 'Developers'),
       body: Obx(
         () => Center(
           child: Row(
@@ -77,7 +77,7 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                           formSubmit: () async {
                             if (devId.value == '') {
                               Get.defaultDialog(
-                                title: 'Creating Category',
+                                title: 'Creating Developer',
                                 content: const Center(
                                   child: CircularProgressIndicator(
                                       color: kPrimaryColor),
@@ -338,7 +338,7 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                             IconButton(
                                               onPressed: () async {
                                                 Get.defaultDialog(
-                                                  title: 'Deleting Category',
+                                                  title: 'Deleting Developer',
                                                   content: const Center(
                                                     child:
                                                         CircularProgressIndicator(

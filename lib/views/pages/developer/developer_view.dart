@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/menuController/sidebar_controller.dart';
+import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:frontend_grounda/views/pages/developer/category_page_mobile.dart';
 import 'package:frontend_grounda/views/pages/developer/developer_page_desktop.dart';
 import 'package:frontend_grounda/views/responsive/responsive_layout.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
+import 'package:frontend_grounda/views/sidebar/mobile_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
-import '../../../utils/global_variable.dart';
-import '../../sidebar/mobile_sidebar.dart';
 
 class DeveloperView extends GetView<SideBarController> {
   const DeveloperView({super.key});
