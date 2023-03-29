@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:frontend_grounda/models/developerModel.dart/developer_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
@@ -10,6 +13,7 @@ class DeveloperController extends GetxController {
   var developers = <DevelopersModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
+  var logo = ''.obs;
   var isLoading = false.obs;
 
   @override
@@ -61,10 +65,17 @@ class DeveloperController extends GetxController {
   }
 
   Future<void> create(
-    String name,
+    String title,
+    String description,
+    String logo,
+    bool status,
   ) async {
     isLoading.value = true;
-    var bodyPrepare = {"name": name};
+    var bodyPrepare = {
+      "title": title,
+      "description": description,
+      "logo": logo
+    };
 
     var response = await http.post(
       Uri.parse(
@@ -88,10 +99,18 @@ class DeveloperController extends GetxController {
 
   Future<void> updateDeveloper(
     int id,
-    String name,
+    String title,
+    String description,
+    String logo,
+    bool status,
   ) async {
     isLoading.value = true;
-    var bodyPrepare = {"id": id, "title": name};
+    var bodyPrepare = {
+      "id": id,
+      "title": title,
+      "description": description,
+      "logo": logo
+    };
 
     var response = await http.put(
       Uri.parse(
@@ -114,12 +133,12 @@ class DeveloperController extends GetxController {
   }
 
   Future<void> delete(
-    String id,
+    int id,
   ) async {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteDeveloper + id,
+        baseUrl + deleteDeveloper + id.toString(),
       ),
       headers: {
         "Content-Type": "application/json",
@@ -138,6 +157,22 @@ class DeveloperController extends GetxController {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
+    }
+  }
+
+  getDeveloperLogo() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      Uint8List fileBytes = result.files.first.bytes!;
+      String fileName = result.files.first.name;
+
+      // Upload file
+      var upload = await FirebaseStorage.instance
+          .ref('uploads/developers/images/$fileName')
+          .putData(fileBytes);
+      final url = upload.ref.getDownloadURL().then((value) {
+        logo.value = value;
+      });
     }
   }
 }
