@@ -66,6 +66,7 @@ dependencies:
   permission_handler: ^10.2.0
   geolocator: ^9.0.2
   image_picker_web: ^3.0.0+1
+  icon_picker: ^2.1.0
 
 
 

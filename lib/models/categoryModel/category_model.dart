@@ -15,7 +15,7 @@ class CategoryModel {
     this.description,
     this.parentId,
     this.image,
-    this.published,
+    this.status,
     this.createdAt,
     this.updatedAt,
   });
@@ -26,7 +26,7 @@ class CategoryModel {
   String? description;
   int? parentId;
   String? image;
-  bool? published;
+  bool? status;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -37,7 +37,7 @@ class CategoryModel {
         description: json["description"],
         image: json["image"],
         parentId: json["parentId"],
-        published: json["published"],
+        status: json["status"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
       );
@@ -49,7 +49,7 @@ class CategoryModel {
         "description": description,
         "image": image,
         "parentId": parentId,
-        "published": published,
+        "status": status,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
       };

@@ -1,17 +1,20 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend_grounda/controllers/amenitiesController/amenities_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
-import 'package:frontend_grounda/models/amenetiesModel/ameneties_model.dart';
 
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/settings/subpages/amenities/amenities_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
+import 'package:frontend_grounda/widgets/icon_from_api.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
 import 'package:get/get.dart';
+import 'package:icon_picker/icon_picker.dart';
 
 class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
   AmenitiesPageDesktop({super.key});
@@ -21,11 +24,10 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
       Get.find<AmenitiesController>();
   TextEditingController amenityTitleController = TextEditingController();
   TextEditingController amenityDescriptionController = TextEditingController();
-  List<AmenitiesModel> allamenitiesModel = [];
 
-  var selectedItemId = 0.obs;
   var isPublished = false.obs;
   var amenityId = ''.obs;
+  var icon = 57487.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -61,22 +63,24 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: AmenitiesForm(
+                    iconPicker: IconPicker(
+                      initialValue: 'Please Select an Icon',
+                      icon: Icon(
+                        IconData(icon.value, fontFamily: "MaterialIcons"),
+                      ),
+                      labelText: "Icon",
+                      title: "Select an icon",
+                      cancelBtn: "CANCEL",
+                      enableSearch: true,
+                      searchHint: 'Search icon',
+                      onChanged: (val) {
+                        var value = jsonDecode(val);
+                        icon.value = value['codePoint'];
+                        print(icon.value);
+                      },
+                    ),
                     amenityTitleController: amenityTitleController,
                     amenityDescriptionController: amenityDescriptionController,
-                    iconButtonText: "Upload Icon",
-                    iconImageUrl: amenitiesController.iconImageUrl.value,
-                    onIconPress: () async {
-                      Get.defaultDialog(
-                        barrierDismissible: false,
-                        title: 'Uploading Amenity Icon',
-                        content: const Center(
-                          child:
-                              CircularProgressIndicator(color: kPrimaryColor),
-                        ),
-                      );
-                      await amenitiesController.getIcon();
-                      Navigator.pop(context);
-                    },
                     buttonText: amenityId.value == '' ? 'Submit' : 'Update',
                     formSubmit: () async {
                       if (amenityId.value == '') {
@@ -87,11 +91,10 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                 CircularProgressIndicator(color: kPrimaryColor),
                           ),
                         );
-
                         await amenitiesController.create(
                             amenityTitleController.text,
                             amenityDescriptionController.text,
-                            amenitiesController.iconImageUrl.value,
+                            icon.value.toString(),
                             isPublished.value);
                         await amenitiesController.getAll();
                         Navigator.pop(context);
@@ -103,17 +106,16 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                 CircularProgressIndicator(color: kPrimaryColor),
                           ),
                         );
-
                         await amenitiesController.updateAmenities(
                           int.parse(amenityId.value),
                           amenityTitleController.text,
                           amenityDescriptionController.text,
-                          amenitiesController.iconImageUrl.value,
+                          icon.value.toString(),
                           isPublished.value,
                         );
                         amenityTitleController.text = '';
                         amenityDescriptionController.text = '';
-                        amenitiesController.iconImageUrl.value = '';
+                        icon.value = 57487;
                         amenityId.value = '';
                         await amenitiesController.getAll();
                         Navigator.pop(context);
@@ -123,8 +125,7 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                     onTap: () async {
                       amenityTitleController.text = '';
                       amenityDescriptionController.text = '';
-                      amenitiesController.iconImageUrl.value = '';
-                      selectedItemId.value = 0;
+                      icon.value = 57487;
                       amenityId.value = '';
                       await amenitiesController.getAll();
                     },
@@ -214,6 +215,13 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
+                                                        IconFromApiWidget(
+                                                          icon:
+                                                              amenitiesController
+                                                                  .amenities[
+                                                                      index]
+                                                                  .icon!,
+                                                        ),
                                                         Text(
                                                           amenitiesController
                                                               .amenities[index]
@@ -286,12 +294,10 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                               .amenities[index]
                                                               .description!;
 
-                                                      amenitiesController
-                                                              .iconImageUrl
-                                                              .value =
+                                                      icon.value = int.parse(
                                                           amenitiesController
                                                               .amenities[index]
-                                                              .icon!;
+                                                              .icon!);
 
                                                       isPublished.value =
                                                           amenitiesController
@@ -314,7 +320,7 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                     onPressed: () async {
                                                       Get.defaultDialog(
                                                         title:
-                                                            'Deleting Category',
+                                                            'Deleting Amenity',
                                                         content: const Center(
                                                           child: CircularProgressIndicator(
                                                               color:

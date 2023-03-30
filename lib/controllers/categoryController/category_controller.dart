@@ -58,7 +58,7 @@ class CategoryController extends GetxController {
     String slug,
     String description,
     int parentId,
-    bool published,
+    bool status,
   ) async {
     var bodyPrepare = {
       'image': image,
@@ -66,7 +66,7 @@ class CategoryController extends GetxController {
       'slug': slug,
       'description': description,
       'parentId': parentId,
-      'published': published
+      'published': status
     };
     var response = await http.post(Uri.parse(baseUrl + createCategory),
         body: jsonEncode(bodyPrepare),
@@ -93,7 +93,7 @@ class CategoryController extends GetxController {
     String slug,
     String description,
     int parentId,
-    bool published,
+    bool status,
   ) async {
     var bodyPrepare = {
       'id': id,
@@ -102,7 +102,7 @@ class CategoryController extends GetxController {
       'slug': slug,
       'description': description,
       'parentId': parentId,
-      'published': published
+      'published': status
     };
     var response = await http.put(Uri.parse(baseUrl + updateCategory),
         body: jsonEncode(bodyPrepare),

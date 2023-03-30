@@ -1,8 +1,5 @@
 import 'dart:convert';
 
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:frontend_grounda/models/amenetiesModel/ameneties_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
@@ -44,26 +41,26 @@ class AmenitiesController extends GetxController {
     }
   }
 
-  Future<void> getbyId(String id) async {
-    isLoading.value = true;
-    var response = await http.get(
-      Uri.parse(
-        baseUrl + getAmenities + id,
-      ),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-    );
-    if (response.statusCode == 200 && response.body != 'null') {
-      amenities.value = amenitiesModelFromJson(response.body);
-      isLoading.value = false;
-    } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
-    }
-  }
+  // Future<void> getbyId(String id) async {
+  //   isLoading.value = true;
+  //   var response = await http.get(
+  //     Uri.parse(
+  //       baseUrl + getAmenities + id,
+  //     ),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": "Bearer $token"
+  //     },
+  //   );
+  //   if (response.statusCode == 200 && response.body != 'null') {
+  //     amenities.value = amenitiesModelFromJson(response.body);
+  //     isLoading.value = false;
+  //   } else {
+  //     Get.snackbar('Error', response.body,
+  //         snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+  //     isLoading.value = false;
+  //   }
+  // }
 
   Future<void> create(
     String name,
@@ -91,8 +88,7 @@ class AmenitiesController extends GetxController {
     );
 
     if (response.statusCode == 200 && response.body != 'null') {
-      print(response.body);
-      amenities.addAll(amenitiesModelFromJson(response.body));
+      showSuccessSnak('Success', 'Amenity Created Sucessfully');
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -165,21 +161,21 @@ class AmenitiesController extends GetxController {
     }
   }
 
-  getIcon() async {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(allowedExtensions: ['svg'], type: FileType.custom);
-    if (result != null) {
-      Uint8List fileBytes = result.files.first.bytes!;
-      String fileName = result.files.first.name;
+  // getIcon() async {
+  //   FilePickerResult? result = await FilePicker.platform
+  //       .pickFiles(allowedExtensions: ['svg'], type: FileType.custom);
+  //   if (result != null) {
+  //     Uint8List fileBytes = result.files.first.bytes!;
+  //     String fileName = result.files.first.name;
 
-      // Upload file
-      var upload = await FirebaseStorage.instance
-          .ref('uploads/amenities/icon/$fileName')
-          .putData(fileBytes);
-      final url = upload.ref.getDownloadURL().then((value) {
-        iconImageUrl.value = value;
-        print(iconImageUrl.value);
-      });
-    }
-  }
+  //     // Upload file
+  //     var upload = await FirebaseStorage.instance
+  //         .ref('uploads/amenities/icon/$fileName')
+  //         .putData(fileBytes);
+  //     final url = upload.ref.getDownloadURL().then((value) {
+  //       iconImageUrl.value = value;
+  //       print(iconImageUrl.value);
+  //     });
+  //   }
+  // }
 }

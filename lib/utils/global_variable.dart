@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:frontend_grounda/utils/constants.dart';
 import 'package:get/get.dart';
 
 RxBool show = false.obs;
@@ -22,7 +24,7 @@ String createPost = '/createPost';
 String getAmenities = '/amenity/';
 String createAmenities = '/amenity/createAmenity';
 String updateAmenites = '/amenity/updateAmenity';
-String deleteAmenities = '/amenity/deleteAmenity';
+String deleteAmenities = '/amenity/deleteAmenity/';
 String createProject = '/project/createProject';
 String updateProjectUrl = '/project/updateProject';
 String allProject = '/project/';
@@ -102,3 +104,19 @@ String updateReviewUrl = '/updateReview';
 String deleteReview = '/deleteReview/';
 // RxBool themeMode = ThemeChangeController().isDarkMode;
 String getContactDetailsUrl = '/postContact/';
+
+showSuccessSnak(String title, String message) {
+  Get.snackbar(
+      icon: const Icon(
+        Icons.check,
+        color: kWhiteColor,
+      ),
+      title,
+      message,
+      colorText: kDarkTextColor,
+      snackPosition: SnackPosition.TOP,
+      maxWidth: 600,
+      backgroundColor: Colors.green,
+      snackStyle: SnackStyle.FLOATING,
+      shouldIconPulse: true);
+}

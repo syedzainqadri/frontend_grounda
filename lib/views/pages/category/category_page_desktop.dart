@@ -62,116 +62,105 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: categoryController.category.isEmpty
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: kPrimaryColor,
+                  child: CategoryForm(
+                    categoryNameController: categoryNameController,
+                    categorySlugController: categorySlugController,
+                    categoryStatusController: categoryStatusController,
+                    descriptionController: descriptionController,
+                    dropDownList: categoryController.category
+                        .map<DropdownMenuItem<String>>((value) {
+                      return DropdownMenuItem<String>(
+                        value: value.name,
+                        child: Text(value.name!),
+                      );
+                    }).toList(),
+                    dropDownValue: categoryController.selectedItemName.value,
+                    onChange: (selectedValue) {
+                      categoryController.selectedItemName.value = selectedValue;
+                      for (int i = 0;
+                          i < categoryController.category.length;
+                          i++) {
+                        if (categoryController.selectedItemName ==
+                            categoryController.category[i].name) {
+                          selectedItemId.value =
+                              categoryController.category[i].id!;
+                        }
+                      }
+                    },
+                    buttonText: catId.value == '' ? 'Submit' : 'Update',
+                    formSubmit: () async {
+                      if (catId.value == '') {
+                        Get.defaultDialog(
+                          title: 'Creating Category',
+                          content: const Center(
+                            child:
+                                CircularProgressIndicator(color: kPrimaryColor),
                           ),
-                        )
-                      : CategoryForm(
-                          categoryNameController: categoryNameController,
-                          categorySlugController: categorySlugController,
-                          categoryStatusController: categoryStatusController,
-                          descriptionController: descriptionController,
-                          dropDownList: categoryController.category
-                              .map<DropdownMenuItem<String>>((value) {
-                            return DropdownMenuItem<String>(
-                              value: value.name,
-                              child: Text(value.name!),
-                            );
-                          }).toList(),
-                          dropDownValue:
-                              categoryController.selectedItemName.value,
-                          onChange: (selectedValue) {
-                            categoryController.selectedItemName.value =
-                                selectedValue;
-                            for (int i = 0;
-                                i < categoryController.category.length;
-                                i++) {
-                              if (categoryController.selectedItemName ==
-                                  categoryController.category[i].name) {
-                                selectedItemId.value =
-                                    categoryController.category[i].id!;
-                              }
-                            }
-                          },
-                          buttonText: catId.value == '' ? 'Submit' : 'Update',
-                          formSubmit: () async {
-                            if (catId.value == '') {
-                              Get.defaultDialog(
-                                title: 'Creating Category',
-                                content: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kPrimaryColor),
-                                ),
-                              );
-                              var description =
-                                  await descriptionController.getText();
-                              await categoryController.createNewCategory(
-                                  categoryController.imageUrl.value,
-                                  categoryNameController.text,
-                                  categorySlugController.text,
-                                  description,
-                                  selectedItemId.value,
-                                  isPublished.value);
-                              await categoryController.getCategories();
-                              Navigator.pop(context);
-                            } else {
-                              Get.defaultDialog(
-                                title: 'Updating Category',
-                                content: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kPrimaryColor),
-                                ),
-                              );
-                              var description =
-                                  await descriptionController.getText();
-                              await categoryController.updateThisCategory(
-                                  int.parse(catId.value),
-                                  categoryController.imageUrl.value,
-                                  categoryNameController.text,
-                                  categorySlugController.text,
-                                  description,
-                                  selectedItemId.value,
-                                  isPublished.value);
-                              categoryNameController.text = '';
-                              categorySlugController.text = '';
-                              descriptionController.clear();
-                              selectedItemId.value = 0;
-                              catId.value = '';
-                              await categoryController.getCategories();
-                              Navigator.pop(context);
-                            }
-                          },
-                          cancelText: catId.value == '' ? '' : 'Cancel Update',
-                          onTap: () async {
-                            categoryNameController.text = '';
-                            categorySlugController.text = '';
-                            descriptionController.clear();
-                            selectedItemId.value = 0;
-                            catId.value = '';
-                            await categoryController.getCategories();
-                          },
-                          pictureButtonText:
-                              categoryController.imageUrl.value.isEmpty
-                                  ? 'Add Picture'
-                                  : 'Update Picture',
-                          uploadImages: () async {
-                            Get.defaultDialog(
-                              title: 'Uploading Image',
-                              content: const Center(
-                                child: CircularProgressIndicator(
-                                    color: kPrimaryColor),
-                              ),
-                            );
-                            await categoryController.getImage();
-                            Navigator.pop(context);
-                          },
-                          statusValue: isPublished.value,
-                          statusChanges: (value) {
-                            isPublished.value = value;
-                          },
+                        );
+                        var description = await descriptionController.getText();
+                        await categoryController.createNewCategory(
+                            categoryController.imageUrl.value,
+                            categoryNameController.text,
+                            categorySlugController.text,
+                            description,
+                            selectedItemId.value,
+                            isPublished.value);
+                        await categoryController.getCategories();
+                        Navigator.pop(context);
+                      } else {
+                        Get.defaultDialog(
+                          title: 'Updating Category',
+                          content: const Center(
+                            child:
+                                CircularProgressIndicator(color: kPrimaryColor),
+                          ),
+                        );
+                        var description = await descriptionController.getText();
+                        await categoryController.updateThisCategory(
+                            int.parse(catId.value),
+                            categoryController.imageUrl.value,
+                            categoryNameController.text,
+                            categorySlugController.text,
+                            description,
+                            selectedItemId.value,
+                            isPublished.value);
+                        categoryNameController.text = '';
+                        categorySlugController.text = '';
+                        descriptionController.clear();
+                        selectedItemId.value = 0;
+                        catId.value = '';
+                        await categoryController.getCategories();
+                        Navigator.pop(context);
+                      }
+                    },
+                    cancelText: catId.value == '' ? '' : 'Cancel Update',
+                    onTap: () async {
+                      categoryNameController.text = '';
+                      categorySlugController.text = '';
+                      descriptionController.clear();
+                      selectedItemId.value = 0;
+                      catId.value = '';
+                      await categoryController.getCategories();
+                    },
+                    pictureButtonText: categoryController.imageUrl.value.isEmpty
+                        ? 'Add Picture'
+                        : 'Update Picture',
+                    uploadImages: () async {
+                      Get.defaultDialog(
+                        title: 'Uploading Image',
+                        content: const Center(
+                          child:
+                              CircularProgressIndicator(color: kPrimaryColor),
                         ),
+                      );
+                      await categoryController.getImage();
+                      Navigator.pop(context);
+                    },
+                    statusValue: isPublished.value,
+                    statusChanges: (value) {
+                      isPublished.value = value;
+                    },
+                  ),
                 ),
               ),
               SizedBox(
@@ -294,7 +283,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                       categoryController
                                                                   .category[
                                                                       index]
-                                                                  .published ==
+                                                                  .status ==
                                                               true
                                                           ? Text(
                                                               "Active",
@@ -346,7 +335,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                 isPublished.value =
                                                     categoryController
                                                         .category[index]
-                                                        .published!;
+                                                        .status!;
                                                 selectedItemId.value =
                                                     categoryController
                                                         .category[index]

@@ -33,7 +33,7 @@ class TextEditor extends StatelessWidget {
         ToolBar(
           toolBarColor: _toolbarColor,
           padding: const EdgeInsets.all(8),
-          iconSize: 25,
+          iconSize: 15,
           iconColor: _toolbarIconColor,
           activeIconColor: Colors.purple.shade300,
           controller: controller,
@@ -43,15 +43,14 @@ class TextEditor extends StatelessWidget {
           fit: FlexFit.tight,
           child: QuillHtmlEditor(
             text: "",
-            hintText:
-                'Add Description here n Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum Loreim Impresum',
+            hintText: 'Add Description here ',
             controller: controller,
             isEnabled: true,
             minHeight: 150,
             textStyle: _editorTextStyle,
             hintTextStyle: _hintTextStyle,
             hintTextAlign: TextAlign.start,
-            padding: const EdgeInsets.only(left: 10, top: 5, bottom: 150),
+            padding: const EdgeInsets.only(left: 10, top: 5, bottom: 100),
             hintTextPadding: EdgeInsets.zero,
             backgroundColor: _backgroundColor,
             onFocusChanged: (hasFocus) => debugPrint('has focus $hasFocus'),

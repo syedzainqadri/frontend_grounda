@@ -17,8 +17,6 @@ class AmenitiesModel {
     this.name,
     this.description,
     this.icon,
-    this.createdAt,
-    this.updatedAt,
     this.status,
   });
 
@@ -26,8 +24,6 @@ class AmenitiesModel {
   String? name;
   String? description;
   String? icon;
-  DateTime? createdAt;
-  DateTime? updatedAt;
   bool? status;
 
   factory AmenitiesModel.fromJson(Map<String, dynamic> json) => AmenitiesModel(
@@ -35,8 +31,6 @@ class AmenitiesModel {
         name: json["name"],
         description: json["description"],
         icon: json["icon"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
         status: json["status"],
       );
 
@@ -45,8 +39,6 @@ class AmenitiesModel {
         "name": name,
         "description": description,
         "icon": icon,
-        "createdAt": createdAt!.toIso8601String(),
-        "updatedAt": updatedAt!.toIso8601String(),
         "status": status,
       };
 }

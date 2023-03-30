@@ -88,7 +88,7 @@ class CategoryPageMobile extends GetView<ThemeChangeController> {
                                                   .bodySmall,
                                             ),
                                             categoryController.category[index]
-                                                        .published ==
+                                                        .status ==
                                                     true
                                                 ? Text(
                                                     "Active",
