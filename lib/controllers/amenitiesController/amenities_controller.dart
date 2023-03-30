@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:frontend_grounda/models/amenetiesModel/ameneties_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
+import 'package:frontend_grounda/utils/global_methods.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -35,9 +35,7 @@ class AmenitiesController extends GetxController {
       amenities.value = amenitiesModelFromJson(response.body);
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -91,9 +89,7 @@ class AmenitiesController extends GetxController {
       showSuccessSnak('Success', 'Amenity Created Sucessfully');
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -125,11 +121,10 @@ class AmenitiesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
+      showSuccessSnak('Success', 'Amenity Updated Sucessfully');
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -150,14 +145,11 @@ class AmenitiesController extends GetxController {
       getAll();
       var deletedAmenities = jsonDecode(response.body);
       var amenities = deletedAmenities['name'];
-      Get.snackbar('Amenity Deleted',
-          'The Amenity with name: $amenities has been deleted',
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      showDeleteSnak('Amenity Deleted',
+          'The Amenity with name: $amenities has been deleted');
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
