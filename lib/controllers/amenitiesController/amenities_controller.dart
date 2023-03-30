@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 class AmenitiesController extends GetxController {
   var amenities = <AmenitiesModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
+  var selectedItemName = ''.obs;
   var token = ''.obs;
   var isLoading = false.obs;
   var iconImageUrl = ''.obs;
@@ -33,6 +34,7 @@ class AmenitiesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       amenities.value = amenitiesModelFromJson(response.body);
+      selectedItemName.value = amenities.value.first.name!;
       isLoading.value = false;
     } else {
       showErrorSnak('Error', response.body);
@@ -73,7 +75,6 @@ class AmenitiesController extends GetxController {
       "status": status,
       "icon": icon
     };
-    print(bodyPrepare);
     var response = await http.post(
       Uri.parse(
         baseUrl + createAmenities,
