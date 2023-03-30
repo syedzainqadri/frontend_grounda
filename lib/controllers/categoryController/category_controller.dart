@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend_grounda/models/categoryModel/category_model.dart';
+import 'package:frontend_grounda/utils/global_methods.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -36,7 +37,9 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       category.value = categoryModelFromJson(response.body);
       selectedItemName.value = category.first.name!;
-    } else {}
+    } else {
+      showErrorSnak('Error', response.body);
+    }
   }
 
   Future<void> getSubCategories(String id) async {
@@ -46,10 +49,11 @@ class CategoryController extends GetxController {
       "Authorization": "Bearer $token"
     });
     if (response.statusCode == 200) {
-      print(response.body);
       subCategory.value = subCategoryModelFromJson(response.body);
       subCategorySelectedItemName.value = subCategory.first.name!;
-    } else {}
+    } else {
+      showErrorSnak('Error', response.body);
+    }
   }
 
   Future<void> createNewCategory(
@@ -58,7 +62,8 @@ class CategoryController extends GetxController {
     String slug,
     String description,
     int parentId,
-    bool published,
+    bool status,
+    String amenitiesIds,
   ) async {
     var bodyPrepare = {
       'image': image,
@@ -66,7 +71,8 @@ class CategoryController extends GetxController {
       'slug': slug,
       'description': description,
       'parentId': parentId,
-      'published': published
+      'status': status,
+      'amenitiesList': amenitiesIds
     };
     var response = await http.post(Uri.parse(baseUrl + createCategory),
         body: jsonEncode(bodyPrepare),
@@ -77,12 +83,12 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       var createdCategory = jsonDecode(response.body);
       var categoryName = createdCategory['name'];
-      Get.snackbar(
-          'Category Created', 'Category Name: $categoryName has been created',
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      showSuccessSnak(
+        'Category Created',
+        'Category Name: $categoryName has been created',
+      );
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -93,7 +99,8 @@ class CategoryController extends GetxController {
     String slug,
     String description,
     int parentId,
-    bool published,
+    bool status,
+    String amenitiesIds,
   ) async {
     var bodyPrepare = {
       'id': id,
@@ -102,7 +109,8 @@ class CategoryController extends GetxController {
       'slug': slug,
       'description': description,
       'parentId': parentId,
-      'published': published
+      'status': status,
+      'amenitiesList': amenitiesIds
     };
     var response = await http.put(Uri.parse(baseUrl + updateCategory),
         body: jsonEncode(bodyPrepare),
@@ -113,13 +121,12 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       var createdCategory = jsonDecode(response.body);
       var categoryName = createdCategory['name'];
-      Get.snackbar(
-          'Category Updated', 'Category Name: $categoryName has been Updated',
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      // singleCategory.value = createCategoryModelFromJson(response.body);
+      showSuccessSnak(
+        'Category Updated',
+        'Category Name: $categoryName has been Updated',
+      );
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -133,12 +140,12 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       var deletedCategory = jsonDecode(response.body);
       var categoryName = deletedCategory['name'];
-      Get.snackbar(
-          'Category Remved', 'Category name: $categoryName Has been deleted',
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      showSuccessSnak(
+        'Category Remved',
+        'Category name: $categoryName Has been deleted',
+      );
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -152,9 +159,11 @@ class CategoryController extends GetxController {
       var upload = await FirebaseStorage.instance
           .ref('uploads/categories/images/$fileName')
           .putData(fileBytes);
-      final url = upload.ref.getDownloadURL().then((value) {
-        imageUrl.value = value;
-      });
+      final url = upload.ref.getDownloadURL().then(
+        (value) {
+          imageUrl.value = value;
+        },
+      );
     }
   }
 }

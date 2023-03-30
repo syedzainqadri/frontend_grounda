@@ -1,10 +1,7 @@
 import 'dart:convert';
-
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:frontend_grounda/models/amenetiesModel/ameneties_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
+import 'package:frontend_grounda/utils/global_methods.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +9,7 @@ import 'package:http/http.dart' as http;
 class AmenitiesController extends GetxController {
   var amenities = <AmenitiesModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
+  var selectedItemName = ''.obs;
   var token = ''.obs;
   var isLoading = false.obs;
   var iconImageUrl = ''.obs;
@@ -36,34 +34,33 @@ class AmenitiesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       amenities.value = amenitiesModelFromJson(response.body);
+      selectedItemName.value = amenities.value.first.name!;
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
-  Future<void> getbyId(String id) async {
-    isLoading.value = true;
-    var response = await http.get(
-      Uri.parse(
-        baseUrl + getAmenities + id,
-      ),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-    );
-    if (response.statusCode == 200 && response.body != 'null') {
-      amenities.value = amenitiesModelFromJson(response.body);
-      isLoading.value = false;
-    } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
-    }
-  }
+  // Future<void> getbyId(String id) async {
+  //   isLoading.value = true;
+  //   var response = await http.get(
+  //     Uri.parse(
+  //       baseUrl + getAmenities + id,
+  //     ),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": "Bearer $token"
+  //     },
+  //   );
+  //   if (response.statusCode == 200 && response.body != 'null') {
+  //     amenities.value = amenitiesModelFromJson(response.body);
+  //     isLoading.value = false;
+  //   } else {
+  //     Get.snackbar('Error', response.body,
+  //         snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+  //     isLoading.value = false;
+  //   }
+  // }
 
   Future<void> create(
     String name,
@@ -78,7 +75,6 @@ class AmenitiesController extends GetxController {
       "status": status,
       "icon": icon
     };
-    print(bodyPrepare);
     var response = await http.post(
       Uri.parse(
         baseUrl + createAmenities,
@@ -91,13 +87,10 @@ class AmenitiesController extends GetxController {
     );
 
     if (response.statusCode == 200 && response.body != 'null') {
-      print(response.body);
-      amenities.addAll(amenitiesModelFromJson(response.body));
+      showSuccessSnak('Success', 'Amenity Created Sucessfully');
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -129,11 +122,10 @@ class AmenitiesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
+      showSuccessSnak('Success', 'Amenity Updated Sucessfully');
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -154,32 +146,29 @@ class AmenitiesController extends GetxController {
       getAll();
       var deletedAmenities = jsonDecode(response.body);
       var amenities = deletedAmenities['name'];
-      Get.snackbar('Amenity Deleted',
-          'The Amenity with name: $amenities has been deleted',
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      showDeleteSnak('Amenity Deleted',
+          'The Amenity with name: $amenities has been deleted');
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
-  getIcon() async {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(allowedExtensions: ['svg'], type: FileType.custom);
-    if (result != null) {
-      Uint8List fileBytes = result.files.first.bytes!;
-      String fileName = result.files.first.name;
+  // getIcon() async {
+  //   FilePickerResult? result = await FilePicker.platform
+  //       .pickFiles(allowedExtensions: ['svg'], type: FileType.custom);
+  //   if (result != null) {
+  //     Uint8List fileBytes = result.files.first.bytes!;
+  //     String fileName = result.files.first.name;
 
-      // Upload file
-      var upload = await FirebaseStorage.instance
-          .ref('uploads/amenities/icon/$fileName')
-          .putData(fileBytes);
-      final url = upload.ref.getDownloadURL().then((value) {
-        iconImageUrl.value = value;
-        print(iconImageUrl.value);
-      });
-    }
-  }
+  //     // Upload file
+  //     var upload = await FirebaseStorage.instance
+  //         .ref('uploads/amenities/icon/$fileName')
+  //         .putData(fileBytes);
+  //     final url = upload.ref.getDownloadURL().then((value) {
+  //       iconImageUrl.value = value;
+  //       print(iconImageUrl.value);
+  //     });
+  //   }
+  // }
 }

@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+// To parse this JSON data, do
+//
+//     final categoryModel = categoryModelFromJson(jsonString);
+
 List<CategoryModel> categoryModelFromJson(String str) =>
     List<CategoryModel>.from(
         json.decode(str).map((x) => CategoryModel.fromJson(x)));
@@ -13,22 +17,24 @@ class CategoryModel {
     this.name,
     this.slug,
     this.description,
-    this.parentId,
     this.image,
-    this.published,
+    this.parentId,
+    this.status,
     this.createdAt,
     this.updatedAt,
+    this.amenitiesIds,
   });
 
   int? id;
   String? name;
   String? slug;
   String? description;
-  int? parentId;
   String? image;
-  bool? published;
+  int? parentId;
+  bool? status;
   DateTime? createdAt;
   DateTime? updatedAt;
+  String? amenitiesIds;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         id: json["id"],
@@ -37,9 +43,10 @@ class CategoryModel {
         description: json["description"],
         image: json["image"],
         parentId: json["parentId"],
-        published: json["published"],
+        status: json["status"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
+        amenitiesIds: json["amenitiesIds"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,64 +56,10 @@ class CategoryModel {
         "description": description,
         "image": image,
         "parentId": parentId,
-        "published": published,
+        "status": status,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
-      };
-}
-
-CreateCategoryModel createCategoryModelFromJson(String str) =>
-    CreateCategoryModel.fromJson(json.decode(str));
-
-String createCategoryModelToJson(CreateCategoryModel data) =>
-    json.encode(data.toJson());
-
-class CreateCategoryModel {
-  CreateCategoryModel({
-    this.id,
-    this.name,
-    this.slug,
-    this.description,
-    this.image,
-    this.parentId,
-    this.published,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  int? id;
-  String? name;
-  String? slug;
-  String? description;
-  String? image;
-  int? parentId;
-  bool? published;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-
-  factory CreateCategoryModel.fromJson(Map<String, dynamic> json) =>
-      CreateCategoryModel(
-        id: json["id"],
-        name: json["name"],
-        slug: json["slug"],
-        description: json["description"],
-        image: json["image"],
-        parentId: json["parentId"],
-        published: json["published"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "slug": slug,
-        "description": description,
-        "image": image,
-        "parentId": parentId,
-        "published": published,
-        "createdAt": createdAt!.toIso8601String(),
-        "updatedAt": updatedAt!.toIso8601String(),
+        "amenitiesIds": amenitiesIds,
       };
 }
 

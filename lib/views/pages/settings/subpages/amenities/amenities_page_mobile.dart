@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
+import 'package:frontend_grounda/controllers/amenitiesController/amenities_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
@@ -8,7 +8,8 @@ import 'package:get/get.dart';
 
 class AmenitiesPageMobile extends GetView<ThemeChangeController> {
   AmenitiesPageMobile({super.key});
-  final CategoryController categoryController = Get.find<CategoryController>();
+  final AmenitiesController amenitiesController =
+      Get.find<AmenitiesController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class AmenitiesPageMobile extends GetView<ThemeChangeController> {
               height: height * .8,
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: categoryController.category.length,
+                itemCount: amenitiesController.amenities.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     color: controller.isDarkMode.value
@@ -47,11 +48,11 @@ class AmenitiesPageMobile extends GetView<ThemeChangeController> {
                                       radius: 30,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(30),
-                                        child: categoryController
-                                                    .category[index].image !=
+                                        child: amenitiesController
+                                                    .amenities[index].icon !=
                                                 null
-                                            ? Image.network(categoryController
-                                                .category[index].image!)
+                                            ? Image.network(amenitiesController
+                                                .amenities[index].icon!)
                                             : SvgPicture.asset(
                                                 '/images/logo.svg',
                                                 fit: BoxFit.cover,
@@ -70,8 +71,8 @@ class AmenitiesPageMobile extends GetView<ThemeChangeController> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          categoryController
-                                              .category[index].name!,
+                                          amenitiesController
+                                              .amenities[index].name!,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge,
@@ -87,8 +88,8 @@ class AmenitiesPageMobile extends GetView<ThemeChangeController> {
                                                   .textTheme
                                                   .bodySmall,
                                             ),
-                                            categoryController.category[index]
-                                                        .published ==
+                                            amenitiesController.amenities[index]
+                                                        .status ==
                                                     true
                                                 ? Text(
                                                     "Active",

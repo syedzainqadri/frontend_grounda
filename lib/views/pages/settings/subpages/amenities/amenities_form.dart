@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
@@ -15,30 +14,32 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
       {required this.amenityTitleController,
       required this.amenityDescriptionController,
       required this.statusChanges,
-      required this.iconImageUrl,
-      required this.onIconPress,
+      // required this.iconImageUrl,
+      // required this.onIconPress,
       required this.formSubmit,
       required this.statusValue,
       required this.buttonText,
-      required this.iconButtonText,
+      // required this.iconButtonText,
       required this.cancelText,
       required this.onTap,
+      required this.iconPicker,
       super.key});
 
   double width = Get.width;
   double height = Get.height;
 
-  dynamic onIconPress;
+  // dynamic onIconPress;
   dynamic onChange;
   dynamic statusChanges;
   dynamic formSubmit;
   dynamic onTap;
 
-  String iconButtonText;
+  // String iconButtonText;
   String buttonText;
-  String iconImageUrl;
+  // String iconImageUrl;
   String cancelText;
   bool statusValue;
+  Widget iconPicker;
 
   TextEditingController amenityTitleController;
   TextEditingController amenityDescriptionController;
@@ -75,19 +76,19 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
           height: height * 0.04,
         ),
 
-        Row(
-          children: [
-            SvgPicture.network(iconImageUrl),
-            DefaultButton(
-              primaryColor: kPrimaryColor,
-              hoverColor: kDarkColor,
-              buttonText: iconButtonText,
-              onPressed: onIconPress,
-              width: width * .1,
-              height: height * .05,
-            ),
-          ],
-        ),
+        // Row(
+        //   children: [
+        //     SvgPicture.network(iconImageUrl),
+        //     DefaultButton(
+        //       primaryColor: kPrimaryColor,
+        //       hoverColor: kDarkColor,
+        //       buttonText: iconButtonText,
+        //       onPressed: onIconPress,
+        //       width: width * .1,
+        //       height: height * .05,
+        //     ),
+        //   ],
+        // ),
 
         // DefaultTextField(
         //   hintText: "Amenity Icon",
@@ -121,6 +122,10 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
             ),
           ),
         ),
+        SizedBox(
+          height: height * .04,
+        ),
+        iconPicker,
         SizedBox(
           height: height * .04,
         ),

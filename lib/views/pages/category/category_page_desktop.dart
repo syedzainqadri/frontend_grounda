@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend_grounda/controllers/amenitiesController/amenities_controller.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/models/categoryModel/category_model.dart';
@@ -19,6 +20,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
 
   final TextEditingController searchCategory = TextEditingController();
   final CategoryController categoryController = Get.find<CategoryController>();
+  final AmenitiesController amenitiesController =
+      Get.find<AmenitiesController>();
   QuillEditorController descriptionController = QuillEditorController();
   TextEditingController categoryNameController = TextEditingController();
   TextEditingController categorySlugController = TextEditingController();
@@ -28,6 +31,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
   var selectedItemId = 0.obs;
   var isPublished = false.obs;
   var catId = ''.obs;
+  RxList amenitiesList = [].obs;
+  RxList iconData = [].obs;
 
   @override
   Widget build(BuildContext context) {
@@ -62,116 +67,180 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: categoryController.category.isEmpty
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: kPrimaryColor,
+                  child: CategoryForm(
+                    categoryNameController: categoryNameController,
+                    categorySlugController: categorySlugController,
+                    categoryStatusController: categoryStatusController,
+                    descriptionController: descriptionController,
+                    dropDownList: categoryController.category
+                        .map<DropdownMenuItem<String>>((value) {
+                      return DropdownMenuItem<String>(
+                        value: value.name,
+                        child: Text(value.name!),
+                      );
+                    }).toList(),
+                    dropDownValue: categoryController.selectedItemName.value,
+                    onChange: (selectedValue) {
+                      categoryController.selectedItemName.value = selectedValue;
+                      for (int i = 0;
+                          i < categoryController.category.length;
+                          i++) {
+                        if (categoryController.selectedItemName ==
+                            categoryController.category[i].name) {
+                          selectedItemId.value =
+                              categoryController.category[i].id!;
+                        }
+                      }
+                    },
+                    //Ameneties
+                    amenetiesListView: iconData.isEmpty
+                        ? Text(
+                            'Please Select Amenitied',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: kPrimaryColor),
+                          )
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Stack(children: [
+                                Icon(
+                                  IconData(
+                                    int.parse(iconData[index]),
+                                    fontFamily: "MaterialIcons",
+                                  ),
+                                  size: 50,
+                                ),
+                                Positioned(
+                                    top: -12,
+                                    left: 20,
+                                    child: IconButton(
+                                        onPressed: () {
+                                          iconData.remove(iconData[index]);
+                                          amenitiesList
+                                              .remove(amenitiesList[index]);
+                                          print(amenitiesList);
+                                        },
+                                        icon: const Icon(
+                                          Icons.cancel,
+                                          color: kRedColor,
+                                          size: 15,
+                                        ))),
+                              ]);
+                            },
+                            itemCount: iconData.length,
                           ),
-                        )
-                      : CategoryForm(
-                          categoryNameController: categoryNameController,
-                          categorySlugController: categorySlugController,
-                          categoryStatusController: categoryStatusController,
-                          descriptionController: descriptionController,
-                          dropDownList: categoryController.category
-                              .map<DropdownMenuItem<String>>((value) {
-                            return DropdownMenuItem<String>(
-                              value: value.name,
-                              child: Text(value.name!),
-                            );
-                          }).toList(),
-                          dropDownValue:
-                              categoryController.selectedItemName.value,
-                          onChange: (selectedValue) {
-                            categoryController.selectedItemName.value =
-                                selectedValue;
-                            for (int i = 0;
-                                i < categoryController.category.length;
-                                i++) {
-                              if (categoryController.selectedItemName ==
-                                  categoryController.category[i].name) {
-                                selectedItemId.value =
-                                    categoryController.category[i].id!;
-                              }
-                            }
-                          },
-                          buttonText: catId.value == '' ? 'Submit' : 'Update',
-                          formSubmit: () async {
-                            if (catId.value == '') {
-                              Get.defaultDialog(
-                                title: 'Creating Category',
-                                content: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kPrimaryColor),
-                                ),
-                              );
-                              var description =
-                                  await descriptionController.getText();
-                              await categoryController.createNewCategory(
-                                  categoryController.imageUrl.value,
-                                  categoryNameController.text,
-                                  categorySlugController.text,
-                                  description,
-                                  selectedItemId.value,
-                                  isPublished.value);
-                              await categoryController.getCategories();
-                              Navigator.pop(context);
-                            } else {
-                              Get.defaultDialog(
-                                title: 'Updating Category',
-                                content: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kPrimaryColor),
-                                ),
-                              );
-                              var description =
-                                  await descriptionController.getText();
-                              await categoryController.updateThisCategory(
-                                  int.parse(catId.value),
-                                  categoryController.imageUrl.value,
-                                  categoryNameController.text,
-                                  categorySlugController.text,
-                                  description,
-                                  selectedItemId.value,
-                                  isPublished.value);
-                              categoryNameController.text = '';
-                              categorySlugController.text = '';
-                              descriptionController.clear();
-                              selectedItemId.value = 0;
-                              catId.value = '';
-                              await categoryController.getCategories();
-                              Navigator.pop(context);
-                            }
-                          },
-                          cancelText: catId.value == '' ? '' : 'Cancel Update',
-                          onTap: () async {
-                            categoryNameController.text = '';
-                            categorySlugController.text = '';
-                            descriptionController.clear();
-                            selectedItemId.value = 0;
-                            catId.value = '';
-                            await categoryController.getCategories();
-                          },
-                          pictureButtonText:
-                              categoryController.imageUrl.value.isEmpty
-                                  ? 'Add Picture'
-                                  : 'Update Picture',
-                          uploadImages: () async {
-                            Get.defaultDialog(
-                              title: 'Uploading Image',
-                              content: const Center(
-                                child: CircularProgressIndicator(
-                                    color: kPrimaryColor),
-                              ),
-                            );
-                            await categoryController.getImage();
-                            Navigator.pop(context);
-                          },
-                          statusValue: isPublished.value,
-                          statusChanges: (value) {
-                            isPublished.value = value;
-                          },
+                    amenitiesDropDownList: amenitiesController.amenities
+                        .map<DropdownMenuItem<String>>((value) {
+                      return DropdownMenuItem<String>(
+                        value: value.name,
+                        child: Row(
+                          children: [
+                            Icon(IconData(int.parse(value.icon!),
+                                fontFamily: "MaterialIcons")),
+                            SizedBox(
+                              width: width * .01,
+                            ),
+                            Text(value.name!),
+                          ],
                         ),
+                      );
+                    }).toList(),
+                    amenitiesDropDownValue:
+                        amenitiesController.selectedItemName.value,
+                    amenitiesOnChange: (selectedValue) {
+                      amenitiesController.selectedItemName.value =
+                          selectedValue;
+                      for (int i = 0;
+                          i < amenitiesController.amenities.length;
+                          i++) {
+                        if (amenitiesController.selectedItemName ==
+                            amenitiesController.amenities[i].name) {
+                          amenitiesList
+                              .add(amenitiesController.amenities[i].id!);
+                          iconData.add(amenitiesController.amenities[i].icon);
+                        }
+                      }
+                      print(amenitiesList);
+                      print(iconData);
+                    },
+                    buttonText: catId.value == '' ? 'Submit' : 'Update',
+                    formSubmit: () async {
+                      if (catId.value == '') {
+                        Get.defaultDialog(
+                          title: 'Creating Category',
+                          content: const Center(
+                            child:
+                                CircularProgressIndicator(color: kPrimaryColor),
+                          ),
+                        );
+                        var description = await descriptionController.getText();
+                        await categoryController.createNewCategory(
+                            categoryController.imageUrl.value,
+                            categoryNameController.text,
+                            categorySlugController.text,
+                            description,
+                            selectedItemId.value,
+                            isPublished.value,
+                            amenitiesList.toString());
+                        await categoryController.getCategories();
+                        Navigator.pop(context);
+                      } else {
+                        Get.defaultDialog(
+                          title: 'Updating Category',
+                          content: const Center(
+                            child:
+                                CircularProgressIndicator(color: kPrimaryColor),
+                          ),
+                        );
+                        var description = await descriptionController.getText();
+                        await categoryController.updateThisCategory(
+                            int.parse(catId.value),
+                            categoryController.imageUrl.value,
+                            categoryNameController.text,
+                            categorySlugController.text,
+                            description,
+                            selectedItemId.value,
+                            isPublished.value,
+                            amenitiesList.toString());
+                        categoryNameController.text = '';
+                        categorySlugController.text = '';
+                        descriptionController.clear();
+                        selectedItemId.value = 0;
+                        catId.value = '';
+                        await categoryController.getCategories();
+                        Navigator.pop(context);
+                      }
+                    },
+                    cancelText: catId.value == '' ? '' : 'Cancel Update',
+                    onTap: () async {
+                      categoryNameController.text = '';
+                      categorySlugController.text = '';
+                      descriptionController.clear();
+                      selectedItemId.value = 0;
+                      catId.value = '';
+                      await categoryController.getCategories();
+                    },
+                    pictureButtonText: categoryController.imageUrl.value.isEmpty
+                        ? 'Add Picture'
+                        : 'Update Picture',
+                    uploadImages: () async {
+                      Get.defaultDialog(
+                        title: 'Uploading Image',
+                        content: const Center(
+                          child:
+                              CircularProgressIndicator(color: kPrimaryColor),
+                        ),
+                      );
+                      await categoryController.getImage();
+                      Navigator.pop(context);
+                    },
+                    statusValue: isPublished.value,
+                    statusChanges: (value) {
+                      isPublished.value = value;
+                    },
+                  ),
                 ),
               ),
               SizedBox(
@@ -294,7 +363,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                       categoryController
                                                                   .category[
                                                                       index]
-                                                                  .published ==
+                                                                  .status ==
                                                               true
                                                           ? Text(
                                                               "Active",
@@ -346,7 +415,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                 isPublished.value =
                                                     categoryController
                                                         .category[index]
-                                                        .published!;
+                                                        .status!;
                                                 selectedItemId.value =
                                                     categoryController
                                                         .category[index]
