@@ -7,15 +7,15 @@ import 'package:frontend_grounda/controllers/themeController/theme_change_contro
 import 'package:frontend_grounda/models/developerModel.dart/developer_model.dart';
 
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/views/pages/developer/developer_form.dart';
+import 'package:frontend_grounda/views/pages/project/project_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
 import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
-class DeveloperPageDesktop extends GetView<ThemeChangeController> {
-  DeveloperPageDesktop({super.key});
+class ProjectPageDesktop extends GetView<ThemeChangeController> {
+  ProjectPageDesktop({super.key});
 
   final TextEditingController searchDeveloperController =
       TextEditingController();
@@ -37,7 +37,7 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
     double height = Get.height;
     const bool isMobile = false;
     return Scaffold(
-      appBar: DashBoardAppBar(title: 'Developers'),
+      appBar: DashBoardAppBar(title: 'Project'),
       body: Obx(
         () => Center(
           child: Row(
@@ -64,78 +64,87 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: DeveloperForm(
-                    developerNameController: developerNameController,
-                    descriptionController: descriptionController,
-                    buttonText: devId.value == '' ? 'Submit' : 'Update',
-                    formSubmit: () async {
-                      if (devId.value == '') {
-                        Get.defaultDialog(
-                          title: 'Creating Developer',
-                          content: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
+                  child: developerController.developers.isEmpty
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: kPrimaryColor,
                           ),
-                        );
-                        var description = await descriptionController.getText();
-                        await developerController.create(
-                            developerNameController.text,
-                            description,
-                            developerController.logo.value,
-                            status.value);
-                        await developerController.getAll();
-                        Navigator.pop(context);
-                      } else {
-                        Get.defaultDialog(
-                          title: 'Updating Developer',
-                          content: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                        var description = await descriptionController.getText();
-                        await developerController.updateDeveloper(
-                            int.parse(devId.value),
-                            developerNameController.text,
-                            developerController.logo.value,
-                            description,
-                            status.value);
-                        developerNameController.text = '';
-                        descriptionController.clear();
-                        selectedItemId.value = 0;
-                        devId.value = '';
-                        await developerController.getAll();
-                        Navigator.pop(context);
-                      }
-                    },
-                    cancelText: devId.value == '' ? '' : 'Cancel Update',
-                    onTap: () async {
-                      developerNameController.text = '';
-                      developerController.logo.value = '';
-                      descriptionController.clear();
-                      selectedItemId.value = 0;
-                      devId.value = '';
-                      await developerController.getAll();
-                    },
-                    pictureButtonText: developerController.logo.value.isEmpty
-                        ? 'Add Logo'
-                        : 'Update Logo',
-                    uploadImages: () async {
-                      Get.defaultDialog(
-                        title: 'Uploading Image',
-                        content: const Center(
-                          child:
-                              CircularProgressIndicator(color: kPrimaryColor),
+                        )
+                      : ProjectForm(
+                          developerNameController: developerNameController,
+                          descriptionController: descriptionController,
+                          buttonText: devId.value == '' ? 'Submit' : 'Update',
+                          formSubmit: () async {
+                            if (devId.value == '') {
+                              Get.defaultDialog(
+                                title: 'Creating Developer',
+                                content: const Center(
+                                  child: CircularProgressIndicator(
+                                      color: kPrimaryColor),
+                                ),
+                              );
+                              var description =
+                                  await descriptionController.getText();
+                              await developerController.create(
+                                  developerNameController.text,
+                                  description,
+                                  developerController.logo.value,
+                                  status.value);
+                              await developerController.getAll();
+                              Navigator.pop(context);
+                            } else {
+                              Get.defaultDialog(
+                                title: 'Updating Developer',
+                                content: const Center(
+                                  child: CircularProgressIndicator(
+                                      color: kPrimaryColor),
+                                ),
+                              );
+                              var description =
+                                  await descriptionController.getText();
+                              await developerController.updateDeveloper(
+                                  int.parse(devId.value),
+                                  developerNameController.text,
+                                  developerController.logo.value,
+                                  description,
+                                  status.value);
+                              developerNameController.text = '';
+                              descriptionController.clear();
+                              selectedItemId.value = 0;
+                              devId.value = '';
+                              await developerController.getAll();
+                              Navigator.pop(context);
+                            }
+                          },
+                          cancelText: devId.value == '' ? '' : 'Cancel Update',
+                          onTap: () async {
+                            developerNameController.text = '';
+                            developerController.logo.value = '';
+                            descriptionController.clear();
+                            selectedItemId.value = 0;
+                            devId.value = '';
+                            await developerController.getAll();
+                          },
+                          pictureButtonText:
+                              developerController.logo.value.isEmpty
+                                  ? 'Add Logo'
+                                  : 'Update Logo',
+                          uploadImages: () async {
+                            Get.defaultDialog(
+                              title: 'Uploading Image',
+                              content: const Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor),
+                              ),
+                            );
+                            await developerController.getDeveloperLogo();
+                            Navigator.pop(context);
+                          },
+                          statusValue: status.value,
+                          statusChanges: (value) {
+                            status.value = value;
+                          },
                         ),
-                      );
-                      await developerController.getDeveloperLogo();
-                      Navigator.pop(context);
-                    },
-                    statusValue: status.value,
-                    statusChanges: (value) {
-                      status.value = value;
-                    },
-                  ),
                 ),
               ),
               SizedBox(
