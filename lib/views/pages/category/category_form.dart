@@ -31,8 +31,7 @@ class CategoryForm extends GetView<ThemeChangeController> {
       required this.amenitiesDropDownList,
       required this.amenitiesOnChange,
       required this.amenitiesDropDownValue,
-      required this.itemCount,
-      required this.iconData,
+      required this.amenetiesListView,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -48,8 +47,6 @@ class CategoryForm extends GetView<ThemeChangeController> {
   String buttonText;
   String pictureButtonText;
   String cancelText;
-  int itemCount;
-  List iconData;
   List<DropdownMenuItem<String>> dropDownList;
   List<DropdownMenuItem<String>> amenitiesDropDownList;
   TextEditingController categoryNameController;
@@ -57,6 +54,7 @@ class CategoryForm extends GetView<ThemeChangeController> {
   TextEditingController categoryStatusController;
 
   QuillEditorController descriptionController;
+  Widget amenetiesListView;
 
   @override
   Widget build(BuildContext context) {
@@ -118,32 +116,20 @@ class CategoryForm extends GetView<ThemeChangeController> {
             SizedBox(
               height: height * .02,
             ),
-            iconData.isEmpty
-                ? Text(
-                    'Please Select Amenitied',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: kPrimaryColor),
-                  )
-                : SizedBox(
-                    width: width * 3,
-                    height: height * .05,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Stack(children: [
-                          Icon(
-                            IconData(
-                              int.parse(iconData[index]),
-                              fontFamily: "MaterialIcons",
-                            ),
-                          ),
-                        ]);
-                      },
-                      itemCount: itemCount,
-                    ),
-                  ),
+            // iconData.isEmpty
+            //     ? Text(
+            //         'Please Select Amenitied',
+            //         style: Theme.of(context)
+            //             .textTheme
+            //             .bodyMedium!
+            //             .copyWith(color: kPrimaryColor),
+            //       )
+            //     :
+            SizedBox(
+              width: width * 3,
+              height: height * .05,
+              child: amenetiesListView,
+            ),
             SizedBox(
               height: height * .02,
             ),

@@ -93,8 +93,44 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                       }
                     },
                     //Ameneties
-                    itemCount: amenitiesList.length,
-                    iconData: iconData.value,
+                    amenetiesListView: iconData.isEmpty
+                        ? Text(
+                            'Please Select Amenitied',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: kPrimaryColor),
+                          )
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Stack(children: [
+                                Icon(
+                                  IconData(
+                                    int.parse(iconData[index]),
+                                    fontFamily: "MaterialIcons",
+                                  ),
+                                  size: 50,
+                                ),
+                                Positioned(
+                                    top: -12,
+                                    left: 20,
+                                    child: IconButton(
+                                        onPressed: () {
+                                          iconData.remove(iconData[index]);
+                                          amenitiesList
+                                              .remove(amenitiesList[index]);
+                                          print(amenitiesList);
+                                        },
+                                        icon: const Icon(
+                                          Icons.cancel,
+                                          color: kRedColor,
+                                          size: 15,
+                                        ))),
+                              ]);
+                            },
+                            itemCount: iconData.length,
+                          ),
                     amenitiesDropDownList: amenitiesController.amenities
                         .map<DropdownMenuItem<String>>((value) {
                       return DropdownMenuItem<String>(
