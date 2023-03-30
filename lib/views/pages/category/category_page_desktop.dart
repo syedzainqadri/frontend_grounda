@@ -140,13 +140,14 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                           ),
                         );
                         var description = await descriptionController.getText();
-                        // await categoryController.createNewCategory(
-                        //     categoryController.imageUrl.value,
-                        //     categoryNameController.text,
-                        //     categorySlugController.text,
-                        //     description,
-                        //     selectedItemId.value,
-                        //     isPublished.value);
+                        await categoryController.createNewCategory(
+                            categoryController.imageUrl.value,
+                            categoryNameController.text,
+                            categorySlugController.text,
+                            description,
+                            selectedItemId.value,
+                            isPublished.value,
+                            amenitiesList.toString());
                         await categoryController.getCategories();
                         Navigator.pop(context);
                       } else {
@@ -165,7 +166,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                             categorySlugController.text,
                             description,
                             selectedItemId.value,
-                            isPublished.value);
+                            isPublished.value,
+                            amenitiesList.toString());
                         categoryNameController.text = '';
                         categorySlugController.text = '';
                         descriptionController.clear();

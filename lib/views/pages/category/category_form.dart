@@ -132,12 +132,14 @@ class CategoryForm extends GetView<ThemeChangeController> {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return Icon(
-                          IconData(
-                            int.parse(iconData[index]),
-                            fontFamily: "MaterialIcons",
+                        return Stack(children: [
+                          Icon(
+                            IconData(
+                              int.parse(iconData[index]),
+                              fontFamily: "MaterialIcons",
+                            ),
                           ),
-                        );
+                        ]);
                       },
                       itemCount: itemCount,
                     ),
