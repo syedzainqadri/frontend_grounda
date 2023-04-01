@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/utils/global_variable.dart';
 
-class IconFromApiWidget extends StatelessWidget {
-  IconFromApiWidget({
+class IconFromApi extends StatelessWidget {
+  IconFromApi({
     super.key,
     required this.icon,
   });
@@ -15,7 +16,7 @@ class IconFromApiWidget extends StatelessWidget {
           int.parse(
             icon,
           ),
-          fontFamily: "MaterialIcons"),
+          fontFamily: iconFontFamily.value),
       size: 20,
     );
   }

@@ -14,6 +14,7 @@ const kLabelColor = Color(0XFF333333);
 const kFrameColor = Color(0XFFF8F8F8);
 const kCardColor = Color.fromARGB(255, 255, 255, 255);
 const kTextColor = Color.fromARGB(255, 0, 0, 0);
+const kTransparentColor = Colors.transparent;
 
 // Dark Theme
 const kDarkFrameColor = Color.fromARGB(255, 106, 108, 115);

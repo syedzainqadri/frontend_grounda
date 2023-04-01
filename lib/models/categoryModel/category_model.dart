@@ -82,9 +82,10 @@ class SubCategoryModel {
     this.description,
     this.image,
     this.parentId,
-    this.published,
+    this.status,
     this.createdAt,
     this.updatedAt,
+    this.amenitiesIds,
   });
 
   int? id;
@@ -93,9 +94,10 @@ class SubCategoryModel {
   String? description;
   String? image;
   int? parentId;
-  bool? published;
+  bool? status;
   DateTime? createdAt;
   DateTime? updatedAt;
+  String? amenitiesIds;
 
   factory SubCategoryModel.fromJson(Map<String, dynamic> json) =>
       SubCategoryModel(
@@ -105,9 +107,10 @@ class SubCategoryModel {
         description: json["description"],
         image: json["image"],
         parentId: json["parentId"],
-        published: json["published"],
+        status: json["status"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
+        amenitiesIds: json["amenitiesIds"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -117,8 +120,71 @@ class SubCategoryModel {
         "description": description,
         "image": image,
         "parentId": parentId,
-        "published": published,
+        "status": status,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
+        "amenitiesIds": amenitiesIds,
+      };
+}
+
+SingleCategoryModel singleCategoryModelFromJson(String str) =>
+    SingleCategoryModel.fromJson(json.decode(str));
+
+String singleCategoryModelToJson(SingleCategoryModel data) =>
+    json.encode(data.toJson());
+
+class SingleCategoryModel {
+  SingleCategoryModel({
+    this.id,
+    this.name,
+    this.slug,
+    this.description,
+    this.image,
+    this.parentId,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.amenitiesIconCodes,
+    this.amenitiesNames,
+  });
+
+  int? id;
+  String? name;
+  String? slug;
+  String? description;
+  String? image;
+  int? parentId;
+  bool? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? amenitiesNames;
+  String? amenitiesIconCodes;
+
+  factory SingleCategoryModel.fromJson(Map<String, dynamic> json) =>
+      SingleCategoryModel(
+          id: json["id"],
+          name: json["name"],
+          slug: json["slug"],
+          description: json["description"],
+          image: json["image"],
+          parentId: json["parentId"],
+          status: json["status"],
+          createdAt: DateTime.parse(json["createdAt"]),
+          updatedAt: DateTime.parse(json["updatedAt"]),
+          amenitiesNames: json["amenitiesNames"],
+          amenitiesIconCodes: json["amenitiesIconCodes"]);
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "slug": slug,
+        "description": description,
+        "image": image,
+        "parentId": parentId,
+        "status": status,
+        "createdAt": createdAt!.toIso8601String(),
+        "updatedAt": updatedAt!.toIso8601String(),
+        "amenitiesNames": amenitiesNames,
+        "amenitiesIconCodes": amenitiesIconCodes
       };
 }

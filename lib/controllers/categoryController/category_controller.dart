@@ -16,11 +16,14 @@ class CategoryController extends GetxController {
   var token = ''.obs;
   var category = <CategoryModel>[].obs;
   var subCategory = <SubCategoryModel>[].obs;
-  // var singleCategory = CreateCategoryModel().obs;
+  var singleCategory = SingleCategoryModel().obs;
   var selectedItemName = ''.obs;
   var subCategorySelectedItemName = '3bhk'.obs;
   var imageUrl = ''.obs;
+  var amenitiesId = [].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
+  RxList<String> listOfAmenitiesNames = <String>[].obs;
+  RxList<String> listOfAmenitiesCodes = <String>[].obs;
 
   @override
   void onInit() {
@@ -56,6 +59,30 @@ class CategoryController extends GetxController {
     }
   }
 
+  Future<void> getAmenitiesIds(String id) async {
+    var response = await http.get(Uri.parse(baseUrl + allCategory + id),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        });
+
+    if (response.statusCode == 200) {
+      singleCategory.value = singleCategoryModelFromJson(response.body);
+      print("====== BEFORE LIST EQULIZATION ========");
+      print(singleCategory.value.amenitiesNames);
+      print(singleCategory.value.amenitiesIconCodes);
+      listOfAmenitiesNames.value =
+          singleCategory.value.amenitiesNames!.split(",");
+      listOfAmenitiesCodes.value =
+          singleCategory.value.amenitiesIconCodes!.split(",");
+      print("======== List of Amenities ===========");
+      print(listOfAmenitiesNames);
+      print(listOfAmenitiesCodes);
+    } else {
+      showErrorSnak('Error', response.body);
+    }
+  }
+
   Future<void> createNewCategory(
     String image,
     String name,
@@ -63,7 +90,8 @@ class CategoryController extends GetxController {
     String description,
     int parentId,
     bool status,
-    String amenitiesIds,
+    String amenitiesNames,
+    String amenitiesIcons,
   ) async {
     var bodyPrepare = {
       'image': image,
@@ -72,7 +100,8 @@ class CategoryController extends GetxController {
       'description': description,
       'parentId': parentId,
       'status': status,
-      'amenitiesList': amenitiesIds
+      'amenitiesNames': amenitiesNames,
+      'amenitiesCode': amenitiesIcons
     };
     var response = await http.post(Uri.parse(baseUrl + createCategory),
         body: jsonEncode(bodyPrepare),
@@ -100,17 +129,18 @@ class CategoryController extends GetxController {
     String description,
     int parentId,
     bool status,
-    String amenitiesIds,
+    String amenitiesNames,
+    String amenitiesIcons,
   ) async {
     var bodyPrepare = {
-      'id': id,
       'image': image,
       'name': name,
       'slug': slug,
       'description': description,
       'parentId': parentId,
       'status': status,
-      'amenitiesList': amenitiesIds
+      'amenitiesNames': amenitiesNames,
+      'amenitiesCode': amenitiesIcons
     };
     var response = await http.put(Uri.parse(baseUrl + updateCategory),
         body: jsonEncode(bodyPrepare),

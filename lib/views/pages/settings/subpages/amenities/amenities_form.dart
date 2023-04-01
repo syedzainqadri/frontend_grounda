@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 class AmenitiesForm extends GetView<ThemeChangeController> {
   AmenitiesForm(
       {required this.amenityTitleController,
-      required this.amenityDescriptionController,
       required this.statusChanges,
       // required this.iconImageUrl,
       // required this.onIconPress,
@@ -42,7 +41,6 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
   Widget iconPicker;
 
   TextEditingController amenityTitleController;
-  TextEditingController amenityDescriptionController;
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +63,6 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
         ),
         SizedBox(
           height: height * 0.04,
-        ),
-        DefaultTextField(
-          hintText: "Amenity Description",
-          labelText: "Amenity Description",
-          isPassword: false,
-          textEditingController: amenityDescriptionController,
         ),
         SizedBox(
           height: height * 0.04,

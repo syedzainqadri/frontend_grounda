@@ -10,7 +10,6 @@ import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/open_street_map.dart';
 import 'package:frontend_grounda/widgets/text_ediotor.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
-
 import 'package:get/get.dart';
 import 'package:map_picker/map_picker.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
@@ -34,7 +33,6 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.pictureButtonText,
       required this.cancelText,
       required this.onTap,
-      required this.imageListUrl,
       required this.videoUrlController,
       required this.cityController,
       required this.areaController,
@@ -58,11 +56,11 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.propertySubTypeController,
       required this.mapPickerController,
       required this.mapTextController,
-      required this.amenitiesCount,
-      required this.amenitiesBuilder,
       required this.showContactDetails,
       required this.showContactDetailsChanges,
       required this.map,
+      required this.images,
+      required this.amenities,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -86,8 +84,6 @@ class PostForm extends GetView<ThemeChangeController> {
   String cancelText;
   RxString purposeValue = 'For Sell'.obs;
   RxString propertyAreaUnitValue = 'SQFT'.obs;
-  int amenitiesCount;
-  List imageListUrl;
   List purposeList = ["For Sell", "For Rent"];
   List propertyAreaUnitList = ["Marla", "SQFT", "SQMT"];
   List<DropdownMenuItem<String>> categoryDropDownList;
@@ -112,7 +108,8 @@ class PostForm extends GetView<ThemeChangeController> {
   TextEditingController propertyTypeController;
   TextEditingController propertySubTypeController;
   QuillEditorController contentController;
-  Widget? Function(BuildContext, int) amenitiesBuilder;
+  Widget images;
+  Widget amenities;
   MapPickerController mapPickerController;
   TextEditingController mapTextController;
   OpenStreetMap map;
@@ -239,29 +236,8 @@ class PostForm extends GetView<ThemeChangeController> {
                       ),
                     ),
                   ),
-                  imageListUrl.isEmpty
-                      ? Text(
-                          'Please add Images',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        )
-                      : Expanded(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: imageListUrl.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                height: height * 1,
-                                width: width * 1,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Image.network(imageListUrl[index]),
-                              );
-                            },
-                          ),
-                        ),
+                  //TODO:place it to create_post_page//
+                  images
                 ],
               ),
 
@@ -659,10 +635,7 @@ class PostForm extends GetView<ThemeChangeController> {
                         width: width * .19,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ListView.builder(
-                            itemBuilder: amenitiesBuilder,
-                            itemCount: amenitiesCount,
-                          ),
+                          child: amenities,
                         ),
                       ),
                     ],

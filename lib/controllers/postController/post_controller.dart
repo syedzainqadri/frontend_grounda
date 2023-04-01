@@ -1,21 +1,21 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:convert';
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+import 'dart:html';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:frontend_grounda/models/postModel/post_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker_web/image_picker_web.dart';
 
 class PostController extends GetxController {
   var post = <PostModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
-  var imageUrl = [];
+  var imageUrl = [].obs;
 
   @override
   onInit() {
@@ -102,7 +102,7 @@ class PostController extends GetxController {
       "metaTitle": title,
       "metaDescription": description,
       "status": status,
-      "slug": slug
+      "slug": slug,
     };
 
     var response = await http.post(Uri.parse(baseUrl + createPost),
@@ -121,19 +121,15 @@ class PostController extends GetxController {
     }
   }
 
+//MultiImage Picker
   getImage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: ['jpg', 'png']);
-    if (result != null) {
-      List<File> files =
-          result.files.map((path) => File(path.toString())).toList();
-      for (var i = 0; i < files.length; i++) {
-        String fileName = result.files[i].name;
+    List<File>? res = await ImagePickerWeb.getMultiImagesAsFile();
+    if (res != null) {
+      for (var i = 0; i < res.length; i++) {
+        String fileName = res[i].name;
         var upload = await FirebaseStorage.instance
             .ref('uploads/post/images/$fileName')
-            .putFile(files[i]);
+            .putBlob(res[i]);
         final url = upload.ref.getDownloadURL().then((value) {
           imageUrl.add(value);
         });
