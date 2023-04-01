@@ -19,6 +19,7 @@ class AmenitiesController extends GetxController {
     super.onInit();
     token.value = tokenHiveBox.get('token');
     getAll();
+    // getAllTest();
   }
 
   Future<void> getAll() async {
@@ -34,7 +35,7 @@ class AmenitiesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       amenities.value = amenitiesModelFromJson(response.body);
-      selectedItemName.value = amenities.value.first.name!;
+      selectedItemName.value = amenities.first.name!;
       isLoading.value = false;
     } else {
       showErrorSnak('Error', response.body);

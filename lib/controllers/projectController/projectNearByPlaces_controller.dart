@@ -1,5 +1,6 @@
-import 'dart:convert';
+// ignore_for_file: file_names
 
+import 'dart:convert';
 import 'package:frontend_grounda/models/projectModel/project_near_by_places_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';

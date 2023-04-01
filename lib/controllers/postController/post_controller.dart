@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
@@ -24,10 +26,13 @@ class PostController extends GetxController {
 
   Future<void> getAll() async {
     isLoading.value = true;
-    var response = await http.get(Uri.parse(baseUrl + getAllPost), headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    });
+    var response = await http.get(
+      Uri.parse(baseUrl + getAllPost),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     if (response.statusCode == 200 && response.body != 'null') {
       post.value = postModelFromJson(response.body);
       isLoading.value = false;

@@ -32,9 +32,6 @@ class PaymentMethodController extends GetxController {
     );
 
     if (response.statusCode == 200 && response.body != 'null') {
-      print("Payment Method Response");
-      print(response.body);
-
       paymentMethods.value = allPaymentMethodsModelFromJson(response.body);
       isLoading.value = false;
     } else {

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, use_build_context_synchronously
+// ignore_for_file: must_be_immutable, use_build_context_synchronously, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -120,7 +120,6 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                           iconData.remove(iconData[index]);
                                           amenitiesList
                                               .remove(amenitiesList[index]);
-                                          print(amenitiesList);
                                         },
                                         icon: const Icon(
                                           Icons.cancel,
@@ -162,8 +161,6 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                           iconData.add(amenitiesController.amenities[i].icon);
                         }
                       }
-                      print(amenitiesList);
-                      print(iconData);
                     },
                     buttonText: catId.value == '' ? 'Submit' : 'Update',
                     formSubmit: () async {

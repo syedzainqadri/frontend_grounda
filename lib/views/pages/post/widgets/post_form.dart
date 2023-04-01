@@ -75,16 +75,21 @@ class PostForm extends GetView<ThemeChangeController> {
   dynamic showContactDetailsChanges;
   dynamic installmentStatusChanges;
   dynamic formSubmit;
+  dynamic uploadImages;
+  dynamic onTap;
   bool posessionValue;
   bool showContactDetails;
   bool statusValue;
   bool hasInstallmentValue;
-  dynamic uploadImages;
-  dynamic onTap;
   String buttonText;
   String pictureButtonText;
   String cancelText;
+  RxString purposeValue = 'For Sell'.obs;
+  RxString propertyAreaUnitValue = 'SQFT'.obs;
+  int amenitiesCount;
   List imageListUrl;
+  List purposeList = ["For Sell", "For Rent"];
+  List propertyAreaUnitList = ["Marla", "SQFT", "SQMT"];
   List<DropdownMenuItem<String>> categoryDropDownList;
   List<DropdownMenuItem<String>> subCategoryDropDownList;
   TextEditingController postTitleController;
@@ -108,21 +113,12 @@ class PostForm extends GetView<ThemeChangeController> {
   TextEditingController propertySubTypeController;
   QuillEditorController contentController;
   Widget? Function(BuildContext, int) amenitiesBuilder;
-  int amenitiesCount;
-  OpenStreetMap map;
-
   MapPickerController mapPickerController;
   TextEditingController mapTextController;
-
-  List purposeList = ["For Sell", "For Rent"];
-  List propertyAreaUnitList = ["Marla", "SQFT", "SQMT"];
-  RxString purposeValue = 'For Sell'.obs;
-  RxString propertyAreaUnitValue = 'SQFT'.obs;
+  OpenStreetMap map;
 
   @override
   Widget build(BuildContext context) {
-    var buildDialogItem = [];
-    bool filtered = false;
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(

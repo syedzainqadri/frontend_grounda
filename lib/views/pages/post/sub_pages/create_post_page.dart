@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, unrelated_type_equality_checks, use_build_context_synchronously
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
