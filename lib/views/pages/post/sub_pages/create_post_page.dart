@@ -68,10 +68,10 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   List<dynamic> amenities = [false].obs;
   var selectedAmenitiesNames = [].obs;
   var selectedAmenitiesCodes = [].obs;
-  List purposeList = ["Sell", "Rent"];
-  RxString purposeValue = 'Sell'.obs;
+  List purposeList = ["SELL", "RENT"];
+  RxString purposeValue = 'SELL'.obs;
   RxString propertyAreaUnitValue = 'SQFT'.obs;
-  List propertyAreaUnitList = ["Marla", "SQFT", "SQMT"];
+  List propertyAreaUnitList = ["MARLA", "SQFT", "SQMT"];
 
   @override
   Widget build(BuildContext context) {
@@ -374,7 +374,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                         monthlyInstallmentController.text,
                         posessionReady.value,
                         propertyAreaUnitValue.value,
-                        purposeValue.value,
+                        purposeValue.value.toUpperCase(),
                         totalAreaController.text,
                         int.parse(bedroomController.text),
                         int.parse(bathroomController.text),

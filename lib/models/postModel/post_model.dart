@@ -26,6 +26,9 @@ class PostModel {
     this.price,
     this.city,
     this.area,
+    this.purpose,
+    this.amenitiesNames,
+    this.amenitiesIconCodes,
     this.isInstallmentAvailable,
     this.showContactDetails,
     this.advanceAmount,
@@ -36,8 +39,6 @@ class PostModel {
     this.totalAreaSize,
     this.bedroooms,
     this.bathroom,
-    this.amenitiesNames,
-    this.amenitiesIconCodes,
     this.categoryId,
     this.authorId,
     this.slugId,
@@ -57,21 +58,22 @@ class PostModel {
   String? longitude;
   String? latitude;
   String? plotNumber;
-  double? price;
+  String? price;
   String? city;
   String? area;
+  String? purpose;
+  String? amenitiesNames;
+  String? amenitiesIconCodes;
   bool? isInstallmentAvailable;
   bool? showContactDetails;
-  double? advanceAmount;
+  String? advanceAmount;
   int? noOfInstallments;
-  double? monthlyInstallments;
+  String? monthlyInstallments;
   bool? readyForPossession;
   String? areaSizeUnit;
   String? totalAreaSize;
   int? bedroooms;
   int? bathroom;
-  String? amenitiesNames;
-  String? amenitiesIconCodes;
   int? categoryId;
   int? authorId;
   int? slugId;
@@ -94,6 +96,9 @@ class PostModel {
         price: json["price"],
         city: json["city"],
         area: json["area"],
+        purpose: json["porpose"],
+        amenitiesNames: json["amenitiesNames"],
+        amenitiesIconCodes: json["amenitiesIconCodes"],
         isInstallmentAvailable: json["isInstallmentAvailable"],
         showContactDetails: json["showContactDetails"],
         advanceAmount: json["advanceAmount"],
@@ -104,8 +109,6 @@ class PostModel {
         totalAreaSize: json["totalAreaSize"],
         bedroooms: json["bedroooms"],
         bathroom: json["bathroom"],
-        amenitiesNames: json["amenitiesNames"],
-        amenitiesIconCodes: json["amenitiesIconCodes"],
         categoryId: json["categoryId"],
         authorId: json["authorId"],
         slugId: json["slugId"],
@@ -129,6 +132,9 @@ class PostModel {
         "price": price,
         "city": city,
         "area": area,
+        "purpose": purpose,
+        "amenitiesNames": amenitiesNames,
+        "amenitiesIconCodes": amenitiesIconCodes,
         "isInstallmentAvailable": isInstallmentAvailable,
         "showContactDetails": showContactDetails,
         "advanceAmount": advanceAmount,
@@ -139,8 +145,6 @@ class PostModel {
         "totalAreaSize": totalAreaSize,
         "bedroooms": bedroooms,
         "bathroom": bathroom,
-        "amenitiesIconCodes": amenitiesIconCodes,
-        "amenitiesNames": amenitiesNames,
         "categoryId": categoryId,
         "authorId": authorId,
         "slugId": slugId,
