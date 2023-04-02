@@ -15,6 +15,7 @@ import 'package:frontend_grounda/widgets/icon_from_api.dart';
 import 'package:frontend_grounda/widgets/open_street_map.dart';
 import 'package:get/get.dart';
 import 'package:map_picker/map_picker.dart';
+import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class CreatePostPage extends GetView<ThemeChangeController> {
@@ -59,8 +60,8 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   var posessionReady = false.obs;
   var showContactDetials = false.obs;
   var catId = ''.obs;
-  var longitude = ''.obs;
-  var latitude = ''.obs;
+  var longitude = 0.0.obs;
+  var latitude = 0.0.obs;
   var newList = [].obs;
   RxBool amenitiesBoolValue = false.obs;
   RxList selectedAmenities = [].obs;
@@ -102,15 +103,20 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: PostForm(
-                    map: OpenStreetMap(
-                      onPicked: (pickedData) {
-                        print(pickedData.latLong.latitude);
-                        print(pickedData.latLong.longitude);
-                        print(pickedData.address);
-                        longitude.value = pickedData.latLong.longitude;
-                        latitude.value = pickedData.latLong.latitude;
-                      },
-                    ),
+                    map: postController.latitude.value == 0.0
+                        ? const Center(
+                            child:
+                                CircularProgressIndicator(color: kPrimaryColor),
+                          )
+                        : OpenStreetMap(
+                            // center: LatLong(31.580951, 74.4887926),
+                            center: LatLong(postController.latitude.value,
+                                postController.longitude.value),
+                            onPicked: (pickedData) {
+                              longitude.value = pickedData.latLong.longitude;
+                              latitude.value = pickedData.latLong.latitude;
+                            },
+                          ),
                     mapPickerController: mapPickerController,
                     mapTextController: mapTextController,
                     purposeController: purposeController,
@@ -271,36 +277,12 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                             ),
                           );
                         }),
-                    // amenitiesCount: amenitiesController.amenities.length,
-                    // amenitiesBuilder: (context, index) {
-                    //   amenitiesController.amenities.map((e) {
-                    //     return Row(
-                    //       children: [
-                    //         Obx(
-                    //           () => Checkbox(
-                    //             activeColor: Colors.blue,
-                    //             value: amenitiesBoolValue.value,
-                    //             onChanged: (value) {
-                    //               amenitiesBoolValue.value = value!;
-                    //               selectedAmenities.add(
-                    //                   amenitiesController.amenities[index].id);
-                    //               print(selectedAmenities);
-                    //             },
-                    //           ),
-                    //         ),
-                    //         Text(amenitiesController.amenities[index].name!)
-                    //       ],
-                    //     );
-                    //   });
-                    //   return null;
-                    // },
                     //show contact details
                     showContactDetails: showContactDetials.value,
                     showContactDetailsChanges: (value) {
                       showContactDetials.value = value;
                     },
                     buttonText: catId.value == '' ? 'Submit' : 'Update',
-                    //TODO: edit functions here
                     formSubmit: () async {
                       if (catId.value == '') {
                         Get.defaultDialog(
@@ -320,8 +302,8 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           postController.imageUrl.toString(),
                           videoUrlController.text,
                           description,
-                          longitude.value,
-                          latitude.value,
+                          longitude.value.toString(),
+                          latitude.value.toString(),
                           plotNumberController.text,
                           //TODO: convert price to double
                           double.parse(priceController.text),
@@ -336,7 +318,8 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           "",
                           int.parse(bedroomController.text),
                           int.parse(bathroomController.text),
-                          selectedAmenities.toString(),
+                          selectedAmenitiesCodes.toString(),
+                          selectedAmenitiesNames.toString(),
                           int.parse(userID.toString()),
                           int.parse(catId.toString()),
                           isPublished.value,
@@ -432,14 +415,4 @@ class CreatePostPage extends GetView<ThemeChangeController> {
       ),
     );
   }
-
-  // addAmenitiesToList() {
-  //   for (int i = 0; i < categoryController.listOfAmenities.length; i++) {
-  //     for (var element in categoryController.listOfAmenities) {
-  //       newList.add(amenitiesController.amenities[i].name);
-  //       print("=========== New List========");
-  //       print(newList);
-  //     }
-  //   }
-  // }
 }

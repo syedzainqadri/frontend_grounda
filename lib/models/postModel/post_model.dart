@@ -35,7 +35,8 @@ class PostModel {
     this.areaSizeUnit,
     this.bedroooms,
     this.bathroom,
-    this.featureAndAmenities,
+    this.amenitiesNames,
+    this.amenitiesIconCodes,
     this.categoryId,
     this.authorId,
     this.slugId,
@@ -67,7 +68,8 @@ class PostModel {
   String? areaSizeUnit;
   int? bedroooms;
   int? bathroom;
-  String? featureAndAmenities;
+  String? amenitiesNames;
+  String? amenitiesIconCodes;
   int? categoryId;
   int? authorId;
   int? slugId;
@@ -99,7 +101,8 @@ class PostModel {
         areaSizeUnit: json["areaSizeUnit"],
         bedroooms: json["bedroooms"],
         bathroom: json["bathroom"],
-        featureAndAmenities: json["featureAndAmenities"],
+        amenitiesNames: json["amenitiesNames"],
+        amenitiesIconCodes: json["amenitiesIconCodes"],
         categoryId: json["categoryId"],
         authorId: json["authorId"],
         slugId: json["slugId"],
@@ -132,7 +135,8 @@ class PostModel {
         "areaSizeUnit": areaSizeUnit,
         "bedroooms": bedroooms,
         "bathroom": bathroom,
-        "featureAndAmenities": featureAndAmenities,
+        "amenitiesIconCodes": amenitiesIconCodes,
+        "amenitiesNames": amenitiesNames,
         "categoryId": categoryId,
         "authorId": authorId,
         "slugId": slugId,

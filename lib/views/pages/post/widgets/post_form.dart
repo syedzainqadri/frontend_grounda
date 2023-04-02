@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
-import 'package:frontend_grounda/widgets/open_street_map.dart';
 import 'package:frontend_grounda/widgets/text_ediotor.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
@@ -112,7 +111,7 @@ class PostForm extends GetView<ThemeChangeController> {
   Widget amenities;
   MapPickerController mapPickerController;
   TextEditingController mapTextController;
-  OpenStreetMap map;
+  Widget map;
 
   @override
   Widget build(BuildContext context) {

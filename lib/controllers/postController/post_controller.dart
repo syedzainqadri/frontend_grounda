@@ -9,19 +9,27 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker_web/image_picker_web.dart';
+import 'package:location/location.dart';
 
 class PostController extends GetxController {
   var post = <PostModel>[].obs;
+  Location location = Location();
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
   var imageUrl = [].obs;
+  late bool _serviceEnabled;
+  late PermissionStatus _permissionGranted;
+  late LocationData _locationData;
+  RxDouble latitude = 0.0.obs;
+  RxDouble longitude = 0.0.obs;
 
   @override
   onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
     getAll();
+    getLocation();
   }
 
   Future<void> getAll() async {
@@ -66,7 +74,8 @@ class PostController extends GetxController {
       String areaSizeUnit,
       int bedrooms,
       int bathrooms,
-      String featureAndAmenities,
+      String amenitiesIconCodes,
+      String amenitiesNames,
       int categoryId,
       int authorId,
       bool status,
@@ -93,7 +102,6 @@ class PostController extends GetxController {
       "readyForPossession": readyForPossession,
       "bedroooms": bedrooms,
       "bathrooms": bathrooms,
-      "featureAndAmenities": featureAndAmenities,
       "areaSizeUnit": {
         "AreaSizeUnit": areaSizeUnit,
       },
@@ -103,6 +111,8 @@ class PostController extends GetxController {
       "metaDescription": description,
       "status": status,
       "slug": slug,
+      "amenitiesIconCodes": amenitiesIconCodes,
+      "amenitiesNames": amenitiesNames
     };
 
     var response = await http.post(Uri.parse(baseUrl + createPost),
@@ -135,5 +145,28 @@ class PostController extends GetxController {
         });
       }
     }
+  }
+
+  Future<void> getLocation() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+    latitude.value = _locationData.latitude!;
+    longitude.value = _locationData.longitude!;
+    print("latitude = $latitude longitude = $longitude");
   }
 }
