@@ -243,8 +243,6 @@ class PostForm extends GetView<ThemeChangeController> {
               SizedBox(
                 height: height * 0.04,
               ),
-              //TODO : adjust structure here
-              //Category section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -627,7 +625,15 @@ class PostForm extends GetView<ThemeChangeController> {
                     width: width * .02,
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(
+                        'Select Amenities',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: kPrimaryColor),
+                      ),
                       Container(
                         color: Colors.white,
                         height: 300,
