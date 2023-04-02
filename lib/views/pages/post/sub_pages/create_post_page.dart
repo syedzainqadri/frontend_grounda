@@ -12,7 +12,6 @@ import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/post/widgets/post_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/icon_from_api.dart';
-import 'package:frontend_grounda/widgets/open_street_map.dart';
 import 'package:get/get.dart';
 import 'package:map_picker/map_picker.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
@@ -108,8 +107,8 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                             child:
                                 CircularProgressIndicator(color: kPrimaryColor),
                           )
-                        : OpenStreetMap(
-                            // center: LatLong(31.580951, 74.4887926),
+                        : OpenStreetMapSearchAndPick(
+                            buttonColor: kPrimaryColor,
                             center: LatLong(postController.latitude.value,
                                 postController.longitude.value),
                             onPicked: (pickedData) {
