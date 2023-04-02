@@ -52,7 +52,7 @@ Map<int, Color> color = {
 //global variables
 
 Rxn<bool> isSigned = Rxn<bool>();
-Rxn<String> userID = Rxn<String>();
+RxString userID = "".obs;
 Rxn<String> visitUserID = Rxn<String>();
 Rx<bool> isLoading = false.obs;
 Rx<bool> isFirstLoad = true.obs;

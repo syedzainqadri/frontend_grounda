@@ -33,6 +33,7 @@ class PostModel {
     this.monthlyInstallments,
     this.readyForPossession,
     this.areaSizeUnit,
+    this.totalAreaSize,
     this.bedroooms,
     this.bathroom,
     this.amenitiesNames,
@@ -66,6 +67,7 @@ class PostModel {
   double? monthlyInstallments;
   bool? readyForPossession;
   String? areaSizeUnit;
+  String? totalAreaSize;
   int? bedroooms;
   int? bathroom;
   String? amenitiesNames;
@@ -99,6 +101,7 @@ class PostModel {
         monthlyInstallments: json["monthlyInstallments"],
         readyForPossession: json["readyForPossession"],
         areaSizeUnit: json["areaSizeUnit"],
+        totalAreaSize: json["totalAreaSize"],
         bedroooms: json["bedroooms"],
         bathroom: json["bathroom"],
         amenitiesNames: json["amenitiesNames"],
@@ -133,6 +136,7 @@ class PostModel {
         "monthlyInstallments": monthlyInstallments,
         "readyForPossession": readyForPossession,
         "areaSizeUnit": areaSizeUnit,
+        "totalAreaSize": totalAreaSize,
         "bedroooms": bedroooms,
         "bathroom": bathroom,
         "amenitiesIconCodes": amenitiesIconCodes,

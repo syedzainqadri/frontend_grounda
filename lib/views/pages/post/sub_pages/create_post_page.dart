@@ -22,6 +22,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   final TextEditingController searchCategory = TextEditingController();
   QuillEditorController descriptionController = QuillEditorController();
   TextEditingController postTitleController = TextEditingController();
+  TextEditingController totalAreaController = TextEditingController();
   TextEditingController postShortDescriptionController =
       TextEditingController();
   TextEditingController cityController = TextEditingController();
@@ -41,7 +42,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   TextEditingController bedroomController = TextEditingController();
   TextEditingController bathroomController = TextEditingController();
 
-  TextEditingController purposeController = TextEditingController();
+  // TextEditingController purposeController = TextEditingController();
   TextEditingController propertyTypeController = TextEditingController();
   TextEditingController propertySubTypeController = TextEditingController();
 
@@ -67,6 +68,10 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   List<dynamic> amenities = [false].obs;
   var selectedAmenitiesNames = [].obs;
   var selectedAmenitiesCodes = [].obs;
+  List purposeList = ["Sell", "Rent"];
+  RxString purposeValue = 'Sell'.obs;
+  RxString propertyAreaUnitValue = 'SQFT'.obs;
+  List propertyAreaUnitList = ["Marla", "SQFT", "SQMT"];
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +123,29 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           ),
                     mapPickerController: mapPickerController,
                     mapTextController: mapTextController,
-                    purposeController: purposeController,
+                    purposeList:
+                        purposeList.map<DropdownMenuItem<String>>((value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    purposeValue: purposeValue.value,
+                    purposeOnChange: (value) {
+                      purposeValue.value = value.toString();
+                    },
+                    //property AreaSizeUnit dropDown
+                    propertyAreaUnitList: propertyAreaUnitList
+                        .map<DropdownMenuItem<String>>((value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    propertyAreaUnitValue: propertyAreaUnitValue.value,
+                    propertyAreaUnitOnChange: (value) {
+                      propertyAreaUnitValue.value = value.toString();
+                    },
                     propertyTypeController: propertyTypeController,
                     propertySubTypeController: propertySubTypeController,
                     images: postController.imageUrl.isEmpty
@@ -172,10 +199,12 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                               },
                             ),
                           ),
+
                     postTitleController: postTitleController,
                     postShortDescriptionController:
                         postShortDescriptionController,
                     contentController: descriptionController,
+                    totalAreaController: totalAreaController,
                     categoryDropDownList: categoryController.category
                         .map<DropdownMenuItem<String>>((value) {
                       return DropdownMenuItem<String>(
@@ -194,6 +223,8 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                             categoryController.category[i].name) {
                           selectedItemId.value =
                               categoryController.category[i].id!;
+                          print("<========== Slected Item Ids ===========>");
+                          print(selectedItemId.value);
                         }
                       }
 
@@ -283,74 +314,103 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                     },
                     buttonText: catId.value == '' ? 'Submit' : 'Update',
                     formSubmit: () async {
-                      if (catId.value == '') {
-                        Get.defaultDialog(
-                          title: 'Creating Post',
-                          content: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                        var description = await descriptionController.getText();
-                        var propertyNumber = Random().nextInt(10000000);
-                        await postController.create(
-                          postTitleController.text,
-                          propertyNumber,
-                          description,
-                          postController.imageUrl.first,
-                          postController.imageUrl.toString(),
-                          videoUrlController.text,
-                          description,
-                          longitude.value.toString(),
-                          latitude.value.toString(),
-                          plotNumberController.text,
-                          //TODO: convert price to double
-                          double.parse(priceController.text),
-                          cityController.text,
-                          areaController.text,
-                          hasInstallments.value,
-                          showContactDetials.value,
-                          double.parse(advanceController.text),
-                          int.parse(noOfInstallmentController.text),
-                          double.parse(monthlyInstallmentController.text),
-                          posessionReady.value,
-                          "",
-                          int.parse(bedroomController.text),
-                          int.parse(bathroomController.text),
-                          selectedAmenitiesCodes.toString(),
-                          selectedAmenitiesNames.toString(),
-                          int.parse(userID.toString()),
-                          int.parse(catId.toString()),
-                          isPublished.value,
-                          postTitleController.text + propertyNumber.toString(),
-                        );
-                        Navigator.pop(context);
-                      } else {
-                        // Get.defaultDialog(
-                        //   title: 'Updating Category',
-                        //   content: const Center(
-                        //     child: CircularProgressIndicator(
-                        //         color: kPrimaryColor),
-                        //   ),
-                        // );
-                        // var description =
-                        //     await contentController.getText();
-                        // await categoryController.updateThisCategory(
-                        //     int.parse(catId.value),
-                        //     categoryController.imageUrl.value,
-                        //     categoryNameController.text,
-                        //     postShortDescriptionController.text,
-                        //     description,
-                        //     selectedItemId.value,
-                        //     isPublished.value);
-                        // categoryNameController.text = '';
-                        // postShortDescriptionController.text = '';
-                        // contentController.clear();
-                        // selectedItemId.value = 0;
-                        // catId.value = '';
-                        // await categoryController.getCategories();
-                        // Navigator.pop(context);
-                      }
+                      // if (catId.value == '') {
+                      Get.defaultDialog(
+                        title: 'Creating Post',
+                        content: const Center(
+                          child:
+                              CircularProgressIndicator(color: kPrimaryColor),
+                        ),
+                      );
+                      var description = await descriptionController.getText();
+                      var propertyNumber = Random().nextInt(10000000);
+                      print(
+                          "<===========> items to be sent to function <===========>");
+                      print(postTitleController.text);
+                      print(propertyNumber);
+                      print(description);
+                      print(postController.imageUrl.first.toString());
+                      print(postController.imageUrl.toString());
+                      print(videoUrlController.text);
+                      print(longitude);
+                      print(latitude);
+                      print(plotNumberController.text);
+                      print(priceController.text);
+                      print(cityController.text);
+                      print(areaController.text);
+                      print(hasInstallments.value);
+                      print(showContactDetials.value);
+                      print(advanceController.text);
+                      print(noOfInstallmentController.text);
+                      print(monthlyInstallmentController.text);
+                      print(posessionReady.value);
+                      print(bedroomController.text);
+                      print(bathroomController.text);
+                      print(selectedAmenitiesNames.toString());
+                      print(selectedAmenitiesCodes.toString());
+                      print(userID.toString());
+                      print(selectedItemId);
+                      print(isPublished);
+                      print("<===========> END <===========>");
+
+                      await postController.create(
+                        postTitleController.text,
+                        propertyNumber,
+                        description,
+                        postController.imageUrl.first.toString(),
+                        postController.imageUrl.toString(),
+                        videoUrlController.text,
+                        description,
+                        longitude.value.toString(),
+                        latitude.value.toString(),
+                        plotNumberController.text,
+                        priceController.text,
+                        cityController.text,
+                        areaController.text,
+                        hasInstallments.value,
+                        showContactDetials.value,
+                        advanceController.text,
+                        int.parse(noOfInstallmentController.text),
+                        monthlyInstallmentController.text,
+                        posessionReady.value,
+                        propertyAreaUnitValue.value,
+                        purposeValue.value,
+                        totalAreaController.text,
+                        int.parse(bedroomController.text),
+                        int.parse(bathroomController.text),
+                        selectedAmenitiesCodes.toString(),
+                        selectedAmenitiesNames.toString(),
+                        selectedItemId.value,
+                        isPublished.value,
+                        postTitleController.text + propertyNumber.toString(),
+                      );
+                      Navigator.pop(context);
+                      // } else {
+                      // Get.defaultDialog(
+                      //   title: 'Updating Category',
+                      //   content: const Center(
+                      //     child: CircularProgressIndicator(
+                      //         color: kPrimaryColor),
+                      //   ),
+                      // );
+                      // var description =
+                      //     await contentController.getText();
+                      // await categoryController.updateThisCategory(
+                      //     int.parse(catId.value),
+                      //     categoryController.imageUrl.value,
+                      //     categoryNameController.text,
+                      //     postShortDescriptionController.text,
+                      //     description,
+                      //     selectedItemId.value,
+                      //     isPublished.value);
+                      // categoryNameController.text = '';
+                      // postShortDescriptionController.text = '';
+                      // contentController.clear();
+                      // selectedItemId.value = 0;
+                      // catId.value = '';
+                      // await categoryController.getCategories();
+                      // Navigator.pop(context);
+                      // }
                     },
                     cancelText: catId.value == '' ? '' : 'Cancel Update',
                     onTap: () async {

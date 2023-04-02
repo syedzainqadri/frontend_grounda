@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/utils/constants.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class TextEditor extends StatelessWidget {
@@ -33,9 +34,9 @@ class TextEditor extends StatelessWidget {
         ToolBar(
           toolBarColor: _toolbarColor,
           padding: const EdgeInsets.all(8),
-          iconSize: 15,
+          iconSize: 18,
           iconColor: _toolbarIconColor,
-          activeIconColor: Colors.purple.shade300,
+          activeIconColor: kPrimaryColor,
           controller: controller,
           customButtons: const [],
         ),
@@ -50,7 +51,7 @@ class TextEditor extends StatelessWidget {
             textStyle: _editorTextStyle,
             hintTextStyle: _hintTextStyle,
             hintTextAlign: TextAlign.start,
-            padding: const EdgeInsets.only(left: 10, top: 5, bottom: 100),
+            padding: const EdgeInsets.only(left: 10, top: 5, bottom: 180),
             hintTextPadding: EdgeInsets.zero,
             backgroundColor: _backgroundColor,
             onFocusChanged: (hasFocus) => debugPrint('has focus $hasFocus'),

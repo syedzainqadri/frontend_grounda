@@ -18,6 +18,7 @@ class PostController extends GetxController {
   var token = ''.obs;
   var isLoading = false.obs;
   var imageUrl = [].obs;
+  var userId = 0.obs;
   late bool _serviceEnabled;
   late PermissionStatus _permissionGranted;
   late LocationData _locationData;
@@ -28,6 +29,7 @@ class PostController extends GetxController {
   onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
+    userId.value = int.parse(tokenHiveBox.get('userId'));
     getAll();
     getLocation();
   }
@@ -62,22 +64,23 @@ class PostController extends GetxController {
       String longitude,
       String latitude,
       String plotNumber,
-      double price,
+      String price,
       String city,
       String area,
       bool isInstallmentAvailable,
       bool showContactDetails,
-      double advanceAmmount,
+      String advanceAmmount,
       int noOfInstallements,
-      double monthlyInstallment,
+      String monthlyInstallment,
       bool readyForPossession,
       String areaSizeUnit,
+      String purpose,
+      String totalAreaSize,
       int bedrooms,
       int bathrooms,
       String amenitiesIconCodes,
       String amenitiesNames,
       int categoryId,
-      int authorId,
       bool status,
       String slug) async {
     isLoading.value = true;
@@ -105,15 +108,20 @@ class PostController extends GetxController {
       "areaSizeUnit": {
         "AreaSizeUnit": areaSizeUnit,
       },
-      "authorId": authorId,
+      "totalAreaSize": totalAreaSize,
+      "authorId": userId.value,
       "categoryId": categoryId,
       "metaTitle": title,
       "metaDescription": description,
       "status": status,
       "slug": slug,
       "amenitiesIconCodes": amenitiesIconCodes,
-      "amenitiesNames": amenitiesNames
+      "amenitiesNames": amenitiesNames,
+      "showContactDetails": showContactDetails,
+      "purpose": purpose
+      //TODO: Check Spellings
     };
+    print(bodyPrepare);
 
     var response = await http.post(Uri.parse(baseUrl + createPost),
         body: jsonEncode(bodyPrepare),
@@ -121,6 +129,7 @@ class PostController extends GetxController {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token"
         });
+    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       post.value = postModelFromJson(response.body);
       isLoading.value = false;

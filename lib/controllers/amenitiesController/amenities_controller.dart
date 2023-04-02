@@ -13,7 +13,6 @@ class AmenitiesController extends GetxController {
   var token = ''.obs;
   var isLoading = false.obs;
   var iconImageUrl = ''.obs;
-  var newList = [].obs;
 
   @override
   void onInit() {
@@ -40,18 +39,6 @@ class AmenitiesController extends GetxController {
       isLoading.value = false;
     } else {
       showErrorSnak('Error', response.body);
-    }
-  }
-
-  addAmenitiesToList(List list) {
-    for (int i = 0; i < list.length; i++) {
-      for (var element in list) {
-        if (element == amenities[i].id) {
-          newList.add(amenities[i].id);
-          print("=========== New List========");
-          print(newList);
-        }
-      }
     }
   }
 

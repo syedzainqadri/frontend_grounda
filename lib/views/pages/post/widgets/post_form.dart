@@ -50,7 +50,6 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.advanceController,
       required this.noOfInstallmentController,
       required this.monthlyInstallmentValueController,
-      required this.purposeController,
       required this.propertyTypeController,
       required this.propertySubTypeController,
       required this.mapPickerController,
@@ -60,6 +59,13 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.map,
       required this.images,
       required this.amenities,
+      required this.totalAreaController,
+      required this.propertyAreaUnitList,
+      required this.propertyAreaUnitOnChange,
+      required this.propertyAreaUnitValue,
+      required this.purposeList,
+      required this.purposeOnChange,
+      required this.purposeValue,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -81,13 +87,16 @@ class PostForm extends GetView<ThemeChangeController> {
   String buttonText;
   String pictureButtonText;
   String cancelText;
-  RxString purposeValue = 'For Sell'.obs;
-  RxString propertyAreaUnitValue = 'SQFT'.obs;
-  List purposeList = ["For Sell", "For Rent"];
-  List propertyAreaUnitList = ["Marla", "SQFT", "SQMT"];
+  String purposeValue;
+  dynamic purposeOnChange;
+  dynamic propertyAreaUnitOnChange;
+  String propertyAreaUnitValue;
+  List<DropdownMenuItem<String>> propertyAreaUnitList;
   List<DropdownMenuItem<String>> categoryDropDownList;
   List<DropdownMenuItem<String>> subCategoryDropDownList;
+  List<DropdownMenuItem<String>> purposeList;
   TextEditingController postTitleController;
+  TextEditingController totalAreaController;
   TextEditingController postShortDescriptionController;
   TextEditingController videoUrlController;
   TextEditingController cityController;
@@ -103,7 +112,6 @@ class PostForm extends GetView<ThemeChangeController> {
   TextEditingController advanceController;
   TextEditingController noOfInstallmentController;
   TextEditingController monthlyInstallmentValueController;
-  TextEditingController purposeController;
   TextEditingController propertyTypeController;
   TextEditingController propertySubTypeController;
   QuillEditorController contentController;
@@ -188,13 +196,11 @@ class PostForm extends GetView<ThemeChangeController> {
               // text editor
               SizedBox(
                 height: 250,
-                child: Expanded(
-                  child: TextEditor(controller: contentController),
-                ),
+                child: TextEditor(controller: contentController),
               ),
 
               SizedBox(
-                height: height * 0.04,
+                height: height * 0.02,
               ),
 
               // Gallery Heading and button
@@ -272,28 +278,19 @@ class PostForm extends GetView<ThemeChangeController> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton(
-                              borderRadius: BorderRadius.circular(15),
-                              hint: const Text("Purpose"),
-                              isExpanded: true,
-                              value: purposeValue.value,
-                              icon: const Icon(Icons.arrow_downward),
-                              elevation: 16,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                              underline: Container(
-                                height: 2,
-                                color: Colors.transparent,
-                              ),
-                              onChanged: (value) {
-                                purposeValue.value = value.toString();
-                              },
-                              items: purposeList
-                                  .map<DropdownMenuItem<String>>((value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
+                                borderRadius: BorderRadius.circular(15),
+                                hint: const Text("Purpose"),
+                                isExpanded: true,
+                                value: purposeValue,
+                                icon: const Icon(Icons.arrow_downward),
+                                elevation: 16,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                                underline: Container(
+                                  height: 2,
+                                  color: Colors.transparent,
+                                ),
+                                onChanged: purposeOnChange,
+                                items: purposeList),
                           ),
                         ),
                       ],
@@ -411,7 +408,7 @@ class PostForm extends GetView<ThemeChangeController> {
                           hintText: "Property Area",
                           labelText: "Enter Total Area",
                           isPassword: false,
-                          textEditingController: postTitleController,
+                          textEditingController: totalAreaController,
                         ),
                         SizedBox(
                           height: height * .02,
@@ -514,7 +511,7 @@ class PostForm extends GetView<ThemeChangeController> {
                               borderRadius: BorderRadius.circular(15),
                               hint: const Text("Property Area Unit"),
                               isExpanded: true,
-                              value: propertyAreaUnitValue.value,
+                              value: propertyAreaUnitValue,
                               icon: const Icon(Icons.arrow_downward),
                               elevation: 16,
                               style: Theme.of(context).textTheme.bodyMedium,
@@ -522,16 +519,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 height: 2,
                                 color: Colors.transparent,
                               ),
-                              onChanged: (value) {
-                                propertyAreaUnitValue.value = value.toString();
-                              },
-                              items: propertyAreaUnitList
-                                  .map<DropdownMenuItem<String>>((value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
+                              onChanged: propertyAreaUnitOnChange,
+                              items: propertyAreaUnitList,
                             ),
                           ),
                         ),
