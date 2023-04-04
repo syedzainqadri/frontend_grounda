@@ -441,6 +441,10 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           );
                           Navigator.pop(context);
                         }
+                        // --------------------------- Message -----------------------------
+                        //Code has to be modified for the editing page.
+                        // we have to decide where do we want to edit in new page or here.
+                        // --------------------------- Message -----------------------------
                         // } else {
                         // Get.defaultDialog(
                         //   title: 'Updating Category',
