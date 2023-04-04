@@ -14,10 +14,15 @@ class DefaultTextField extends GetView<ThemeChangeController> {
     required this.textEditingController,
     this.suffixIcon,
     this.prefixIcon,
+    this.validator,
+    this.maxLength,
+    this.maxLines,
   });
-
+  dynamic validator;
   String hintText;
   String labelText;
+  int? maxLength;
+  int? maxLines;
   bool isPassword;
   Widget? prefixIcon;
   Widget? suffixIcon;
@@ -25,7 +30,11 @@ class DefaultTextField extends GetView<ThemeChangeController> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      maxLines: maxLines,
+      autofocus: true,
+      maxLength: maxLength,
+      validator: validator,
       controller: textEditingController,
       obscureText: isPassword,
       decoration: InputDecoration(

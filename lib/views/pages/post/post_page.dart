@@ -301,12 +301,12 @@ class PostPage extends GetView<ThemeChangeController> {
                                                       BorderRadius.circular(30),
                                                   child: postController
                                                               .post[index]
-                                                              .galleryImages !=
+                                                              .featuredImages !=
                                                           null
                                                       ? Image.network(
                                                           postController
                                                               .post[index]
-                                                              .galleryImages!)
+                                                              .featuredImages!)
                                                       : SvgPicture.asset(
                                                           '/images/logo.svg',
                                                           fit: BoxFit.cover,
@@ -345,7 +345,7 @@ class PostPage extends GetView<ThemeChangeController> {
                                                       ),
                                                       postController.post[index]
                                                                   .status ==
-                                                              'PUBLISH'
+                                                              true
                                                           ? Text(
                                                               "Active",
                                                               style: Theme.of(

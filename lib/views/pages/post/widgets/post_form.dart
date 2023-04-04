@@ -16,8 +16,6 @@ import 'package:quill_html_editor/quill_html_editor.dart';
 class PostForm extends GetView<ThemeChangeController> {
   PostForm(
       {required this.postTitleController,
-      required this.postShortDescriptionController,
-      required this.contentController,
       required this.categoryDropDownList,
       required this.categoryDropDownValue,
       required this.categoryOnChange,
@@ -41,21 +39,14 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.installmentStatusChanges,
       required this.posessionChanges,
       required this.posessionValue,
-      required this.contactPersonsLandlineController,
-      required this.contactPersonEmailController,
-      required this.contactPersonNameController,
-      required this.contactPersonsMobileController,
       required this.bathRoomController,
       required this.bedRoomController,
       required this.advanceController,
       required this.noOfInstallmentController,
       required this.monthlyInstallmentValueController,
-      required this.propertyTypeController,
-      required this.propertySubTypeController,
       required this.mapPickerController,
       required this.mapTextController,
       required this.showContactDetails,
-      required this.showContactDetailsChanges,
       required this.map,
       required this.images,
       required this.amenities,
@@ -66,6 +57,19 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.purposeList,
       required this.purposeOnChange,
       required this.purposeValue,
+      required this.postTitleValidator,
+      required this.cityValidator,
+      required this.areaValidator,
+      required this.priceValidator,
+      required this.advanceValidator,
+      required this.bathroomValidator,
+      required this.bedroomValidator,
+      required this.monthlyInstallmentValidator,
+      required this.noOfInstallmentValidator,
+      required this.propertyAreaValidator,
+      required this.plotNumberValidator,
+      required this.contentController,
+      required this.showContactDetailsChanges,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -80,6 +84,16 @@ class PostForm extends GetView<ThemeChangeController> {
   dynamic formSubmit;
   dynamic uploadImages;
   dynamic onTap;
+  dynamic postTitleValidator;
+  dynamic cityValidator;
+  dynamic areaValidator;
+  dynamic propertyAreaValidator;
+  dynamic plotNumberValidator;
+  dynamic bathroomValidator;
+  dynamic bedroomValidator;
+  dynamic noOfInstallmentValidator;
+  dynamic monthlyInstallmentValidator;
+  dynamic advanceValidator;
   bool posessionValue;
   bool showContactDetails;
   bool statusValue;
@@ -90,6 +104,7 @@ class PostForm extends GetView<ThemeChangeController> {
   String purposeValue;
   dynamic purposeOnChange;
   dynamic propertyAreaUnitOnChange;
+  dynamic priceValidator;
   String propertyAreaUnitValue;
   List<DropdownMenuItem<String>> propertyAreaUnitList;
   List<DropdownMenuItem<String>> categoryDropDownList;
@@ -97,23 +112,17 @@ class PostForm extends GetView<ThemeChangeController> {
   List<DropdownMenuItem<String>> purposeList;
   TextEditingController postTitleController;
   TextEditingController totalAreaController;
-  TextEditingController postShortDescriptionController;
   TextEditingController videoUrlController;
   TextEditingController cityController;
   TextEditingController areaController;
   TextEditingController plotNumberController;
   TextEditingController priceController;
-  TextEditingController contactPersonsLandlineController;
-  TextEditingController contactPersonsMobileController;
-  TextEditingController contactPersonEmailController;
-  TextEditingController contactPersonNameController;
+
   TextEditingController bathRoomController;
   TextEditingController bedRoomController;
   TextEditingController advanceController;
   TextEditingController noOfInstallmentController;
   TextEditingController monthlyInstallmentValueController;
-  TextEditingController propertyTypeController;
-  TextEditingController propertySubTypeController;
   QuillEditorController contentController;
   Widget images;
   Widget amenities;
@@ -144,13 +153,15 @@ class PostForm extends GetView<ThemeChangeController> {
                 labelText: "Post Title",
                 isPassword: false,
                 textEditingController: postTitleController,
+                validator: postTitleValidator,
+                maxLength: 200,
               ),
               SizedBox(
                 height: height * 0.015,
               ),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     width: width * 0.23,
@@ -159,6 +170,8 @@ class PostForm extends GetView<ThemeChangeController> {
                       labelText: "City",
                       isPassword: false,
                       textEditingController: cityController,
+                      validator: cityValidator,
+                      maxLength: 25,
                     ),
                   ),
                   SizedBox(
@@ -172,6 +185,8 @@ class PostForm extends GetView<ThemeChangeController> {
                       labelText: "Area",
                       isPassword: false,
                       textEditingController: areaController,
+                      validator: areaValidator,
+                      maxLength: 50,
                     ),
                   ),
                   SizedBox(
@@ -185,6 +200,8 @@ class PostForm extends GetView<ThemeChangeController> {
                       labelText: "Price",
                       isPassword: false,
                       textEditingController: priceController,
+                      validator: priceValidator,
+                      maxLength: 25,
                     ),
                   ),
                 ],
@@ -194,6 +211,7 @@ class PostForm extends GetView<ThemeChangeController> {
                 height: height * 0.015,
               ),
               // text editor
+              //TODO: text editor must not be empty validation please
               SizedBox(
                 height: 250,
                 child: TextEditor(controller: contentController),
@@ -250,7 +268,7 @@ class PostForm extends GetView<ThemeChangeController> {
                 height: height * 0.04,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     height: 100,
@@ -266,6 +284,9 @@ class PostForm extends GetView<ThemeChangeController> {
                               .bodyMedium!
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
+                        ),
+                        SizedBox(
+                          height: height * .02,
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -313,6 +334,9 @@ class PostForm extends GetView<ThemeChangeController> {
                               .bodyMedium!
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
+                        ),
+                        SizedBox(
+                          height: height * .02,
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -362,6 +386,9 @@ class PostForm extends GetView<ThemeChangeController> {
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
                         ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
@@ -396,7 +423,7 @@ class PostForm extends GetView<ThemeChangeController> {
               ),
               //amenities and other fields
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     height: 500,
@@ -409,6 +436,8 @@ class PostForm extends GetView<ThemeChangeController> {
                           labelText: "Enter Total Area",
                           isPassword: false,
                           textEditingController: totalAreaController,
+                          validator: propertyAreaValidator,
+                          maxLength: 10,
                         ),
                         SizedBox(
                           height: height * .02,
@@ -455,6 +484,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 labelText: "Advance Amount",
                                 isPassword: false,
                                 textEditingController: advanceController,
+                                validator: advanceValidator,
+                                maxLength: 10,
                               )
                             : const Offstage(),
                         hasInstallmentValue
@@ -469,6 +500,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 isPassword: false,
                                 textEditingController:
                                     noOfInstallmentController,
+                                validator: noOfInstallmentValidator,
+                                maxLength: 10,
                               )
                             : const Offstage(),
                         hasInstallmentValue
@@ -483,6 +516,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 isPassword: false,
                                 textEditingController:
                                     monthlyInstallmentValueController,
+                                validator: monthlyInstallmentValidator,
+                                maxLength: 10,
                               )
                             : const Offstage(),
                       ],
@@ -528,14 +563,17 @@ class PostForm extends GetView<ThemeChangeController> {
                           height: height * .02,
                         ),
                         DefaultTextField(
-                          hintText: "Plot Number",
-                          labelText: "Plot Number",
+                          hintText: "Plot / Flat Number",
+                          labelText: "Plot / Flat Number",
                           isPassword: false,
                           textEditingController: plotNumberController,
+                          validator: plotNumberValidator,
+                          maxLength: 10,
                         ),
                         SizedBox(
                           height: height * .02,
                         ),
+                        //possession
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                           child: Transform.scale(
@@ -558,7 +596,6 @@ class PostForm extends GetView<ThemeChangeController> {
                             ),
                           ),
                         ),
-                        //possession
                         posessionValue
                             ? SizedBox(
                                 height: height * 0.02,
@@ -570,6 +607,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 labelText: "Bedrooms",
                                 isPassword: false,
                                 textEditingController: bedRoomController,
+                                validator: bedroomValidator,
+                                maxLength: 2,
                               )
                             : const Offstage(),
                         posessionValue
@@ -583,10 +622,12 @@ class PostForm extends GetView<ThemeChangeController> {
                                 labelText: "Bathrooms",
                                 isPassword: false,
                                 textEditingController: bathRoomController,
+                                validator: bathroomValidator,
+                                maxLength: 2,
                               )
                             : const Offstage(),
                         Padding(
-                          padding: const EdgeInsets.only(top: 8.0, left: 0.0),
+                          padding: const EdgeInsets.only(top: 25.0, left: 0.0),
                           child: Transform.scale(
                             scale: .8,
                             child: Row(
@@ -625,7 +666,7 @@ class PostForm extends GetView<ThemeChangeController> {
                       ),
                       Container(
                         color: Colors.white,
-                        height: 300,
+                        height: 290,
                         width: width * .19,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -637,13 +678,10 @@ class PostForm extends GetView<ThemeChangeController> {
                 ],
               ),
 
-              SizedBox(
-                height: height * 0.04,
-              ),
               Center(
                 child: SizedBox(
-                  width: width * .4,
-                  height: height * .4,
+                  width: width * .3,
+                  height: height * .3,
                   child: map,
                 ),
               ),
