@@ -6,8 +6,6 @@ import 'package:quill_html_editor/quill_html_editor.dart';
 
 class TextEditor extends StatelessWidget {
   TextEditor({required this.controller, Key? key}) : super(key: key);
-
-  // final QuillEditorController controller = QuillEditorController();
   dynamic controller;
 
   final customToolBarList = [

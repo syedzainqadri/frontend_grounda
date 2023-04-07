@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:html';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend_grounda/models/postModel/post_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,12 @@ import 'package:image_picker_web/image_picker_web.dart';
 import 'package:location/location.dart';
 
 class PostController extends GetxController {
+  late FocusNode formFocus;
+  late FocusNode titleFieldFocus;
+  late FocusNode cityFieldFocus;
+  late FocusNode areaFieldFocus;
+  late FocusNode priceFieldFocus;
+
   var post = <PostModel>[].obs;
   Location location = Location();
   final Box<dynamic> tokenHiveBox = Hive.box('token');
@@ -32,6 +39,11 @@ class PostController extends GetxController {
     userId.value = int.parse(tokenHiveBox.get('userId'));
     getAll();
     getLocation();
+    titleFieldFocus = FocusNode();
+    cityFieldFocus = FocusNode();
+    areaFieldFocus = FocusNode();
+    priceFieldFocus = FocusNode();
+    formFocus = FocusNode();
   }
 
   Future<void> getAll() async {

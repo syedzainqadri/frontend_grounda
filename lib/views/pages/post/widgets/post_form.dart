@@ -10,7 +10,6 @@ import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/text_ediotor.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
-import 'package:map_picker/map_picker.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class PostForm extends GetView<ThemeChangeController> {
@@ -44,10 +43,7 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.advanceController,
       required this.noOfInstallmentController,
       required this.monthlyInstallmentValueController,
-      required this.mapPickerController,
-      required this.mapTextController,
       required this.showContactDetails,
-      required this.map,
       required this.images,
       required this.amenities,
       required this.totalAreaController,
@@ -70,6 +66,10 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.plotNumberValidator,
       required this.contentController,
       required this.showContactDetailsChanges,
+      required this.titleFieldSubmitted,
+      required this.titleFocus,
+      required this.cityFocus,
+      required this.cityFieldSubmitted,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -105,6 +105,8 @@ class PostForm extends GetView<ThemeChangeController> {
   dynamic purposeOnChange;
   dynamic propertyAreaUnitOnChange;
   dynamic priceValidator;
+  dynamic titleFieldSubmitted;
+  dynamic cityFieldSubmitted;
   String propertyAreaUnitValue;
   List<DropdownMenuItem<String>> propertyAreaUnitList;
   List<DropdownMenuItem<String>> categoryDropDownList;
@@ -117,7 +119,6 @@ class PostForm extends GetView<ThemeChangeController> {
   TextEditingController areaController;
   TextEditingController plotNumberController;
   TextEditingController priceController;
-
   TextEditingController bathRoomController;
   TextEditingController bedRoomController;
   TextEditingController advanceController;
@@ -126,9 +127,8 @@ class PostForm extends GetView<ThemeChangeController> {
   QuillEditorController contentController;
   Widget images;
   Widget amenities;
-  MapPickerController mapPickerController;
-  TextEditingController mapTextController;
-  Widget map;
+  FocusNode titleFocus;
+  FocusNode cityFocus;
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +149,9 @@ class PostForm extends GetView<ThemeChangeController> {
                 height: height * 0.015,
               ),
               DefaultTextField(
+                autofocus: true,
+                focusNode: titleFocus,
+                onFieldSubmitted: titleFieldSubmitted,
                 hintText: "Enter Post Title",
                 labelText: "Post Title",
                 isPassword: false,
@@ -166,6 +169,8 @@ class PostForm extends GetView<ThemeChangeController> {
                   SizedBox(
                     width: width * 0.23,
                     child: DefaultTextField(
+                      focusNode: cityFocus,
+                      onFieldSubmitted: cityFieldSubmitted,
                       hintText: "Enter City",
                       labelText: "City",
                       isPassword: false,
@@ -676,14 +681,6 @@ class PostForm extends GetView<ThemeChangeController> {
                     ],
                   )
                 ],
-              ),
-
-              Center(
-                child: SizedBox(
-                  width: width * .3,
-                  height: height * .3,
-                  child: map,
-                ),
               ),
               SizedBox(
                 height: height * 0.04,

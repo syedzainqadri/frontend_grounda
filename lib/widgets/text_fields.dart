@@ -17,8 +17,12 @@ class DefaultTextField extends GetView<ThemeChangeController> {
     this.validator,
     this.maxLength,
     this.maxLines,
+    this.onFieldSubmitted,
+    this.autofocus,
+    this.focusNode,
   });
   dynamic validator;
+  dynamic onFieldSubmitted;
   String hintText;
   String labelText;
   int? maxLength;
@@ -27,12 +31,16 @@ class DefaultTextField extends GetView<ThemeChangeController> {
   Widget? prefixIcon;
   Widget? suffixIcon;
   TextEditingController? textEditingController;
+  bool? autofocus;
+  FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
+      onFieldSubmitted: onFieldSubmitted,
       maxLines: maxLines,
-      autofocus: true,
+      autofocus: autofocus ?? false,
       maxLength: maxLength,
       validator: validator,
       controller: textEditingController,

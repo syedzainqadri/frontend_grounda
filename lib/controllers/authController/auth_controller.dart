@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend_grounda/models/userModel/user_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class AuthController extends GetxController {
+  late FocusNode userNameFocus;
+  late FocusNode passwordFocus;
   FirebaseAuth auth = FirebaseAuth.instance;
   Rxn<User> firebaseUser = Rxn<User>();
 
@@ -15,6 +18,14 @@ class AuthController extends GetxController {
 
   var userModel = UserModel().obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    userNameFocus = FocusNode();
+    passwordFocus = FocusNode();
+  }
 
   // @override
   // void onInit() {
@@ -113,7 +124,7 @@ class AuthController extends GetxController {
     userModel.value = userModelFromJson(response.body);
   }
 
-  void signIn(String email, String password) async {
+  Future<void> signIn(String email, String password) async {
     var bodyPrepare = {
       "email": email,
       "password": password,
