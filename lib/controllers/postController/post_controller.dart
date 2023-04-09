@@ -5,6 +5,7 @@ import 'dart:html';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/models/postModel/post_model.dart';
+import 'package:frontend_grounda/utils/global_methods.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -131,7 +132,6 @@ class PostController extends GetxController {
       "amenitiesNames": amenitiesNames,
       "showContactDetails": showContactDetails,
       "purpose": purpose
-      //TODO: Check Spellings
     };
     print(bodyPrepare);
 
@@ -152,19 +152,177 @@ class PostController extends GetxController {
     }
   }
 
-//MultiImage Picker
-  getImage() async {
-    List<File>? res = await ImagePickerWeb.getMultiImagesAsFile();
-    if (res != null) {
-      for (var i = 0; i < res.length; i++) {
-        String fileName = res[i].name;
-        var upload = await FirebaseStorage.instance
-            .ref('uploads/post/images/$fileName')
-            .putBlob(res[i]);
-        final url = upload.ref.getDownloadURL().then((value) {
-          imageUrl.add(value);
+  //Update Post
+
+  Future<void> updatePost(
+      String id,
+      String title,
+      int propertyNumber,
+      String description,
+      String featuredImage,
+      String gallerImages,
+      String video,
+      String longDescription,
+      String longitude,
+      String latitude,
+      String plotNumber,
+      String price,
+      String city,
+      String area,
+      bool isInstallmentAvailable,
+      bool showContactDetails,
+      String advanceAmmount,
+      int noOfInstallements,
+      String monthlyInstallment,
+      bool readyForPossession,
+      String areaSizeUnit,
+      String purpose,
+      String totalAreaSize,
+      int bedrooms,
+      int bathrooms,
+      String amenitiesIconCodes,
+      String amenitiesNames,
+      int categoryId,
+      bool status,
+      String slug) async {
+    isLoading.value = true;
+    var bodyPrepare = {
+      "id": id,
+      "title": title,
+      "propertyNumber": propertyNumber,
+      "description": description,
+      "featuredImages": featuredImage,
+      "galleryImages": gallerImages,
+      "video": video,
+      "longDescription": longDescription,
+      "longitude": longitude,
+      "latitude": latitude,
+      "plotNumber": plotNumber,
+      "price": price,
+      "city": city,
+      "area": area,
+      "isInstallmentAvailable": isInstallmentAvailable,
+      "advanceAmount": advanceAmmount,
+      "noOfInstallments": noOfInstallements,
+      "monthlyInstallments": monthlyInstallment,
+      "readyForPossession": readyForPossession,
+      "bedroooms": bedrooms,
+      "bathrooms": bathrooms,
+      "areaSizeUnit": {
+        "AreaSizeUnit": areaSizeUnit,
+      },
+      "totalAreaSize": totalAreaSize,
+      "authorId": userId.value,
+      "categoryId": categoryId,
+      "metaTitle": title,
+      "metaDescription": description,
+      "status": status,
+      "slug": slug,
+      "amenitiesIconCodes": amenitiesIconCodes,
+      "amenitiesNames": amenitiesNames,
+      "showContactDetails": showContactDetails,
+      "purpose": purpose
+    };
+    print(bodyPrepare);
+
+    var response = await http.put(Uri.parse(baseUrl + updatePostUrl),
+        body: jsonEncode(bodyPrepare),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
         });
-      }
+    print(response.body);
+    if (response.statusCode == 200 && response.body != 'null') {
+      post.value = postModelFromJson(response.body);
+      getAll();
+      isLoading.value = false;
+    } else {
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> delete(
+    String id,
+    String title,
+    int propertyNumber,
+    String description,
+    String featuredImage,
+    String gallerImages,
+    String video,
+    String longDescription,
+    String longitude,
+    String latitude,
+    String plotNumber,
+    String price,
+    String city,
+    String area,
+    bool isInstallmentAvailable,
+    bool showContactDetails,
+    String advanceAmmount,
+    int noOfInstallements,
+    String monthlyInstallment,
+    bool readyForPossession,
+    String areaSizeUnit,
+    String purpose,
+    String totalAreaSize,
+    int bedrooms,
+    int bathrooms,
+    String amenitiesIconCodes,
+    String amenitiesNames,
+    int categoryId,
+  ) async {
+    var bodyPrepare = {
+      "id": id,
+      "title": title,
+      "propertyNumber": propertyNumber,
+      "description": description,
+      "featuredImages": featuredImage,
+      "galleryImages": gallerImages,
+      "video": video,
+      "longDescription": longDescription,
+      "longitude": longitude,
+      "latitude": latitude,
+      "plotNumber": plotNumber,
+      "price": price,
+      "city": city,
+      "area": area,
+      "isInstallmentAvailable": isInstallmentAvailable,
+      "advanceAmount": advanceAmmount,
+      "noOfInstallments": noOfInstallements,
+      "monthlyInstallments": monthlyInstallment,
+      "readyForPossession": readyForPossession,
+      "bedroooms": bedrooms,
+      "bathrooms": bathrooms,
+      "areaSizeUnit": {
+        "AreaSizeUnit": areaSizeUnit,
+      },
+      "totalAreaSize": totalAreaSize,
+      "authorId": userId.value,
+      "categoryId": categoryId,
+      "metaTitle": title,
+      "metaDescription": description,
+      "status": false,
+      "amenitiesIconCodes": amenitiesIconCodes,
+      "amenitiesNames": amenitiesNames,
+      "showContactDetails": showContactDetails,
+      "purpose": purpose
+    };
+    isLoading.value = true;
+    var response = await http.put(Uri.parse(baseUrl + updatePostUrl),
+        body: jsonEncode(bodyPrepare),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        });
+    if (response.statusCode == 200 && response.body != 'null') {
+      getAll();
+      isLoading.value = false;
+      showSuccessSnak('Softly Deleted',
+          'This post has been updated as delted in the system');
+    } else {
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -189,5 +347,21 @@ class PostController extends GetxController {
     latitude.value = _locationData.latitude!;
     longitude.value = _locationData.longitude!;
     print("latitude = $latitude longitude = $longitude");
+  }
+
+  //MultiImage Picker
+  getImage() async {
+    List<File>? res = await ImagePickerWeb.getMultiImagesAsFile();
+    if (res != null) {
+      for (var i = 0; i < res.length; i++) {
+        String fileName = res[i].name;
+        var upload = await FirebaseStorage.instance
+            .ref('uploads/post/images/$fileName')
+            .putBlob(res[i]);
+        final url = upload.ref.getDownloadURL().then((value) {
+          imageUrl.add(value);
+        });
+      }
+    }
   }
 }

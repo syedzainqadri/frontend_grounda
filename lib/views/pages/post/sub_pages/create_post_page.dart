@@ -413,6 +413,36 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                             var description =
                                 await descriptionController.getText();
                             var propertyNumber = Random().nextInt(10000000);
+                            print(postTitleController.text);
+                            print(propertyNumber);
+                            print(description);
+                            print(postController.imageUrl.first.toString());
+                            print(postController.imageUrl.toString());
+                            print(videoUrlController.text);
+                            print(description);
+                            print(postController.longitude.value.toString());
+                            print(postController.latitude.value.toString());
+                            print(plotNumberController.text);
+                            print(priceController.text);
+                            print(cityController.text);
+                            print(areaController.text);
+                            print(hasInstallments.value);
+                            print(showContactDetials.value);
+                            print(advanceController.text);
+                            print(int.parse(noOfInstallmentController.text));
+                            print(monthlyInstallmentController.text);
+                            print(posessionReady.value);
+                            print(propertyAreaUnitValue);
+                            print(purposeValue.value.toUpperCase());
+                            print(totalAreaController.text);
+                            print(int.parse(bedroomController.text));
+                            print(int.parse(bathroomController.text));
+                            print(selectedAmenitiesCodes.toString());
+                            print(selectedAmenitiesNames.toString());
+                            print(selectedItemId.value);
+                            print(isPublished.value);
+                            print(postTitleController.text +
+                                propertyNumber.toString());
 
                             await postController.create(
                               postTitleController.text,

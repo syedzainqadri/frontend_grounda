@@ -96,7 +96,7 @@ class PostModel {
         price: json["price"],
         city: json["city"],
         area: json["area"],
-        purpose: json["porpose"],
+        purpose: json["purpose"],
         amenitiesNames: json["amenitiesNames"],
         amenitiesIconCodes: json["amenitiesIconCodes"],
         isInstallmentAvailable: json["isInstallmentAvailable"],
