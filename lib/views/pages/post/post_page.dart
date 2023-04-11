@@ -381,7 +381,12 @@ class PostPage extends GetView<ThemeChangeController> {
                                           children: [
                                             IconButton(
                                               onPressed: () async {
-                                                //TODO: implement Post edit
+                                                await postController
+                                                    .getPostById(
+                                                  postController.post[index].id
+                                                      .toString(),
+                                                );
+                                                Get.toNamed('/post/create');
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/edit.svg"),

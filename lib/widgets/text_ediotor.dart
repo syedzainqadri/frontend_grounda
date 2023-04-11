@@ -1,12 +1,14 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/controllers/postController/post_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
+import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
-class TextEditor extends StatelessWidget {
-  TextEditor({required this.controller, Key? key}) : super(key: key);
-  dynamic controller;
+class TextEditor extends GetView<PostController> {
+  TextEditor({required this.textController, Key? key}) : super(key: key);
+  dynamic textController;
 
   final customToolBarList = [
     ToolBarStyle.bold,
@@ -35,15 +37,15 @@ class TextEditor extends StatelessWidget {
           iconSize: 18,
           iconColor: _toolbarIconColor,
           activeIconColor: kPrimaryColor,
-          controller: controller,
+          controller: textController,
           customButtons: const [],
         ),
         Flexible(
           fit: FlexFit.tight,
           child: QuillHtmlEditor(
-            text: "",
+            text: controller.descriptionController.text,
             hintText: 'Add Description here ',
-            controller: controller,
+            controller: textController,
             isEnabled: true,
             minHeight: 150,
             textStyle: _editorTextStyle,
@@ -79,39 +81,39 @@ class TextEditor extends StatelessWidget {
 
   ///[getHtmlText] to get the html text from editor
   void getHtmlText() async {
-    String? htmlText = await controller.getText();
+    String? htmlText = await textController.getText();
     debugPrint(htmlText.toString());
   }
 
   ///[setHtmlText] to set the html text to editor
   void setHtmlText(String text) async {
-    await controller.setText(text);
+    await textController.setText(text);
   }
 
   ///[insertNetworkImage] to set the html text to editor
   void insertNetworkImage(String url) async {
-    await controller.embedImage(url);
+    await textController.embedImage(url);
   }
 
   ///[insertVideoURL] to set the video url to editor
   ///this method recognises the inserted url and sanitize to make it embeddable url
   ///eg: converts youtube video to embed video, same for vimeo
   void insertVideoURL(String url) async {
-    await controller.embedVideo(url);
+    await textController.embedVideo(url);
   }
 
   /// to set the html text to editor
   /// if index is not set, it will be inserted at the cursor postion
   void insertHtmlText(String text, {int? index}) async {
-    await controller.insertText(text, index: index);
+    await textController.insertText(text, index: index);
   }
 
   /// to clear the editor
-  void clearEditor() => controller.clear();
+  void clearEditor() => textController.clear();
 
   /// to enable/disable the editor
-  void enableEditor(bool enable) => controller.enableEditor(enable);
+  void enableEditor(bool enable) => textController.enableEditor(enable);
 
   /// method to un focus editor
-  void unFocusEditor() => controller.unFocus();
+  void unFocusEditor() => textController.unFocus();
 }

@@ -93,101 +93,94 @@ class LoginView extends GetView<ThemeChangeController> {
                                 style: BorderStyle.solid,
                               ),
                             ),
-                            child: Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 30, bottom: 60),
-                                    child: Text(
-                                      "Sign In",
-                                      style: TextStyle(
-                                        fontSize: headingTwoSize,
-                                      ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 30, bottom: 60),
+                                  child: Text(
+                                    "Sign In",
+                                    style: TextStyle(
+                                      fontSize: headingTwoSize,
                                     ),
                                   ),
-                                  Padding(
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40),
+                                  child: DefaultTextField(
+                                    focusNode: authController.userNameFocus,
+                                    textEditingController: emailController,
+                                    hintText: "Username",
+                                    labelText: "Username",
+                                    isPassword: false,
+                                    prefixIcon: const Icon(Icons.person),
+                                    onFieldSubmitted: (value) {
+                                      FocusScope.of(context).requestFocus(
+                                          authController.passwordFocus);
+                                    },
+                                  ),
+                                ),
+                                Obx(
+                                  () => Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 40),
+                                        horizontal: 40, vertical: 20),
                                     child: DefaultTextField(
-                                      focusNode: authController.userNameFocus,
-                                      textEditingController: emailController,
-                                      hintText: "Username",
-                                      labelText: "Username",
-                                      isPassword: false,
-                                      prefixIcon: const Icon(Icons.person),
-                                      onFieldSubmitted: (value) {
-                                        FocusScope.of(context).requestFocus(
-                                            authController.passwordFocus);
+                                      autofocus: false,
+                                      focusNode: authController.passwordFocus,
+                                      textEditingController: passwordController,
+                                      hintText: "Password",
+                                      labelText: "Password",
+                                      isPassword: isObsecure.value,
+                                      prefixIcon: const Icon(Icons.lock),
+                                      maxLines: 1,
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          isObsecure.value =
+                                              isObsecure.value ? false : true;
+                                        },
+                                        icon: isObsecure.value
+                                            ? const Icon(Icons.password)
+                                            : const Icon(Icons.remove_red_eye),
+                                        // icon: const Icon(Icons.remove_red_eye),
+                                      ),
+                                      onFieldSubmitted: (value) async {
+                                        Get.defaultDialog(
+                                          title: 'Signing In',
+                                          content:
+                                              const CircularProgressIndicator(
+                                            color: kPrimaryColor,
+                                          ),
+                                        );
+                                        await authController.signIn(
+                                          emailController.text.trim(),
+                                          passwordController.text,
+                                        );
                                       },
                                     ),
                                   ),
-                                  Obx(
-                                    () => Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 40, vertical: 20),
-                                      child: DefaultTextField(
-                                        autofocus: false,
-                                        focusNode: authController.passwordFocus,
-                                        textEditingController:
-                                            passwordController,
-                                        hintText: "Password",
-                                        labelText: "Password",
-                                        isPassword: isObsecure.value,
-                                        prefixIcon: const Icon(Icons.lock),
-                                        maxLines: 1,
-                                        suffixIcon: IconButton(
-                                          onPressed: () {
-                                            isObsecure.value =
-                                                isObsecure.value ? false : true;
-                                          },
-                                          icon: isObsecure.value
-                                              ? const Icon(Icons.password)
-                                              : const Icon(
-                                                  Icons.remove_red_eye),
-                                          // icon: const Icon(Icons.remove_red_eye),
-                                        ),
-                                        onFieldSubmitted: (value) async {
-                                          Get.defaultDialog(
-                                            title: 'Signing In',
-                                            content:
-                                                const CircularProgressIndicator(
-                                              color: kPrimaryColor,
-                                            ),
-                                          );
-                                          await authController.signIn(
-                                            emailController.text.trim(),
-                                            passwordController.text,
-                                          );
-                                        },
+                                ),
+                                DefaultButton(
+                                  primaryColor: kPrimaryColor,
+                                  hoverColor: kDarkColor,
+                                  buttonText: "Sign In",
+                                  onPressed: () async {
+                                    Get.defaultDialog(
+                                      title: 'Signing In',
+                                      content: const CircularProgressIndicator(
+                                        color: kPrimaryColor,
                                       ),
-                                    ),
-                                  ),
-                                  DefaultButton(
-                                    primaryColor: kPrimaryColor,
-                                    hoverColor: kDarkColor,
-                                    buttonText: "Sign In",
-                                    onPressed: () async {
-                                      Get.defaultDialog(
-                                        title: 'Signing In',
-                                        content:
-                                            const CircularProgressIndicator(
-                                          color: kPrimaryColor,
-                                        ),
-                                      );
-                                      authController.signIn(
-                                        emailController.text.trim(),
-                                        passwordController.text,
-                                      );
-                                    },
-                                    width: media.width < 768
-                                        ? width / 9
-                                        : width / 5,
-                                    height: height / 20,
-                                  ),
-                                ],
-                              ),
+                                    );
+                                    authController.signIn(
+                                      emailController.text.trim(),
+                                      passwordController.text,
+                                    );
+                                  },
+                                  width:
+                                      media.width < 768 ? width / 9 : width / 5,
+                                  height: height / 20,
+                                ),
+                              ],
                             ),
                           ),
                         ),

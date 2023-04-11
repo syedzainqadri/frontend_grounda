@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, unrelated_type_equality_checks, use_build_context_synchronously
 
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/amenitiesController/amenities_controller.dart';
@@ -12,33 +13,31 @@ import 'package:frontend_grounda/views/pages/post/widgets/post_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/icon_from_api.dart';
 import 'package:get/get.dart';
-import 'package:map_picker/map_picker.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class CreatePostPage extends GetView<ThemeChangeController> {
   CreatePostPage({Key? key}) : super(key: key);
-  //<=============== Text Editor Controllers ========================>
-  QuillEditorController descriptionController = QuillEditorController();
-  final TextEditingController searchCategory = TextEditingController();
-  TextEditingController postTitleController = TextEditingController();
-  TextEditingController totalAreaController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController areaController = TextEditingController();
-  TextEditingController plotNumberController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController videoUrlController = TextEditingController();
-  TextEditingController advanceController = TextEditingController();
-  TextEditingController noOfInstallmentController = TextEditingController();
-  TextEditingController monthlyInstallmentController = TextEditingController();
-  TextEditingController bedroomController = TextEditingController();
-  TextEditingController bathroomController = TextEditingController();
-  MapPickerController mapPickerController = MapPickerController();
-  TextEditingController mapTextController = TextEditingController();
-//<=============== Data Controllers ========================>
+  //<=============== Data Controllers ========================>
   CategoryController categoryController = Get.find<CategoryController>();
   PostController postController = Get.find<PostController>();
   AmenitiesController amenitiesController = Get.find<AmenitiesController>();
   ProfileController profileController = Get.find<ProfileController>();
+  //<=============== Text Editor Controllers ========================>
+  QuillEditorController descriptionController = QuillEditorController();
+  final TextEditingController searchCategory = TextEditingController();
+  // TextEditingController postTitleController = TextEditingController();
+  // TextEditingController totalAreaController = TextEditingController();
+  // TextEditingController cityController = TextEditingController();
+  // TextEditingController areaController = TextEditingController();
+  // TextEditingController plotNumberController = TextEditingController();
+  // TextEditingController priceController = TextEditingController();
+  // TextEditingController videoUrlController = TextEditingController();
+  // TextEditingController advanceController = TextEditingController();
+  // TextEditingController noOfInstallmentController = TextEditingController();
+  // TextEditingController monthlyInstallmentController = TextEditingController();
+  // TextEditingController bedroomController = TextEditingController();
+  // TextEditingController bathroomController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   var selectedItemId = 0.obs;
   var subCategorySelectedItemId = 0.obs;
@@ -47,18 +46,12 @@ class CreatePostPage extends GetView<ThemeChangeController> {
   var posessionReady = false.obs;
   var showContactDetials = false.obs;
   var catId = ''.obs;
-  var longitude = 0.0.obs;
-  var latitude = 0.0.obs;
-  var newList = [].obs;
-  RxBool amenitiesBoolValue = false.obs;
-  RxList selectedAmenities = [].obs;
+  // var longitude = 0.0.obs;
+  // var latitude = 0.0.obs;
+  // var newList = [].obs;
+  // RxBool amenitiesBoolValue = false.obs;
+  // RxList selectedAmenities = [].obs;
   List<dynamic> amenities = [false].obs;
-  var selectedAmenitiesNames = [].obs;
-  var selectedAmenitiesCodes = [].obs;
-  List purposeList = ["SELL", "RENT"];
-  RxString purposeValue = 'SELL'.obs;
-  RxString propertyAreaUnitValue = 'SQFT'.obs;
-  List propertyAreaUnitList = ["MARLA", "SQFT", "SQMT"];
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +93,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                       key: _formKey,
                       child: PostForm(
                         //<============! Post Title Fild ==========>
-                        postTitleController: postTitleController,
+                        postTitleController: postController.postTitleController,
                         titleFocus: postController.titleFieldFocus,
                         titleFieldSubmitted: (value) {
                           FocusScope.of(context)
@@ -112,7 +105,7 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           }
                         },
                         //<============! City Fild ==========>
-                        cityController: cityController,
+                        cityController: postController.cityController,
                         cityFocus: postController.cityFieldFocus,
                         cityFieldSubmitted: (value) {
                           FocusScope.of(context)
@@ -124,14 +117,14 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           }
                         },
                         //<============! Area Fild ==========>
-                        areaController: areaController,
+                        areaController: postController.areaController,
                         areaValidator: (value) {
                           if (value == null || value == '') {
                             return 'Area cannot be empty ';
                           }
                         },
                         //<============! Price Fild ==========>
-                        priceController: priceController,
+                        priceController: postController.priceController,
                         priceValidator: (value) {
                           if (value == null || value == '') {
                             return 'Price cannot be empty';
@@ -208,16 +201,16 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                                 ),
                               ),
                         //category segment
-                        purposeList:
-                            purposeList.map<DropdownMenuItem<String>>((value) {
+                        purposeList: postController.purposeList
+                            .map<DropdownMenuItem<String>>((value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
                           );
                         }).toList(),
-                        purposeValue: purposeValue.value,
+                        purposeValue: postController.purposeValue.value,
                         purposeOnChange: (value) {
-                          purposeValue.value = value.toString();
+                          postController.purposeValue.value = value.toString();
                         },
                         categoryDropDownList: categoryController.category
                             .map<DropdownMenuItem<String>>((value) {
@@ -238,9 +231,6 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                                 categoryController.category[i].name) {
                               selectedItemId.value =
                                   categoryController.category[i].id!;
-                              print(
-                                  "<========== Slected Item Ids ===========>");
-                              print(selectedItemId.value);
                             }
                           }
                           await categoryController.getSubCategories(
@@ -273,27 +263,31 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           }
                         },
                         //total area
-                        totalAreaController: totalAreaController,
+                        totalAreaController: postController.totalAreaController,
                         propertyAreaValidator: (value) {
                           if (value == null || value == '') {
                             return 'Property Ara cannot be empty';
                           }
                         },
                         //property AreaSizeUnit dropDown
-                        propertyAreaUnitList: propertyAreaUnitList
+                        propertyAreaUnitList: postController
+                            .propertyAreaUnitList
                             .map<DropdownMenuItem<String>>((value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
                           );
                         }).toList(),
-                        propertyAreaUnitValue: propertyAreaUnitValue.value,
+                        propertyAreaUnitValue:
+                            postController.propertyAreaUnitValue.value,
                         propertyAreaUnitOnChange: (value) {
-                          propertyAreaUnitValue.value = value.toString();
+                          postController.propertyAreaUnitValue.value =
+                              value.toString();
                         },
-                        videoUrlController: videoUrlController,
+                        videoUrlController: postController.videoUrlController,
                         // not required validation for video url
-                        plotNumberController: plotNumberController,
+                        plotNumberController:
+                            postController.plotNumberController,
                         plotNumberValidator: (value) {
                           if (value == null || value == '') {
                             return 'Plot / Flat number cannot be empty';
@@ -305,20 +299,21 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           hasInstallments.value = value;
                           print(hasInstallments.value);
                         },
-                        noOfInstallmentController: noOfInstallmentController,
+                        noOfInstallmentController:
+                            postController.noOfInstallmentController,
                         noOfInstallmentValidator: (value) {
                           if (value == null || value == '') {
                             return 'Number of Installment cannot be empty';
                           }
                         },
                         monthlyInstallmentValueController:
-                            monthlyInstallmentController,
+                            postController.monthlyInstallmentController,
                         monthlyInstallmentValidator: (value) {
                           if (value == null || value == '') {
                             return 'Monthly Installment Value cannot be empty';
                           }
                         },
-                        advanceController: advanceController,
+                        advanceController: postController.advanceController,
                         advanceValidator: (value) {
                           if (value == null || value == '') {
                             return 'Advance amount cannot be empty';
@@ -329,13 +324,13 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                         posessionChanges: (value) {
                           posessionReady.value = value;
                         },
-                        bedRoomController: bedroomController,
+                        bedRoomController: postController.bedroomController,
                         bedroomValidator: (value) {
                           if (value == null || value == '') {
                             return 'Bedroom cannot be empty';
                           }
                         },
-                        bathRoomController: bathroomController,
+                        bathRoomController: postController.bathroomController,
                         bathroomValidator: (value) {
                           if (value == null || value == '') {
                             return 'Bathroom cannot be empty';
@@ -362,12 +357,14 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                                     amenities[index] = !amenities[index];
                                     //TODO: build amenities local lists
                                     if (amenities[index]) {
-                                      selectedAmenitiesNames.add(names[index]);
-                                      selectedAmenitiesCodes.add(codes[index]);
+                                      postController.selectedAmenitiesNames
+                                          .add(names[index]);
+                                      postController.selectedAmenitiesCodes
+                                          .add(codes[index]);
                                     } else {
-                                      selectedAmenitiesNames
+                                      postController.selectedAmenitiesNames
                                           .remove(names[index]);
-                                      selectedAmenitiesCodes
+                                      postController.selectedAmenitiesCodes
                                           .remove(codes[index]);
                                     }
                                   },
@@ -413,67 +410,76 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                             var description =
                                 await descriptionController.getText();
                             var propertyNumber = Random().nextInt(10000000);
-                            print(postTitleController.text);
+                            var imageList = jsonEncode(postController.imageUrl);
+                            print(postController.postTitleController.text);
                             print(propertyNumber);
                             print(description);
                             print(postController.imageUrl.first.toString());
-                            print(postController.imageUrl.toString());
-                            print(videoUrlController.text);
+                            print(imageList);
+                            print(postController.videoUrlController.text);
                             print(description);
                             print(postController.longitude.value.toString());
                             print(postController.latitude.value.toString());
-                            print(plotNumberController.text);
-                            print(priceController.text);
-                            print(cityController.text);
-                            print(areaController.text);
+                            print(postController.plotNumberController.text);
+                            print(postController.priceController.text);
+                            print(postController.cityController.text);
+                            print(postController.areaController.text);
                             print(hasInstallments.value);
                             print(showContactDetials.value);
-                            print(advanceController.text);
-                            print(int.parse(noOfInstallmentController.text));
-                            print(monthlyInstallmentController.text);
+                            print(postController.advanceController.text);
+                            print(int.parse(
+                                postController.noOfInstallmentController.text));
+                            print(postController
+                                .monthlyInstallmentController.text);
                             print(posessionReady.value);
-                            print(propertyAreaUnitValue);
-                            print(purposeValue.value.toUpperCase());
-                            print(totalAreaController.text);
-                            print(int.parse(bedroomController.text));
-                            print(int.parse(bathroomController.text));
-                            print(selectedAmenitiesCodes.toString());
-                            print(selectedAmenitiesNames.toString());
+                            print(postController.propertyAreaUnitValue);
+                            print(postController.purposeValue.value
+                                .toUpperCase());
+                            print(postController.totalAreaController.text);
+                            print(int.parse(
+                                postController.bedroomController.text));
+                            print(int.parse(
+                                postController.bathroomController.text));
+                            print(postController.selectedAmenitiesCodes
+                                .toString());
+                            print(postController.selectedAmenitiesNames
+                                .toString());
                             print(selectedItemId.value);
                             print(isPublished.value);
-                            print(postTitleController.text +
+                            print(postController.postTitleController.text +
                                 propertyNumber.toString());
 
                             await postController.create(
-                              postTitleController.text,
+                              postController.postTitleController.text,
                               propertyNumber,
                               description,
                               postController.imageUrl.first.toString(),
-                              postController.imageUrl.toString(),
-                              videoUrlController.text,
+                              imageList,
+                              postController.videoUrlController.text,
                               description,
                               postController.longitude.value.toString(),
                               postController.latitude.value.toString(),
-                              plotNumberController.text,
-                              priceController.text,
-                              cityController.text,
-                              areaController.text,
+                              postController.plotNumberController.text,
+                              postController.priceController.text,
+                              postController.cityController.text,
+                              postController.areaController.text,
                               hasInstallments.value,
                               showContactDetials.value,
-                              advanceController.text,
-                              int.parse(noOfInstallmentController.text),
-                              monthlyInstallmentController.text,
+                              postController.advanceController.text,
+                              int.parse(postController
+                                  .noOfInstallmentController.text),
+                              postController.monthlyInstallmentController.text,
                               posessionReady.value,
-                              propertyAreaUnitValue.value,
-                              purposeValue.value.toUpperCase(),
-                              totalAreaController.text,
-                              int.parse(bedroomController.text),
-                              int.parse(bathroomController.text),
-                              selectedAmenitiesCodes.toString(),
-                              selectedAmenitiesNames.toString(),
+                              postController.propertyAreaUnitValue.value,
+                              postController.purposeValue.value.toUpperCase(),
+                              postController.totalAreaController.text,
+                              int.parse(postController.bedroomController.text),
+                              int.parse(postController.bathroomController.text),
+                              postController.selectedAmenitiesCodes.toString(),
+                              postController.selectedAmenitiesNames.toString(),
                               selectedItemId.value,
                               isPublished.value,
-                              postTitleController.text +
+                              postController.postTitleController.text +
                                   propertyNumber.toString(),
                             );
                             Navigator.pop(context);

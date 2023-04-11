@@ -219,7 +219,7 @@ class PostForm extends GetView<ThemeChangeController> {
               //TODO: text editor must not be empty validation please
               SizedBox(
                 height: 250,
-                child: TextEditor(controller: contentController),
+                child: TextEditor(textController: contentController),
               ),
 
               SizedBox(

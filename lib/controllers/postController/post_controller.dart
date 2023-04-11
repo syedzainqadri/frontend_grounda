@@ -21,6 +21,7 @@ class PostController extends GetxController {
   late FocusNode priceFieldFocus;
 
   var post = <PostModel>[].obs;
+  var singlePost = SinglePostModel().obs;
   Location location = Location();
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
@@ -32,6 +33,28 @@ class PostController extends GetxController {
   late LocationData _locationData;
   RxDouble latitude = 0.0.obs;
   RxDouble longitude = 0.0.obs;
+
+  var selectedAmenitiesNames = [].obs;
+  var selectedAmenitiesCodes = [].obs;
+  List purposeList = ["SELL", "RENT"];
+  RxString purposeValue = 'SELL'.obs;
+  RxString propertyAreaUnitValue = 'SQFT'.obs;
+  List propertyAreaUnitList = ["MARLA", "SQFT", "SQMT"];
+
+  //<=================== Text Editing Controllers ==================>
+  TextEditingController postTitleController = TextEditingController();
+  TextEditingController totalAreaController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController areaController = TextEditingController();
+  TextEditingController plotNumberController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController videoUrlController = TextEditingController();
+  TextEditingController advanceController = TextEditingController();
+  TextEditingController noOfInstallmentController = TextEditingController();
+  TextEditingController monthlyInstallmentController = TextEditingController();
+  TextEditingController bedroomController = TextEditingController();
+  TextEditingController bathroomController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   onInit() {
@@ -58,6 +81,42 @@ class PostController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       post.value = postModelFromJson(response.body);
+      isLoading.value = false;
+    } else {
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getPostById(String id) async {
+    isLoading.value = true;
+    var response = await http.get(
+      Uri.parse('$baseUrl$getAllPost/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
+    if (response.statusCode == 200 && response.body != 'null') {
+      singlePost.value = singlePostModelFromJson(response.body);
+      postTitleController.text = singlePost.value.title!;
+      totalAreaController.text = singlePost.value.totalAreaSize!;
+      cityController.text = singlePost.value.city!;
+      areaController.text = singlePost.value.area!;
+      plotNumberController.text = singlePost.value.plotNumber!;
+      priceController.text = singlePost.value.price!;
+      videoUrlController.text = singlePost.value.video!;
+      advanceController.text = singlePost.value.advanceAmount!;
+      noOfInstallmentController.text =
+          singlePost.value.noOfInstallments!.toString();
+      monthlyInstallmentController.text = singlePost.value.monthlyInstallments!;
+      bedroomController.text = singlePost.value.bedroooms!.toString();
+      bathroomController.text = singlePost.value.bathroom!.toString();
+      descriptionController.text = singlePost.value.longDescription!;
+      imageUrl.value = jsonDecode(singlePost.value.galleryImages!);
+      purposeValue.value = singlePost.value.purpose!;
+      propertyAreaUnitValue.value = singlePost.value.areaSizeUnit!;
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
