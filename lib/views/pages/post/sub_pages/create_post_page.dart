@@ -9,49 +9,77 @@ import 'package:frontend_grounda/controllers/postController/post_controller.dart
 import 'package:frontend_grounda/controllers/profileController/profile_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
+import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:frontend_grounda/views/pages/post/widgets/post_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/icon_from_api.dart';
 import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
-class CreatePostPage extends GetView<ThemeChangeController> {
-  CreatePostPage({Key? key}) : super(key: key);
+class CreatePostPage extends StatefulWidget {
+  const CreatePostPage({Key? key}) : super(key: key);
+
+  @override
+  State<CreatePostPage> createState() => _CreatePostPageState();
+}
+
+class _CreatePostPageState extends State<CreatePostPage> {
   //<=============== Data Controllers ========================>
   CategoryController categoryController = Get.find<CategoryController>();
+  ThemeChangeController themeChangeController =
+      Get.find<ThemeChangeController>();
   PostController postController = Get.find<PostController>();
+
   AmenitiesController amenitiesController = Get.find<AmenitiesController>();
+
   ProfileController profileController = Get.find<ProfileController>();
+
   //<=============== Text Editor Controllers ========================>
   QuillEditorController descriptionController = QuillEditorController();
-  final TextEditingController searchCategory = TextEditingController();
-  // TextEditingController postTitleController = TextEditingController();
-  // TextEditingController totalAreaController = TextEditingController();
-  // TextEditingController cityController = TextEditingController();
-  // TextEditingController areaController = TextEditingController();
-  // TextEditingController plotNumberController = TextEditingController();
-  // TextEditingController priceController = TextEditingController();
-  // TextEditingController videoUrlController = TextEditingController();
-  // TextEditingController advanceController = TextEditingController();
-  // TextEditingController noOfInstallmentController = TextEditingController();
-  // TextEditingController monthlyInstallmentController = TextEditingController();
-  // TextEditingController bedroomController = TextEditingController();
-  // TextEditingController bathroomController = TextEditingController();
 
+  final TextEditingController searchCategory = TextEditingController();
+
+  // TextEditingController postTitleController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   var selectedItemId = 0.obs;
+
   var subCategorySelectedItemId = 0.obs;
-  var isPublished = false.obs;
-  var hasInstallments = false.obs;
-  var posessionReady = false.obs;
-  var showContactDetials = false.obs;
-  var catId = ''.obs;
-  // var longitude = 0.0.obs;
-  // var latitude = 0.0.obs;
-  // var newList = [].obs;
-  // RxBool amenitiesBoolValue = false.obs;
-  // RxList selectedAmenities = [].obs;
+
   List<dynamic> amenities = [false].obs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCatName(postController.catID);
+    getSubCatname(postController.subCatID);
+  }
+
+  getCatName(catId) {
+    if (catId != 0) {
+      categoryController.getAmenitiesIds(catId.toString());
+      for (int i = 0; i < categoryController.category.length; i++) {
+        if (catId == categoryController.category[i].id) {
+          categoryController.selectedItemName.value =
+              categoryController.category[i].name!;
+          categoryController.getSubCategories(catId.toString());
+        }
+      }
+    }
+  }
+
+  getSubCatname(subCatId) {
+    if (subCatId != 0) {
+      categoryController.getAmenitiesIds(subCatId.toString());
+      for (int i = 0; i < categoryController.subCategory.length; i++) {
+        if (subCatId == categoryController.subCategory[i].id) {
+          categoryController.subCategorySelectedItemName.value =
+              categoryController.subCategory[i].name!;
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +97,13 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .8,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
+                  color: themeChangeController.isDarkMode.value
                       ? kDarkFrameColor
                       : kFrameColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
-                      color: controller.isDarkMode.value
+                      color: themeChangeController.isDarkMode.value
                           ? kDarkShadowColor.withOpacity(.9)
                           : kShadowColor.withOpacity(.5),
                       spreadRadius: 3,
@@ -294,10 +322,11 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           }
                         },
                         //Installment Segment
-                        hasInstallmentValue: hasInstallments.value,
+                        hasInstallmentValue:
+                            postController.hasInstallments.value,
                         installmentStatusChanges: (value) {
-                          hasInstallments.value = value;
-                          print(hasInstallments.value);
+                          postController.hasInstallments.value = value;
+                          print(postController.hasInstallments.value);
                         },
                         noOfInstallmentController:
                             postController.noOfInstallmentController,
@@ -320,9 +349,9 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           }
                         },
                         //Possession Segment
-                        posessionValue: posessionReady.value,
+                        posessionValue: postController.posessionReady.value,
                         posessionChanges: (value) {
-                          posessionReady.value = value;
+                          postController.posessionReady.value = value;
                         },
                         bedRoomController: postController.bedroomController,
                         bedroomValidator: (value) {
@@ -337,6 +366,50 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           }
                         },
                         //amenities
+                        selectedAmenities: postController.postID.value != ''
+                            ? SizedBox(
+                                width: width * .2,
+                                height: 50,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: postController
+                                        .postAmenitiesNames.length,
+                                    itemBuilder: (context, index) {
+                                      var names =
+                                          postController.postAmenitiesNames;
+                                      var code =
+                                          postController.postAmenitiesCodes;
+                                      return Stack(children: [
+                                        Icon(
+                                          IconData(
+                                            int.parse(names[index]),
+                                            fontFamily: iconFontFamily.value,
+                                          ),
+                                          size: 30,
+                                        ),
+                                        Positioned(
+                                            top: -10,
+                                            left: 0,
+                                            child: IconButton(
+                                                onPressed: () {
+                                                  names.remove(names[index]);
+                                                  postController
+                                                      .postAmenitiesNames
+                                                      .remove(names[index]);
+                                                  code.remove(code[index]);
+                                                  postController
+                                                      .postAmenitiesCodes
+                                                      .remove(code[index]);
+                                                },
+                                                icon: const Icon(
+                                                  Icons.cancel,
+                                                  color: kRedColor,
+                                                  size: 15,
+                                                ))),
+                                      ]);
+                                    }),
+                              )
+                            : const Offstage(),
                         amenities: ListView.builder(
                             itemCount:
                                 categoryController.listOfAmenitiesNames.length,
@@ -356,16 +429,30 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                                   onChanged: (value) {
                                     amenities[index] = !amenities[index];
                                     //TODO: build amenities local lists
-                                    if (amenities[index]) {
-                                      postController.selectedAmenitiesNames
-                                          .add(names[index]);
-                                      postController.selectedAmenitiesCodes
-                                          .add(codes[index]);
+                                    if (postController.postID.value != '') {
+                                      if (amenities[index]) {
+                                        postController.postAmenitiesNames
+                                            .add(names[index]);
+                                        postController.postAmenitiesCodes
+                                            .add(codes[index]);
+                                      } else {
+                                        postController.postAmenitiesNames
+                                            .remove(names[index]);
+                                        postController.postAmenitiesCodes
+                                            .remove(codes[index]);
+                                      }
                                     } else {
-                                      postController.selectedAmenitiesNames
-                                          .remove(names[index]);
-                                      postController.selectedAmenitiesCodes
-                                          .remove(codes[index]);
+                                      if (amenities[index]) {
+                                        postController.selectedAmenitiesNames
+                                            .add(names[index]);
+                                        postController.selectedAmenitiesCodes
+                                            .add(codes[index]);
+                                      } else {
+                                        postController.selectedAmenitiesNames
+                                            .remove(names[index]);
+                                        postController.selectedAmenitiesCodes
+                                            .remove(codes[index]);
+                                      }
                                     }
                                   },
                                   title: Row(
@@ -388,16 +475,19 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                               );
                             }),
                         //show contact details
-                        showContactDetails: showContactDetials.value,
+                        showContactDetails:
+                            postController.showContactDetials.value,
                         showContactDetailsChanges: (value) {
-                          showContactDetials.value = value;
+                          postController.showContactDetials.value = value;
                         },
-                        buttonText: catId.value == '' ? 'Submit' : 'Update',
-                        statusValue: isPublished.value,
+                        buttonText: postController.postID.value == ''
+                            ? 'Submit'
+                            : 'Update',
+                        statusValue: postController.isPublished.value,
                         statusChanges: (value) {
-                          isPublished.value = value;
+                          postController.isPublished.value = value;
                         },
-
+                        //submit button
                         formSubmit: () async {
                           if (_formKey.currentState!.validate()) {
                             Get.defaultDialog(
@@ -411,44 +501,10 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                                 await descriptionController.getText();
                             var propertyNumber = Random().nextInt(10000000);
                             var imageList = jsonEncode(postController.imageUrl);
-                            print(postController.postTitleController.text);
-                            print(propertyNumber);
-                            print(description);
-                            print(postController.imageUrl.first.toString());
-                            print(imageList);
-                            print(postController.videoUrlController.text);
-                            print(description);
-                            print(postController.longitude.value.toString());
-                            print(postController.latitude.value.toString());
-                            print(postController.plotNumberController.text);
-                            print(postController.priceController.text);
-                            print(postController.cityController.text);
-                            print(postController.areaController.text);
-                            print(hasInstallments.value);
-                            print(showContactDetials.value);
-                            print(postController.advanceController.text);
-                            print(int.parse(
-                                postController.noOfInstallmentController.text));
-                            print(postController
-                                .monthlyInstallmentController.text);
-                            print(posessionReady.value);
-                            print(postController.propertyAreaUnitValue);
-                            print(postController.purposeValue.value
-                                .toUpperCase());
-                            print(postController.totalAreaController.text);
-                            print(int.parse(
-                                postController.bedroomController.text));
-                            print(int.parse(
-                                postController.bathroomController.text));
-                            print(postController.selectedAmenitiesCodes
-                                .toString());
-                            print(postController.selectedAmenitiesNames
-                                .toString());
-                            print(selectedItemId.value);
-                            print(isPublished.value);
-                            print(postController.postTitleController.text +
-                                propertyNumber.toString());
-
+                            var amenitiesNameList = jsonEncode(
+                                postController.selectedAmenitiesNames);
+                            var amenitiesCodeList = jsonEncode(
+                                postController.selectedAmenitiesCodes);
                             await postController.create(
                               postController.postTitleController.text,
                               propertyNumber,
@@ -463,22 +519,23 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                               postController.priceController.text,
                               postController.cityController.text,
                               postController.areaController.text,
-                              hasInstallments.value,
-                              showContactDetials.value,
+                              postController.hasInstallments.value,
+                              postController.showContactDetials.value,
                               postController.advanceController.text,
                               int.parse(postController
                                   .noOfInstallmentController.text),
                               postController.monthlyInstallmentController.text,
-                              posessionReady.value,
+                              postController.posessionReady.value,
                               postController.propertyAreaUnitValue.value,
                               postController.purposeValue.value.toUpperCase(),
                               postController.totalAreaController.text,
                               int.parse(postController.bedroomController.text),
                               int.parse(postController.bathroomController.text),
-                              postController.selectedAmenitiesCodes.toString(),
-                              postController.selectedAmenitiesNames.toString(),
+                              amenitiesCodeList,
+                              amenitiesNameList,
                               selectedItemId.value,
-                              isPublished.value,
+                              subCategorySelectedItemId.value,
+                              postController.isPublished.value,
                               postController.postTitleController.text +
                                   propertyNumber.toString(),
                             );
@@ -515,7 +572,9 @@ class CreatePostPage extends GetView<ThemeChangeController> {
                           // Navigator.pop(context);
                           // }
                         },
-                        cancelText: catId.value == '' ? '' : 'Cancel Update',
+                        cancelText: postController.postID.value == ''
+                            ? ''
+                            : 'Cancel Update',
                         onTap: () async {
                           // categoryNameController.text = '';
                           // postShortDescriptionController.text = '';

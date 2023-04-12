@@ -70,6 +70,7 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.titleFocus,
       required this.cityFocus,
       required this.cityFieldSubmitted,
+      this.selectedAmenities,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -127,6 +128,7 @@ class PostForm extends GetView<ThemeChangeController> {
   QuillEditorController contentController;
   Widget images;
   Widget amenities;
+  Widget? selectedAmenities;
   FocusNode titleFocus;
   FocusNode cityFocus;
 
@@ -662,6 +664,7 @@ class PostForm extends GetView<ThemeChangeController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      selectedAmenities!,
                       Text(
                         'Select Amenities',
                         style: Theme.of(context)

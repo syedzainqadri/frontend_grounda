@@ -18,7 +18,7 @@ class CategoryController extends GetxController {
   var subCategory = <SubCategoryModel>[].obs;
   var singleCategory = SingleCategoryModel().obs;
   var selectedItemName = ''.obs;
-  var subCategorySelectedItemName = '3bhk'.obs;
+  var subCategorySelectedItemName = 'Apartments'.obs;
   var imageUrl = ''.obs;
   var amenitiesId = [].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');

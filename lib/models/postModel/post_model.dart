@@ -40,6 +40,7 @@ class PostModel {
     this.bedroooms,
     this.bathroom,
     this.categoryId,
+    this.subCategoryId,
     this.authorId,
     this.slugId,
     this.status,
@@ -75,6 +76,7 @@ class PostModel {
   int? bedroooms;
   int? bathroom;
   int? categoryId;
+  int? subCategoryId;
   int? authorId;
   int? slugId;
   bool? status;
@@ -110,6 +112,7 @@ class PostModel {
         bedroooms: json["bedroooms"],
         bathroom: json["bathroom"],
         categoryId: json["categoryId"],
+        subCategoryId: json["subCategoryId"],
         authorId: json["authorId"],
         slugId: json["slugId"],
         status: json["status"],
@@ -146,6 +149,7 @@ class PostModel {
         "bedroooms": bedroooms,
         "bathroom": bathroom,
         "categoryId": categoryId,
+        "subCategoryId": subCategoryId,
         "authorId": authorId,
         "slugId": slugId,
         "status": status,
@@ -194,6 +198,7 @@ class SinglePostModel {
     this.bedroooms,
     this.bathroom,
     this.categoryId,
+    this.subCategoryId,
     this.authorId,
     this.slugId,
     this.status,
@@ -229,6 +234,7 @@ class SinglePostModel {
   int? bedroooms;
   int? bathroom;
   int? categoryId;
+  int? subCategoryId;
   int? authorId;
   int? slugId;
   bool? status;
@@ -265,6 +271,7 @@ class SinglePostModel {
         bedroooms: json["bedroooms"],
         bathroom: json["bathroom"],
         categoryId: json["categoryId"],
+        subCategoryId: json["subCategoryId"],
         authorId: json["authorId"],
         slugId: json["slugId"],
         status: json["status"],
@@ -301,6 +308,7 @@ class SinglePostModel {
         "bedroooms": bedroooms,
         "bathroom": bathroom,
         "categoryId": categoryId,
+        "subCategoryId": subCategoryId,
         "authorId": authorId,
         "slugId": slugId,
         "status": status,

@@ -33,13 +33,21 @@ class PostController extends GetxController {
   late LocationData _locationData;
   RxDouble latitude = 0.0.obs;
   RxDouble longitude = 0.0.obs;
-
+  var postID = ''.obs;
+  var catID = 0.obs;
+  var subCatID = 0.obs;
   var selectedAmenitiesNames = [].obs;
   var selectedAmenitiesCodes = [].obs;
+  var postAmenitiesNames = [].obs;
+  var postAmenitiesCodes = [].obs;
   List purposeList = ["SELL", "RENT"];
   RxString purposeValue = 'SELL'.obs;
   RxString propertyAreaUnitValue = 'SQFT'.obs;
   List propertyAreaUnitList = ["MARLA", "SQFT", "SQMT"];
+  var isPublished = false.obs;
+  var hasInstallments = false.obs;
+  var posessionReady = false.obs;
+  var showContactDetials = false.obs;
 
   //<=================== Text Editing Controllers ==================>
   TextEditingController postTitleController = TextEditingController();
@@ -117,6 +125,22 @@ class PostController extends GetxController {
       imageUrl.value = jsonDecode(singlePost.value.galleryImages!);
       purposeValue.value = singlePost.value.purpose!;
       propertyAreaUnitValue.value = singlePost.value.areaSizeUnit!;
+      postID.value = singlePost.value.id.toString();
+      catID.value = singlePost.value.categoryId!;
+      subCatID.value = singlePost.value.subCategoryId!;
+      hasInstallments.value = singlePost.value.isInstallmentAvailable!;
+      isPublished.value = singlePost.value.status!;
+      posessionReady.value = singlePost.value.readyForPossession!;
+      showContactDetials.value = singlePost.value.showContactDetails!;
+      print(singlePost.value.amenitiesNames);
+      print(singlePost.value.amenitiesIconCodes);
+      postAmenitiesNames.value = jsonDecode(singlePost.value.amenitiesNames!);
+      postAmenitiesCodes.value =
+          jsonDecode(singlePost.value.amenitiesIconCodes!);
+
+      print(postAmenitiesNames);
+      print(postAmenitiesCodes);
+
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -153,6 +177,7 @@ class PostController extends GetxController {
       String amenitiesIconCodes,
       String amenitiesNames,
       int categoryId,
+      int subCategoryId,
       bool status,
       String slug) async {
     isLoading.value = true;
@@ -183,6 +208,7 @@ class PostController extends GetxController {
       "totalAreaSize": totalAreaSize,
       "authorId": userId.value,
       "categoryId": categoryId,
+      "subCategoryId": subCategoryId,
       "metaTitle": title,
       "metaDescription": description,
       "status": status,
@@ -242,6 +268,7 @@ class PostController extends GetxController {
       String amenitiesIconCodes,
       String amenitiesNames,
       int categoryId,
+      int subCategoryId,
       bool status,
       String slug) async {
     isLoading.value = true;
@@ -273,6 +300,7 @@ class PostController extends GetxController {
       "totalAreaSize": totalAreaSize,
       "authorId": userId.value,
       "categoryId": categoryId,
+      "subCategoryId": subCategoryId,
       "metaTitle": title,
       "metaDescription": description,
       "status": status,
@@ -331,6 +359,7 @@ class PostController extends GetxController {
     String amenitiesIconCodes,
     String amenitiesNames,
     int categoryId,
+    int subCategoryId,
   ) async {
     var bodyPrepare = {
       "id": id,
@@ -360,6 +389,7 @@ class PostController extends GetxController {
       "totalAreaSize": totalAreaSize,
       "authorId": userId.value,
       "categoryId": categoryId,
+      "subCategoryId": subCategoryId,
       "metaTitle": title,
       "metaDescription": description,
       "status": false,

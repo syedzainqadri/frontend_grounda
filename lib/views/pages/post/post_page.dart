@@ -503,7 +503,9 @@ class PostPage extends GetView<ThemeChangeController> {
                                                     postController.post[index]
                                                         .amenitiesNames!,
                                                     postController.post[index]
-                                                        .categoryId!);
+                                                        .categoryId!,
+                                                    postController.post[index]
+                                                        .subCategoryId!);
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/trash.svg"),
