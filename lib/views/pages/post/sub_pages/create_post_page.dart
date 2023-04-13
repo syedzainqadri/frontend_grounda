@@ -264,8 +264,6 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           }
                           await categoryController.getSubCategories(
                               selectedItemId.value.toString());
-                          await categoryController
-                              .getAmenitiesIds(selectedItemId.value.toString());
                         },
                         //subCategory
                         subCategoryDropDownList: categoryController.subCategory
@@ -277,7 +275,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         }).toList(),
                         subCategoryDropDownValue: categoryController
                             .subCategorySelectedItemName.value,
-                        subCategoryOnChange: (selectedValue) {
+                        subCategoryOnChange: (selectedValue) async {
                           categoryController.subCategorySelectedItemName.value =
                               selectedValue;
                           for (int i = 0;
@@ -290,6 +288,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                   categoryController.subCategory[i].id!;
                             }
                           }
+                          await categoryController.getAmenitiesIds(
+                              subCategorySelectedItemId.value.toString());
                         },
                         //total area
                         totalAreaController: postController.totalAreaController,
@@ -372,6 +372,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                 width: width * .2,
                                 height: 50,
                                 child: ListView.builder(
+                                    reverse: true,
                                     scrollDirection: Axis.horizontal,
                                     itemCount: postController
                                         .postAmenitiesNames.length,
@@ -383,7 +384,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                       return Stack(children: [
                                         Icon(
                                           IconData(
-                                            int.parse(names[index]),
+                                            int.parse(code[index]),
                                             fontFamily: iconFontFamily.value,
                                           ),
                                           size: 30,

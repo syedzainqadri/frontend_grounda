@@ -453,4 +453,39 @@ class PostController extends GetxController {
       }
     }
   }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    postTitleController.text = '';
+    totalAreaController.text = '';
+    cityController.text = '';
+    areaController.text = '';
+    plotNumberController.text = '';
+    priceController.text = '';
+    videoUrlController.text = '';
+    advanceController.text = '';
+    noOfInstallmentController.text = '';
+    monthlyInstallmentController.text = '';
+    bedroomController.text = '';
+    bathroomController.text = '';
+    descriptionController.text = '';
+    imageUrl.value = [];
+    purposeValue.value = '';
+    propertyAreaUnitValue.value = '';
+    postID.value = '';
+    catID.value = 0;
+    subCatID.value = 0;
+    hasInstallments.value = false;
+    isPublished.value = false;
+    posessionReady.value = false;
+    showContactDetials.value = false;
+    print(singlePost.value.amenitiesNames);
+    print(singlePost.value.amenitiesIconCodes);
+    postAmenitiesNames.value = [];
+    postAmenitiesCodes.value = [];
+    print(postAmenitiesNames);
+    print(postAmenitiesCodes);
+  }
 }
