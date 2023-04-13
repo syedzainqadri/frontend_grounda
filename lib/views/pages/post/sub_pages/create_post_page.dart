@@ -9,6 +9,7 @@ import 'package:frontend_grounda/controllers/postController/post_controller.dart
 import 'package:frontend_grounda/controllers/profileController/profile_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
+import 'package:frontend_grounda/utils/global_methods.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:frontend_grounda/views/pages/post/widgets/post_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
@@ -489,57 +490,88 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         },
                         //submit button
                         formSubmit: () async {
-                          if (_formKey.currentState!.validate()) {
-                            Get.defaultDialog(
-                              title: 'Creating Post',
-                              content: const Center(
-                                child: CircularProgressIndicator(
-                                    color: kPrimaryColor),
-                              ),
-                            );
-                            var description =
-                                await descriptionController.getText();
-                            var propertyNumber = Random().nextInt(10000000);
-                            var imageList = jsonEncode(postController.imageUrl);
-                            var amenitiesNameList = jsonEncode(
-                                postController.selectedAmenitiesNames);
-                            var amenitiesCodeList = jsonEncode(
-                                postController.selectedAmenitiesCodes);
-                            await postController.create(
-                              postController.postTitleController.text,
-                              propertyNumber,
-                              description,
-                              postController.imageUrl.first.toString(),
-                              imageList,
-                              postController.videoUrlController.text,
-                              description,
-                              postController.longitude.value.toString(),
-                              postController.latitude.value.toString(),
-                              postController.plotNumberController.text,
-                              postController.priceController.text,
-                              postController.cityController.text,
-                              postController.areaController.text,
-                              postController.hasInstallments.value,
-                              postController.showContactDetials.value,
-                              postController.advanceController.text,
-                              int.parse(postController
-                                  .noOfInstallmentController.text),
-                              postController.monthlyInstallmentController.text,
-                              postController.posessionReady.value,
-                              postController.propertyAreaUnitValue.value,
-                              postController.purposeValue.value.toUpperCase(),
-                              postController.totalAreaController.text,
-                              int.parse(postController.bedroomController.text),
-                              int.parse(postController.bathroomController.text),
-                              amenitiesCodeList,
-                              amenitiesNameList,
-                              selectedItemId.value,
-                              subCategorySelectedItemId.value,
-                              postController.isPublished.value,
-                              postController.postTitleController.text +
-                                  propertyNumber.toString(),
-                            );
-                            Navigator.pop(context);
+                          var description =
+                              await descriptionController.getText();
+                          var amenitiesNameList =
+                              jsonEncode(postController.selectedAmenitiesNames);
+                          var amenitiesCodeList =
+                              jsonEncode(postController.selectedAmenitiesCodes);
+                          if (description.isNotEmpty) {
+                            if (postController.imageUrl.isNotEmpty) {
+                              if (subCategorySelectedItemId != 0) {
+                                if (postController
+                                        .selectedAmenitiesNames.isNotEmpty ||
+                                    postController
+                                        .selectedAmenitiesCodes.isNotEmpty) {
+                                  if (_formKey.currentState!.validate()) {
+                                    Get.defaultDialog(
+                                      title: 'Creating Post',
+                                      content: const Center(
+                                        child: CircularProgressIndicator(
+                                            color: kPrimaryColor),
+                                      ),
+                                    );
+                                    var propertyNumber =
+                                        Random().nextInt(10000000);
+                                    var imageList =
+                                        jsonEncode(postController.imageUrl);
+
+                                    await postController.create(
+                                      postController.postTitleController.text,
+                                      propertyNumber,
+                                      description,
+                                      postController.imageUrl.first.toString(),
+                                      imageList,
+                                      postController.videoUrlController.text,
+                                      description,
+                                      postController.longitude.value.toString(),
+                                      postController.latitude.value.toString(),
+                                      postController.plotNumberController.text,
+                                      postController.priceController.text,
+                                      postController.cityController.text,
+                                      postController.areaController.text,
+                                      postController.hasInstallments.value,
+                                      postController.showContactDetials.value,
+                                      postController.advanceController.text,
+                                      int.parse(postController
+                                          .noOfInstallmentController.text),
+                                      postController
+                                          .monthlyInstallmentController.text,
+                                      postController.posessionReady.value,
+                                      postController
+                                          .propertyAreaUnitValue.value,
+                                      postController.purposeValue.value
+                                          .toUpperCase(),
+                                      postController.totalAreaController.text,
+                                      int.parse(postController
+                                          .bedroomController.text),
+                                      int.parse(postController
+                                          .bathroomController.text),
+                                      amenitiesCodeList,
+                                      amenitiesNameList,
+                                      selectedItemId.value,
+                                      subCategorySelectedItemId.value,
+                                      postController.isPublished.value,
+                                      postController.postTitleController.text +
+                                          propertyNumber.toString(),
+                                    );
+                                    Navigator.pop(context);
+                                  } else {
+                                    showErrorSnak('Amenities are empty',
+                                        'Please Select Amenities');
+                                  }
+                                }
+                              } else {
+                                showErrorSnak('Sub Category is not selected',
+                                    'Please select a Sub Category');
+                              }
+                            } else {
+                              showErrorSnak('No Image Selected',
+                                  'Images Must not be Empty');
+                            }
+                          } else {
+                            showErrorSnak('Description is Empty',
+                                'Description Can Not be empty');
                           }
                           // --------------------------- Message -----------------------------
                           //Code has to be modified for the editing page.
