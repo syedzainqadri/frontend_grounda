@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 RxBool show = false.obs;
 //api endpoints
 RxString pid = ''.obs;
+RxString iconFontFamily = "MaterialIcons".obs;
 //String baseUrl = 'https://starfish-app-mfjab.ondigitalocean.app';
 String baseUrl = 'http://127.0.0.1:8080';
 String createUser = '/auth/register';
@@ -18,7 +19,9 @@ String createCategory = '/category/createCategory';
 String deleteCategory = '/category/deleteCategory/';
 String updateCategory = '/category/updateCategory';
 String getAllPost = '/post';
-String createPost = '/createPost';
+String createPost = '/post/createPost';
+String updatePostUrl = '/post/updatePost';
+String deletePost = '/post/deletePost/';
 String getAmenities = '/amenity/';
 String createAmenities = '/amenity/createAmenity';
 String updateAmenites = '/amenity/updateAmenity';

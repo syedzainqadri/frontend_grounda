@@ -8,6 +8,7 @@ import 'package:frontend_grounda/controllers/amenitiesController/amenities_contr
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 
 import 'package:frontend_grounda/utils/constants.dart';
+import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:frontend_grounda/views/pages/settings/subpages/amenities/amenities_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/icon_from_api.dart';
@@ -23,7 +24,6 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
   final AmenitiesController amenitiesController =
       Get.find<AmenitiesController>();
   TextEditingController amenityTitleController = TextEditingController();
-  TextEditingController amenityDescriptionController = TextEditingController();
 
   var isPublished = false.obs;
   var amenityId = ''.obs;
@@ -66,7 +66,7 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                     iconPicker: IconPicker(
                       initialValue: 'Please Select an Icon',
                       icon: Icon(
-                        IconData(icon.value, fontFamily: "MaterialIcons"),
+                        IconData(icon.value, fontFamily: iconFontFamily.value),
                       ),
                       labelText: "Icon",
                       title: "Select an icon",
@@ -80,7 +80,6 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                       },
                     ),
                     amenityTitleController: amenityTitleController,
-                    amenityDescriptionController: amenityDescriptionController,
                     buttonText: amenityId.value == '' ? 'Submit' : 'Update',
                     formSubmit: () async {
                       if (amenityId.value == '') {
@@ -93,7 +92,6 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                         );
                         await amenitiesController.create(
                             amenityTitleController.text,
-                            amenityDescriptionController.text,
                             icon.value.toString(),
                             isPublished.value);
                         await amenitiesController.getAll();
@@ -109,12 +107,10 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                         await amenitiesController.updateAmenities(
                           int.parse(amenityId.value),
                           amenityTitleController.text,
-                          amenityDescriptionController.text,
                           icon.value.toString(),
                           isPublished.value,
                         );
                         amenityTitleController.text = '';
-                        amenityDescriptionController.text = '';
                         icon.value = 57487;
                         amenityId.value = '';
                         await amenitiesController.getAll();
@@ -124,7 +120,6 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                     cancelText: amenityId.value == '' ? '' : 'Cancel Update',
                     onTap: () async {
                       amenityTitleController.text = '';
-                      amenityDescriptionController.text = '';
                       icon.value = 57487;
                       amenityId.value = '';
                       await amenitiesController.getAll();
@@ -215,7 +210,7 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        IconFromApiWidget(
+                                                        IconFromApi(
                                                           icon:
                                                               amenitiesController
                                                                   .amenities[
@@ -287,13 +282,6 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                           amenitiesController
                                                               .amenities[index]
                                                               .name!;
-
-                                                      amenityDescriptionController
-                                                              .text =
-                                                          amenitiesController
-                                                              .amenities[index]
-                                                              .description!;
-
                                                       icon.value = int.parse(
                                                           amenitiesController
                                                               .amenities[index]

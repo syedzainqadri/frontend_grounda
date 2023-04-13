@@ -14,6 +14,7 @@ const kLabelColor = Color(0XFF333333);
 const kFrameColor = Color(0XFFF8F8F8);
 const kCardColor = Color.fromARGB(255, 255, 255, 255);
 const kTextColor = Color.fromARGB(255, 0, 0, 0);
+const kTransparentColor = Colors.transparent;
 
 // Dark Theme
 const kDarkFrameColor = Color.fromARGB(255, 106, 108, 115);
@@ -51,7 +52,7 @@ Map<int, Color> color = {
 //global variables
 
 Rxn<bool> isSigned = Rxn<bool>();
-Rxn<String> userID = Rxn<String>();
+RxString userID = "".obs;
 Rxn<String> visitUserID = Rxn<String>();
 Rx<bool> isLoading = false.obs;
 Rx<bool> isFirstLoad = true.obs;

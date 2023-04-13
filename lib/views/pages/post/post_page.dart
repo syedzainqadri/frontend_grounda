@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
@@ -299,12 +301,12 @@ class PostPage extends GetView<ThemeChangeController> {
                                                       BorderRadius.circular(30),
                                                   child: postController
                                                               .post[index]
-                                                              .galleryImages !=
+                                                              .featuredImages !=
                                                           null
                                                       ? Image.network(
                                                           postController
                                                               .post[index]
-                                                              .galleryImages!)
+                                                              .featuredImages!)
                                                       : SvgPicture.asset(
                                                           '/images/logo.svg',
                                                           fit: BoxFit.cover,
@@ -343,7 +345,7 @@ class PostPage extends GetView<ThemeChangeController> {
                                                       ),
                                                       postController.post[index]
                                                                   .status ==
-                                                              'PUBLISH'
+                                                              true
                                                           ? Text(
                                                               "Active",
                                                               style: Theme.of(
@@ -379,7 +381,12 @@ class PostPage extends GetView<ThemeChangeController> {
                                           children: [
                                             IconButton(
                                               onPressed: () async {
-                                                //TODO: implement Post edit
+                                                await postController
+                                                    .getPostById(
+                                                  postController.post[index].id
+                                                      .toString(),
+                                                );
+                                                Get.toNamed('/post/create');
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/edit.svg"),
@@ -389,7 +396,116 @@ class PostPage extends GetView<ThemeChangeController> {
                                             ),
                                             IconButton(
                                               onPressed: () async {
-                                                //Todo Implement Post Delete
+                                                print('post deleted pressed');
+                                                print(postController
+                                                    .post[index].id!
+                                                    .toString());
+                                                print(postController
+                                                    .post[index].title);
+                                                print(postController.post[index]
+                                                    .propertyNumber);
+                                                print(postController
+                                                    .post[index].description);
+                                                print(postController.post[index]
+                                                    .featuredImages);
+                                                print(postController
+                                                    .post[index].galleryImages);
+                                                print(postController.post[index]
+                                                    .longDescription);
+                                                print(postController
+                                                    .post[index].longitude);
+                                                print(postController
+                                                    .post[index].latitude);
+                                                print(postController.post[index]
+                                                    .propertyNumber);
+                                                print(postController
+                                                    .post[index].price);
+                                                print(postController
+                                                    .post[index].city);
+                                                print(postController
+                                                    .post[index].area);
+                                                print(postController.post[index]
+                                                    .isInstallmentAvailable);
+                                                print(postController.post[index]
+                                                    .showContactDetails);
+                                                print(postController
+                                                    .post[index].advanceAmount);
+                                                print(postController.post[index]
+                                                    .noOfInstallments);
+                                                print(postController.post[index]
+                                                    .monthlyInstallments);
+                                                print(postController.post[index]
+                                                    .readyForPossession);
+                                                print(postController
+                                                    .post[index].areaSizeUnit);
+                                                print(postController
+                                                    .post[index].purpose);
+                                                print(postController.post[index]
+                                                    .amenitiesIconCodes);
+                                                print(postController.post[index]
+                                                    .amenitiesNames);
+                                                print(postController
+                                                    .post[index].categoryId);
+                                                await postController.delete(
+                                                    postController
+                                                        .post[index].id!
+                                                        .toString(),
+                                                    postController
+                                                        .post[index].title!,
+                                                    postController.post[index]
+                                                        .propertyNumber!,
+                                                    postController.post[index]
+                                                        .description!,
+                                                    postController.post[index]
+                                                        .featuredImages!,
+                                                    postController.post[index]
+                                                        .galleryImages!,
+                                                    postController
+                                                        .post[index].video!,
+                                                    postController.post[index]
+                                                        .longDescription!,
+                                                    postController
+                                                        .post[index].longitude!,
+                                                    postController
+                                                        .post[index].latitude!,
+                                                    postController.post[index]
+                                                        .plotNumber!,
+                                                    postController
+                                                        .post[index].price!,
+                                                    postController
+                                                        .post[index].city!,
+                                                    postController
+                                                        .post[index].area!,
+                                                    postController.post[index]
+                                                        .isInstallmentAvailable!,
+                                                    postController.post[index]
+                                                        .showContactDetails!,
+                                                    postController.post[index]
+                                                        .advanceAmount!,
+                                                    postController.post[index]
+                                                        .noOfInstallments!,
+                                                    postController.post[index]
+                                                        .monthlyInstallments!,
+                                                    postController.post[index]
+                                                        .readyForPossession!,
+                                                    postController.post[index]
+                                                        .areaSizeUnit!,
+                                                    postController
+                                                        .post[index].purpose!,
+                                                    postController.post[index]
+                                                        .totalAreaSize!,
+                                                    postController
+                                                        .post[index].bedroooms!,
+                                                    postController
+                                                        .post[index].bathroom!,
+                                                    postController.post[index]
+                                                        .amenitiesIconCodes!,
+                                                    postController.post[index]
+                                                        .amenitiesNames!,
+                                                    postController.post[index]
+                                                        .categoryId!,
+                                                    postController.post[index]
+                                                        .subCategoryId!);
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/trash.svg"),

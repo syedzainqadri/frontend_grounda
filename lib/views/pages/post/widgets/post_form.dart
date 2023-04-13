@@ -7,19 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
-import 'package:frontend_grounda/widgets/open_street_map.dart';
 import 'package:frontend_grounda/widgets/text_ediotor.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
-
 import 'package:get/get.dart';
-import 'package:map_picker/map_picker.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class PostForm extends GetView<ThemeChangeController> {
   PostForm(
       {required this.postTitleController,
-      required this.postShortDescriptionController,
-      required this.contentController,
       required this.categoryDropDownList,
       required this.categoryDropDownValue,
       required this.categoryOnChange,
@@ -34,7 +29,6 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.pictureButtonText,
       required this.cancelText,
       required this.onTap,
-      required this.imageListUrl,
       required this.videoUrlController,
       required this.cityController,
       required this.areaController,
@@ -44,25 +38,39 @@ class PostForm extends GetView<ThemeChangeController> {
       required this.installmentStatusChanges,
       required this.posessionChanges,
       required this.posessionValue,
-      required this.contactPersonsLandlineController,
-      required this.contactPersonEmailController,
-      required this.contactPersonNameController,
-      required this.contactPersonsMobileController,
       required this.bathRoomController,
       required this.bedRoomController,
       required this.advanceController,
       required this.noOfInstallmentController,
       required this.monthlyInstallmentValueController,
-      required this.purposeController,
-      required this.propertyTypeController,
-      required this.propertySubTypeController,
-      required this.mapPickerController,
-      required this.mapTextController,
-      required this.amenitiesCount,
-      required this.amenitiesBuilder,
       required this.showContactDetails,
+      required this.images,
+      required this.amenities,
+      required this.totalAreaController,
+      required this.propertyAreaUnitList,
+      required this.propertyAreaUnitOnChange,
+      required this.propertyAreaUnitValue,
+      required this.purposeList,
+      required this.purposeOnChange,
+      required this.purposeValue,
+      required this.postTitleValidator,
+      required this.cityValidator,
+      required this.areaValidator,
+      required this.priceValidator,
+      required this.advanceValidator,
+      required this.bathroomValidator,
+      required this.bedroomValidator,
+      required this.monthlyInstallmentValidator,
+      required this.noOfInstallmentValidator,
+      required this.propertyAreaValidator,
+      required this.plotNumberValidator,
+      required this.contentController,
       required this.showContactDetailsChanges,
-      required this.map,
+      required this.titleFieldSubmitted,
+      required this.titleFocus,
+      required this.cityFocus,
+      required this.cityFieldSubmitted,
+      this.selectedAmenities,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -75,54 +83,57 @@ class PostForm extends GetView<ThemeChangeController> {
   dynamic showContactDetailsChanges;
   dynamic installmentStatusChanges;
   dynamic formSubmit;
+  dynamic uploadImages;
+  dynamic onTap;
+  dynamic postTitleValidator;
+  dynamic cityValidator;
+  dynamic areaValidator;
+  dynamic propertyAreaValidator;
+  dynamic plotNumberValidator;
+  dynamic bathroomValidator;
+  dynamic bedroomValidator;
+  dynamic noOfInstallmentValidator;
+  dynamic monthlyInstallmentValidator;
+  dynamic advanceValidator;
   bool posessionValue;
   bool showContactDetails;
   bool statusValue;
   bool hasInstallmentValue;
-  dynamic uploadImages;
-  dynamic onTap;
   String buttonText;
   String pictureButtonText;
   String cancelText;
-  List imageListUrl;
+  String purposeValue;
+  dynamic purposeOnChange;
+  dynamic propertyAreaUnitOnChange;
+  dynamic priceValidator;
+  dynamic titleFieldSubmitted;
+  dynamic cityFieldSubmitted;
+  String propertyAreaUnitValue;
+  List<DropdownMenuItem<String>> propertyAreaUnitList;
   List<DropdownMenuItem<String>> categoryDropDownList;
   List<DropdownMenuItem<String>> subCategoryDropDownList;
+  List<DropdownMenuItem<String>> purposeList;
   TextEditingController postTitleController;
-  TextEditingController postShortDescriptionController;
+  TextEditingController totalAreaController;
   TextEditingController videoUrlController;
   TextEditingController cityController;
   TextEditingController areaController;
   TextEditingController plotNumberController;
   TextEditingController priceController;
-  TextEditingController contactPersonsLandlineController;
-  TextEditingController contactPersonsMobileController;
-  TextEditingController contactPersonEmailController;
-  TextEditingController contactPersonNameController;
   TextEditingController bathRoomController;
   TextEditingController bedRoomController;
   TextEditingController advanceController;
   TextEditingController noOfInstallmentController;
   TextEditingController monthlyInstallmentValueController;
-  TextEditingController purposeController;
-  TextEditingController propertyTypeController;
-  TextEditingController propertySubTypeController;
   QuillEditorController contentController;
-  Widget? Function(BuildContext, int) amenitiesBuilder;
-  int amenitiesCount;
-  OpenStreetMap map;
-
-  MapPickerController mapPickerController;
-  TextEditingController mapTextController;
-
-  List purposeList = ["For Sell", "For Rent"];
-  List propertyAreaUnitList = ["Marla", "SQFT", "SQMT"];
-  RxString purposeValue = 'For Sell'.obs;
-  RxString propertyAreaUnitValue = 'SQFT'.obs;
+  Widget images;
+  Widget amenities;
+  Widget? selectedAmenities;
+  FocusNode titleFocus;
+  FocusNode cityFocus;
 
   @override
   Widget build(BuildContext context) {
-    var buildDialogItem = [];
-    bool filtered = false;
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
@@ -140,25 +151,34 @@ class PostForm extends GetView<ThemeChangeController> {
                 height: height * 0.015,
               ),
               DefaultTextField(
+                autofocus: true,
+                focusNode: titleFocus,
+                onFieldSubmitted: titleFieldSubmitted,
                 hintText: "Enter Post Title",
                 labelText: "Post Title",
                 isPassword: false,
                 textEditingController: postTitleController,
+                validator: postTitleValidator,
+                maxLength: 200,
               ),
               SizedBox(
                 height: height * 0.015,
               ),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     width: width * 0.23,
                     child: DefaultTextField(
+                      focusNode: cityFocus,
+                      onFieldSubmitted: cityFieldSubmitted,
                       hintText: "Enter City",
                       labelText: "City",
                       isPassword: false,
                       textEditingController: cityController,
+                      validator: cityValidator,
+                      maxLength: 25,
                     ),
                   ),
                   SizedBox(
@@ -172,6 +192,8 @@ class PostForm extends GetView<ThemeChangeController> {
                       labelText: "Area",
                       isPassword: false,
                       textEditingController: areaController,
+                      validator: areaValidator,
+                      maxLength: 50,
                     ),
                   ),
                   SizedBox(
@@ -185,6 +207,8 @@ class PostForm extends GetView<ThemeChangeController> {
                       labelText: "Price",
                       isPassword: false,
                       textEditingController: priceController,
+                      validator: priceValidator,
+                      maxLength: 25,
                     ),
                   ),
                 ],
@@ -194,15 +218,14 @@ class PostForm extends GetView<ThemeChangeController> {
                 height: height * 0.015,
               ),
               // text editor
+              //TODO: text editor must not be empty validation please
               SizedBox(
                 height: 250,
-                child: Expanded(
-                  child: TextEditor(controller: contentController),
-                ),
+                child: TextEditor(textController: contentController),
               ),
 
               SizedBox(
-                height: height * 0.04,
+                height: height * 0.02,
               ),
 
               // Gallery Heading and button
@@ -243,39 +266,16 @@ class PostForm extends GetView<ThemeChangeController> {
                       ),
                     ),
                   ),
-                  imageListUrl.isEmpty
-                      ? Text(
-                          'Please add Images',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        )
-                      : Expanded(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: imageListUrl.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                height: height * 1,
-                                width: width * 1,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Image.network(imageListUrl[index]),
-                              );
-                            },
-                          ),
-                        ),
+                  //TODO:place it to create_post_page//
+                  images
                 ],
               ),
 
               SizedBox(
                 height: height * 0.04,
               ),
-              //TODO : adjust structure here
-              //Category section
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     height: 100,
@@ -292,6 +292,9 @@ class PostForm extends GetView<ThemeChangeController> {
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
                         ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
@@ -303,28 +306,19 @@ class PostForm extends GetView<ThemeChangeController> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton(
-                              borderRadius: BorderRadius.circular(15),
-                              hint: const Text("Purpose"),
-                              isExpanded: true,
-                              value: purposeValue.value,
-                              icon: const Icon(Icons.arrow_downward),
-                              elevation: 16,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                              underline: Container(
-                                height: 2,
-                                color: Colors.transparent,
-                              ),
-                              onChanged: (value) {
-                                purposeValue.value = value.toString();
-                              },
-                              items: purposeList
-                                  .map<DropdownMenuItem<String>>((value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
+                                borderRadius: BorderRadius.circular(15),
+                                hint: const Text("Purpose"),
+                                isExpanded: true,
+                                value: purposeValue,
+                                icon: const Icon(Icons.arrow_downward),
+                                elevation: 16,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                                underline: Container(
+                                  height: 2,
+                                  color: Colors.transparent,
+                                ),
+                                onChanged: purposeOnChange,
+                                items: purposeList),
                           ),
                         ),
                       ],
@@ -347,6 +341,9 @@ class PostForm extends GetView<ThemeChangeController> {
                               .bodyMedium!
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
+                        ),
+                        SizedBox(
+                          height: height * .02,
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -396,6 +393,9 @@ class PostForm extends GetView<ThemeChangeController> {
                               .copyWith(color: kPrimaryColor),
                           textAlign: TextAlign.start,
                         ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
@@ -430,7 +430,7 @@ class PostForm extends GetView<ThemeChangeController> {
               ),
               //amenities and other fields
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     height: 500,
@@ -442,7 +442,9 @@ class PostForm extends GetView<ThemeChangeController> {
                           hintText: "Property Area",
                           labelText: "Enter Total Area",
                           isPassword: false,
-                          textEditingController: postTitleController,
+                          textEditingController: totalAreaController,
+                          validator: propertyAreaValidator,
+                          maxLength: 10,
                         ),
                         SizedBox(
                           height: height * .02,
@@ -489,6 +491,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 labelText: "Advance Amount",
                                 isPassword: false,
                                 textEditingController: advanceController,
+                                validator: advanceValidator,
+                                maxLength: 10,
                               )
                             : const Offstage(),
                         hasInstallmentValue
@@ -503,6 +507,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 isPassword: false,
                                 textEditingController:
                                     noOfInstallmentController,
+                                validator: noOfInstallmentValidator,
+                                maxLength: 10,
                               )
                             : const Offstage(),
                         hasInstallmentValue
@@ -517,6 +523,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 isPassword: false,
                                 textEditingController:
                                     monthlyInstallmentValueController,
+                                validator: monthlyInstallmentValidator,
+                                maxLength: 10,
                               )
                             : const Offstage(),
                       ],
@@ -545,7 +553,7 @@ class PostForm extends GetView<ThemeChangeController> {
                               borderRadius: BorderRadius.circular(15),
                               hint: const Text("Property Area Unit"),
                               isExpanded: true,
-                              value: propertyAreaUnitValue.value,
+                              value: propertyAreaUnitValue,
                               icon: const Icon(Icons.arrow_downward),
                               elevation: 16,
                               style: Theme.of(context).textTheme.bodyMedium,
@@ -553,16 +561,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 height: 2,
                                 color: Colors.transparent,
                               ),
-                              onChanged: (value) {
-                                propertyAreaUnitValue.value = value.toString();
-                              },
-                              items: propertyAreaUnitList
-                                  .map<DropdownMenuItem<String>>((value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
+                              onChanged: propertyAreaUnitOnChange,
+                              items: propertyAreaUnitList,
                             ),
                           ),
                         ),
@@ -570,14 +570,17 @@ class PostForm extends GetView<ThemeChangeController> {
                           height: height * .02,
                         ),
                         DefaultTextField(
-                          hintText: "Plot Number",
-                          labelText: "Plot Number",
+                          hintText: "Plot / Flat Number",
+                          labelText: "Plot / Flat Number",
                           isPassword: false,
                           textEditingController: plotNumberController,
+                          validator: plotNumberValidator,
+                          maxLength: 10,
                         ),
                         SizedBox(
                           height: height * .02,
                         ),
+                        //possession
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                           child: Transform.scale(
@@ -600,7 +603,6 @@ class PostForm extends GetView<ThemeChangeController> {
                             ),
                           ),
                         ),
-                        //possession
                         posessionValue
                             ? SizedBox(
                                 height: height * 0.02,
@@ -612,6 +614,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                 labelText: "Bedrooms",
                                 isPassword: false,
                                 textEditingController: bedRoomController,
+                                validator: bedroomValidator,
+                                maxLength: 2,
                               )
                             : const Offstage(),
                         posessionValue
@@ -625,10 +629,12 @@ class PostForm extends GetView<ThemeChangeController> {
                                 labelText: "Bathrooms",
                                 isPassword: false,
                                 textEditingController: bathRoomController,
+                                validator: bathroomValidator,
+                                maxLength: 2,
                               )
                             : const Offstage(),
                         Padding(
-                          padding: const EdgeInsets.only(top: 8.0, left: 0.0),
+                          padding: const EdgeInsets.only(top: 25.0, left: 0.0),
                           child: Transform.scale(
                             scale: .8,
                             child: Row(
@@ -656,33 +662,28 @@ class PostForm extends GetView<ThemeChangeController> {
                     width: width * .02,
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      selectedAmenities!,
+                      Text(
+                        'Select Amenities',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: kPrimaryColor),
+                      ),
                       Container(
                         color: Colors.white,
-                        height: 300,
+                        height: 290,
                         width: width * .19,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ListView.builder(
-                            itemBuilder: amenitiesBuilder,
-                            itemCount: amenitiesCount,
-                          ),
+                          child: amenities,
                         ),
                       ),
                     ],
                   )
                 ],
-              ),
-
-              SizedBox(
-                height: height * 0.04,
-              ),
-              Center(
-                child: SizedBox(
-                  width: width * .4,
-                  height: height * .4,
-                  child: map,
-                ),
               ),
               SizedBox(
                 height: height * 0.04,

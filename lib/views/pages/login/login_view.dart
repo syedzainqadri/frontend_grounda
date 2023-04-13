@@ -67,14 +67,14 @@ class LoginView extends GetView<ThemeChangeController> {
                           child: Text(
                               "The most popular real estate market place."),
                         ),
-                        DefaultButton(
-                          buttonText: "Read More",
-                          primaryColor: kPrimaryColor,
-                          hoverColor: kDarkColor,
-                          width: width / 12,
-                          height: height / 20,
-                          onPressed: () {},
-                        )
+                        // DefaultButton(
+                        //   buttonText: "Read More",
+                        //   primaryColor: kPrimaryColor,
+                        //   hoverColor: kDarkColor,
+                        //   width: width / 12,
+                        //   height: height / 20,
+                        //   onPressed: () {},
+                        // )
                       ],
                     ),
                     Column(
@@ -94,30 +94,31 @@ class LoginView extends GetView<ThemeChangeController> {
                               ),
                             ),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Row(
-                                  children: const [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 60, left: 40, bottom: 60),
-                                      child: Text(
-                                        "Sign In",
-                                        style: TextStyle(
-                                          fontSize: headingTwoSize,
-                                        ),
-                                      ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 30, bottom: 60),
+                                  child: Text(
+                                    "Sign In",
+                                    style: TextStyle(
+                                      fontSize: headingTwoSize,
                                     ),
-                                  ],
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 40),
                                   child: DefaultTextField(
+                                    focusNode: authController.userNameFocus,
                                     textEditingController: emailController,
                                     hintText: "Username",
                                     labelText: "Username",
                                     isPassword: false,
                                     prefixIcon: const Icon(Icons.person),
+                                    onFieldSubmitted: (value) {
+                                      FocusScope.of(context).requestFocus(
+                                          authController.passwordFocus);
+                                    },
                                   ),
                                 ),
                                 Obx(
@@ -125,11 +126,14 @@ class LoginView extends GetView<ThemeChangeController> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 40, vertical: 20),
                                     child: DefaultTextField(
+                                      autofocus: false,
+                                      focusNode: authController.passwordFocus,
                                       textEditingController: passwordController,
                                       hintText: "Password",
                                       labelText: "Password",
                                       isPassword: isObsecure.value,
                                       prefixIcon: const Icon(Icons.lock),
+                                      maxLines: 1,
                                       suffixIcon: IconButton(
                                         onPressed: () {
                                           isObsecure.value =
@@ -140,6 +144,19 @@ class LoginView extends GetView<ThemeChangeController> {
                                             : const Icon(Icons.remove_red_eye),
                                         // icon: const Icon(Icons.remove_red_eye),
                                       ),
+                                      onFieldSubmitted: (value) async {
+                                        Get.defaultDialog(
+                                          title: 'Signing In',
+                                          content:
+                                              const CircularProgressIndicator(
+                                            color: kPrimaryColor,
+                                          ),
+                                        );
+                                        await authController.signIn(
+                                          emailController.text.trim(),
+                                          passwordController.text,
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
@@ -155,8 +172,9 @@ class LoginView extends GetView<ThemeChangeController> {
                                       ),
                                     );
                                     authController.signIn(
-                                        emailController.text.trim(),
-                                        passwordController.text);
+                                      emailController.text.trim(),
+                                      passwordController.text,
+                                    );
                                   },
                                   width:
                                       media.width < 768 ? width / 9 : width / 5,

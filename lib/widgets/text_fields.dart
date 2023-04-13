@@ -14,18 +14,35 @@ class DefaultTextField extends GetView<ThemeChangeController> {
     required this.textEditingController,
     this.suffixIcon,
     this.prefixIcon,
+    this.validator,
+    this.maxLength,
+    this.maxLines,
+    this.onFieldSubmitted,
+    this.autofocus,
+    this.focusNode,
   });
-
+  dynamic validator;
+  dynamic onFieldSubmitted;
   String hintText;
   String labelText;
+  int? maxLength;
+  int? maxLines;
   bool isPassword;
   Widget? prefixIcon;
   Widget? suffixIcon;
   TextEditingController? textEditingController;
+  bool? autofocus;
+  FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      focusNode: focusNode,
+      onFieldSubmitted: onFieldSubmitted,
+      maxLines: maxLines,
+      autofocus: autofocus ?? false,
+      maxLength: maxLength,
+      validator: validator,
       controller: textEditingController,
       obscureText: isPassword,
       decoration: InputDecoration(

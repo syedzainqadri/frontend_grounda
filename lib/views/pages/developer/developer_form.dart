@@ -62,11 +62,11 @@ class DeveloperForm extends GetView<ThemeChangeController> {
         SizedBox(
           height: height * .02,
         ),
-        Expanded(child: TextEditor(controller: descriptionController)),
+        Expanded(child: TextEditor(textController: descriptionController)),
         SizedBox(
           height: height * .02,
         ),
-        Expanded(child: TextEditor(controller: descriptionController)),
+        Expanded(child: TextEditor(textController: descriptionController)),
         Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
           child: Transform.scale(

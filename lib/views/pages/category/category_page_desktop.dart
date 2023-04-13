@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, use_build_context_synchronously
+// ignore_for_file: must_be_immutable, use_build_context_synchronously, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +8,7 @@ import 'package:frontend_grounda/controllers/themeController/theme_change_contro
 import 'package:frontend_grounda/models/categoryModel/category_model.dart';
 
 import 'package:frontend_grounda/utils/constants.dart';
+import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:frontend_grounda/views/pages/category/category_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
@@ -31,7 +32,9 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
   var selectedItemId = 0.obs;
   var isPublished = false.obs;
   var catId = ''.obs;
-  RxList amenitiesList = [].obs;
+  var commaSepratedAmenitiesList = ''.obs;
+  var commaSepratedAmenitiesIconList = ''.obs;
+  RxList amenitiesName = [].obs;
   RxList iconData = [].obs;
 
   @override
@@ -108,7 +111,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                 Icon(
                                   IconData(
                                     int.parse(iconData[index]),
-                                    fontFamily: "MaterialIcons",
+                                    fontFamily: iconFontFamily.value,
                                   ),
                                   size: 50,
                                 ),
@@ -118,9 +121,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                     child: IconButton(
                                         onPressed: () {
                                           iconData.remove(iconData[index]);
-                                          amenitiesList
-                                              .remove(amenitiesList[index]);
-                                          print(amenitiesList);
+                                          amenitiesName
+                                              .remove(amenitiesName[index]);
                                         },
                                         icon: const Icon(
                                           Icons.cancel,
@@ -157,13 +159,14 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                           i++) {
                         if (amenitiesController.selectedItemName ==
                             amenitiesController.amenities[i].name) {
-                          amenitiesList
-                              .add(amenitiesController.amenities[i].id!);
+                          amenitiesName
+                              .add(amenitiesController.amenities[i].name!);
                           iconData.add(amenitiesController.amenities[i].icon);
                         }
                       }
-                      print(amenitiesList);
-                      print(iconData);
+                      commaSepratedAmenitiesList.value =
+                          amenitiesName.join(',');
+                      commaSepratedAmenitiesIconList.value = iconData.join(',');
                     },
                     buttonText: catId.value == '' ? 'Submit' : 'Update',
                     formSubmit: () async {
@@ -177,13 +180,15 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                         );
                         var description = await descriptionController.getText();
                         await categoryController.createNewCategory(
-                            categoryController.imageUrl.value,
-                            categoryNameController.text,
-                            categorySlugController.text,
-                            description,
-                            selectedItemId.value,
-                            isPublished.value,
-                            amenitiesList.toString());
+                          categoryController.imageUrl.value,
+                          categoryNameController.text,
+                          categorySlugController.text,
+                          description,
+                          selectedItemId.value,
+                          isPublished.value,
+                          commaSepratedAmenitiesList.value,
+                          commaSepratedAmenitiesIconList.value,
+                        );
                         await categoryController.getCategories();
                         Navigator.pop(context);
                       } else {
@@ -196,14 +201,16 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                         );
                         var description = await descriptionController.getText();
                         await categoryController.updateThisCategory(
-                            int.parse(catId.value),
-                            categoryController.imageUrl.value,
-                            categoryNameController.text,
-                            categorySlugController.text,
-                            description,
-                            selectedItemId.value,
-                            isPublished.value,
-                            amenitiesList.toString());
+                          int.parse(catId.value),
+                          categoryController.imageUrl.value,
+                          categoryNameController.text,
+                          categorySlugController.text,
+                          description,
+                          selectedItemId.value,
+                          isPublished.value,
+                          commaSepratedAmenitiesList.value,
+                          commaSepratedAmenitiesList.value,
+                        );
                         categoryNameController.text = '';
                         categorySlugController.text = '';
                         descriptionController.clear();

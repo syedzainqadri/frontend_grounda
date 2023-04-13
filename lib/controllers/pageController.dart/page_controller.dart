@@ -159,7 +159,7 @@ class PageController extends GetxController {
       getAll();
       var deletedPage = jsonDecode(response.body);
       var page = deletedPage['title'];
-      Get.snackbar('Page Deleted', 'The Page: $pages has been deleted',
+      Get.snackbar('Page Deleted', 'The Page: $page has been deleted',
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
     } else {

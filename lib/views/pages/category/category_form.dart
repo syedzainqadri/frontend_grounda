@@ -108,7 +108,7 @@ class CategoryForm extends GetView<ThemeChangeController> {
             SizedBox(
               height: height * .02,
             ),
-            Expanded(child: TextEditor(controller: descriptionController)),
+            Expanded(child: TextEditor(textController: descriptionController)),
             SizedBox(
               height: height * .02,
             ),

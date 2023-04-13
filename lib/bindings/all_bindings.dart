@@ -52,5 +52,6 @@ class AllBindings implements Bindings {
     Get.lazyPut<WishListController>(() => WishListController(), fenix: true);
     Get.lazyPut<PaymentMethodController>(() => PaymentMethodController(),
         fenix: true);
+    // Get.lazyPut<LocationService>(() => LocationService(), fenix: true);
   }
 }

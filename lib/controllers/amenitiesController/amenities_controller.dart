@@ -19,6 +19,7 @@ class AmenitiesController extends GetxController {
     super.onInit();
     token.value = tokenHiveBox.get('token');
     getAll();
+    // getAllTest();
   }
 
   Future<void> getAll() async {
@@ -34,47 +35,20 @@ class AmenitiesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       amenities.value = amenitiesModelFromJson(response.body);
-      selectedItemName.value = amenities.value.first.name!;
+      selectedItemName.value = amenities.first.name!;
       isLoading.value = false;
     } else {
       showErrorSnak('Error', response.body);
     }
   }
 
-  // Future<void> getbyId(String id) async {
-  //   isLoading.value = true;
-  //   var response = await http.get(
-  //     Uri.parse(
-  //       baseUrl + getAmenities + id,
-  //     ),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Authorization": "Bearer $token"
-  //     },
-  //   );
-  //   if (response.statusCode == 200 && response.body != 'null') {
-  //     amenities.value = amenitiesModelFromJson(response.body);
-  //     isLoading.value = false;
-  //   } else {
-  //     Get.snackbar('Error', response.body,
-  //         snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-  //     isLoading.value = false;
-  //   }
-  // }
-
   Future<void> create(
     String name,
-    String description,
     String icon,
     bool status,
   ) async {
     isLoading.value = true;
-    var bodyPrepare = {
-      "name": name,
-      "description": description,
-      "status": status,
-      "icon": icon
-    };
+    var bodyPrepare = {"name": name, "status": status, "icon": icon};
     var response = await http.post(
       Uri.parse(
         baseUrl + createAmenities,
@@ -97,18 +71,11 @@ class AmenitiesController extends GetxController {
   Future<void> updateAmenities(
     int id,
     String name,
-    String description,
     String icon,
     bool status,
   ) async {
     isLoading.value = true;
-    var bodyPrepare = {
-      "id": id,
-      "name": name,
-      "description": description,
-      "status": status,
-      "icon": icon
-    };
+    var bodyPrepare = {"id": id, "name": name, "status": status, "icon": icon};
 
     var response = await http.put(
       Uri.parse(

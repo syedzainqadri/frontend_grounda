@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'package:frontend_grounda/models/wishListModel/whish_list_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
