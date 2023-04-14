@@ -491,119 +491,185 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         },
                         //submit button
                         formSubmit: () async {
-                          var description =
-                              await descriptionController.getText();
-                          var amenitiesNameList =
-                              jsonEncode(postController.selectedAmenitiesNames);
-                          var amenitiesCodeList =
-                              jsonEncode(postController.selectedAmenitiesCodes);
-                          if (description.isNotEmpty) {
-                            if (postController.imageUrl.isNotEmpty) {
-                              if (subCategorySelectedItemId != 0) {
-                                if (postController
-                                        .selectedAmenitiesNames.isNotEmpty ||
-                                    postController
-                                        .selectedAmenitiesCodes.isNotEmpty) {
-                                  if (_formKey.currentState!.validate()) {
-                                    Get.defaultDialog(
-                                      title: 'Creating Post',
-                                      content: const Center(
-                                        child: CircularProgressIndicator(
-                                            color: kPrimaryColor),
-                                      ),
-                                    );
-                                    var propertyNumber =
-                                        Random().nextInt(10000000);
-                                    var imageList =
-                                        jsonEncode(postController.imageUrl);
+                          if (postController.postID.value == '') {
+                            var description =
+                                await descriptionController.getText();
+                            var amenitiesNameList = jsonEncode(
+                                postController.selectedAmenitiesNames);
+                            var amenitiesCodeList = jsonEncode(
+                                postController.selectedAmenitiesCodes);
+                            if (description.isNotEmpty) {
+                              if (postController.imageUrl.isNotEmpty) {
+                                if (subCategorySelectedItemId != 0) {
+                                  if (postController
+                                          .selectedAmenitiesNames.isNotEmpty ||
+                                      postController
+                                          .selectedAmenitiesCodes.isNotEmpty) {
+                                    if (_formKey.currentState!.validate()) {
+                                      Get.defaultDialog(
+                                        title: 'Creating Post',
+                                        content: const Center(
+                                          child: CircularProgressIndicator(
+                                              color: kPrimaryColor),
+                                        ),
+                                      );
+                                      var propertyNumber =
+                                          Random().nextInt(10000000);
+                                      var imageList =
+                                          jsonEncode(postController.imageUrl);
 
-                                    await postController.create(
-                                      postController.postTitleController.text,
-                                      propertyNumber,
-                                      description,
-                                      postController.imageUrl.first.toString(),
-                                      imageList,
-                                      postController.videoUrlController.text,
-                                      description,
-                                      postController.longitude.value.toString(),
-                                      postController.latitude.value.toString(),
-                                      postController.plotNumberController.text,
-                                      postController.priceController.text,
-                                      postController.cityController.text,
-                                      postController.areaController.text,
-                                      postController.hasInstallments.value,
-                                      postController.showContactDetials.value,
-                                      postController.advanceController.text,
-                                      int.parse(postController
-                                          .noOfInstallmentController.text),
-                                      postController
-                                          .monthlyInstallmentController.text,
-                                      postController.posessionReady.value,
-                                      postController
-                                          .propertyAreaUnitValue.value,
-                                      postController.purposeValue.value
-                                          .toUpperCase(),
-                                      postController.totalAreaController.text,
-                                      int.parse(postController
-                                          .bedroomController.text),
-                                      int.parse(postController
-                                          .bathroomController.text),
-                                      amenitiesCodeList,
-                                      amenitiesNameList,
-                                      selectedItemId.value,
-                                      subCategorySelectedItemId.value,
-                                      postController.isPublished.value,
-                                      postController.postTitleController.text +
-                                          propertyNumber.toString(),
-                                    );
-                                    Navigator.pop(context);
-                                  } else {
-                                    showErrorSnak('Amenities are empty',
-                                        'Please Select Amenities');
+                                      await postController.create(
+                                        postController.postTitleController.text,
+                                        propertyNumber,
+                                        description,
+                                        postController.imageUrl.first
+                                            .toString(),
+                                        imageList,
+                                        postController.videoUrlController.text,
+                                        description,
+                                        postController.longitude.value
+                                            .toString(),
+                                        postController.latitude.value
+                                            .toString(),
+                                        postController
+                                            .plotNumberController.text,
+                                        postController.priceController.text,
+                                        postController.cityController.text,
+                                        postController.areaController.text,
+                                        postController.hasInstallments.value,
+                                        postController.showContactDetials.value,
+                                        postController.advanceController.text,
+                                        int.parse(postController
+                                            .noOfInstallmentController.text),
+                                        postController
+                                            .monthlyInstallmentController.text,
+                                        postController.posessionReady.value,
+                                        postController
+                                            .propertyAreaUnitValue.value,
+                                        postController.purposeValue.value
+                                            .toUpperCase(),
+                                        postController.totalAreaController.text,
+                                        int.parse(postController
+                                            .bedroomController.text),
+                                        int.parse(postController
+                                            .bathroomController.text),
+                                        amenitiesCodeList,
+                                        amenitiesNameList,
+                                        selectedItemId.value,
+                                        subCategorySelectedItemId.value,
+                                        postController.isPublished.value,
+                                        postController
+                                                .postTitleController.text +
+                                            propertyNumber.toString(),
+                                      );
+                                      Navigator.pop(context);
+                                    } else {
+                                      showErrorSnak('Amenities are empty',
+                                          'Please Select Amenities');
+                                    }
                                   }
+                                } else {
+                                  showErrorSnak('Sub Category is not selected',
+                                      'Please select a Sub Category');
                                 }
                               } else {
-                                showErrorSnak('Sub Category is not selected',
-                                    'Please select a Sub Category');
+                                showErrorSnak('No Image Selected',
+                                    'Images Must not be Empty');
                               }
                             } else {
-                              showErrorSnak('No Image Selected',
-                                  'Images Must not be Empty');
+                              showErrorSnak('Description is Empty',
+                                  'Description Can Not be empty');
                             }
+                            // --------------------------- Message -----------------------------
+                            //Code has to be modified for the editing page.
+                            // we have to decide where do we want to edit in new page or here.
+                            // --------------------------- Message -----------------------------
                           } else {
-                            showErrorSnak('Description is Empty',
-                                'Description Can Not be empty');
+                            var description =
+                                await descriptionController.getText();
+                            var amenitiesNameList = jsonEncode(
+                                postController.selectedAmenitiesNames);
+                            var amenitiesCodeList = jsonEncode(
+                                postController.selectedAmenitiesCodes);
+                            if (description.isNotEmpty) {
+                              if (postController.imageUrl.isNotEmpty) {
+                                if (subCategorySelectedItemId != 0) {
+                                  if (postController
+                                          .selectedAmenitiesNames.isNotEmpty ||
+                                      postController
+                                          .selectedAmenitiesCodes.isNotEmpty) {
+                                    if (_formKey.currentState!.validate()) {
+                                      Get.defaultDialog(
+                                        title: 'Creating Post',
+                                        content: const Center(
+                                          child: CircularProgressIndicator(
+                                              color: kPrimaryColor),
+                                        ),
+                                      );
+                                      var imageList =
+                                          jsonEncode(postController.imageUrl);
+
+                                      await postController.updatePost(
+                                        postController.postID.value,
+                                        postController.postTitleController.text,
+                                        postController.propertyNumber.value,
+                                        description,
+                                        postController.imageUrl.first
+                                            .toString(),
+                                        imageList,
+                                        postController.videoUrlController.text,
+                                        description,
+                                        postController.longitude.value
+                                            .toString(),
+                                        postController.latitude.value
+                                            .toString(),
+                                        postController
+                                            .plotNumberController.text,
+                                        postController.priceController.text,
+                                        postController.cityController.text,
+                                        postController.areaController.text,
+                                        postController.hasInstallments.value,
+                                        postController.showContactDetials.value,
+                                        postController.advanceController.text,
+                                        int.parse(postController
+                                            .noOfInstallmentController.text),
+                                        postController
+                                            .monthlyInstallmentController.text,
+                                        postController.posessionReady.value,
+                                        postController
+                                            .propertyAreaUnitValue.value,
+                                        postController.purposeValue.value
+                                            .toUpperCase(),
+                                        postController.totalAreaController.text,
+                                        int.parse(postController
+                                            .bedroomController.text),
+                                        int.parse(postController
+                                            .bathroomController.text),
+                                        amenitiesCodeList,
+                                        amenitiesNameList,
+                                        postController.catID.value,
+                                        postController.subCatID.value,
+                                        postController.isPublished.value,
+                                      );
+                                      Navigator.pop(context);
+                                    } else {
+                                      showErrorSnak('Amenities are empty',
+                                          'Please Select Amenities');
+                                    }
+                                  }
+                                } else {
+                                  showErrorSnak('Sub Category is not selected',
+                                      'Please select a Sub Category');
+                                }
+                              } else {
+                                showErrorSnak('No Image Selected',
+                                    'Images Must not be Empty');
+                              }
+                            } else {
+                              showErrorSnak('Description is Empty',
+                                  'Description Can Not be empty');
+                            }
                           }
-                          // --------------------------- Message -----------------------------
-                          //Code has to be modified for the editing page.
-                          // we have to decide where do we want to edit in new page or here.
-                          // --------------------------- Message -----------------------------
-                          // } else {
-                          // Get.defaultDialog(
-                          //   title: 'Updating Category',
-                          //   content: const Center(
-                          //     child: CircularProgressIndicator(
-                          //         color: kPrimaryColor),
-                          //   ),
-                          // );
-                          // var description =
-                          //     await contentController.getText();
-                          // await categoryController.updateThisCategory(
-                          //     int.parse(catId.value),
-                          //     categoryController.imageUrl.value,
-                          //     categoryNameController.text,
-                          //     postShortDescriptionController.text,
-                          //     description,
-                          //     selectedItemId.value,
-                          //     isPublished.value);
-                          // categoryNameController.text = '';
-                          // postShortDescriptionController.text = '';
-                          // contentController.clear();
-                          // selectedItemId.value = 0;
-                          // catId.value = '';
-                          // await categoryController.getCategories();
-                          // Navigator.pop(context);
-                          // }
                         },
                         cancelText: postController.postID.value == ''
                             ? ''
