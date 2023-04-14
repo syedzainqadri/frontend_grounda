@@ -48,6 +48,7 @@ class PostController extends GetxController {
   var hasInstallments = false.obs;
   var posessionReady = false.obs;
   var showContactDetials = false.obs;
+  var propertyNumber = 0.obs;
 
   //<=================== Text Editing Controllers ==================>
   TextEditingController postTitleController = TextEditingController();
@@ -137,7 +138,7 @@ class PostController extends GetxController {
       postAmenitiesNames.value = jsonDecode(singlePost.value.amenitiesNames!);
       postAmenitiesCodes.value =
           jsonDecode(singlePost.value.amenitiesIconCodes!);
-
+      propertyNumber.value = singlePost.value.propertyNumber!;
       print(postAmenitiesNames);
       print(postAmenitiesCodes);
 
@@ -240,37 +241,37 @@ class PostController extends GetxController {
   //Update Post
 
   Future<void> updatePost(
-      String id,
-      String title,
-      int propertyNumber,
-      String description,
-      String featuredImage,
-      String gallerImages,
-      String video,
-      String longDescription,
-      String longitude,
-      String latitude,
-      String plotNumber,
-      String price,
-      String city,
-      String area,
-      bool isInstallmentAvailable,
-      bool showContactDetails,
-      String advanceAmmount,
-      int noOfInstallements,
-      String monthlyInstallment,
-      bool readyForPossession,
-      String areaSizeUnit,
-      String purpose,
-      String totalAreaSize,
-      int bedrooms,
-      int bathrooms,
-      String amenitiesIconCodes,
-      String amenitiesNames,
-      int categoryId,
-      int subCategoryId,
-      bool status,
-      String slug) async {
+    String id,
+    String title,
+    int propertyNumber,
+    String description,
+    String featuredImage,
+    String gallerImages,
+    String video,
+    String longDescription,
+    String longitude,
+    String latitude,
+    String plotNumber,
+    String price,
+    String city,
+    String area,
+    bool isInstallmentAvailable,
+    bool showContactDetails,
+    String advanceAmmount,
+    int noOfInstallements,
+    String monthlyInstallment,
+    bool readyForPossession,
+    String areaSizeUnit,
+    String purpose,
+    String totalAreaSize,
+    int bedrooms,
+    int bathrooms,
+    String amenitiesIconCodes,
+    String amenitiesNames,
+    int categoryId,
+    int subCategoryId,
+    bool status,
+  ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
@@ -304,7 +305,6 @@ class PostController extends GetxController {
       "metaTitle": title,
       "metaDescription": description,
       "status": status,
-      "slug": slug,
       "amenitiesIconCodes": amenitiesIconCodes,
       "amenitiesNames": amenitiesNames,
       "showContactDetails": showContactDetails,
