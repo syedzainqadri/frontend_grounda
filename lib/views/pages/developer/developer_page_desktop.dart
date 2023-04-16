@@ -21,11 +21,13 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
       TextEditingController();
   final DeveloperController developerController =
       Get.find<DeveloperController>();
-  QuillEditorController descriptionController = QuillEditorController();
+  QuillEditorController descriptionControllerDeveloperPage =
+      QuillEditorController();
   TextEditingController developerNameController = TextEditingController();
 
   TextEditingController categoryStatusController = TextEditingController();
   List<DevelopersModel> developersModel = [];
+  final _formKey = GlobalKey<FormState>();
 
   var selectedItemId = 0.obs;
   var status = false.obs;
@@ -64,87 +66,92 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: developerController.developers.isEmpty
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: kPrimaryColor,
-                          ),
-                        )
-                      : DeveloperForm(
-                          developerNameController: developerNameController,
-                          descriptionController: descriptionController,
-                          buttonText: devId.value == '' ? 'Submit' : 'Update',
-                          formSubmit: () async {
-                            if (devId.value == '') {
-                              Get.defaultDialog(
-                                title: 'Creating Developer',
-                                content: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kPrimaryColor),
-                                ),
-                              );
-                              var description =
-                                  await descriptionController.getText();
-                              await developerController.create(
-                                  developerNameController.text,
-                                  description,
-                                  developerController.logo.value,
-                                  status.value);
-                              await developerController.getAll();
-                              Navigator.pop(context);
-                            } else {
-                              Get.defaultDialog(
-                                title: 'Updating Developer',
-                                content: const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kPrimaryColor),
-                                ),
-                              );
-                              var description =
-                                  await descriptionController.getText();
-                              await developerController.updateDeveloper(
-                                  int.parse(devId.value),
-                                  developerNameController.text,
-                                  developerController.logo.value,
-                                  description,
-                                  status.value);
-                              developerNameController.text = '';
-                              descriptionController.clear();
-                              selectedItemId.value = 0;
-                              devId.value = '';
-                              await developerController.getAll();
-                              Navigator.pop(context);
-                            }
-                          },
-                          cancelText: devId.value == '' ? '' : 'Cancel Update',
-                          onTap: () async {
-                            developerNameController.text = '';
-                            developerController.logo.value = '';
-                            descriptionController.clear();
-                            selectedItemId.value = 0;
-                            devId.value = '';
-                            await developerController.getAll();
-                          },
-                          pictureButtonText:
-                              developerController.logo.value.isEmpty
-                                  ? 'Add Logo'
-                                  : 'Update Logo',
-                          uploadImages: () async {
+                  child: Form(
+                    key: _formKey,
+                    child: DeveloperForm(
+                      developerNameController: developerNameController,
+                      nameValidator: (value) {
+                        if (value == null || value == '') {
+                          return 'Post title cannot be empty';
+                        }
+                      },
+                      descriptionController: descriptionControllerDeveloperPage,
+                      buttonText: devId.value == '' ? 'Submit' : 'Update',
+                      formSubmit: () async {
+                        if (_formKey.currentState!.validate()) {
+                          if (devId.value == '') {
                             Get.defaultDialog(
-                              title: 'Uploading Image',
+                              title: 'Creating Developer',
                               content: const Center(
                                 child: CircularProgressIndicator(
                                     color: kPrimaryColor),
                               ),
                             );
-                            await developerController.getDeveloperLogo();
+                            var description =
+                                await descriptionControllerDeveloperPage
+                                    .getText();
+                            await developerController.create(
+                                developerNameController.text,
+                                description,
+                                developerController.logo.value,
+                                status.value);
+                            await developerController.getAll();
                             Navigator.pop(context);
-                          },
-                          statusValue: status.value,
-                          statusChanges: (value) {
-                            status.value = value;
-                          },
-                        ),
+                          } else {
+                            Get.defaultDialog(
+                              title: 'Updating Developer',
+                              content: const Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor),
+                              ),
+                            );
+                            var description =
+                                await descriptionControllerDeveloperPage
+                                    .getText();
+                            await developerController.updateDeveloper(
+                                int.parse(devId.value),
+                                developerNameController.text,
+                                description,
+                                developerController.logo.value,
+                                status.value);
+                            developerNameController.text = '';
+                            descriptionControllerDeveloperPage.clear();
+                            selectedItemId.value = 0;
+                            devId.value = '';
+                            await developerController.getAll();
+                            Navigator.pop(context);
+                          }
+                        }
+                      },
+                      cancelText: devId.value == '' ? '' : 'Cancel Update',
+                      onTap: () async {
+                        developerNameController.text = '';
+                        developerController.logo.value = '';
+                        descriptionControllerDeveloperPage.clear();
+                        selectedItemId.value = 0;
+                        devId.value = '';
+                        await developerController.getAll();
+                      },
+                      pictureButtonText: developerController.logo.value.isEmpty
+                          ? 'Add Logo'
+                          : 'Update Logo',
+                      uploadImages: () async {
+                        Get.defaultDialog(
+                          title: 'Uploading Image',
+                          content: const Center(
+                            child:
+                                CircularProgressIndicator(color: kPrimaryColor),
+                          ),
+                        );
+                        await developerController.getDeveloperLogo();
+                        Navigator.pop(context);
+                      },
+                      statusValue: status.value,
+                      statusChanges: (value) {
+                        status.value = value;
+                      },
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
@@ -305,12 +312,13 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                           children: [
                                             IconButton(
                                               onPressed: () async {
-                                                descriptionController.clear();
+                                                descriptionControllerDeveloperPage
+                                                    .clear();
                                                 developerNameController.text =
                                                     developerController
                                                         .developers[index]
                                                         .title!;
-                                                descriptionController
+                                                descriptionControllerDeveloperPage
                                                     .insertText(
                                                         developerController
                                                             .developers[index]

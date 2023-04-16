@@ -22,6 +22,7 @@ class DeveloperController extends GetxController {
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
+    getAll();
   }
 
   Future<void> getAll() async {
@@ -36,6 +37,8 @@ class DeveloperController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
+      print('<======== Developer Details ===========>');
+      print('developer details are: ${response.body}');
       developers.value = developersModelFromJson(response.body);
       isLoading.value = false;
     } else {
@@ -76,7 +79,8 @@ class DeveloperController extends GetxController {
     var bodyPrepare = {
       "title": title,
       "description": description,
-      "logo": logo
+      "logo": logo,
+      "status": status
     };
 
     var response = await http.post(
@@ -90,7 +94,6 @@ class DeveloperController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      developers.addAll(developersModelFromJson(response.body));
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -111,7 +114,8 @@ class DeveloperController extends GetxController {
       "id": id,
       "title": title,
       "description": description,
-      "logo": logo
+      "logo": logo,
+      "status": status
     };
 
     var response = await http.put(
@@ -124,6 +128,7 @@ class DeveloperController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
+    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
       isLoading.value = false;
@@ -170,7 +175,7 @@ class DeveloperController extends GetxController {
 
       // Upload file
       var upload = await FirebaseStorage.instance
-          .ref('uploads/developers/images/$fileName')
+          .ref('uploads/developers/logos/$fileName')
           .putData(fileBytes);
       final url = upload.ref.getDownloadURL().then((value) {
         logo.value = value;

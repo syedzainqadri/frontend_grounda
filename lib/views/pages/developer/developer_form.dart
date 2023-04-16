@@ -23,6 +23,7 @@ class DeveloperForm extends GetView<ThemeChangeController> {
       required this.pictureButtonText,
       required this.cancelText,
       required this.onTap,
+      required this.nameValidator,
       super.key});
 
   double width = Get.width;
@@ -35,6 +36,7 @@ class DeveloperForm extends GetView<ThemeChangeController> {
   String buttonText;
   String pictureButtonText;
   String cancelText;
+  dynamic nameValidator;
 
   TextEditingController developerNameController;
 
@@ -54,15 +56,14 @@ class DeveloperForm extends GetView<ThemeChangeController> {
           height: height * 0.03,
         ),
         DefaultTextField(
+          maxLength: 20,
           hintText: "Developer Name",
           labelText: "Developer Name",
           isPassword: false,
           textEditingController: developerNameController,
+          validator: nameValidator,
         ),
-        SizedBox(
-          height: height * .02,
-        ),
-        Expanded(child: TextEditor(textController: descriptionController)),
+        TextEditor(textController: descriptionController),
         SizedBox(
           height: height * .02,
         ),
