@@ -53,8 +53,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCatName(postController.catID);
-    getSubCatname(postController.subCatID);
+    getCatName(postController.catID.value);
   }
 
   getCatName(catId) {
@@ -67,16 +66,19 @@ class _CreatePostPageState extends State<CreatePostPage> {
           categoryController.getSubCategories(catId.toString());
         }
       }
+      getSubCatname(postController.subCatID.value);
     }
   }
 
-  getSubCatname(subCatId) {
+  getSubCatname(subCatId) async {
+    print('subcat id is: $subCatId');
     if (subCatId != 0) {
-      categoryController.getAmenitiesIds(subCatId.toString());
+      await categoryController.getAmenitiesIds(subCatId.toString());
       for (int i = 0; i < categoryController.subCategory.length; i++) {
         if (subCatId == categoryController.subCategory[i].id) {
           categoryController.subCategorySelectedItemName.value =
               categoryController.subCategory[i].name!;
+          print(categoryController.subCategorySelectedItemName);
         }
       }
     }
@@ -367,7 +369,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           }
                         },
                         //amenities
-                        selectedAmenities: postController.postID.value != ''
+                        selectedAmenities: postController.postID.value != 0
                             ? SizedBox(
                                 width: width * .2,
                                 height: 50,
@@ -431,7 +433,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                   onChanged: (value) {
                                     amenities[index] = !amenities[index];
                                     //TODO: build amenities local lists
-                                    if (postController.postID.value != '') {
+                                    if (postController.postID.value != 0) {
+                                      print(postController.postID);
                                       if (amenities[index]) {
                                         postController.postAmenitiesNames
                                             .add(names[index]);
@@ -444,6 +447,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                             .remove(codes[index]);
                                       }
                                     } else {
+                                      print('This is working');
                                       if (amenities[index]) {
                                         postController.selectedAmenitiesNames
                                             .add(names[index]);
@@ -491,13 +495,14 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         },
                         //submit button
                         formSubmit: () async {
-                          if (postController.postID.value == '') {
+                          if (postController.postID.value == 0) {
                             var description =
                                 await descriptionController.getText();
                             var amenitiesNameList = jsonEncode(
                                 postController.selectedAmenitiesNames);
                             var amenitiesCodeList = jsonEncode(
                                 postController.selectedAmenitiesCodes);
+                            print(amenitiesNameList);
                             if (description.isNotEmpty) {
                               if (postController.imageUrl.isNotEmpty) {
                                 if (subCategorySelectedItemId != 0) {
@@ -517,7 +522,6 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                           Random().nextInt(10000000);
                                       var imageList =
                                           jsonEncode(postController.imageUrl);
-
                                       await postController.create(
                                         postController.postTitleController.text,
                                         propertyNumber,
@@ -580,87 +584,78 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               showErrorSnak('Description is Empty',
                                   'Description Can Not be empty');
                             }
-                            // --------------------------- Message -----------------------------
-                            //Code has to be modified for the editing page.
-                            // we have to decide where do we want to edit in new page or here.
-                            // --------------------------- Message -----------------------------
                           } else {
+                            print("============= Updating started=======");
                             var description =
                                 await descriptionController.getText();
-                            var amenitiesNameList = jsonEncode(
-                                postController.selectedAmenitiesNames);
-                            var amenitiesCodeList = jsonEncode(
-                                postController.selectedAmenitiesCodes);
-                            if (description.isNotEmpty) {
-                              if (postController.imageUrl.isNotEmpty) {
-                                if (subCategorySelectedItemId != 0) {
-                                  if (postController
-                                          .selectedAmenitiesNames.isNotEmpty ||
-                                      postController
-                                          .selectedAmenitiesCodes.isNotEmpty) {
-                                    if (_formKey.currentState!.validate()) {
-                                      Get.defaultDialog(
-                                        title: 'Creating Post',
-                                        content: const Center(
-                                          child: CircularProgressIndicator(
-                                              color: kPrimaryColor),
-                                        ),
-                                      );
-                                      var imageList =
-                                          jsonEncode(postController.imageUrl);
 
-                                      await postController.updatePost(
-                                        postController.postID.value,
-                                        postController.postTitleController.text,
-                                        postController.propertyNumber.value,
-                                        description,
-                                        postController.imageUrl.first
-                                            .toString(),
-                                        imageList,
-                                        postController.videoUrlController.text,
-                                        description,
-                                        postController.longitude.value
-                                            .toString(),
-                                        postController.latitude.value
-                                            .toString(),
-                                        postController
-                                            .plotNumberController.text,
-                                        postController.priceController.text,
-                                        postController.cityController.text,
-                                        postController.areaController.text,
-                                        postController.hasInstallments.value,
-                                        postController.showContactDetials.value,
-                                        postController.advanceController.text,
-                                        int.parse(postController
-                                            .noOfInstallmentController.text),
-                                        postController
-                                            .monthlyInstallmentController.text,
-                                        postController.posessionReady.value,
-                                        postController
-                                            .propertyAreaUnitValue.value,
-                                        postController.purposeValue.value
-                                            .toUpperCase(),
-                                        postController.totalAreaController.text,
-                                        int.parse(postController
-                                            .bedroomController.text),
-                                        int.parse(postController
-                                            .bathroomController.text),
-                                        amenitiesCodeList,
-                                        amenitiesNameList,
-                                        postController.catID.value,
-                                        postController.subCatID.value,
-                                        postController.isPublished.value,
-                                      );
-                                      Navigator.pop(context);
-                                    } else {
-                                      showErrorSnak('Amenities are empty',
-                                          'Please Select Amenities');
-                                    }
-                                  }
-                                } else {
-                                  showErrorSnak('Sub Category is not selected',
-                                      'Please select a Sub Category');
-                                }
+                            var amenitiesNameList =
+                                jsonEncode(postController.postAmenitiesNames);
+                            var amenitiesCodeList =
+                                jsonEncode(postController.postAmenitiesCodes);
+                            print(amenitiesNameList);
+                            if (description.isNotEmpty) {
+                              print(description);
+                              if (postController.imageUrl.isNotEmpty) {
+                                print(postController.imageUrl);
+                                // if (postController
+                                //         .selectedAmenitiesNames.isNotEmpty ||
+                                //     postController
+                                //         .selectedAmenitiesCodes.isNotEmpty) {
+                                // if (_formKey.currentState!.validate()) {
+                                Get.defaultDialog(
+                                  title: 'Creating Post',
+                                  content: const Center(
+                                    child: CircularProgressIndicator(
+                                        color: kPrimaryColor),
+                                  ),
+                                );
+                                var imageList =
+                                    jsonEncode(postController.imageUrl);
+                                print("============= Updating =======");
+                                await postController.updatePost(
+                                  postController.postID.value,
+                                  postController.postTitleController.text,
+                                  postController.propertyNumber.value,
+                                  description,
+                                  postController.imageUrl.first.toString(),
+                                  imageList,
+                                  postController.videoUrlController.text,
+                                  description,
+                                  postController.longitude.value.toString(),
+                                  postController.latitude.value.toString(),
+                                  postController.plotNumberController.text,
+                                  postController.priceController.text,
+                                  postController.cityController.text,
+                                  postController.areaController.text,
+                                  postController.hasInstallments.value,
+                                  postController.showContactDetials.value,
+                                  postController.advanceController.text,
+                                  int.parse(postController
+                                      .noOfInstallmentController.text),
+                                  postController
+                                      .monthlyInstallmentController.text,
+                                  postController.posessionReady.value,
+                                  postController.propertyAreaUnitValue.value,
+                                  postController.purposeValue.value
+                                      .toUpperCase(),
+                                  postController.totalAreaController.text,
+                                  int.parse(
+                                      postController.bedroomController.text),
+                                  int.parse(
+                                      postController.bathroomController.text),
+                                  amenitiesCodeList,
+                                  amenitiesNameList,
+                                  postController.catID.value,
+                                  postController.subCatID.value,
+                                  postController.isPublished.value,
+                                );
+                                Navigator.pop(context);
+                                // }
+                                // } else {
+                                //   showErrorSnak('Amenities are empty',
+                                //       'Please Select Amenities');
+                                // }
                               } else {
                                 showErrorSnak('No Image Selected',
                                     'Images Must not be Empty');

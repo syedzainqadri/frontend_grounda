@@ -68,16 +68,10 @@ class CategoryController extends GetxController {
 
     if (response.statusCode == 200) {
       singleCategory.value = singleCategoryModelFromJson(response.body);
-      print("====== BEFORE LIST EQULIZATION ========");
-      print(singleCategory.value.amenitiesNames);
-      print(singleCategory.value.amenitiesIconCodes);
       listOfAmenitiesNames.value =
           singleCategory.value.amenitiesNames!.split(",");
       listOfAmenitiesCodes.value =
           singleCategory.value.amenitiesIconCodes!.split(",");
-      print("======== List of Amenities ===========");
-      print(listOfAmenitiesNames);
-      print(listOfAmenitiesCodes);
     } else {
       showErrorSnak('Error', response.body);
     }
