@@ -1,5 +1,6 @@
 import 'package:frontend_grounda/services/intial_navigation.dart';
 import 'package:frontend_grounda/views/pages/agency/agency_view.dart';
+import 'package:frontend_grounda/views/pages/agency/sub_pages/create_agency_view.dart';
 import 'package:frontend_grounda/views/pages/category/category_view.dart';
 import 'package:frontend_grounda/views/pages/developer/developer_view.dart';
 import 'package:frontend_grounda/views/pages/forum/forum_view.dart';
@@ -67,6 +68,12 @@ appRoutes() => [
       GetPage(
         name: '/agency',
         page: () => const AgencyView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
+        name: '/agency/create',
+        page: () => const CreateAgencyView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),

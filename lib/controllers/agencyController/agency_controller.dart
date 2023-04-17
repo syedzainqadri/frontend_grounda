@@ -1,4 +1,8 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend_grounda/models/agencyModel/agency_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
@@ -6,15 +10,27 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 
 class AgencyController extends GetxController {
+  late FocusNode formFocus;
+  late FocusNode agencyEmailFieldFocus;
+  late FocusNode agencyPhoneFieldFocus;
+  late FocusNode agencyPasswordFieldFocus;
   var agencies = <AgencyModel>[].obs;
+  var logo = ''.obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
+  var sell = false.obs;
+  var rent = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
+    formFocus = FocusNode();
+    agencyEmailFieldFocus = FocusNode();
+    agencyPhoneFieldFocus = FocusNode();
+    agencyPasswordFieldFocus = FocusNode();
+    getAll();
   }
 
   Future<void> getAll() async {
@@ -212,6 +228,22 @@ class AgencyController extends GetxController {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
+    }
+  }
+
+  getAgencyLogo() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      Uint8List fileBytes = result.files.first.bytes!;
+      String fileName = result.files.first.name;
+
+      // Upload file
+      var upload = await FirebaseStorage.instance
+          .ref('uploads/developers/logos/$fileName')
+          .putData(fileBytes);
+      final url = upload.ref.getDownloadURL().then((value) {
+        logo.value = value;
+      });
     }
   }
 }

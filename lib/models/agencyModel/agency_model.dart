@@ -33,6 +33,7 @@ class AgencyModel {
     this.updatedAt,
     this.userId,
     this.slugId,
+    this.status,
   });
 
   int? id;
@@ -56,6 +57,7 @@ class AgencyModel {
   DateTime? updatedAt;
   int? userId;
   int? slugId;
+  bool? status;
 
   factory AgencyModel.fromJson(Map<String, dynamic> json) => AgencyModel(
         id: json["id"],
@@ -79,6 +81,7 @@ class AgencyModel {
         updatedAt: DateTime.parse(json["updatedAt"]),
         userId: json["userId"],
         slugId: json["slugId"],
+        status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -103,5 +106,6 @@ class AgencyModel {
         "updatedAt": updatedAt!.toIso8601String(),
         "userId": userId,
         "slugId": slugId,
+        "status": status,
       };
 }
