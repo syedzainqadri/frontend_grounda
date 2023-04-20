@@ -18,6 +18,8 @@ class AgencyController extends GetxController {
   var logo = ''.obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
+  var countryCode = ''.obs;
+  var countryName = 'PK'.obs;
   var isLoading = false.obs;
   var sell = false.obs;
   var rent = false.obs;
