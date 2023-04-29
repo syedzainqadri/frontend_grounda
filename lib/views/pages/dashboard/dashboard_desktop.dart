@@ -127,7 +127,7 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                     child: DataTable(
                       border: TableBorder.all(
                           color: Colors.black,
-                          width: 1.0,
+                          width: .7,
                           style: BorderStyle.none),
                       rows: const [
                         DataRow(
@@ -231,103 +231,106 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ),
-                    SingleChildScrollView(
-                      child: DataTable(
-                        border: TableBorder.all(
-                            color: Colors.black,
-                            width: 1.0,
-                            style: BorderStyle.none),
-                        rows: const [
-                          DataRow(
-                            cells: [
-                              DataCell(
-                                Text("1"),
-                              ),
-                              DataCell(
-                                Text("Top Ads"),
-                              ),
-                              DataCell(
-                                Text("100,000"),
-                              ),
-                            ],
-                          ),
-                          DataRow(
-                            cells: [
-                              DataCell(
-                                Text("1"),
-                              ),
-                              DataCell(
-                                Text("Top Ads"),
-                              ),
-                              DataCell(
-                                Text("100,000"),
-                              ),
-                            ],
-                          ),
-                          DataRow(
-                            cells: [
-                              DataCell(
-                                Text("1"),
-                              ),
-                              DataCell(
-                                Text("Top Ads"),
-                              ),
-                              DataCell(
-                                Text("100,000"),
-                              ),
-                            ],
-                          ),
-                          DataRow(
-                            cells: [
-                              DataCell(
-                                Text("1"),
-                              ),
-                              DataCell(
-                                Text("Top Ads"),
-                              ),
-                              DataCell(
-                                Text("100,000"),
-                              ),
-                            ],
-                          ),
-                          DataRow(
-                            cells: [
-                              DataCell(
-                                Text("1"),
-                              ),
-                              DataCell(
-                                Text("Top Ads"),
-                              ),
-                              DataCell(
-                                Text("100,000"),
-                              ),
-                            ],
-                          ),
-                          DataRow(
-                            cells: [
-                              DataCell(
-                                Text("1"),
-                              ),
-                              DataCell(
-                                Text("Top Ads"),
-                              ),
-                              DataCell(
-                                Text("100,000"),
-                              ),
-                            ],
-                          ),
-                        ],
-                        columns: const [
-                          DataColumn(
-                            label: Text("ID"),
-                            numeric: true,
-                          ),
-                          DataColumn(label: Text("Product")),
-                          DataColumn(
-                            label: Text("Amount"),
-                            numeric: true,
-                          ),
-                        ],
+                    SizedBox(
+                      width: width * .21,
+                      child: SingleChildScrollView(
+                        child: DataTable(
+                          border: TableBorder.all(
+                              color: Colors.black,
+                              width: 1.0,
+                              style: BorderStyle.none),
+                          rows: const [
+                            DataRow(
+                              cells: [
+                                DataCell(
+                                  Text("1"),
+                                ),
+                                DataCell(
+                                  Text("Top Ads"),
+                                ),
+                                DataCell(
+                                  Text("100,000"),
+                                ),
+                              ],
+                            ),
+                            DataRow(
+                              cells: [
+                                DataCell(
+                                  Text("1"),
+                                ),
+                                DataCell(
+                                  Text("Top Ads"),
+                                ),
+                                DataCell(
+                                  Text("100,000"),
+                                ),
+                              ],
+                            ),
+                            DataRow(
+                              cells: [
+                                DataCell(
+                                  Text("1"),
+                                ),
+                                DataCell(
+                                  Text("Top Ads"),
+                                ),
+                                DataCell(
+                                  Text("100,000"),
+                                ),
+                              ],
+                            ),
+                            DataRow(
+                              cells: [
+                                DataCell(
+                                  Text("1"),
+                                ),
+                                DataCell(
+                                  Text("Top Ads"),
+                                ),
+                                DataCell(
+                                  Text("100,000"),
+                                ),
+                              ],
+                            ),
+                            DataRow(
+                              cells: [
+                                DataCell(
+                                  Text("1"),
+                                ),
+                                DataCell(
+                                  Text("Top Ads"),
+                                ),
+                                DataCell(
+                                  Text("100,000"),
+                                ),
+                              ],
+                            ),
+                            DataRow(
+                              cells: [
+                                DataCell(
+                                  Text("1"),
+                                ),
+                                DataCell(
+                                  Text("Top Ads"),
+                                ),
+                                DataCell(
+                                  Text("100,000"),
+                                ),
+                              ],
+                            ),
+                          ],
+                          columns: const [
+                            DataColumn(
+                              label: Text("ID"),
+                              numeric: true,
+                            ),
+                            DataColumn(label: Text("Product")),
+                            DataColumn(
+                              label: Text("Amount"),
+                              numeric: true,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

@@ -44,7 +44,7 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
                 ),
               ),
               SizedBox(
-                width: width * .4,
+                width: width * .3,
                 height: 40,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 5.0),

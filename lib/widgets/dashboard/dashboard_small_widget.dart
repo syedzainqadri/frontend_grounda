@@ -29,7 +29,7 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: isMobile ? width : width / 4,
+      width: isMobile ? width : width * .25,
       decoration: BoxDecoration(
         color: controller.isDarkMode.value ? kDarkCardColor : kCardColor,
         borderRadius: const BorderRadius.all(
@@ -78,7 +78,7 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
                   children: [
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(
                       height: 8,
@@ -90,7 +90,7 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
                   ],
                 ),
                 SizedBox(
-                  width: 180,
+                  width: isMobile ? width * .4 : width * .1,
                   height: 140,
                   child: SfRadialGauge(
                     axes: <RadialAxis>[
@@ -112,7 +112,7 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
                               widget: Text("$percentage%",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headlineMedium)),
+                                      .headlineSmall)),
                         ],
                         pointers: <GaugePointer>[
                           RangePointer(
