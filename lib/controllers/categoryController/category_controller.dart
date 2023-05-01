@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 class CategoryController extends GetxController {
   var token = ''.obs;
   var category = <CategoryModel>[].obs;
+  RxList<String> parentCategory = RxList.empty(growable: true);
   var subCategory = <SubCategoryModel>[].obs;
   var singleCategory = SingleCategoryModel().obs;
   var selectedItemName = ''.obs;
@@ -40,6 +41,11 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       category.value = categoryModelFromJson(response.body);
       selectedItemName.value = category.first.name!;
+      for (int i = 0; i < category.length; i++) {
+        // if (category.value[i].parentId == 0) {
+        parentCategory.add(category.value[i].name!);
+        // }
+      }
     } else {
       showErrorSnak('Error', response.body);
     }

@@ -1,6 +1,7 @@
-import 'package:country_list_pick/country_list_pick.dart';
+import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/agencyController/agency_controller.dart';
+import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
@@ -14,11 +15,13 @@ class CreateAgency extends GetView<ThemeChangeController> {
   TextEditingController agencyEmailController = TextEditingController();
   TextEditingController agencyPhoneController = TextEditingController();
   TextEditingController agencyPasswordController = TextEditingController();
-  HtmlEditorController htmlEditorController = HtmlEditorController();
   TextEditingController countryNameController = TextEditingController();
+  TextEditingController agencyAddressController = TextEditingController();
+  HtmlEditorController htmlEditorController = HtmlEditorController();
   ScrollController scrollController =
       ScrollController(initialScrollOffset: 00.0);
   AgencyController agencyController = Get.find<AgencyController>();
+  CategoryController categoryController = Get.find<CategoryController>();
   var height = Get.height;
   var width = Get.width;
   //TODO: replace with api call from area api
@@ -31,6 +34,16 @@ class CreateAgency extends GetView<ThemeChangeController> {
       const DropdownMenuItem(value: "England", child: Text("England")),
     ];
     return menuItems;
+  }
+
+  RxList<String> agencyCategory = RxList.empty(growable: true);
+  var indexs = [].obs;
+  RxInt selectedIndex = 0.obs;
+  bool isSelected(index, List indexs, List agencyCategory) {
+    if (indexs.contains(index)) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -261,130 +274,211 @@ class CreateAgency extends GetView<ThemeChangeController> {
                   width: width * .02,
                 ),
                 //right side
-                SingleChildScrollView(
+                Scrollbar(
                   controller: scrollController,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: width * .26,
-                            height: height * .2,
-                            decoration: BoxDecoration(
-                              color: kDarkCardColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: IconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed: () {
-                                //TODO: add cover image.
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            width: width * .02,
-                          ),
-                          //TODO: Replace with Map
-                          Container(
-                            width: width * .26,
-                            height: height * .2,
-                            decoration: BoxDecoration(
-                              color: kDarkCardColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: IconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed: () {
-                                //TODO: add cover image.
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: height * .02,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: width * .26,
-                            height: height * .4,
-                            decoration: BoxDecoration(
-                              color: kCardColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: HtmlEditor(
-                              htmlToolbarOptions: const HtmlToolbarOptions(
-                                defaultToolbarButtons: [
-                                  FontSettingButtons(),
-                                  ColorButtons(),
-                                  ListButtons(),
-                                ],
-                                toolbarItemHeight: 30,
-                                toolbarType: ToolbarType.nativeExpandable,
+                  thumbVisibility: false,
+                  trackVisibility: false,
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: width * .26,
+                              height: height * .2,
+                              decoration: BoxDecoration(
+                                image: agencyController.logo == ''
+                                    ? const DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage(
+                                            'assets/images/mountains.webp'),
+                                      )
+                                    : DecorationImage(
+                                        image: NetworkImage(
+                                            agencyController.logo.value),
+                                      ),
+                                color: kDarkCardColor,
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              controller: htmlEditorController, //required
-                              htmlEditorOptions: const HtmlEditorOptions(
-                                autoAdjustHeight: true,
-                                androidUseHybridComposition: true,
-                                hint: "Your Description here...",
-                                //initalText: "text content initial, if any",
-                              ),
-                              otherOptions: const OtherOptions(
-                                height: 350,
+                              child: IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: () {
+                                  agencyController.getAgencyLogo();
+                                },
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: width * .02,
-                          ),
-                          //TODO: Replace with address details
-                          CountryListPick(
-                            initialSelection: agencyController.countryName.value
-                                .toLowerCase(),
-                            useSafeArea: true,
-                            useUiOverlay: true,
-                            theme: CountryTheme(
-                              labelColor: Colors.black,
-                              isShowFlag: true,
-                              isShowTitle: false,
-                              isShowCode: false,
-                              isDownIcon: false,
-                              showEnglishName: true,
+                            SizedBox(
+                              width: width * .02,
                             ),
-                            onChanged: (value) async {
-                              countryNameController.text = value!.code!;
-                              agencyController.countryCode.value =
-                                  value.dialCode!;
-                              // await getLocation();
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: height * .02,
-                      ),
-                      //TODO: Replace with list of categories and sub categories respectively
-                      Row(
-                        children: [
-                          Container(
-                            width: width * .54,
-                            height: height * .25,
-                            decoration: BoxDecoration(
-                              color: kDarkCardColor,
-                              borderRadius: BorderRadius.circular(20),
+                            //TODO: Replace with Map
+                            Container(
+                              width: width * .26,
+                              height: height * .2,
+                              decoration: BoxDecoration(
+                                color: kDarkCardColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: () {
+                                  //TODO: add cover image.
+                                },
+                              ),
                             ),
-                            child: IconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed: () {
-                                //TODO: add cover image.
-                              },
+                          ],
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: width * .26,
+                              height: height * .3,
+                              decoration: BoxDecoration(
+                                color: kCardColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: HtmlEditor(
+                                htmlToolbarOptions: const HtmlToolbarOptions(
+                                  defaultToolbarButtons: [
+                                    FontSettingButtons(),
+                                    ColorButtons(),
+                                    ListButtons(),
+                                  ],
+                                  toolbarItemHeight: 30,
+                                  toolbarType: ToolbarType.nativeExpandable,
+                                ),
+                                controller: htmlEditorController, //required
+                                htmlEditorOptions: const HtmlEditorOptions(
+                                  autoAdjustHeight: true,
+                                  androidUseHybridComposition: true,
+                                  hint: "Your Description here...",
+                                  //initalText: "text content initial, if any",
+                                ),
+                                otherOptions: const OtherOptions(
+                                  height: 350,
+                                ),
+                              ),
                             ),
+                            SizedBox(
+                              width: width * .02,
+                            ),
+                            //TODO: Replace with address details
+                            Column(
+                              children: [
+                                SizedBox(
+                                  width: width * .26,
+                                  child: SelectState(
+                                    onCountryChanged: (String value) {},
+                                    onCityChanged: (String value) {},
+                                    onStateChanged: (String value) {},
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width * .26,
+                                  child: DefaultTextField(
+                                    hintText: 'Address',
+                                    labelText: 'Please Enter Agency Address',
+                                    isPassword: false,
+                                    textEditingController:
+                                        agencyAddressController,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
+                        //TODO: Replace with list of categories and sub categories respectively
+                        Container(
+                          width: width * .54,
+                          height: height * .25,
+                          decoration: BoxDecoration(
+                            color: kCardColor,
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                        ],
-                      )
-                    ],
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20.0, left: 20.0),
+                                child: Text('Property Type'),
+                              ),
+                              SizedBox(
+                                height: height * .02,
+                              ),
+                              SizedBox(
+                                width: width * .5,
+                                height: height * .2,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 20.0),
+                                  child: Wrap(
+                                    spacing: width * .005,
+                                    runSpacing: width * .01,
+                                    children: List.generate(
+                                      categoryController.category.length,
+                                      (index) {
+                                        return InputChip(
+                                          backgroundColor: isSelected(
+                                                  index, indexs, agencyCategory)
+                                              ? Theme.of(context).primaryColor
+                                              : const Color(0xFF3E5561),
+                                          avatar: isSelected(
+                                                  index, indexs, agencyCategory)
+                                              ? const Icon(
+                                                  Icons.check_box_rounded,
+                                                  size: 20,
+                                                )
+                                              : const Icon(Icons.add),
+                                          label: Text(
+                                            categoryController
+                                                .category[index].name!,
+                                            style: isSelected(index, indexs,
+                                                    agencyCategory)
+                                                ? const TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold)
+                                                : TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.blueGrey[100],
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                          ),
+                                          onSelected: (bool value) {
+                                            selectedIndex.value = index;
+                                            (indexs.contains(index)
+                                                ? indexs.remove(index)
+                                                : indexs.add(index));
+                                            (agencyCategory.contains(
+                                                    categoryController
+                                                        .category[index].name)
+                                                ? agencyCategory.remove(
+                                                    categoryController
+                                                        .category[index].name!)
+                                                : agencyCategory.add(
+                                                    categoryController
+                                                        .category[index]
+                                                        .name!));
+                                            print(agencyCategory);
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],

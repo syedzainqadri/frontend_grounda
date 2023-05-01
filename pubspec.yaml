@@ -68,6 +68,8 @@ dependencies:
   image_picker_web: ^3.0.0+1
   icon_picker: ^2.1.0
   html_editor_enhanced: ^2.5.1
+  country_state_city_picker: ^1.2.8
+  chips_choice_null_safety: ^2.0.6
   # flutter_open_street_map: ^0.0.3
 
 
