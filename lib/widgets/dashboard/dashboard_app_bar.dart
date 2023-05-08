@@ -23,6 +23,7 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
     double width = Get.width;
     return Obx(
       () => AppBar(
+        leading: const Offstage(),
         backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
         title: SizedBox(
           width: width * .8,
@@ -44,7 +45,7 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
                 ),
               ),
               SizedBox(
-                width: width * .3,
+                width: width < 1010 ? width * .2 : width * .3,
                 height: 40,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 5.0),

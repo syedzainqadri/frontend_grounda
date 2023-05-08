@@ -52,7 +52,9 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                         width: width,
                         percentage: 65,
                         svgIconPath: "assets/icons/order-list.svg",
-                        color: kDarkColor,
+                        color: controller.isDarkMode.value
+                            ? kGoldenColor
+                            : kDarkColor,
                         isMobile: isMobile,
                       ),
                     ],
@@ -64,13 +66,14 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
               ),
               Container(
                 width: width * .515,
-                decoration: const BoxDecoration(
-                  color: kFrameColor,
+                decoration: BoxDecoration(
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: kShadowColor,
                       blurRadius: 2,
@@ -81,6 +84,9 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: SfCartesianChart(
+                    backgroundColor: controller.isDarkMode.value
+                        ? kDarkCardColor
+                        : kCardColor,
                     plotAreaBorderWidth: 0,
                     primaryXAxis: DateTimeAxis(
                         name: 'X-Axis',
@@ -107,13 +113,14 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
               ),
               Container(
                 width: width * .515,
-                decoration: const BoxDecoration(
-                  color: kFrameColor,
+                decoration: BoxDecoration(
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: kShadowColor,
                       blurRadius: 2,
@@ -208,13 +215,14 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
             children: [
               Container(
                 width: width * 0.21,
-                decoration: const BoxDecoration(
-                  color: kFrameColor,
+                decoration: BoxDecoration(
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: kShadowColor,
                       blurRadius: 2,
@@ -341,13 +349,14 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
               ),
               Container(
                 width: width * 0.21,
-                decoration: const BoxDecoration(
-                  color: kFrameColor,
+                decoration: BoxDecoration(
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: kShadowColor,
                       blurRadius: 2,

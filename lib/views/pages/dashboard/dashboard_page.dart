@@ -27,9 +27,6 @@ class DashboardPage extends GetView<ThemeChangeController> {
 
   @override
   Widget build(BuildContext context) {
-    // var width = Get.width;
-    // var height = Get.height;
-
     return Obx(
       () => Scaffold(
         backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
