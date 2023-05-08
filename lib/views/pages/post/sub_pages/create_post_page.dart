@@ -41,7 +41,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
   final TextEditingController searchCategory = TextEditingController();
 
   // TextEditingController postTitleController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final _createPostFormKey = GlobalKey<FormState>();
 
   var selectedItemId = 0.obs;
 
@@ -121,7 +121,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   child: Focus(
                     focusNode: postController.formFocus,
                     child: Form(
-                      key: _formKey,
+                      key: _createPostFormKey,
                       child: PostForm(
                         //<============! Post Title Fild ==========>
                         postTitleController: postController.postTitleController,
@@ -510,7 +510,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                           .selectedAmenitiesNames.isNotEmpty ||
                                       postController
                                           .selectedAmenitiesCodes.isNotEmpty) {
-                                    if (_formKey.currentState!.validate()) {
+                                    if (_createPostFormKey.currentState!
+                                        .validate()) {
                                       Get.defaultDialog(
                                         title: 'Creating Post',
                                         content: const Center(

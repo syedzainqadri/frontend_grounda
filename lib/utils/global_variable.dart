@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 
 RxBool show = false.obs;
-//api endpoints
 RxString pid = ''.obs;
 RxString iconFontFamily = "MaterialIcons".obs;
-//String baseUrl = 'https://starfish-app-mfjab.ondigitalocean.app';
-String baseUrl = 'http://127.0.0.1:8080';
+//api endpoints
+String baseUrl = 'https://ghrounda-app-pwo2qiqgmq-dt.a.run.app';
+// String baseUrl = 'http://127.0.0.1:8080';
 String createUser = '/auth/register';
 String userLogin = '/auth/login';
 String allUsers = '/users/';

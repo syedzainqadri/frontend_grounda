@@ -24,7 +24,7 @@ class DashboardView extends GetView<SideBarController> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      key: controller.scaffoldKey,
+      // key: controller.scaffoldKey,
       body: Obx(
         () => Row(
           crossAxisAlignment: CrossAxisAlignment.start,

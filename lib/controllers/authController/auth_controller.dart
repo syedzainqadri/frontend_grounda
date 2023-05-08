@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/models/userModel/user_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
@@ -11,10 +11,10 @@ import 'package:http/http.dart' as http;
 class AuthController extends GetxController {
   late FocusNode userNameFocus;
   late FocusNode passwordFocus;
-  FirebaseAuth auth = FirebaseAuth.instance;
-  Rxn<User> firebaseUser = Rxn<User>();
+  // FirebaseAuth auth = FirebaseAuth.instance;
+  // Rxn<User> firebaseUser = Rxn<User>();
 
-  User? get userGetter => firebaseUser.value;
+  // User? get userGetter => firebaseUser.value;
 
   var userModel = UserModel().obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');

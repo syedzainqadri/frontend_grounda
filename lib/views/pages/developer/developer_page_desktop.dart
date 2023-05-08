@@ -27,7 +27,7 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
 
   TextEditingController categoryStatusController = TextEditingController();
   List<DevelopersModel> developersModel = [];
-  final _formKey = GlobalKey<FormState>();
+  final _developerFormKey = GlobalKey<FormState>();
 
   var selectedItemId = 0.obs;
   var status = false.obs;
@@ -67,7 +67,7 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: Form(
-                    key: _formKey,
+                    key: _developerFormKey,
                     child: DeveloperForm(
                       developerNameController: developerNameController,
                       nameValidator: (value) {
@@ -78,7 +78,7 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                       descriptionController: descriptionControllerDeveloperPage,
                       buttonText: devId.value == '' ? 'Submit' : 'Update',
                       formSubmit: () async {
-                        if (_formKey.currentState!.validate()) {
+                        if (_developerFormKey.currentState!.validate()) {
                           if (devId.value == '') {
                             Get.defaultDialog(
                               title: 'Creating Developer',

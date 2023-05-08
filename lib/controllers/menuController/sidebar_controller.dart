@@ -42,8 +42,7 @@ class SideBarController extends GetxController {
   var show = false.obs;
   PageController get pageController => _pageController.value;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
+  // GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   onSelected(int index) {
     switch (index) {
@@ -91,11 +90,11 @@ class SideBarController extends GetxController {
     _pageController.value = pageController;
   }
 
-  void controlMenu() {
-    if (!_scaffoldKey.currentState!.isDrawerOpen) {
-      _scaffoldKey.currentState!.openDrawer();
-    }
-  }
+  // void controlMenu() {
+  //   if (scaffoldKey.currentState!.isDrawerOpen) {
+  //     scaffoldKey.currentState!.openDrawer();
+  //   }
+  // }
 
   changeName(String value) {
     title(value).obs;
