@@ -8,6 +8,7 @@ import 'package:frontend_grounda/theme/theme.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:url_strategy/url_strategy.dart';
 import 'controllers/themeController/theme_change_controller.dart';
 import 'controllers/themeController/theme_controller.dart';
 
@@ -24,6 +25,7 @@ void main() async {
   Get.put(AuthController());
   Get.put(ThemeController());
   Get.put(ThemeChangeController());
+  setPathUrlStrategy();
   runApp(MyApp());
 }
 
