@@ -4,7 +4,7 @@ RxBool show = false.obs;
 RxString pid = ''.obs;
 RxString iconFontFamily = "MaterialIcons".obs;
 //api endpoints
-String baseUrl = 'https://ghrounda-app-pwo2qiqgmq-dt.a.run.app';
+String baseUrl = 'https://server-pwo2qiqgmq-uc.a.run.app';
 // String baseUrl = 'http://127.0.0.1:8080';
 String createUser = '/auth/register';
 String userLogin = '/auth/login';

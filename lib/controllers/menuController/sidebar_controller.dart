@@ -85,6 +85,9 @@ class SideBarController extends GetxController {
       case 12:
         Get.toNamed('/settings');
         break;
+      case 13:
+        Get.toNamed('/login');
+        break;
     }
     _pageController.value.jumpToPage(index);
     _pageController.value = pageController;
