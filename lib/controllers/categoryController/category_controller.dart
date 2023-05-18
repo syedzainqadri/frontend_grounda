@@ -133,6 +133,7 @@ class CategoryController extends GetxController {
     String amenitiesIcons,
   ) async {
     var bodyPrepare = {
+      'id': id,
       'image': image,
       'name': name,
       'slug': slug,
@@ -140,8 +141,9 @@ class CategoryController extends GetxController {
       'parentId': parentId,
       'status': status,
       'amenitiesNames': amenitiesNames,
-      'amenitiesCode': amenitiesIcons
+      'amenitiesIconCodes': amenitiesIcons
     };
+    print(bodyPrepare);
     var response = await http.put(Uri.parse(baseUrl + updateCategory),
         body: jsonEncode(bodyPrepare),
         headers: {

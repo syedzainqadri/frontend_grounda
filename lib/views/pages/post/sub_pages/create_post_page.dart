@@ -433,7 +433,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                   onChanged: (value) {
                                     amenities[index] = !amenities[index];
                                     //TODO: build amenities local lists
-                                    if (postController.postID.value != 0) {
+                                    if (postController.postID.value != '') {
                                       print(postController.postID);
                                       if (amenities[index]) {
                                         postController.postAmenitiesNames
@@ -495,13 +495,14 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         },
                         //submit button
                         formSubmit: () async {
-                          if (postController.postID.value == 0) {
+                          if (postController.postID == '') {
                             var description =
                                 await descriptionController.getText();
                             var amenitiesNameList = jsonEncode(
                                 postController.selectedAmenitiesNames);
                             var amenitiesCodeList = jsonEncode(
                                 postController.selectedAmenitiesCodes);
+                            print('Amenities Names Are');
                             print(amenitiesNameList);
                             if (description.isNotEmpty) {
                               if (postController.imageUrl.isNotEmpty) {
@@ -523,6 +524,55 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                           Random().nextInt(10000000);
                                       var imageList =
                                           jsonEncode(postController.imageUrl);
+                                      print(postController
+                                          .postTitleController.text);
+                                      print(propertyNumber);
+                                      print(description);
+                                      print(postController.imageUrl.first
+                                          .toString());
+                                      print(imageList);
+                                      print(postController
+                                          .videoUrlController.text);
+                                      print(description);
+                                      print(postController.longitude.value
+                                          .toString());
+                                      print(postController.latitude.value
+                                          .toString());
+                                      print(postController
+                                          .plotNumberController.text);
+                                      print(
+                                          postController.priceController.text);
+                                      print(postController.cityController.text);
+                                      print(postController.areaController.text);
+                                      print(
+                                          postController.hasInstallments.value);
+                                      print(postController
+                                          .showContactDetials.value);
+                                      print('issue loading advance controller');
+                                      print(postController
+                                          .advanceController.text);
+                                      print(int.parse(postController
+                                          .noOfInstallmentController.text));
+                                      print(postController
+                                          .monthlyInstallmentController.text);
+                                      print(
+                                          postController.posessionReady.value);
+                                      print(postController
+                                          .propertyAreaUnitValue.value);
+                                      print(postController.purposeValue.value);
+                                      print(postController
+                                          .totalAreaController.text);
+                                      print(postController
+                                          .bedroomController.text);
+                                      print(postController
+                                          .bathroomController.text);
+                                      print(amenitiesCodeList);
+                                      print(amenitiesNameList);
+                                      print(selectedItemId);
+                                      print(subCategorySelectedItemId);
+                                      print(postController
+                                              .postTitleController.text +
+                                          propertyNumber.toString());
                                       await postController.create(
                                         postController.postTitleController.text,
                                         propertyNumber,
@@ -568,6 +618,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                             propertyNumber.toString(),
                                       );
                                       Navigator.pop(context);
+                                      Get.toNamed('/post');
                                     } else {
                                       showErrorSnak('Amenities are empty',
                                           'Please Select Amenities');

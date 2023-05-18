@@ -72,6 +72,11 @@ class PostController extends GetxController {
     userId.value = int.parse(tokenHiveBox.get('userId'));
     getAll();
     getLocation();
+    noOfInstallmentController.text = '0';
+    monthlyInstallmentController.text = '0';
+    bedroomController.text = '0';
+    bathroomController.text = '0';
+    advanceController.text = '0';
     titleFieldFocus = FocusNode();
     cityFieldFocus = FocusNode();
     areaFieldFocus = FocusNode();
@@ -229,7 +234,7 @@ class PostController extends GetxController {
         });
     print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
-      post.value = postModelFromJson(response.body);
+      // post.value = postModelFromJson(response.body);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,

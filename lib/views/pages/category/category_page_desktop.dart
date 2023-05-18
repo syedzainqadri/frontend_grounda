@@ -209,7 +209,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                           selectedItemId.value,
                           isPublished.value,
                           commaSepratedAmenitiesList.value,
-                          commaSepratedAmenitiesList.value,
+                          commaSepratedAmenitiesIconList.value,
                         );
                         categoryNameController.text = '';
                         categorySlugController.text = '';
@@ -434,6 +434,21 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                         .imageUrl.value =
                                                     categoryController
                                                         .category[index].image!;
+                                                commaSepratedAmenitiesList
+                                                        .value =
+                                                    categoryController
+                                                        .category[index]
+                                                        .amenitiesNames!;
+                                                commaSepratedAmenitiesIconList
+                                                        .value =
+                                                    categoryController
+                                                        .category[index]
+                                                        .amenitiesIconCodes!;
+                                                iconData.value =
+                                                    categoryController
+                                                        .category[index]
+                                                        .amenitiesIconCodes!
+                                                        .split(',');
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/edit.svg"),
