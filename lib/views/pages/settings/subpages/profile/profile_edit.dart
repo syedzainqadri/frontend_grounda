@@ -294,7 +294,7 @@ class ProfileEditPage extends StatelessWidget {
                     SizedBox(
                       width: width * .02,
                     ),
-                    profileController.profile.value.id == ''
+                    profileController.profile.value.firstName == ''
                         ? DefaultButton(
                             primaryColor: kPrimaryColor,
                             hoverColor: kDarkColor,
@@ -310,6 +310,40 @@ class ProfileEditPage extends StatelessWidget {
                               var userId =
                                   profileController.tokenHiveBox.get('userId');
                               int userId0 = int.parse(userId);
+                              print(
+                                  "<======== Start Creating Profile =======>");
+                              print(userId0);
+                              print(profileController
+                                  .firstNameController.value.text);
+                              print(profileController
+                                  .lastNameController.value.text);
+                              print(profileController
+                                  .address1Controller.value.text);
+                              print(profileController
+                                  .address2Controller.value.text);
+                              print(profileController
+                                  .cityNameController.value.text);
+                              print(profileController
+                                  .stateNameController.value.text);
+                              print(profileController
+                                  .countryNameController.value.text);
+                              print(profileController
+                                  .phoneNumberController.value.text);
+                              print(profileController
+                                  .postCodeController.value.text);
+                              print(longitude.value.toString());
+                              print(latitude.value.toString());
+                              print(
+                                  profileController.emailController.value.text);
+                              print(profileController
+                                  .contactMobileNumberCodeController
+                                  .value
+                                  .text);
+                              print(profileController
+                                  .landlineController.value.text);
+                              print(profileController
+                                  .contactPersonNameController.value.text);
+                              print("<======== Creating Profile =======>");
                               await profileController.createUserProfile(
                                   profileController
                                       .firstNameController.value.text,

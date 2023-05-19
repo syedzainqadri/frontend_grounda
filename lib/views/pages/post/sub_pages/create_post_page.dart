@@ -514,6 +514,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                     if (_createPostFormKey.currentState!
                                         .validate()) {
                                       Get.defaultDialog(
+                                        barrierDismissible: false,
                                         title: 'Creating Post',
                                         content: const Center(
                                           child: CircularProgressIndicator(
@@ -618,6 +619,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                             propertyNumber.toString(),
                                       );
                                       Navigator.pop(context);
+                                      postController.getAll();
                                       Get.toNamed('/post');
                                     } else {
                                       showErrorSnak('Amenities are empty',
@@ -656,7 +658,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                 //         .selectedAmenitiesCodes.isNotEmpty) {
                                 // if (_formKey.currentState!.validate()) {
                                 Get.defaultDialog(
-                                  title: 'Creating Post',
+                                  barrierDismissible: false,
+                                  title: 'Updating Post',
                                   content: const Center(
                                     child: CircularProgressIndicator(
                                         color: kPrimaryColor),
@@ -703,6 +706,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                   postController.isPublished.value,
                                 );
                                 Navigator.pop(context);
+                                postController.getAll();
+                                Get.toNamed('/post');
                                 // }
                                 // } else {
                                 //   showErrorSnak('Amenities are empty',
