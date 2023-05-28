@@ -20,6 +20,7 @@ import 'package:get/route_manager.dart';
 import '../views/pages/blog/blog_view.dart';
 import '../views/pages/customer/customer_view.dart';
 import '../views/pages/help/help_view.dart';
+import '../views/pages/project/sub_pages/project_create_view.dart';
 import '../views/pages/settings/setting_view.dart';
 
 appRoutes() => [
@@ -51,6 +52,12 @@ appRoutes() => [
       GetPage(
         name: '/project',
         page: () => const ProjectView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
+        name: '/project/create',
+        page: () => const ProjectCreateView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
