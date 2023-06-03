@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/menuController/sidebar_controller.dart';
-import 'package:frontend_grounda/views/pages/project/project_page.dart';
+import 'package:frontend_grounda/utils/global_variable.dart';
+import 'package:frontend_grounda/views/pages/customer/sub_pages/create_customer_page.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
+import 'package:frontend_grounda/views/sidebar/mobile_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
-import '../../../utils/global_variable.dart';
-import '../../sidebar/mobile_sidebar.dart';
 
-class ProjectView extends GetView<SideBarController> {
-  const ProjectView({super.key});
+class CustomerCreateView extends GetView<SideBarController> {
+  const CustomerCreateView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +47,8 @@ class ProjectView extends GetView<SideBarController> {
               child: PageView(
                 controller: controller.pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  ProjectPage(),
+                children: const [
+                  CreateCustomerPage(),
                 ],
               ),
             ),
@@ -58,3 +58,16 @@ class ProjectView extends GetView<SideBarController> {
     );
   }
 }
+
+
+
+// Hover color effect on test field
+// price icon svg 
+// space evenly in price row
+// remove one upload button and alight to right side and increase heading side
+// add google map 
+// address
+// re arrange the has installment etc
+// columns based
+// add plus button for images uploads
+

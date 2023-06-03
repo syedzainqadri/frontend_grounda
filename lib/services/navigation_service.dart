@@ -2,6 +2,7 @@ import 'package:frontend_grounda/services/intial_navigation.dart';
 import 'package:frontend_grounda/views/pages/agency/agency_view.dart';
 import 'package:frontend_grounda/views/pages/agency/sub_pages/create_agency_view.dart';
 import 'package:frontend_grounda/views/pages/category/category_view.dart';
+import 'package:frontend_grounda/views/pages/customer/sub_pages/customer_create_view.dart';
 import 'package:frontend_grounda/views/pages/developer/developer_view.dart';
 import 'package:frontend_grounda/views/pages/forum/forum_view.dart';
 import 'package:frontend_grounda/views/pages/login/login_view.dart';
@@ -19,6 +20,7 @@ import 'package:get/route_manager.dart';
 import '../views/pages/blog/blog_view.dart';
 import '../views/pages/customer/customer_view.dart';
 import '../views/pages/help/help_view.dart';
+import '../views/pages/project/sub_pages/project_create_view.dart';
 import '../views/pages/settings/setting_view.dart';
 
 appRoutes() => [
@@ -54,6 +56,12 @@ appRoutes() => [
         transitionDuration: const Duration(milliseconds: 1000),
       ),
       GetPage(
+        name: '/project/create',
+        page: () => const ProjectCreateView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
         name: '/developer',
         page: () => const DeveloperView(),
         transition: Transition.fadeIn,
@@ -80,6 +88,12 @@ appRoutes() => [
       GetPage(
         name: '/customer',
         page: () => const CustomerView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
+        name: '/customer/create',
+        page: () => const CustomerCreateView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
