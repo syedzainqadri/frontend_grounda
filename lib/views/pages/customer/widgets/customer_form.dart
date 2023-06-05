@@ -573,25 +573,26 @@ class CustomerForm extends GetView<ThemeChangeController> {
                                   // MAP
 
                                   Container(
-                                      width: width * .22,
-                                      height: height * .57,
-                                      decoration: BoxDecoration(
-                                        color: kDarkCardColor,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: customerController
-                                                  .latitude.value ==
-                                              0
-                                          ? const Center(
-                                              child: CircularProgressIndicator(
+                                    width: width * .22,
+                                    height: height * .57,
+                                    decoration: BoxDecoration(
+                                      color: kDarkCardColor,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: customerController.latitude.value ==
+                                            0
+                                        ? const Center(
+                                            child: CircularProgressIndicator(
                                               color: kPrimaryColor,
-                                            ))
-                                          : GoogleMap(
-                                              lang: customerController
-                                                  .longitude.value,
-                                              lat: customerController
-                                                  .latitude.value,
-                                            )),
+                                            ),
+                                          )
+                                        : GoogleMap(
+                                            lang: customerController
+                                                .longitude.value,
+                                            lat: customerController
+                                                .latitude.value,
+                                          ),
+                                  ),
                                 ],
                               ),
                             ),
