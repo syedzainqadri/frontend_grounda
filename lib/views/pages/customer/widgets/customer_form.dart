@@ -160,7 +160,7 @@ class CustomerForm extends GetView<ThemeChangeController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: width * 0.25,
+                    width: width * 0.24,
                     child: Column(
                       children: [
                         // First Name
@@ -305,9 +305,12 @@ class CustomerForm extends GetView<ThemeChangeController> {
                           width: width * .47,
                           child: const Text("Customer Address and Location"),
                         ),
+                        //TODO: check this divider
                         const Padding(
-                          padding: EdgeInsets.only(left: 25.0),
+                          padding: EdgeInsets.only(left: 25.0, right: 25),
                           child: Divider(
+                            indent: 1,
+                            endIndent: 2,
                             height: 1.0,
                             thickness: 1,
                             color: Colors.black,
