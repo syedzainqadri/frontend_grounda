@@ -4,6 +4,7 @@ import 'package:frontend_grounda/controllers/agencyController/agency_controller.
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
+import 'package:frontend_grounda/widgets/maps.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
@@ -313,21 +314,22 @@ class CreateAgency extends GetView<ThemeChangeController> {
                             SizedBox(
                               width: width * .02,
                             ),
-                            //TODO: Replace with Map
                             Container(
-                              width: width * .26,
-                              height: height * .2,
-                              decoration: BoxDecoration(
-                                color: kDarkCardColor,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: IconButton(
-                                icon: const Icon(Icons.add),
-                                onPressed: () {
-                                  //TODO: add cover image.
-                                },
-                              ),
-                            ),
+                                width: width * .26,
+                                height: height * .2,
+                                decoration: BoxDecoration(
+                                  color: kDarkCardColor,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: agencyController.latitude.value == 0
+                                    ? const Center(
+                                        child: CircularProgressIndicator(
+                                        color: kPrimaryColor,
+                                      ))
+                                    : GoogleMap(
+                                        lang: agencyController.longitude.value,
+                                        lat: agencyController.latitude.value,
+                                      )),
                           ],
                         ),
                         SizedBox(
@@ -415,7 +417,6 @@ class CreateAgency extends GetView<ThemeChangeController> {
                               ),
                               SizedBox(
                                 width: width * .5,
-                                height: height * .2,
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
                                   child: Wrap(

@@ -71,6 +71,8 @@ dependencies:
   country_state_city_picker: ^1.2.8
   chips_choice_null_safety: ^2.0.6
   url_strategy: ^0.2.0
+  google_maps_flutter_web: ^0.5.0
+  google_maps: ^6.3.0
   # flutter_open_street_map: ^0.0.3
 
 
