@@ -8,6 +8,7 @@ import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
+import 'package:location/location.dart';
 
 class AgencyController extends GetxController {
   late FocusNode formFocus;
@@ -23,6 +24,12 @@ class AgencyController extends GetxController {
   var isLoading = false.obs;
   var sell = false.obs;
   var rent = false.obs;
+  late bool _serviceEnabled;
+  late PermissionStatus _permissionGranted;
+  late LocationData _locationData;
+  RxDouble latitude = 0.0.obs;
+  RxDouble longitude = 0.0.obs;
+  Location location = Location();
 
   @override
   void onInit() {
@@ -33,6 +40,7 @@ class AgencyController extends GetxController {
     agencyPhoneFieldFocus = FocusNode();
     agencyPasswordFieldFocus = FocusNode();
     getAll();
+    getLocation();
   }
 
   Future<void> getAll() async {
@@ -247,5 +255,28 @@ class AgencyController extends GetxController {
         logo.value = value;
       });
     }
+  }
+
+  Future<void> getLocation() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+    latitude.value = _locationData.latitude!;
+    longitude.value = _locationData.longitude!;
+    print("latitude = $latitude longitude = $longitude");
   }
 }
