@@ -26,7 +26,7 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
         leading: const Offstage(),
         backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
         title: SizedBox(
-          width: width * .8,
+          width: width * .75,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

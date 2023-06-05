@@ -20,6 +20,8 @@ import 'package:get/route_manager.dart';
 import '../views/pages/blog/blog_view.dart';
 import '../views/pages/customer/customer_view.dart';
 import '../views/pages/help/help_view.dart';
+import '../views/pages/order/sub_pages/order_create_view.dart';
+import '../views/pages/product/sub_pages/product_create_view.dart';
 import '../views/pages/project/sub_pages/project_create_view.dart';
 import '../views/pages/settings/setting_view.dart';
 
@@ -74,6 +76,12 @@ appRoutes() => [
         transitionDuration: const Duration(milliseconds: 1000),
       ),
       GetPage(
+        name: '/product/create',
+        page: () => const ProductCreateView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
         name: '/agency',
         page: () => const AgencyView(),
         transition: Transition.fadeIn,
@@ -106,6 +114,12 @@ appRoutes() => [
       GetPage(
         name: '/order',
         page: () => const OrderView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
+        name: '/order/create',
+        page: () => const OrderCreateView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
