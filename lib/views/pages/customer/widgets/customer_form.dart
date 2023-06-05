@@ -3,11 +3,14 @@
 import 'package:country_currency_pickers/country.dart';
 import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend_grounda/controllers/customerController/customer_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
+
+import '../../../../widgets/maps.dart';
 
 class CustomerForm extends GetView<ThemeChangeController> {
   CustomerForm(
@@ -110,6 +113,7 @@ class CustomerForm extends GetView<ThemeChangeController> {
   List<DropdownMenuItem<String>> categoryDropDownList;
   List<DropdownMenuItem<String>> subCategoryDropDownList;
   List<DropdownMenuItem<String>> purposeList;
+  // controllers
   TextEditingController postTitleController;
   TextEditingController totalAreaController;
   TextEditingController videoUrlController;
@@ -122,6 +126,9 @@ class CustomerForm extends GetView<ThemeChangeController> {
   TextEditingController advanceController;
   TextEditingController noOfInstallmentController;
   TextEditingController monthlyInstallmentValueController;
+
+  CustomerController customerController = Get.find<CustomerController>();
+
   QuillEditorController contentController;
   Widget images;
   Widget amenities;
@@ -131,6 +138,7 @@ class CustomerForm extends GetView<ThemeChangeController> {
 
   @override
   Widget build(BuildContext context) {
+    var agencyController;
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
@@ -139,125 +147,108 @@ class CustomerForm extends GetView<ThemeChangeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Add Customer",
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.start,
-              ),
-              SizedBox(
-                height: height * 0.015,
-              ),
+              // Text(
+              //   "Add Customer",
+              //   style: Theme.of(context).textTheme.bodyLarge,
+              //   textAlign: TextAlign.start,
+              // ),
+              // SizedBox(
+              //   height: height * 0.015,
+              // ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
                     width: width * 0.25,
                     child: Column(
                       children: [
                         // First Name
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "First Name",
-                            labelText: "First Name",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
+                        DefaultTextField(
+                          focusNode: cityFocus,
+                          onFieldSubmitted: cityFieldSubmitted,
+                          hintText: "First Name",
+                          labelText: "First Name",
+                          isPassword: false,
+                          textEditingController: cityController,
+                          validator: cityValidator,
+                          maxLength: 25,
                         ),
                         SizedBox(
-                          width: width * 0.012,
+                          height: height * 0.012,
                         ),
                         // Last Name
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "Last name",
-                            labelText: "Last name",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
+                        DefaultTextField(
+                          focusNode: cityFocus,
+                          onFieldSubmitted: cityFieldSubmitted,
+                          hintText: "Last name",
+                          labelText: "Last name",
+                          isPassword: false,
+                          textEditingController: cityController,
+                          validator: cityValidator,
+                          maxLength: 25,
                         ),
                         SizedBox(
-                          width: width * 0.012,
+                          height: height * 0.012,
                         ),
                         // Phone
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "Phone",
-                            labelText: "Phone",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
+                        DefaultTextField(
+                          focusNode: cityFocus,
+                          onFieldSubmitted: cityFieldSubmitted,
+                          hintText: "Phone",
+                          labelText: "Phone",
+                          isPassword: false,
+                          textEditingController: cityController,
+                          validator: cityValidator,
+                          maxLength: 25,
                         ),
                         SizedBox(
-                          width: width * 0.012,
+                          height: height * 0.012,
                         ),
                         // Phone 2
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "Phone 2",
-                            labelText: "Phone 2",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
+                        DefaultTextField(
+                          focusNode: cityFocus,
+                          onFieldSubmitted: cityFieldSubmitted,
+                          hintText: "Phone 2",
+                          labelText: "Phone 2",
+                          isPassword: false,
+                          textEditingController: cityController,
+                          validator: cityValidator,
+                          maxLength: 25,
                         ),
                         SizedBox(
-                          width: width * 0.012,
+                          height: height * 0.012,
                         ),
                         // Whatsapp Number
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "Whatsapp Number",
-                            labelText: "Whatsapp Number",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
+                        DefaultTextField(
+                          focusNode: cityFocus,
+                          onFieldSubmitted: cityFieldSubmitted,
+                          hintText: "Whatsapp Number",
+                          labelText: "Whatsapp Number",
+                          isPassword: false,
+                          textEditingController: cityController,
+                          validator: cityValidator,
+                          maxLength: 25,
                         ),
                         SizedBox(
-                          width: width * 0.012,
+                          height: height * 0.012,
                         ),
                         // Whatsapp Number
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "Date of Birth",
-                            labelText: "Date of Birth",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
+                        DefaultTextField(
+                          focusNode: cityFocus,
+                          onFieldSubmitted: cityFieldSubmitted,
+                          hintText: "Date of Birth",
+                          labelText: "Date of Birth",
+                          isPassword: false,
+                          textEditingController: cityController,
+                          validator: cityValidator,
+                          maxLength: 25,
                         ),
                         SizedBox(
-                          width: width * 0.012,
+                          height: height * 0.012,
                         ),
                         Container(
-                          width: width * .22,
+                          width: width * .25,
                           height: height * .03,
                           decoration: const BoxDecoration(
                               border: Border(bottom: BorderSide())),
@@ -268,35 +259,29 @@ class CustomerForm extends GetView<ThemeChangeController> {
                           height: height * .02,
                         ),
                         // Login Credentials
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "E-mail",
-                            labelText: "E-mail",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
+                        DefaultTextField(
+                          focusNode: cityFocus,
+                          onFieldSubmitted: cityFieldSubmitted,
+                          hintText: "E-mail",
+                          labelText: "E-mail",
+                          isPassword: false,
+                          textEditingController: cityController,
+                          validator: cityValidator,
+                          maxLength: 25,
                         ),
                         SizedBox(
                           width: width * 0.012,
                         ),
                         // Password - Login Credentials
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "Password",
-                            labelText: "Password",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
+                        DefaultTextField(
+                          focusNode: cityFocus,
+                          onFieldSubmitted: cityFieldSubmitted,
+                          hintText: "Password",
+                          labelText: "Password",
+                          isPassword: false,
+                          textEditingController: cityController,
+                          validator: cityValidator,
+                          maxLength: 25,
                         ),
                         SizedBox(
                           width: width * 0.012,
@@ -305,224 +290,309 @@ class CustomerForm extends GetView<ThemeChangeController> {
                     ),
                   ),
                   SizedBox(
-                    width: width * .007,
+                    width: width * .002,
                   ),
-
-                  // another column
                   SizedBox(
-                    width: width * 0.25,
+                    width: width * .002,
+                    height: height * .15,
+                  ),
+                  // address
+                  SizedBox(
+                    width: width * .5,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // Country
                         SizedBox(
-                          height: 100,
-                          width: width * .22,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Country",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(color: kPrimaryColor),
-                                textAlign: TextAlign.start,
-                              ),
-                              SizedBox(
-                                height: height * .02,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: controller.isDarkMode == true
-                                      ? kDarkCardColor
-                                      : kCardColor,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: DropdownButton(
-                                    borderRadius: BorderRadius.circular(15),
-                                    hint: const Text("Select Country"),
-                                    isExpanded: true,
-                                    value: categoryDropDownValue,
-                                    icon: const Icon(Icons.arrow_downward),
-                                    elevation: 16,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                    underline: Container(
-                                      height: 2,
-                                      color: Colors.transparent,
-                                    ),
-                                    onChanged: categoryOnChange,
-                                    items: categoryDropDownList,
+                          width: width * .47,
+                          child: const Text("Customer Address and Location"),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 25.0),
+                          child: Divider(
+                            height: 1.0,
+                            thickness: 1,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            // address column
+                            SizedBox(
+                              width: width * 0.25,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: width * .002,
+                                    height: height * .050,
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: width * .02,
-                        ),
-                        // State
-                        SizedBox(
-                          height: 100,
-                          width: width * .22,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "State",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(color: kPrimaryColor),
-                                textAlign: TextAlign.start,
-                              ),
-                              SizedBox(
-                                height: height * .02,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: controller.isDarkMode == true
-                                      ? kDarkCardColor
-                                      : kCardColor,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: DropdownButton(
-                                    borderRadius: BorderRadius.circular(15),
-                                    hint: const Text("Select State"),
-                                    isExpanded: true,
-                                    value: categoryDropDownValue,
-                                    icon: const Icon(Icons.arrow_downward),
-                                    elevation: 16,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                    underline: Container(
-                                      height: 2,
-                                      color: Colors.transparent,
+                                  // Country
+                                  SizedBox(
+                                    height: 100,
+                                    width: width * .22,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Country",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(color: kPrimaryColor),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        SizedBox(
+                                          height: height * .02,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: controller.isDarkMode == true
+                                                ? kDarkCardColor
+                                                : kCardColor,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: DropdownButton(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              hint:
+                                                  const Text("Select Country"),
+                                              isExpanded: true,
+                                              value: categoryDropDownValue,
+                                              icon: const Icon(
+                                                  Icons.arrow_downward),
+                                              elevation: 16,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                              underline: Container(
+                                                height: 2,
+                                                color: Colors.transparent,
+                                              ),
+                                              onChanged: categoryOnChange,
+                                              items: categoryDropDownList,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    onChanged: categoryOnChange,
-                                    items: categoryDropDownList,
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: width * .02,
-                        ),
-                        // City
-                        SizedBox(
-                          height: 100,
-                          width: width * .22,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "City",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(color: kPrimaryColor),
-                                textAlign: TextAlign.start,
-                              ),
-                              SizedBox(
-                                height: height * .02,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: controller.isDarkMode == true
-                                      ? kDarkCardColor
-                                      : kCardColor,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: DropdownButton(
-                                    borderRadius: BorderRadius.circular(15),
-                                    hint: const Text("Select City"),
-                                    isExpanded: true,
-                                    value: categoryDropDownValue,
-                                    icon: const Icon(Icons.arrow_downward),
-                                    elevation: 16,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                    underline: Container(
-                                      height: 2,
-                                      color: Colors.transparent,
+                                  SizedBox(
+                                    width: width * .02,
+                                  ),
+                                  // State
+                                  SizedBox(
+                                    height: 100,
+                                    width: width * .22,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "State",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(color: kPrimaryColor),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        SizedBox(
+                                          height: height * .02,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: controller.isDarkMode == true
+                                                ? kDarkCardColor
+                                                : kCardColor,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: DropdownButton(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              hint: const Text("Select State"),
+                                              isExpanded: true,
+                                              value: categoryDropDownValue,
+                                              icon: const Icon(
+                                                  Icons.arrow_downward),
+                                              elevation: 16,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                              underline: Container(
+                                                height: 2,
+                                                color: Colors.transparent,
+                                              ),
+                                              onChanged: categoryOnChange,
+                                              items: categoryDropDownList,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    onChanged: categoryOnChange,
-                                    items: categoryDropDownList,
                                   ),
-                                ),
+                                  SizedBox(
+                                    width: width * .02,
+                                  ),
+                                  // City
+                                  SizedBox(
+                                    height: 100,
+                                    width: width * .22,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "City",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(color: kPrimaryColor),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        SizedBox(
+                                          height: height * .02,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: controller.isDarkMode == true
+                                                ? kDarkCardColor
+                                                : kCardColor,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: DropdownButton(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              hint: const Text("Select City"),
+                                              isExpanded: true,
+                                              value: categoryDropDownValue,
+                                              icon: const Icon(
+                                                  Icons.arrow_downward),
+                                              elevation: 16,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                              underline: Container(
+                                                height: 2,
+                                                color: Colors.transparent,
+                                              ),
+                                              onChanged: categoryOnChange,
+                                              items: categoryDropDownList,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: width * .02,
+                                  ),
+                                  // Postal Code
+                                  SizedBox(
+                                    width: width * 0.23,
+                                    child: DefaultTextField(
+                                      focusNode: cityFocus,
+                                      onFieldSubmitted: cityFieldSubmitted,
+                                      hintText: "Postal Code",
+                                      labelText: "Postal Code",
+                                      isPassword: false,
+                                      textEditingController: cityController,
+                                      validator: cityValidator,
+                                      maxLength: 25,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: width * 0.012,
+                                  ),
+                                  // Address Line 1
+                                  SizedBox(
+                                    width: width * 0.23,
+                                    child: DefaultTextField(
+                                      focusNode: cityFocus,
+                                      onFieldSubmitted: cityFieldSubmitted,
+                                      hintText: "Address Line 1",
+                                      labelText: "Address Line 1",
+                                      isPassword: false,
+                                      textEditingController: cityController,
+                                      validator: cityValidator,
+                                      maxLength: 25,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: width * 0.012,
+                                  ),
+                                  // Address Line 1
+                                  SizedBox(
+                                    width: width * 0.23,
+                                    child: DefaultTextField(
+                                      focusNode: cityFocus,
+                                      onFieldSubmitted: cityFieldSubmitted,
+                                      hintText: "Address Line 2",
+                                      labelText: "Address Line 2",
+                                      isPassword: false,
+                                      textEditingController: cityController,
+                                      validator: cityValidator,
+                                      maxLength: 25,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: width * .02,
-                        ),
-                        // Postal Code
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "Postal Code",
-                            labelText: "Postal Code",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
-                        ),
-                        SizedBox(
-                          width: width * 0.012,
-                        ),
-                        // Address Line 1
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "Address Line 1",
-                            labelText: "Address Line 1",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
-                        ),
-                        SizedBox(
-                          width: width * 0.012,
-                        ),
-                        // Address Line 1
-                        SizedBox(
-                          width: width * 0.23,
-                          child: DefaultTextField(
-                            focusNode: cityFocus,
-                            onFieldSubmitted: cityFieldSubmitted,
-                            hintText: "Address Line 2",
-                            labelText: "Address Line 2",
-                            isPassword: false,
-                            textEditingController: cityController,
-                            validator: cityValidator,
-                            maxLength: 25,
-                          ),
-                        ),
-                        SizedBox(
-                          width: width * 0.012,
+                              // TODO; add map
+                            ),
+                            SizedBox(
+                              width: width * 0.007,
+                            ),
+                            SizedBox(
+                              width: width * 0.20,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: width * .008,
+                                    height: height * .05,
+                                  ),
+                                  // MAP
+
+                                  Container(
+                                      width: width * .22,
+                                      height: height * .57,
+                                      decoration: BoxDecoration(
+                                        color: kDarkCardColor,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: customerController
+                                                  .latitude.value ==
+                                              0
+                                          ? const Center(
+                                              child: CircularProgressIndicator(
+                                              color: kPrimaryColor,
+                                            ))
+                                          : GoogleMap(
+                                              lang: customerController
+                                                  .longitude.value,
+                                              lat: customerController
+                                                  .latitude.value,
+                                            )),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

@@ -2,6 +2,7 @@ import 'package:frontend_grounda/controllers/agencyController/agency_controller.
 import 'package:frontend_grounda/controllers/amenitiesController/amenities_controller.dart';
 import 'package:frontend_grounda/controllers/blogsController/blogs_controller.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
+import 'package:frontend_grounda/controllers/customerController/customer_controller.dart';
 import 'package:frontend_grounda/controllers/developerController/developer_controller.dart';
 import 'package:frontend_grounda/controllers/faqController/faq_controller.dart';
 import 'package:frontend_grounda/controllers/faqController/faq_group_controller.dart';
@@ -50,6 +51,7 @@ class AllBindings implements Bindings {
     Get.lazyPut<ReviewsController>(() => ReviewsController(), fenix: true);
     Get.lazyPut<ProjectController>(() => ProjectController(), fenix: true);
     Get.lazyPut<WishListController>(() => WishListController(), fenix: true);
+    Get.lazyPut<CustomerController>(() => CustomerController(), fenix: true);
     Get.lazyPut<PaymentMethodController>(() => PaymentMethodController(),
         fenix: true);
     // Get.lazyPut<LocationService>(() => LocationService(), fenix: true);
