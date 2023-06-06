@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/customerController/customer_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
+import 'package:frontend_grounda/widgets/Buttons.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
@@ -143,7 +144,7 @@ class CustomerForm extends GetView<ThemeChangeController> {
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         child: SizedBox(
-          height: height * 2.2,
+          height: height * .9,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -289,9 +290,7 @@ class CustomerForm extends GetView<ThemeChangeController> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: width * .002,
-                  ),
+
                   SizedBox(
                     width: width * .002,
                     height: height * .15,
@@ -316,6 +315,7 @@ class CustomerForm extends GetView<ThemeChangeController> {
                             color: Colors.black,
                           ),
                         ),
+
                         Row(
                           children: [
                             // address column
@@ -603,17 +603,29 @@ class CustomerForm extends GetView<ThemeChangeController> {
                   ),
                 ],
               ),
-              Center(
-                child: InkWell(
-                  onTap: onTap,
-                  child: Text(
-                    cancelText,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: kPrimaryColor),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  DefaultButton(
+                    buttonText: "Submit",
+                    onPressed: onTap,
+                    key: key,
+                    primaryColor: kPrimaryColor,
+                    hoverColor: kDarkColor,
+                    width: width * .12,
+                    height: height * .05,
                   ),
-                ),
+                ],
+                // InkWell(
+                //   onTap: onTap,
+                //   child: Text(
+                //     cancelText,
+                //     style: Theme.of(context)
+                //         .textTheme
+                //         .bodyMedium!
+                //         .copyWith(color: kPrimaryColor),
+                //   ),
+                // ),
               ),
             ],
           ),
