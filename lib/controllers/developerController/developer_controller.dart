@@ -17,6 +17,7 @@ class DeveloperController extends GetxController {
   var token = ''.obs;
   var logo = ''.obs;
   var isLoading = false.obs;
+  var selectedItemName = ''.obs;
 
   @override
   void onInit() {
@@ -40,6 +41,7 @@ class DeveloperController extends GetxController {
       print('<======== Developer Details ===========>');
       print('developer details are: ${response.body}');
       developers.value = developersModelFromJson(response.body);
+      selectedItemName.value = developers.first.title!;
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,

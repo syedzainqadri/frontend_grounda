@@ -161,7 +161,7 @@ class CustomerForm extends GetView<ThemeChangeController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: width * 0.24,
+                    width: width * 0.23,
                     child: Column(
                       children: [
                         // First Name

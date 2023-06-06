@@ -1,43 +1,36 @@
 // ignore_for_file: must_be_immutable, unrelated_type_equality_checks, use_build_context_synchronously
 
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:frontend_grounda/controllers/amenitiesController/amenities_controller.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
-import 'package:frontend_grounda/controllers/postController/post_controller.dart';
+import 'package:frontend_grounda/controllers/developerController/developer_controller.dart';
+
 import 'package:frontend_grounda/controllers/profileController/profile_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/utils/global_methods.dart';
-import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:frontend_grounda/views/pages/project/widgets/project_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
-import 'package:frontend_grounda/widgets/icon_from_api.dart';
 import 'package:get/get.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 
-class CreateProjectPage extends StatefulWidget {
-  const CreateProjectPage({Key? key}) : super(key: key);
+import '../../../../controllers/projectController/project_controller.dart';
 
-  @override
-  State<CreateProjectPage> createState() => _CreateProjectPageState();
-}
+class CreateProjectPage extends GetView<ThemeChangeController> {
+  CreateProjectPage({Key? key}) : super(key: key);
 
-class _CreateProjectPageState extends State<CreateProjectPage> {
   //<=============== Data Controllers ========================>
   CategoryController categoryController = Get.find<CategoryController>();
-  ThemeChangeController themeChangeController =
-      Get.find<ThemeChangeController>();
-  PostController postController = Get.find<PostController>();
 
-  AmenitiesController amenitiesController = Get.find<AmenitiesController>();
+  ProjectController projectController = Get.find<ProjectController>();
 
   ProfileController profileController = Get.find<ProfileController>();
 
   //<=============== Text Editor Controllers ========================>
-  QuillEditorController descriptionController = QuillEditorController();
+  HtmlEditorController htmlEditorController = HtmlEditorController();
 
+  final TextEditingController projectCategoryController =
+      TextEditingController();
   final TextEditingController searchCategory = TextEditingController();
 
   // TextEditingController postTitleController = TextEditingController();
@@ -47,42 +40,9 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
 
   var subCategorySelectedItemId = 0.obs;
 
-  List<dynamic> amenities = [false].obs;
+  var statusValue = true.obs;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getCatName(postController.catID.value);
-  }
-
-  getCatName(catId) {
-    if (catId != 0) {
-      categoryController.getAmenitiesIds(catId.toString());
-      for (int i = 0; i < categoryController.category.length; i++) {
-        if (catId == categoryController.category[i].id) {
-          categoryController.selectedItemName.value =
-              categoryController.category[i].name!;
-          categoryController.getSubCategories(catId.toString());
-        }
-      }
-      getSubCatname(postController.subCatID.value);
-    }
-  }
-
-  getSubCatname(subCatId) async {
-    print('subcat id is: $subCatId');
-    if (subCatId != 0) {
-      await categoryController.getAmenitiesIds(subCatId.toString());
-      for (int i = 0; i < categoryController.subCategory.length; i++) {
-        if (subCatId == categoryController.subCategory[i].id) {
-          categoryController.subCategorySelectedItemName.value =
-              categoryController.subCategory[i].name!;
-          print(categoryController.subCategorySelectedItemName);
-        }
-      }
-    }
-  }
+  DeveloperController developerController = Get.find<DeveloperController>();
 
   @override
   Widget build(BuildContext context) {
@@ -100,13 +60,13 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 height: height * .8,
                 width: width * .8,
                 decoration: BoxDecoration(
-                  color: themeChangeController.isDarkMode.value
+                  color: controller.isDarkMode.value
                       ? kDarkFrameColor
                       : kFrameColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
-                      color: themeChangeController.isDarkMode.value
+                      color: controller.isDarkMode.value
                           ? kDarkShadowColor.withOpacity(.9)
                           : kShadowColor.withOpacity(.5),
                       spreadRadius: 3,
@@ -119,29 +79,57 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 50.0, vertical: 25),
                   child: Focus(
-                    focusNode: postController.formFocus,
+                    focusNode: projectController.formFocus,
                     child: Form(
                       key: _createPostFormKey,
+                      // form
                       child: ProjectForm(
-                        projectLocalityFocus: postController.titleFieldFocus,
-                        //<============! Post Title Fild ==========>
-                        postTitleController: postController.postTitleController,
-                        titleFocus: postController.titleFieldFocus,
+                        // text
+                        buttonText: "Submit",
+                        // focus nods
+                        projectLocalityFocus:
+                            projectController.projectLocalityFocus,
+                        projectAddressFocus:
+                            projectController.projectAddressFocus,
+                        cityFocus: projectController.cityFieldFocus,
+
+                        // controllers
+                        projectTitleController:
+                            projectController.projectTitleController,
+                        projectAddressController:
+                            projectController.projectTitleController,
+                        projectLocalityController:
+                            projectController.projectTitleController,
+                        titleFocus: projectController.titleFieldFocus,
+                        cityController: projectController.cityController,
+                        areaController: projectController.areaController,
+                        startingPriceController:
+                            projectController.startingPriceController,
+                        endingPriceController:
+                            projectController.endingPriceController,
+                        htmlEditorController: htmlEditorController,
+
+                        // validations
                         titleFieldSubmitted: (value) {
                           FocusScope.of(context)
-                              .requestFocus(postController.cityFieldFocus);
+                              .requestFocus(projectController.cityFieldFocus);
                         },
-                        postTitleValidator: (value) {
+                        projectTitleValidator: (value) {
                           if (value == null || value == '') {
                             return 'Project title cannot be empty';
                           }
                         },
+
+                        // status change
+                        statusChanges: (value) {
+                          statusValue.value = value;
+                        },
+                        statusValue: statusValue.value,
+
                         //<============! City Fild ==========>
-                        cityController: postController.cityController,
-                        cityFocus: postController.cityFieldFocus,
                         cityFieldSubmitted: (value) {
                           FocusScope.of(context)
-                              .requestFocus(postController.cityFieldFocus);
+                              .requestFocus(projectController.cityFieldFocus);
                         },
                         cityValidator: (value) {
                           if (value == null || value == '' || value == int) {
@@ -149,21 +137,26 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                           }
                         },
                         //<============! Area Fild ==========>
-                        areaController: postController.areaController,
+
                         areaValidator: (value) {
                           if (value == null || value == '') {
                             return 'Area cannot be empty ';
                           }
                         },
                         //<============! Price Fild ==========>
-                        priceController: postController.priceController,
-                        priceValidator: (value) {
+
+                        startingPriceValidator: (value) {
+                          if (value == null || value == '') {
+                            return 'Price cannot be empty';
+                          }
+                        },
+                        endingPriceValidator: (value) {
                           if (value == null || value == '') {
                             return 'Price cannot be empty';
                           }
                         },
                         //<============! Text Editor ==========>
-                        contentController: descriptionController,
+
                         //Galary segment
                         pictureButtonText:
                             categoryController.imageUrl.value.isEmpty
@@ -177,10 +170,11 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                   color: kPrimaryColor),
                             ),
                           );
-                          await postController.getImage();
+                          await projectController.getImage();
                           Navigator.pop(context);
                         },
-                        images: postController.imageUrl.isEmpty
+
+                        images: projectController.imageUrl.isEmpty
                             ? Text(
                                 'Please add Images',
                                 style: Theme.of(context).textTheme.bodySmall,
@@ -195,7 +189,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                   ),
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: postController.imageUrl.length,
+                                  itemCount: projectController.imageUrl.length,
                                   itemBuilder: (context, index) {
                                     return Stack(
                                       children: [
@@ -208,7 +202,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                                 BorderRadius.circular(20),
                                           ),
                                           child: Image.network(
-                                            postController.imageUrl[index],
+                                            projectController.imageUrl[index],
                                             width: width * .1,
                                             height: height * .14,
                                             fit: BoxFit.cover,
@@ -223,7 +217,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                                 color: kRedColor,
                                               ),
                                               onPressed: () {
-                                                postController.imageUrl
+                                                projectController.imageUrl
                                                     .removeAt(index);
                                               },
                                             ))
@@ -232,18 +226,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                   },
                                 ),
                               ),
-                        //category segment
-                        purposeList: postController.purposeList
-                            .map<DropdownMenuItem<String>>((value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        purposeValue: postController.purposeValue.value,
-                        purposeOnChange: (value) {
-                          postController.purposeValue.value = value.toString();
-                        },
+
                         categoryDropDownList: categoryController.category
                             .map<DropdownMenuItem<String>>((value) {
                           return DropdownMenuItem<String>(
@@ -251,6 +234,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                             child: Text(value.name!),
                           );
                         }).toList(),
+
                         categoryDropDownValue:
                             categoryController.selectedItemName.value,
                         categoryOnChange: (selectedValue) async {
@@ -268,369 +252,40 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                           await categoryController.getSubCategories(
                               selectedItemId.value.toString());
                         },
-                        //subCategory
-                        subCategoryDropDownList: categoryController.subCategory
+
+                        // developer
+                        developerDropDownList: developerController.developers
                             .map<DropdownMenuItem<String>>((value) {
                           return DropdownMenuItem<String>(
-                            value: value.name,
-                            child: Text(value.name!),
+                            value: value.title,
+                            child: Text(value.title!),
                           );
                         }).toList(),
-                        subCategoryDropDownValue: categoryController
-                            .subCategorySelectedItemName.value,
-                        subCategoryOnChange: (selectedValue) async {
-                          categoryController.subCategorySelectedItemName.value =
+
+                        developerDropDownValue:
+                            developerController.selectedItemName.value,
+                        developerOnChange: (selectedValue) async {
+                          developerController.selectedItemName.value =
                               selectedValue;
                           for (int i = 0;
-                              i < categoryController.subCategory.length;
+                              i < developerController.developers.length;
                               i++) {
-                            if (categoryController
-                                    .subCategorySelectedItemName ==
-                                categoryController.subCategory[i].name) {
-                              subCategorySelectedItemId.value =
-                                  categoryController.subCategory[i].id!;
+                            if (developerController.selectedItemName ==
+                                developerController.developers[i].title) {
+                              selectedItemId.value =
+                                  developerController.developers[i].id!;
                             }
                           }
-                          await categoryController.getAmenitiesIds(
-                              subCategorySelectedItemId.value.toString());
                         },
-                        //total area
-                        totalAreaController: postController.totalAreaController,
-                        propertyAreaValidator: (value) {
-                          if (value == null || value == '') {
-                            return 'Property Ara cannot be empty';
-                          }
-                        },
-                        //property AreaSizeUnit dropDown
-                        propertyAreaUnitList: postController
-                            .propertyAreaUnitList
-                            .map<DropdownMenuItem<String>>((value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        propertyAreaUnitValue:
-                            postController.propertyAreaUnitValue.value,
-                        propertyAreaUnitOnChange: (value) {
-                          postController.propertyAreaUnitValue.value =
-                              value.toString();
-                        },
-                        videoUrlController: postController.videoUrlController,
-                        // not required validation for video url
-                        plotNumberController:
-                            postController.plotNumberController,
-                        plotNumberValidator: (value) {
-                          if (value == null || value == '') {
-                            return 'Plot / Flat number cannot be empty';
-                          }
-                        },
-                        //Installment Segment
-                        hasInstallmentValue:
-                            postController.hasInstallments.value,
-                        installmentStatusChanges: (value) {
-                          postController.hasInstallments.value = value;
-                          print(postController.hasInstallments.value);
-                        },
-                        noOfInstallmentController:
-                            postController.noOfInstallmentController,
-                        noOfInstallmentValidator: (value) {
-                          if (value == null || value == '') {
-                            return 'Number of Installment cannot be empty';
-                          }
-                        },
-                        monthlyInstallmentValueController:
-                            postController.monthlyInstallmentController,
-                        monthlyInstallmentValidator: (value) {
-                          if (value == null || value == '') {
-                            return 'Monthly Installment Value cannot be empty';
-                          }
-                        },
-                        advanceController: postController.advanceController,
-                        advanceValidator: (value) {
-                          if (value == null || value == '') {
-                            return 'Advance amount cannot be empty';
-                          }
-                        },
-                        //Possession Segment
-                        posessionValue: postController.posessionReady.value,
-                        posessionChanges: (value) {
-                          postController.posessionReady.value = value;
-                        },
-                        bedRoomController: postController.bedroomController,
-                        bedroomValidator: (value) {
-                          if (value == null || value == '') {
-                            return 'Bedroom cannot be empty';
-                          }
-                        },
-                        bathRoomController: postController.bathroomController,
-                        bathroomValidator: (value) {
-                          if (value == null || value == '') {
-                            return 'Bathroom cannot be empty';
-                          }
-                        },
-                        //amenities
-                        selectedAmenities: postController.postID.value != 0
-                            ? SizedBox(
-                                width: width * .2,
-                                height: 50,
-                                child: ListView.builder(
-                                    reverse: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: postController
-                                        .postAmenitiesNames.length,
-                                    itemBuilder: (context, index) {
-                                      var names =
-                                          postController.postAmenitiesNames;
-                                      var code =
-                                          postController.postAmenitiesCodes;
-                                      return Stack(children: [
-                                        Icon(
-                                          IconData(
-                                            int.parse(code[index]),
-                                            fontFamily: iconFontFamily.value,
-                                          ),
-                                          size: 30,
-                                        ),
-                                        Positioned(
-                                            top: -10,
-                                            left: 0,
-                                            child: IconButton(
-                                                onPressed: () {
-                                                  names.remove(names[index]);
-                                                  postController
-                                                      .postAmenitiesNames
-                                                      .remove(names[index]);
-                                                  code.remove(code[index]);
-                                                  postController
-                                                      .postAmenitiesCodes
-                                                      .remove(code[index]);
-                                                },
-                                                icon: const Icon(
-                                                  Icons.cancel,
-                                                  color: kRedColor,
-                                                  size: 15,
-                                                ))),
-                                      ]);
-                                    }),
-                              )
-                            : const Offstage(),
-                        amenities: ListView.builder(
-                            itemCount:
-                                categoryController.listOfAmenitiesNames.length,
-                            itemBuilder: (context, index) {
-                              var names =
-                                  categoryController.listOfAmenitiesNames;
-                              var codes =
-                                  categoryController.listOfAmenitiesCodes;
-                              amenities.add(false);
-                              return Obx(
-                                () => CheckboxListTile(
-                                  selectedTileColor: kPrimaryColor,
-                                  tileColor: kWhiteColor,
-                                  checkColor: kDarkColor,
-                                  activeColor: kPrimaryColor,
-                                  value: amenities[index],
-                                  onChanged: (value) {
-                                    amenities[index] = !amenities[index];
-                                    //TODO: build amenities local lists
-                                    if (postController.postID.value != '') {
-                                      print(postController.postID);
-                                      if (amenities[index]) {
-                                        postController.postAmenitiesNames
-                                            .add(names[index]);
-                                        postController.postAmenitiesCodes
-                                            .add(codes[index]);
-                                      } else {
-                                        postController.postAmenitiesNames
-                                            .remove(names[index]);
-                                        postController.postAmenitiesCodes
-                                            .remove(codes[index]);
-                                      }
-                                    } else {
-                                      print('This is working');
-                                      if (amenities[index]) {
-                                        postController.selectedAmenitiesNames
-                                            .add(names[index]);
-                                        postController.selectedAmenitiesCodes
-                                            .add(codes[index]);
-                                      } else {
-                                        postController.selectedAmenitiesNames
-                                            .remove(names[index]);
-                                        postController.selectedAmenitiesCodes
-                                            .remove(codes[index]);
-                                      }
-                                    }
-                                  },
-                                  title: Row(
-                                    children: [
-                                      IconFromApi(
-                                        icon: codes[index],
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        names[index],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }),
-                        //show contact details
-                        showContactDetails:
-                            postController.showContactDetials.value,
-                        showContactDetailsChanges: (value) {
-                          postController.showContactDetials.value = value;
-                        },
-                        buttonText: postController.postID.value == ''
-                            ? 'Submit'
-                            : 'Update',
-                        statusValue: postController.isPublished.value,
-                        statusChanges: (value) {
-                          postController.isPublished.value = value;
-                        },
+
                         //submit button
                         formSubmit: () async {
-                          if (postController.postID == '') {
+                          if (projectController.project == '') {
                             var description =
-                                await descriptionController.getText();
-                            var amenitiesNameList = jsonEncode(
-                                postController.selectedAmenitiesNames);
-                            var amenitiesCodeList = jsonEncode(
-                                postController.selectedAmenitiesCodes);
-                            print('Amenities Names Are');
-                            print(amenitiesNameList);
+                                await htmlEditorController.getText();
+
                             if (description.isNotEmpty) {
-                              if (postController.imageUrl.isNotEmpty) {
-                                if (subCategorySelectedItemId != 0) {
-                                  if (postController
-                                          .selectedAmenitiesNames.isNotEmpty ||
-                                      postController
-                                          .selectedAmenitiesCodes.isNotEmpty) {
-                                    if (_createPostFormKey.currentState!
-                                        .validate()) {
-                                      Get.defaultDialog(
-                                        barrierDismissible: false,
-                                        title: 'Creating Post',
-                                        content: const Center(
-                                          child: CircularProgressIndicator(
-                                              color: kPrimaryColor),
-                                        ),
-                                      );
-                                      var propertyNumber =
-                                          Random().nextInt(10000000);
-                                      var imageList =
-                                          jsonEncode(postController.imageUrl);
-                                      print(postController
-                                          .postTitleController.text);
-                                      print(propertyNumber);
-                                      print(description);
-                                      print(postController.imageUrl.first
-                                          .toString());
-                                      print(imageList);
-                                      print(postController
-                                          .videoUrlController.text);
-                                      print(description);
-                                      print(postController.longitude.value
-                                          .toString());
-                                      print(postController.latitude.value
-                                          .toString());
-                                      print(postController
-                                          .plotNumberController.text);
-                                      print(
-                                          postController.priceController.text);
-                                      print(postController.cityController.text);
-                                      print(postController.areaController.text);
-                                      print(
-                                          postController.hasInstallments.value);
-                                      print(postController
-                                          .showContactDetials.value);
-                                      print('issue loading advance controller');
-                                      print(postController
-                                          .advanceController.text);
-                                      print(int.parse(postController
-                                          .noOfInstallmentController.text));
-                                      print(postController
-                                          .monthlyInstallmentController.text);
-                                      print(
-                                          postController.posessionReady.value);
-                                      print(postController
-                                          .propertyAreaUnitValue.value);
-                                      print(postController.purposeValue.value);
-                                      print(postController
-                                          .totalAreaController.text);
-                                      print(postController
-                                          .bedroomController.text);
-                                      print(postController
-                                          .bathroomController.text);
-                                      print(amenitiesCodeList);
-                                      print(amenitiesNameList);
-                                      print(selectedItemId);
-                                      print(subCategorySelectedItemId);
-                                      print(postController
-                                              .postTitleController.text +
-                                          propertyNumber.toString());
-                                      await postController.create(
-                                        postController.postTitleController.text,
-                                        propertyNumber,
-                                        description,
-                                        postController.imageUrl.first
-                                            .toString(),
-                                        imageList,
-                                        postController.videoUrlController.text,
-                                        description,
-                                        postController.longitude.value
-                                            .toString(),
-                                        postController.latitude.value
-                                            .toString(),
-                                        postController
-                                            .plotNumberController.text,
-                                        postController.priceController.text,
-                                        postController.cityController.text,
-                                        postController.areaController.text,
-                                        postController.hasInstallments.value,
-                                        postController.showContactDetials.value,
-                                        postController.advanceController.text,
-                                        int.parse(postController
-                                            .noOfInstallmentController.text),
-                                        postController
-                                            .monthlyInstallmentController.text,
-                                        postController.posessionReady.value,
-                                        postController
-                                            .propertyAreaUnitValue.value,
-                                        postController.purposeValue.value
-                                            .toUpperCase(),
-                                        postController.totalAreaController.text,
-                                        int.parse(postController
-                                            .bedroomController.text),
-                                        int.parse(postController
-                                            .bathroomController.text),
-                                        amenitiesCodeList,
-                                        amenitiesNameList,
-                                        selectedItemId.value,
-                                        subCategorySelectedItemId.value,
-                                        postController.isPublished.value,
-                                        postController
-                                                .postTitleController.text +
-                                            propertyNumber.toString(),
-                                      );
-                                      Navigator.pop(context);
-                                      postController.getAll();
-                                      Get.toNamed('/post');
-                                    } else {
-                                      showErrorSnak('Amenities are empty',
-                                          'Please Select Amenities');
-                                    }
-                                  }
-                                } else {
-                                  showErrorSnak('Sub Category is not selected',
-                                      'Please select a Sub Category');
-                                }
+                              if (projectController.imageUrl.isNotEmpty) {
                               } else {
                                 showErrorSnak('No Image Selected',
                                     'Images Must not be Empty');
@@ -642,22 +297,13 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                           } else {
                             print("============= Updating started=======");
                             var description =
-                                await descriptionController.getText();
+                                await htmlEditorController.getText();
 
-                            var amenitiesNameList =
-                                jsonEncode(postController.postAmenitiesNames);
-                            var amenitiesCodeList =
-                                jsonEncode(postController.postAmenitiesCodes);
-                            print(amenitiesNameList);
                             if (description.isNotEmpty) {
                               print(description);
-                              if (postController.imageUrl.isNotEmpty) {
-                                print(postController.imageUrl);
-                                // if (postController
-                                //         .selectedAmenitiesNames.isNotEmpty ||
-                                //     postController
-                                //         .selectedAmenitiesCodes.isNotEmpty) {
-                                // if (_formKey.currentState!.validate()) {
+                              if (projectController.imageUrl.isNotEmpty) {
+                                print(projectController.imageUrl);
+
                                 Get.defaultDialog(
                                   barrierDismissible: false,
                                   title: 'Updating Post',
@@ -667,47 +313,26 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                   ),
                                 );
                                 var imageList =
-                                    jsonEncode(postController.imageUrl);
+                                    jsonEncode(projectController.imageUrl);
                                 print("============= Updating =======");
-                                await postController.updatePost(
-                                  postController.postID.value,
-                                  postController.postTitleController.text,
-                                  postController.propertyNumber.value,
-                                  description,
-                                  postController.imageUrl.first.toString(),
+                                await projectController.updateProject(
+                                  projectController.projectID.value,
+                                  projectController.projectTitleController.text,
                                   imageList,
-                                  postController.videoUrlController.text,
+                                  imageList,
+                                  projectController
+                                      .projectLocalityController.text,
+                                  projectController.cityController.text,
                                   description,
-                                  postController.longitude.value.toString(),
-                                  postController.latitude.value.toString(),
-                                  postController.plotNumberController.text,
-                                  postController.priceController.text,
-                                  postController.cityController.text,
-                                  postController.areaController.text,
-                                  postController.hasInstallments.value,
-                                  postController.showContactDetials.value,
-                                  postController.advanceController.text,
-                                  int.parse(postController
-                                      .noOfInstallmentController.text),
-                                  postController
-                                      .monthlyInstallmentController.text,
-                                  postController.posessionReady.value,
-                                  postController.propertyAreaUnitValue.value,
-                                  postController.purposeValue.value
-                                      .toUpperCase(),
-                                  postController.totalAreaController.text,
-                                  int.parse(
-                                      postController.bedroomController.text),
-                                  int.parse(
-                                      postController.bathroomController.text),
-                                  amenitiesCodeList,
-                                  amenitiesNameList,
-                                  postController.catID.value,
-                                  postController.subCatID.value,
-                                  postController.isPublished.value,
+                                  projectController.catID.value,
+
+                                  projectController.developerID.value,
+                                  projectController.startingPrice.value,
+                                  projectController.endingPrice.value,
+                                  // projectController.isPublished.value,
                                 );
                                 Navigator.pop(context);
-                                postController.getAll();
+                                projectController.getAll();
                                 Get.toNamed('/post');
                                 // }
                                 // } else {
@@ -724,7 +349,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                             }
                           }
                         },
-                        cancelText: postController.postID.value == ''
+                        cancelText: projectController.projectID.value == ''
                             ? ''
                             : 'Cancel Update',
                         onTap: () async {
