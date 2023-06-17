@@ -40,6 +40,7 @@ class ProjectController extends GetxController {
   //<=================== Text Editing Controllers ==================>
   TextEditingController projectTitleController = TextEditingController();
   TextEditingController projectCategoryController = TextEditingController();
+  TextEditingController projectAddressController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController areaController = TextEditingController();
   TextEditingController projectLocalityController = TextEditingController();
@@ -136,6 +137,7 @@ class ProjectController extends GetxController {
     int developerId,
     double startingPrice,
     double endingPrice,
+    bool status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
@@ -148,7 +150,8 @@ class ProjectController extends GetxController {
       "categoryId": categoryId,
       "developerId": developerId,
       "startingPrice": startingPrice,
-      "endingPrice": endingPrice
+      "endingPrice": endingPrice,
+      "status": status
     };
 
     var response = await http.post(
@@ -183,6 +186,7 @@ class ProjectController extends GetxController {
     int developerId,
     double startingPrice,
     double endingPrice,
+    bool status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
@@ -196,7 +200,8 @@ class ProjectController extends GetxController {
       "categoryId": categoryId,
       "developerId": developerId,
       "startingPrice": startingPrice,
-      "endingPrice": endingPrice
+      "endingPrice": endingPrice,
+      "status": status
     };
 
     var response = await http.put(

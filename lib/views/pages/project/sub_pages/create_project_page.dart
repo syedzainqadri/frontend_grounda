@@ -38,7 +38,7 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
 
   var selectedItemId = 0.obs;
 
-  var subCategorySelectedItemId = 0.obs;
+  var categorySelectedItemId = 0.obs;
 
   var statusValue = true.obs;
 
@@ -85,7 +85,9 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                       // form
                       child: ProjectForm(
                         // text
-                        buttonText: "Submit",
+                        buttonText: projectController.projectID == 0
+                            ? "Submit"
+                            : "Update",
                         // focus nods
                         projectLocalityFocus:
                             projectController.projectLocalityFocus,
@@ -97,9 +99,9 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                         projectTitleController:
                             projectController.projectTitleController,
                         projectAddressController:
-                            projectController.projectTitleController,
+                            projectController.projectAddressController,
                         projectLocalityController:
-                            projectController.projectTitleController,
+                            projectController.projectLocalityController,
                         titleFocus: projectController.titleFieldFocus,
                         cityController: projectController.cityController,
                         areaController: projectController.areaController,
@@ -245,12 +247,10 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                               i++) {
                             if (categoryController.selectedItemName ==
                                 categoryController.category[i].name) {
-                              selectedItemId.value =
+                              categorySelectedItemId.value =
                                   categoryController.category[i].id!;
                             }
                           }
-                          await categoryController.getSubCategories(
-                              selectedItemId.value.toString());
                         },
 
                         // developer
@@ -280,12 +280,38 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
 
                         //submit button
                         formSubmit: () async {
-                          if (projectController.project == '') {
+                          if (projectController.projectID == 0) {
+                            print(
+                                "<======= The Project post is being submited =========>");
                             var description =
                                 await htmlEditorController.getText();
+                            var imageList =
+                                jsonEncode(projectController.imageUrl);
+                            projectController.startingPrice.value =
+                                double.parse(projectController
+                                    .startingPriceController.text);
+                            projectController.endingPrice.value = double.parse(
+                                projectController.endingPriceController.text);
 
                             if (description.isNotEmpty) {
                               if (projectController.imageUrl.isNotEmpty) {
+                                projectController.create(
+                                    projectController
+                                        .projectTitleController.text,
+                                    projectController
+                                        .projectAddressController.text,
+                                    imageList[0],
+                                    imageList,
+                                    projectController
+                                        .projectLocalityController.text,
+                                    projectController.cityController.text,
+                                    categorySelectedItemId.value,
+                                    selectedItemId.value,
+                                    projectController.startingPrice.value
+                                        .toDouble(),
+                                    projectController.endingPrice.value
+                                        .toDouble(),
+                                    statusValue.value);
                               } else {
                                 showErrorSnak('No Image Selected',
                                     'Images Must not be Empty');
@@ -316,21 +342,22 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                     jsonEncode(projectController.imageUrl);
                                 print("============= Updating =======");
                                 await projectController.updateProject(
-                                  projectController.projectID.value,
-                                  projectController.projectTitleController.text,
-                                  imageList,
-                                  imageList,
-                                  projectController
-                                      .projectLocalityController.text,
-                                  projectController.cityController.text,
-                                  description,
-                                  projectController.catID.value,
-
-                                  projectController.developerID.value,
-                                  projectController.startingPrice.value,
-                                  projectController.endingPrice.value,
-                                  // projectController.isPublished.value,
-                                );
+                                    projectController.projectID.value,
+                                    projectController
+                                        .projectTitleController.text,
+                                    imageList[0],
+                                    imageList,
+                                    projectController
+                                        .projectLocalityController.text,
+                                    projectController.cityController.text,
+                                    description,
+                                    projectController.catID.value,
+                                    projectController.developerID.value,
+                                    projectController.startingPrice.value
+                                        .toDouble(),
+                                    projectController.endingPrice.value
+                                        .toDouble(),
+                                    statusValue.value);
                                 Navigator.pop(context);
                                 projectController.getAll();
                                 Get.toNamed('/post');
