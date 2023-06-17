@@ -10,6 +10,9 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 
+//Todo: Need to create an api for the customer
+//NOTE: this should not be an agency any single buyer
+//will be considered a customer
 class CustomerController extends GetxController {
   late FocusNode formFocus;
   late FocusNode agencyEmailFieldFocus;

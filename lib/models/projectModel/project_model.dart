@@ -28,6 +28,7 @@ class ProjectsModel {
     this.developerId,
     this.categoryId,
     this.projectNearByPlaceId,
+    this.status,
   });
 
   int? id;
@@ -45,6 +46,7 @@ class ProjectsModel {
   int? developerId;
   int? categoryId;
   int? projectNearByPlaceId;
+  bool? status;
 
   factory ProjectsModel.fromJson(Map<String, dynamic> json) => ProjectsModel(
         id: json["id"],
@@ -62,6 +64,7 @@ class ProjectsModel {
         developerId: json["developerId"],
         categoryId: json["categoryId"],
         projectNearByPlaceId: json["projectNearByPlaceId"],
+        status: json['status'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -80,5 +83,6 @@ class ProjectsModel {
         "developerId": developerId,
         "categoryId": categoryId,
         "projectNearByPlaceId": projectNearByPlaceId,
+        "status": status,
       };
 }

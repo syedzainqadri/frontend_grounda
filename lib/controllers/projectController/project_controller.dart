@@ -56,7 +56,7 @@ class ProjectController extends GetxController {
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
-
+    getAll();
     projectLocalityFocus = FocusNode();
     projectLocalityFocus = FocusNode();
     titleFieldFocus = FocusNode();
@@ -76,6 +76,8 @@ class ProjectController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
+    print('Responce on projects is');
+    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       project.value = projectsModelFromJson(response.body);
       isLoading.value = false;
