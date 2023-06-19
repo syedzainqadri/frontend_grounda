@@ -283,6 +283,7 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                           if (projectController.projectID == 0) {
                             print(
                                 "<======= The Project post is being submited =========>");
+
                             var description =
                                 await htmlEditorController.getText();
                             var imageList =
@@ -292,6 +293,12 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                     .startingPriceController.text);
                             projectController.endingPrice.value = double.parse(
                                 projectController.endingPriceController.text);
+
+                            print(double.parse(projectController
+                                .startingPriceController.text
+                                .replaceAll(RegExp(r'[^0-9.]'), '')));
+                            // print(projectController.startingPrice.toDouble());
+                            // print(projectController.endingPrice);
 
                             if (description.isNotEmpty) {
                               if (projectController.imageUrl.isNotEmpty) {
@@ -322,8 +329,16 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                             }
                           } else {
                             print("============= Updating started=======");
+
                             var description =
                                 await htmlEditorController.getText();
+                            projectController.startingPrice.value =
+                                double.parse(projectController
+                                    .startingPriceController.text);
+                            projectController.endingPrice.value = double.parse(
+                                projectController.endingPriceController.text);
+                            print(projectController.startingPrice);
+                            print(projectController.endingPrice);
 
                             if (description.isNotEmpty) {
                               print(description);
