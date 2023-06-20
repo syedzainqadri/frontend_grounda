@@ -229,6 +229,19 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                 ),
                               ),
 
+                        walkThroughController:
+                            projectController.walkThroughController,
+                        walkThroughFocus: projectController.walkThroughFocus,
+                        walkThroughValidator: (value) {
+                          if (value == null || value != 'https://') {
+                            return 'Please Enter a valid Url';
+                          }
+                        },
+                        walkThroughFieldSubmitted: (value) {
+                          FocusScope.of(context)
+                              .requestFocus(projectController.walkThroughFocus);
+                        },
+
                         categoryDropDownList: categoryController.category
                             .map<DropdownMenuItem<String>>((value) {
                           return DropdownMenuItem<String>(
@@ -289,36 +302,42 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                             var imageList =
                                 jsonEncode(projectController.imageUrl);
                             projectController.startingPrice.value =
-                                double.parse(projectController
-                                    .startingPriceController.text);
-                            projectController.endingPrice.value = double.parse(
-                                projectController.endingPriceController.text);
-
-                            print(double.parse(projectController
-                                .startingPriceController.text
-                                .replaceAll(RegExp(r'[^0-9.]'), '')));
-                            // print(projectController.startingPrice.toDouble());
-                            // print(projectController.endingPrice);
+                                projectController.startingPriceController.text;
+                            projectController.endingPrice.value =
+                                projectController.endingPriceController.text;
+                            print(imageList);
 
                             if (description.isNotEmpty) {
                               if (projectController.imageUrl.isNotEmpty) {
-                                projectController.create(
-                                    projectController
-                                        .projectTitleController.text,
-                                    projectController
-                                        .projectAddressController.text,
-                                    imageList[0],
-                                    imageList,
-                                    projectController
-                                        .projectLocalityController.text,
-                                    projectController.cityController.text,
-                                    categorySelectedItemId.value,
-                                    selectedItemId.value,
-                                    projectController.startingPrice.value
-                                        .toDouble(),
-                                    projectController.endingPrice.value
-                                        .toDouble(),
-                                    statusValue.value);
+                                Get.defaultDialog(
+                                  barrierDismissible: false,
+                                  title: 'Submiting Project',
+                                  content: const Center(
+                                    child: CircularProgressIndicator(
+                                        color: kPrimaryColor),
+                                  ),
+                                );
+                                await projectController.create(
+                                  projectController.projectTitleController.text,
+                                  projectController
+                                      .projectAddressController.text,
+                                  description,
+                                  projectController.imageUrl.first,
+                                  imageList,
+                                  projectController
+                                      .projectLocalityController.text,
+                                  projectController.cityController.text,
+                                  projectController.areaController.text,
+                                  categorySelectedItemId.value,
+                                  selectedItemId.value,
+                                  projectController.startingPrice.value,
+                                  projectController.endingPrice.value,
+                                  statusValue.value,
+                                  projectController.walkThroughController.text,
+                                  1,
+                                );
+                                Navigator.pop(context);
+                                Get.toNamed('/project');
                               } else {
                                 showErrorSnak('No Image Selected',
                                     'Images Must not be Empty');
@@ -332,11 +351,12 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
 
                             var description =
                                 await htmlEditorController.getText();
+                            var imageList =
+                                jsonEncode(projectController.imageUrl);
                             projectController.startingPrice.value =
-                                double.parse(projectController
-                                    .startingPriceController.text);
-                            projectController.endingPrice.value = double.parse(
-                                projectController.endingPriceController.text);
+                                projectController.startingPriceController.text;
+                            projectController.endingPrice.value =
+                                projectController.endingPriceController.text;
                             print(projectController.startingPrice);
                             print(projectController.endingPrice);
 
@@ -347,35 +367,35 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
 
                                 Get.defaultDialog(
                                   barrierDismissible: false,
-                                  title: 'Updating Post',
+                                  title: 'Updating Project',
                                   content: const Center(
                                     child: CircularProgressIndicator(
                                         color: kPrimaryColor),
                                   ),
                                 );
-                                var imageList =
-                                    jsonEncode(projectController.imageUrl);
                                 print("============= Updating =======");
                                 await projectController.updateProject(
-                                    projectController.projectID.value,
-                                    projectController
-                                        .projectTitleController.text,
-                                    imageList[0],
-                                    imageList,
-                                    projectController
-                                        .projectLocalityController.text,
-                                    projectController.cityController.text,
-                                    description,
-                                    projectController.catID.value,
-                                    projectController.developerID.value,
-                                    projectController.startingPrice.value
-                                        .toDouble(),
-                                    projectController.endingPrice.value
-                                        .toDouble(),
-                                    statusValue.value);
+                                  projectController.projectID.value,
+                                  projectController.projectTitleController.text,
+                                  projectController.descriptionController.text,
+                                  projectController.imageUrl.first,
+                                  imageList,
+                                  projectController
+                                      .projectLocalityController.text,
+                                  projectController.cityController.text,
+                                  projectController.areaController.text,
+                                  description,
+                                  projectController.catID.value,
+                                  projectController.developerID.value,
+                                  projectController.startingPrice.value,
+                                  projectController.endingPrice.value,
+                                  statusValue.value,
+                                  projectController.walkThroughController.text,
+                                  1,
+                                );
                                 Navigator.pop(context);
                                 projectController.getAll();
-                                Get.toNamed('/post');
+                                Get.toNamed('/project');
                                 // }
                                 // } else {
                                 //   showErrorSnak('Amenities are empty',

@@ -16,10 +16,12 @@ class ProjectsModel {
     this.id,
     this.title,
     this.address,
+    this.description,
     this.featuredImage,
     this.gallery,
     this.locality,
     this.city,
+    this.area,
     this.startingPrice,
     this.endingPrice,
     this.walkthroughThreeD,
@@ -34,13 +36,15 @@ class ProjectsModel {
   int? id;
   String? title;
   String? address;
+  String? description;
   String? featuredImage;
   String? gallery;
   String? locality;
   String? city;
-  int? startingPrice;
-  int? endingPrice;
-  dynamic walkthroughThreeD;
+  String? area;
+  String? startingPrice;
+  String? endingPrice;
+  String? walkthroughThreeD;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? developerId;
@@ -52,10 +56,12 @@ class ProjectsModel {
         id: json["id"],
         title: json["title"],
         address: json["address"],
+        description: json["description"],
         featuredImage: json["featuredImage"],
         gallery: json["gallery"],
         locality: json["locality"],
         city: json["city"],
+        area: json["area"],
         startingPrice: json["startingPrice"],
         endingPrice: json["endingPrice"],
         walkthroughThreeD: json["walkthroughThreeD"],
@@ -71,10 +77,12 @@ class ProjectsModel {
         "id": id,
         "title": title,
         "address": address,
+        "description": description,
         "featuredImage": featuredImage,
         "gallery": gallery,
         "locality": locality,
         "city": city,
+        "area": area,
         "startingPrice": startingPrice,
         "endingPrice": endingPrice,
         "walkthroughThreeD": walkthroughThreeD,

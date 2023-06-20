@@ -35,6 +35,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
       required this.startingPriceController,
       required this.endingPriceController,
       required this.htmlEditorController,
+      required this.walkThroughController,
       required this.images,
       // validation
       required this.projectTitleValidator,
@@ -42,6 +43,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
       required this.areaValidator,
       required this.startingPriceValidator,
       required this.endingPriceValidator,
+      required this.walkThroughFieldSubmitted,
 
       // focus node
       required this.titleFieldSubmitted,
@@ -50,6 +52,8 @@ class ProjectForm extends GetView<ThemeChangeController> {
       required this.projectLocalityFocus,
       required this.cityFocus,
       required this.cityFieldSubmitted,
+      required this.walkThroughFocus,
+      required this.walkThroughValidator,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -78,6 +82,8 @@ class ProjectForm extends GetView<ThemeChangeController> {
   dynamic noOfInstallmentValidator;
   dynamic monthlyInstallmentValidator;
   dynamic advanceValidator;
+  dynamic endingPriceValidator;
+  dynamic walkThroughValidator;
 
   bool statusValue;
 
@@ -87,15 +93,15 @@ class ProjectForm extends GetView<ThemeChangeController> {
 
   dynamic propertyAreaUnitOnChange;
   dynamic startingPriceValidator;
-  dynamic endingPriceValidator;
   dynamic titleFieldSubmitted;
   dynamic projectAddressFieldSubmitted;
   dynamic cityFieldSubmitted;
+  dynamic walkThroughFieldSubmitted;
 
   TextEditingController projectTitleController;
   TextEditingController projectLocalityController;
   TextEditingController projectAddressController;
-  // TextEditingController totalAreaController;
+  TextEditingController walkThroughController;
   TextEditingController cityController;
   TextEditingController areaController;
   TextEditingController startingPriceController;
@@ -108,6 +114,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
   FocusNode projectLocalityFocus;
   FocusNode projectAddressFocus;
   FocusNode cityFocus;
+  FocusNode walkThroughFocus;
 
   @override
   Widget build(BuildContext context) {
@@ -307,11 +314,21 @@ class ProjectForm extends GetView<ThemeChangeController> {
                       ),
                     ),
                   ),
-                  //TODO:place it to create_post_page//
                   images
                 ],
               ),
-
+              SizedBox(
+                height: height * 0.04,
+              ),
+              DefaultTextField(
+                focusNode: walkThroughFocus,
+                onFieldSubmitted: walkThroughFieldSubmitted,
+                hintText: "Enter Walk Through Video Url",
+                labelText: "Walk Through Video",
+                isPassword: false,
+                textEditingController: walkThroughController,
+                validator: walkThroughValidator,
+              ),
               SizedBox(
                 height: height * 0.04,
               ),
@@ -326,7 +343,6 @@ class ProjectForm extends GetView<ThemeChangeController> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          // TODO: need to update API
                           "Project Type",
                           style: Theme.of(context)
                               .textTheme
@@ -462,11 +478,6 @@ class ProjectForm extends GetView<ThemeChangeController> {
                 ],
               ),
               //amenities and other fields
-
-              SizedBox(
-                height: height * 0.04,
-              ),
-
               SizedBox(
                 height: height * 0.015,
               ),

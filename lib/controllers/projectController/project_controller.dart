@@ -26,8 +26,8 @@ class ProjectController extends GetxController {
   var token = ''.obs;
   var isPublished = 0.obs;
 
-  var startingPrice = 0.0.obs;
-  var endingPrice = 0.0.obs;
+  var startingPrice = ''.obs;
+  var endingPrice = ''.obs;
 
   RxString purposeValue = 'SELL'.obs;
 
@@ -36,6 +36,7 @@ class ProjectController extends GetxController {
   late FocusNode titleFieldFocus;
   late FocusNode projectAddressFocus;
   late FocusNode cityFieldFocus;
+  late FocusNode walkThroughFocus;
 
   //<=================== Text Editing Controllers ==================>
   TextEditingController projectTitleController = TextEditingController();
@@ -52,6 +53,7 @@ class ProjectController extends GetxController {
   TextEditingController bedroomController = TextEditingController();
   TextEditingController bathroomController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController walkThroughController = TextEditingController();
 
   @override
   void onInit() {
@@ -64,6 +66,7 @@ class ProjectController extends GetxController {
     projectAddressFocus = FocusNode();
     formFocus = FocusNode();
     cityFieldFocus = FocusNode();
+    walkThroughFocus = FocusNode();
   }
 
   Future<void> getAll() async {
@@ -77,8 +80,6 @@ class ProjectController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
-    print('Responce on projects is');
-    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       project.value = projectsModelFromJson(response.body);
       isLoading.value = false;
@@ -117,7 +118,7 @@ class ProjectController extends GetxController {
       for (var i = 0; i < res.length; i++) {
         String fileName = res[i].name;
         var upload = await FirebaseStorage.instance
-            .ref('uploads/post/images/$fileName')
+            .ref('uploads/project/images/$fileName')
             .putBlob(res[i]);
         final url = upload.ref.getDownloadURL().then((value) {
           imageUrl.add(value);
@@ -129,30 +130,41 @@ class ProjectController extends GetxController {
   Future<void> create(
     String title,
     String address,
+    String description,
     String featuredImage,
     String gallery,
     String locality,
     String city,
+    String area,
     int categoryId,
     int developerId,
-    double startingPrice,
-    double endingPrice,
+    String startingPrice,
+    String endingPrice,
     bool status,
+    String walkthroughThreeD,
+    int projectNearByPlaceId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "title": title,
       "address": address,
+      "description": description,
       "featuredImage": featuredImage,
       "gallery": gallery,
       "locality": locality,
       "city": city,
+      "area": area,
       "categoryId": categoryId,
       "developerId": developerId,
       "startingPrice": startingPrice,
       "endingPrice": endingPrice,
-      "status": status
+      "status": status,
+      "walkthroughThreeD": walkthroughThreeD,
+      "projectNearByPlaceId": projectNearByPlaceId
     };
+
+    print("<=== body we are sending ===>");
+    print(bodyPrepare);
 
     var response = await http.post(
       Uri.parse(
@@ -164,8 +176,10 @@ class ProjectController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
+    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
-      project.addAll(projectsModelFromJson(response.body));
+      // project.addAll(projectsModelFromJson(response.body));
+      await getAll();
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -178,30 +192,38 @@ class ProjectController extends GetxController {
     int id,
     String title,
     String address,
+    String description,
     String featuredImage,
     String gallery,
     String locality,
     String city,
+    String area,
     int categoryId,
     int developerId,
-    double startingPrice,
-    double endingPrice,
+    String startingPrice,
+    String endingPrice,
     bool status,
+    String walkthroughThreeD,
+    int projectNearByPlaceId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
       "title": title,
       "address": address,
+      "description": description,
       "featuredImage": featuredImage,
       "gallery": gallery,
       "locality": locality,
       "city": city,
+      "area": area,
       "categoryId": categoryId,
       "developerId": developerId,
       "startingPrice": startingPrice,
       "endingPrice": endingPrice,
-      "status": status
+      "status": status,
+      "walkthroughThreeD": walkthroughThreeD,
+      "projectNearByPlaceId": projectNearByPlaceId
     };
 
     var response = await http.put(
@@ -230,7 +252,7 @@ class ProjectController extends GetxController {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteProject + id,
+        '$baseUrl$deleteProject/$id',
       ),
       headers: {
         "Content-Type": "application/json",
@@ -241,9 +263,11 @@ class ProjectController extends GetxController {
       getAll();
       var deletedProjects = jsonDecode(response.body);
       var projects = deletedProjects['name'];
-      Get.snackbar('Project Deleted',
-          'The Project with name: $projects has been deleted',
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      Get.snackbar('Project Deleted', 'The Project has been deleted',
+          snackPosition: SnackPosition.TOP,
+          maxWidth: 400,
+          icon: const Icon(Icons.delete),
+          backgroundColor: Colors.red);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
