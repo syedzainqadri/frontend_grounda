@@ -12,6 +12,7 @@ import 'package:image_picker_web/image_picker_web.dart';
 
 class ProjectController extends GetxController {
   var project = <ProjectsModel>[].obs;
+  var singleProject = SingleProjectModel().obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var isLoading = false.obs;
 
@@ -28,6 +29,8 @@ class ProjectController extends GetxController {
 
   var startingPrice = ''.obs;
   var endingPrice = ''.obs;
+  var statusValue = true.obs;
+  var projectNearByPlaces = 1.obs;
 
   RxString purposeValue = 'SELL'.obs;
 
@@ -40,7 +43,6 @@ class ProjectController extends GetxController {
 
   //<=================== Text Editing Controllers ==================>
   TextEditingController projectTitleController = TextEditingController();
-  TextEditingController projectCategoryController = TextEditingController();
   TextEditingController projectAddressController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController areaController = TextEditingController();
@@ -101,8 +103,24 @@ class ProjectController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
+    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
-      project.value = projectsModelFromJson(response.body);
+      singleProject.value = singleProjectModelFromJson(response.body);
+      projectID.value = singleProject.value.id!;
+      projectTitleController.text = singleProject.value.title!;
+      projectAddressController.text = singleProject.value.address!;
+      cityController.text = singleProject.value.city!;
+      areaController.text = singleProject.value.area!;
+      projectLocalityController.text = singleProject.value.locality!;
+      startingPriceController.text = singleProject.value.startingPrice!;
+      endingPriceController.text = singleProject.value.endingPrice!;
+      descriptionController.text = singleProject.value.description!;
+      walkThroughController.text = singleProject.value.walkthroughThreeD!;
+      statusValue.value = singleProject.value.status!;
+      imageUrl.value = jsonDecode(singleProject.value.gallery!);
+      projectNearByPlaces.value = 1;
+      catID.value = singleProject.value.categoryId!;
+      developerID.value = singleProject.value.developerId!;
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,

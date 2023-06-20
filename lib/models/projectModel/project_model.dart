@@ -94,3 +94,98 @@ class ProjectsModel {
         "status": status,
       };
 }
+
+// To parse this JSON data, do
+//
+//     final singleProjectModel = singleProjectModelFromJson(jsonString);
+
+SingleProjectModel singleProjectModelFromJson(String str) =>
+    SingleProjectModel.fromJson(json.decode(str));
+
+String singleProjectModelToJson(SingleProjectModel data) =>
+    json.encode(data.toJson());
+
+class SingleProjectModel {
+  int? id;
+  String? title;
+  String? address;
+  dynamic description;
+  String? featuredImage;
+  String? gallery;
+  String? locality;
+  String? area;
+  String? city;
+  String? startingPrice;
+  String? endingPrice;
+  String? walkthroughThreeD;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? developerId;
+  int? categoryId;
+  int? projectNearByPlaceId;
+  bool? status;
+
+  SingleProjectModel({
+    this.id,
+    this.title,
+    this.address,
+    this.description,
+    this.featuredImage,
+    this.gallery,
+    this.locality,
+    this.area,
+    this.city,
+    this.startingPrice,
+    this.endingPrice,
+    this.walkthroughThreeD,
+    this.createdAt,
+    this.updatedAt,
+    this.developerId,
+    this.categoryId,
+    this.projectNearByPlaceId,
+    this.status,
+  });
+
+  factory SingleProjectModel.fromJson(Map<String, dynamic> json) =>
+      SingleProjectModel(
+        id: json["id"],
+        title: json["title"],
+        address: json["address"],
+        description: json["description"],
+        featuredImage: json["featuredImage"],
+        gallery: json["gallery"],
+        locality: json["locality"],
+        area: json["area"],
+        city: json["city"],
+        startingPrice: json["startingPrice"],
+        endingPrice: json["endingPrice"],
+        walkthroughThreeD: json["walkthroughThreeD"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+        developerId: json["developerId"],
+        categoryId: json["categoryId"],
+        projectNearByPlaceId: json["projectNearByPlaceId"],
+        status: json["status"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "address": address,
+        "description": description,
+        "featuredImage": featuredImage,
+        "gallery": gallery,
+        "locality": locality,
+        "area": area,
+        "city": city,
+        "startingPrice": startingPrice,
+        "endingPrice": endingPrice,
+        "walkthroughThreeD": walkthroughThreeD,
+        "createdAt": createdAt!.toIso8601String(),
+        "updatedAt": updatedAt!.toIso8601String(),
+        "developerId": developerId,
+        "categoryId": categoryId,
+        "projectNearByPlaceId": projectNearByPlaceId,
+        "status": status,
+      };
+}

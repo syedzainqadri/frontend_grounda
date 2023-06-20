@@ -40,8 +40,6 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
 
   var categorySelectedItemId = 0.obs;
 
-  var statusValue = true.obs;
-
   DeveloperController developerController = Get.find<DeveloperController>();
 
   @override
@@ -124,9 +122,9 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
 
                         // status change
                         statusChanges: (value) {
-                          statusValue.value = value;
+                          projectController.statusValue.value = value;
                         },
-                        statusValue: statusValue.value,
+                        statusValue: projectController.statusValue.value,
 
                         //<============! City Fild ==========>
                         cityFieldSubmitted: (value) {
@@ -171,6 +169,7 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                               child: CircularProgressIndicator(
                                   color: kPrimaryColor),
                             ),
+                            barrierDismissible: false,
                           );
                           await projectController.getImage();
                           Navigator.pop(context);
@@ -332,7 +331,7 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                   selectedItemId.value,
                                   projectController.startingPrice.value,
                                   projectController.endingPrice.value,
-                                  statusValue.value,
+                                  projectController.statusValue.value,
                                   projectController.walkThroughController.text,
                                   1,
                                 );
@@ -389,7 +388,7 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                   projectController.developerID.value,
                                   projectController.startingPrice.value,
                                   projectController.endingPrice.value,
-                                  statusValue.value,
+                                  projectController.statusValue.value,
                                   projectController.walkThroughController.text,
                                   1,
                                 );
