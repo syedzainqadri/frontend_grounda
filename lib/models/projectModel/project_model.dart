@@ -122,7 +122,8 @@ class SingleProjectModel {
   DateTime? updatedAt;
   int? developerId;
   int? categoryId;
-  int? projectNearByPlaceId;
+  String? projectNearByPlaceNames;
+  String? projectNearByPlaceIcons;
   bool? status;
 
   SingleProjectModel({
@@ -142,7 +143,8 @@ class SingleProjectModel {
     this.updatedAt,
     this.developerId,
     this.categoryId,
-    this.projectNearByPlaceId,
+    this.projectNearByPlaceNames,
+    this.projectNearByPlaceIcons,
     this.status,
   });
 
@@ -164,7 +166,8 @@ class SingleProjectModel {
         updatedAt: DateTime.parse(json["updatedAt"]),
         developerId: json["developerId"],
         categoryId: json["categoryId"],
-        projectNearByPlaceId: json["projectNearByPlaceId"],
+        projectNearByPlaceNames: json["projectNearByPlaceNames"],
+        projectNearByPlaceIcons: json["projectNearByPlaceIcons"],
         status: json["status"],
       );
 
@@ -185,7 +188,8 @@ class SingleProjectModel {
         "updatedAt": updatedAt!.toIso8601String(),
         "developerId": developerId,
         "categoryId": categoryId,
-        "projectNearByPlaceId": projectNearByPlaceId,
+        "projectNearByPlaceNames": projectNearByPlaceNames,
+        "projectNearByPlaceIcons": projectNearByPlaceIcons,
         "status": status,
       };
 }

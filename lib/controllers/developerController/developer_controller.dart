@@ -38,8 +38,6 @@ class DeveloperController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      print('<======== Developer Details ===========>');
-      print('developer details are: ${response.body}');
       developers.value = developersModelFromJson(response.body);
       selectedItemName.value = developers.first.title!;
       isLoading.value = false;

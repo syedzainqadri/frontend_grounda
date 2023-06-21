@@ -35,6 +35,11 @@ class ProjectController extends GetxController {
 
   RxString purposeValue = 'SELL'.obs;
 
+  var selectedProjectNearByPlacesNames = [].obs;
+  var selectedProjectNearByPlacesCodes = [].obs;
+  var projectNearByPlacesNames = [].obs;
+  var projectNearByPlacesCodes = [].obs;
+
   late FocusNode formFocus;
   late FocusNode projectLocalityFocus;
   late FocusNode titleFieldFocus;
@@ -116,13 +121,17 @@ class ProjectController extends GetxController {
       projectLocalityController.text = singleProject.value.locality!;
       startingPriceController.text = singleProject.value.startingPrice!;
       endingPriceController.text = singleProject.value.endingPrice!;
-      htmlEditorController.insertHtml(singleProject.value.description!);
+      htmlEditorController.insertText(singleProject.value.description!);
       walkThroughController.text = singleProject.value.walkthroughThreeD!;
       statusValue.value = singleProject.value.status!;
-      imageUrl.add(singleProject.value.gallery);
+      imageUrl.value = jsonDecode(singleProject.value.gallery!);
       projectNearByPlaces.value = 1;
       catID.value = singleProject.value.categoryId!;
       developerID.value = singleProject.value.developerId!;
+      selectedProjectNearByPlacesNames.value =
+          jsonDecode(singleProject.value.projectNearByPlaceNames!);
+      selectedProjectNearByPlacesCodes.value =
+          jsonDecode(singleProject.value.projectNearByPlaceIcons!);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -162,7 +171,8 @@ class ProjectController extends GetxController {
     String endingPrice,
     bool status,
     String walkthroughThreeD,
-    int projectNearByPlaceId,
+    String projectNearByPlaceNames,
+    String projectNearByPlaceCodes,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
@@ -180,7 +190,8 @@ class ProjectController extends GetxController {
       "endingPrice": endingPrice,
       "status": status,
       "walkthroughThreeD": walkthroughThreeD,
-      "projectNearByPlaceId": projectNearByPlaceId
+      "projectNearByPlacesNames": projectNearByPlaceNames,
+      "projectNearByPlacesIcons": projectNearByPlaceCodes
     };
 
     print("<=== body we are sending ===>");
@@ -224,7 +235,8 @@ class ProjectController extends GetxController {
     String endingPrice,
     bool status,
     String walkthroughThreeD,
-    int projectNearByPlaceId,
+    String projectNearByPlaceNames,
+    String projectNearByPlaceCodes,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
@@ -243,7 +255,8 @@ class ProjectController extends GetxController {
       "endingPrice": endingPrice,
       "status": status,
       "walkthroughThreeD": walkthroughThreeD,
-      "projectNearByPlaceId": projectNearByPlaceId
+      "projectNearByPlacesNames": projectNearByPlaceNames,
+      "projectNearByPlacesIcons": projectNearByPlaceCodes
     };
 
     var response = await http.put(

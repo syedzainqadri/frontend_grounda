@@ -14,6 +14,9 @@ class ProjectNearByPlacesController extends GetxController {
   var isLoading = false.obs;
   var iconImageUrl = ''.obs;
 
+  RxList<String> projectNearByPlacesNames = <String>[].obs;
+  RxList<String> projectNearByPlacesCodes = <String>[].obs;
+
   @override
   void onInit() {
     super.onInit();

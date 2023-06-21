@@ -54,6 +54,8 @@ class ProjectForm extends GetView<ThemeChangeController> {
       required this.cityFieldSubmitted,
       required this.walkThroughFocus,
       required this.walkThroughValidator,
+      required this.projectNearByPlaces,
+      required this.selectedProjectNearByPlaces,
       super.key});
   double width = Get.width;
   double height = Get.height;
@@ -109,6 +111,8 @@ class ProjectForm extends GetView<ThemeChangeController> {
   HtmlEditorController htmlEditorController;
 
   Widget images;
+  Widget projectNearByPlaces;
+  Widget? selectedProjectNearByPlaces;
 
   FocusNode titleFocus;
   FocusNode projectLocalityFocus;
@@ -440,44 +444,69 @@ class ProjectForm extends GetView<ThemeChangeController> {
                   SizedBox(
                     width: width * .02,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 0.0),
-                    child: Transform.scale(
-                      scale: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Status",
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              SizedBox(
-                                width: width * .01,
-                              ),
-                              CupertinoSwitch(
-                                activeColor: kPrimaryColor,
-                                value: statusValue,
-                                onChanged: statusChanges,
-                              ),
-                            ],
-                          ),
-                          DefaultButton(
-                            primaryColor: kPrimaryColor,
-                            hoverColor: kDarkColor,
-                            buttonText: buttonText,
-                            width: width * .2,
-                            height: height * .05,
-                            onPressed: formSubmit,
-                          ),
-                        ],
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      selectedProjectNearByPlaces!,
+                      Text(
+                        'Select Amenities',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: kPrimaryColor),
                       ),
-                    ),
+                      Container(
+                        color: Colors.white,
+                        height: 290,
+                        width: width * .19,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: projectNearByPlaces,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
               //amenities and other fields
+              SizedBox(
+                height: height * 0.015,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 0.0),
+                child: Transform.scale(
+                  scale: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "Status",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          SizedBox(
+                            width: width * .01,
+                          ),
+                          CupertinoSwitch(
+                            activeColor: kPrimaryColor,
+                            value: statusValue,
+                            onChanged: statusChanges,
+                          ),
+                        ],
+                      ),
+                      DefaultButton(
+                        primaryColor: kPrimaryColor,
+                        hoverColor: kDarkColor,
+                        buttonText: buttonText,
+                        width: width * .2,
+                        height: height * .05,
+                        onPressed: formSubmit,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
                 height: height * 0.015,
               ),
