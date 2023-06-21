@@ -12,6 +12,7 @@ import 'package:frontend_grounda/views/pages/post/post_view.dart';
 import 'package:frontend_grounda/views/pages/post/sub_pages/post_create_view.dart';
 import 'package:frontend_grounda/views/pages/product/product_view.dart';
 import 'package:frontend_grounda/views/pages/project/project_view.dart';
+import 'package:frontend_grounda/views/pages/settings/subpages/project_near_by_places/project_near_by_places_view.dart';
 import 'package:frontend_grounda/views/pages/settings/subpages/amenities/amenities_view.dart';
 import 'package:frontend_grounda/views/pages/settings/subpages/payment_methods/payment_method_view.dart';
 import 'package:frontend_grounda/views/pages/settings/subpages/profile/profile_view.dart';
@@ -138,6 +139,12 @@ appRoutes() => [
       GetPage(
         name: '/settings/amenities',
         page: () => const AmenitiesView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
+        name: '/settings/project-near-by-places',
+        page: () => const ProjectNearByPlacesView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),

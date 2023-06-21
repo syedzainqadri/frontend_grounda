@@ -7,6 +7,7 @@ import 'package:frontend_grounda/models/projectModel/project_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker_web/image_picker_web.dart';
 
@@ -56,6 +57,7 @@ class ProjectController extends GetxController {
   TextEditingController bathroomController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController walkThroughController = TextEditingController();
+  HtmlEditorController htmlEditorController = HtmlEditorController();
 
   @override
   void onInit() {
@@ -114,10 +116,10 @@ class ProjectController extends GetxController {
       projectLocalityController.text = singleProject.value.locality!;
       startingPriceController.text = singleProject.value.startingPrice!;
       endingPriceController.text = singleProject.value.endingPrice!;
-      descriptionController.text = singleProject.value.description!;
+      htmlEditorController.insertHtml(singleProject.value.description!);
       walkThroughController.text = singleProject.value.walkthroughThreeD!;
       statusValue.value = singleProject.value.status!;
-      imageUrl.value = jsonDecode(singleProject.value.gallery!);
+      imageUrl.add(singleProject.value.gallery);
       projectNearByPlaces.value = 1;
       catID.value = singleProject.value.categoryId!;
       developerID.value = singleProject.value.developerId!;

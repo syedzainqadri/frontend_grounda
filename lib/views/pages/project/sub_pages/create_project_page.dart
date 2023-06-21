@@ -12,7 +12,6 @@ import 'package:frontend_grounda/utils/global_methods.dart';
 import 'package:frontend_grounda/views/pages/project/widgets/project_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
 
 import '../../../../controllers/projectController/project_controller.dart';
 
@@ -27,7 +26,6 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
   ProfileController profileController = Get.find<ProfileController>();
 
   //<=============== Text Editor Controllers ========================>
-  HtmlEditorController htmlEditorController = HtmlEditorController();
 
   final TextEditingController projectCategoryController =
       TextEditingController();
@@ -107,7 +105,8 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                             projectController.startingPriceController,
                         endingPriceController:
                             projectController.endingPriceController,
-                        htmlEditorController: htmlEditorController,
+                        htmlEditorController:
+                            projectController.htmlEditorController,
 
                         // validations
                         titleFieldSubmitted: (value) {
@@ -296,8 +295,9 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                             print(
                                 "<======= The Project post is being submited =========>");
 
-                            var description =
-                                await htmlEditorController.getText();
+                            var description = await projectController
+                                .htmlEditorController
+                                .getText();
                             var imageList =
                                 jsonEncode(projectController.imageUrl);
                             projectController.startingPrice.value =
@@ -348,8 +348,9 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                           } else {
                             print("============= Updating started=======");
 
-                            var description =
-                                await htmlEditorController.getText();
+                            var description = await projectController
+                                .htmlEditorController
+                                .getText();
                             var imageList =
                                 jsonEncode(projectController.imageUrl);
                             projectController.startingPrice.value =

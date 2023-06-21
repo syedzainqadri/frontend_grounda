@@ -14,32 +14,29 @@ String projectsNearByPlacesModelToJson(List<ProjectsNearByPlacesModel> data) =>
 class ProjectsNearByPlacesModel {
   ProjectsNearByPlacesModel({
     this.id,
-    this.title,
-    this.latitude,
-    this.longitude,
-    this.placeCategory,
+    this.name,
+    this.icon,
+    this.status,
   });
 
   int? id;
-  String? title;
-  String? latitude;
-  String? longitude;
-  String? placeCategory;
+  String? name;
+
+  String? icon;
+  bool? status;
 
   factory ProjectsNearByPlacesModel.fromJson(Map<String, dynamic> json) =>
       ProjectsNearByPlacesModel(
         id: json["id"],
-        title: json["title"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
-        placeCategory: json["placeCategory"],
+        name: json["name"],
+        icon: json["icon"],
+        status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "title": title,
-        "latitude": latitude,
-        "longitude": longitude,
-        "placeCategory": placeCategory,
+        "name": name,
+        "icon": icon,
+        "status": status,
       };
 }

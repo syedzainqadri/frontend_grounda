@@ -54,9 +54,11 @@ class SettingsPage extends GetView<ThemeChangeController> {
                 SettingsMenuCard(
                   height: height,
                   width: width,
-                  text: 'Profile Settings',
-                  icon: 'assets/icons/person.svg',
-                  onPressed: () {},
+                  text: 'Project Near By Places',
+                  icon: 'assets/icons/project-list.svg',
+                  onPressed: () {
+                    Get.toNamed('/settings/project-near-by-places');
+                  },
                 ),
                 SettingsMenuCard(
                   height: height,

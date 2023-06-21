@@ -64,19 +64,15 @@ class ProjectNearByPlacesController extends GetxController {
   }
 
   Future<void> create(
-    String title,
-    String longitude,
-    String latitude,
-    int projectId,
-    String placeCategory,
+    String? name,
+    String? icon,
+    bool? status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
-      "title": title,
-      "longitude": longitude,
-      "latitude": latitude,
-      "projectId": projectId,
-      "placeCategory": placeCategory
+      "title": name,
+      "icon": icon,
+      "status": status,
     };
 
     var response = await http.post(
@@ -101,21 +97,17 @@ class ProjectNearByPlacesController extends GetxController {
   }
 
   Future<void> updateProjectNearByPlaces(
-    int id,
-    String title,
-    String longitude,
-    String latitude,
-    int projectId,
-    String placeCategory,
+    int? id,
+    String? name,
+    String? icon,
+    bool? status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "id": id,
-      "title": title,
-      "longitude": longitude,
-      "latitude": latitude,
-      "projectId": projectId,
-      "placeCategory": placeCategory
+      "title": name,
+      "icon": icon,
+      "status": status,
     };
 
     var response = await http.put(
@@ -139,12 +131,12 @@ class ProjectNearByPlacesController extends GetxController {
   }
 
   Future<void> delete(
-    String id,
+    int id,
   ) async {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteProjectNearByPlaces + id,
+        '$baseUrl$deleteProjectNearByPlaces/$id',
       ),
       headers: {
         "Content-Type": "application/json",

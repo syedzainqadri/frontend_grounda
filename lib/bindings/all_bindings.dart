@@ -17,6 +17,7 @@ import 'package:frontend_grounda/controllers/postController/post_comment_control
 import 'package:frontend_grounda/controllers/postController/post_controller.dart';
 import 'package:frontend_grounda/controllers/productsController/products_controller.dart';
 import 'package:frontend_grounda/controllers/profileController/profile_controller.dart';
+import 'package:frontend_grounda/controllers/projectController/projectNearByPlaces_controller.dart';
 import 'package:frontend_grounda/controllers/projectController/project_controller.dart';
 import 'package:frontend_grounda/controllers/reviewController/review_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
@@ -53,6 +54,9 @@ class AllBindings implements Bindings {
     Get.lazyPut<WishListController>(() => WishListController(), fenix: true);
     Get.lazyPut<CustomerController>(() => CustomerController(), fenix: true);
     Get.lazyPut<PaymentMethodController>(() => PaymentMethodController(),
+        fenix: true);
+    Get.lazyPut<ProjectNearByPlacesController>(
+        () => ProjectNearByPlacesController(),
         fenix: true);
     // Get.lazyPut<LocationService>(() => LocationService(), fenix: true);
   }
