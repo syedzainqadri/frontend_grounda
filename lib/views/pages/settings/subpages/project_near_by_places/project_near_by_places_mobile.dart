@@ -27,7 +27,7 @@ class ProjectNearByPlacesMobile extends GetView<ThemeChangeController> {
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount:
-                    projectNearByPlacesController.projectNearByPlaces.length,
+                    projectNearByPlacesController.projectNearByPlace.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     color: controller.isDarkMode.value
@@ -50,12 +50,12 @@ class ProjectNearByPlacesMobile extends GetView<ThemeChangeController> {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(30),
                                         child: projectNearByPlacesController
-                                                    .projectNearByPlaces[index]
+                                                    .projectNearByPlace[index]
                                                     .icon !=
                                                 null
                                             ? Image.network(
                                                 projectNearByPlacesController
-                                                    .projectNearByPlaces[index]
+                                                    .projectNearByPlace[index]
                                                     .icon!)
                                             : SvgPicture.asset(
                                                 '/images/logo.svg',
@@ -76,7 +76,7 @@ class ProjectNearByPlacesMobile extends GetView<ThemeChangeController> {
                                       children: [
                                         Text(
                                           projectNearByPlacesController
-                                              .projectNearByPlaces[index].name!,
+                                              .projectNearByPlace[index].name!,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge,
@@ -93,7 +93,7 @@ class ProjectNearByPlacesMobile extends GetView<ThemeChangeController> {
                                                   .bodySmall,
                                             ),
                                             projectNearByPlacesController
-                                                        .projectNearByPlaces[
+                                                        .projectNearByPlace[
                                                             index]
                                                         .status ==
                                                     true

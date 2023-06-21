@@ -1,22 +1,24 @@
-// ignore_for_file: file_names
-
 import 'dart:convert';
 import 'package:frontend_grounda/models/projectModel/project_near_by_places_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
+import 'package:frontend_grounda/utils/global_methods.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class ProjectNearByPlacesController extends GetxController {
-  var projectNearByPlaces = <ProjectsNearByPlacesModel>[].obs;
+  var projectNearByPlace = <ProjectsNearByPlacesModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
+  var selectedItemName = ''.obs;
   var token = ''.obs;
   var isLoading = false.obs;
+  var iconImageUrl = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
+    getAll();
   }
 
   Future<void> getAll() async {
@@ -31,50 +33,23 @@ class ProjectNearByPlacesController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      projectNearByPlaces.value =
+      projectNearByPlace.value =
           projectsNearByPlacesModelFromJson(response.body);
+      selectedItemName.value = projectNearByPlace.first.name!;
+      print(projectNearByPlace.length);
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> getbyId(String id) async {
-    isLoading.value = true;
-    var response = await http.get(
-      Uri.parse(
-        baseUrl + getProjectNearByPlaces + id,
-      ),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-    );
-    if (response.statusCode == 200 && response.body != 'null') {
-      projectNearByPlaces.value =
-          projectsNearByPlacesModelFromJson(response.body);
-      isLoading.value = false;
-    } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
   Future<void> create(
-    String? name,
-    String? icon,
-    bool? status,
+    String name,
+    String icon,
+    bool status,
   ) async {
     isLoading.value = true;
-    var bodyPrepare = {
-      "title": name,
-      "icon": icon,
-      "status": status,
-    };
-
+    var bodyPrepare = {"title": name, "status": status, "icon": icon};
     var response = await http.post(
       Uri.parse(
         baseUrl + createProjectNearByPlaces,
@@ -85,30 +60,23 @@ class ProjectNearByPlacesController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
+
     if (response.statusCode == 200 && response.body != 'null') {
-      projectNearByPlaces
-          .addAll(projectsNearByPlacesModelFromJson(response.body));
+      showSuccessSnak('Success', 'Project Place Created Sucessfully');
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
   Future<void> updateProjectNearByPlaces(
-    int? id,
-    String? name,
-    String? icon,
-    bool? status,
+    int id,
+    String name,
+    String icon,
+    bool status,
   ) async {
     isLoading.value = true;
-    var bodyPrepare = {
-      "id": id,
-      "title": name,
-      "icon": icon,
-      "status": status,
-    };
+    var bodyPrepare = {"id": id, "title": name, "status": status, "icon": icon};
 
     var response = await http.put(
       Uri.parse(
@@ -122,11 +90,10 @@ class ProjectNearByPlacesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
+      showSuccessSnak('Success', 'Project Place Updated Sucessfully');
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 
@@ -145,16 +112,13 @@ class ProjectNearByPlacesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      var deletedProjectNearByPlaces = jsonDecode(response.body);
-      var projectNearByPlaces = deletedProjectNearByPlaces['name'];
-      Get.snackbar('Project Place Deleted',
-          'The Project Place with name: $projectNearByPlaces has been deleted',
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      var deletedProjectPlace = jsonDecode(response.body);
+      var ProjectPlace = deletedProjectPlace['name'];
+      showDeleteSnak('Project Place Deleted',
+          'The Project Palce with name: $ProjectPlace has been deleted');
       isLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      showErrorSnak('Error', response.body);
     }
   }
 }
