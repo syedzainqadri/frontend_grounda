@@ -308,4 +308,42 @@ class ProjectController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    projectTitleController.text = '';
+    projectAddressController.text = '';
+    cityController.text = '';
+    areaController.text = '';
+    projectLocalityController.text = '';
+    startingPriceController.text = '';
+    endingPriceController.text = '';
+    advanceController.text = '';
+    noOfInstallmentController.text = '';
+    monthlyInstallmentController.text = '';
+    bedroomController.text = '';
+    bathroomController.text = '';
+    descriptionController.text = '';
+    walkThroughController.text = '';
+    htmlEditorController.clear();
+    var projectID = 0.obs;
+    var developerID = 0.obs;
+    var catID = 0.obs;
+    var token = ''.obs;
+    var isPublished = 0.obs;
+
+    var startingPrice = ''.obs;
+    var endingPrice = ''.obs;
+    var statusValue = true.obs;
+    var projectNearByPlaces = 1.obs;
+
+    RxString purposeValue = 'SELL'.obs;
+
+    var selectedProjectNearByPlacesNames = [].obs;
+    var selectedProjectNearByPlacesCodes = [].obs;
+    var projectNearByPlacesNames = [].obs;
+    var projectNearByPlacesCodes = [].obs;
+  }
 }
