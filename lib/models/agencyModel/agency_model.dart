@@ -14,25 +14,22 @@ class AgencyModel {
   AgencyModel({
     this.id,
     this.title,
+    this.ownerName,
     this.featuredImage,
     this.logoImage,
-    this.ownerName,
-    this.ownerDesignation,
-    this.ownerMessage,
-    this.ownerProfilePic,
-    this.companyTitle,
     this.country,
+    this.state,
+    this.city,
     this.email,
-    this.website,
     this.address,
     this.description,
     this.mobile,
-    this.landline,
-    this.whatsapp,
+    this.purpose,
+    this.propertyType,
     this.createdAt,
     this.updatedAt,
     this.userId,
-    this.slugId,
+    this.slug,
     this.status,
   });
 
@@ -41,22 +38,19 @@ class AgencyModel {
   String? featuredImage;
   String? logoImage;
   String? ownerName;
-  String? ownerDesignation;
-  String? ownerMessage;
-  String? ownerProfilePic;
-  String? companyTitle;
   String? country;
+  String? state;
+  String? city;
   String? email;
-  String? website;
   String? address;
   String? description;
+  String? propertyType;
   String? mobile;
-  String? landline;
-  String? whatsapp;
+  String? purpose;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? userId;
-  int? slugId;
+  String? slug;
   bool? status;
 
   factory AgencyModel.fromJson(Map<String, dynamic> json) => AgencyModel(
@@ -65,22 +59,19 @@ class AgencyModel {
         featuredImage: json["featuredImage"],
         logoImage: json["logoImage"],
         ownerName: json["ownerName"],
-        ownerDesignation: json["ownerDesignation"],
-        ownerMessage: json["ownerMessage"],
-        ownerProfilePic: json["ownerProfilePic"],
-        companyTitle: json["companyTitle"],
         country: json["country"],
+        state: json["state"],
+        city: json["city"],
         email: json["email"],
-        website: json["website"],
         address: json["address"],
         description: json["description"],
         mobile: json["mobile"],
-        landline: json["landline"],
-        whatsapp: json["whatsapp"],
+        purpose: json["purpose"],
+        propertyType: json["propertyType"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         userId: json["userId"],
-        slugId: json["slugId"],
+        slug: json["slug"],
         status: json["status"],
       );
 
@@ -90,22 +81,19 @@ class AgencyModel {
         "featuredImage": featuredImage,
         "logoImage": logoImage,
         "ownerName": ownerName,
-        "ownerDesignation": ownerDesignation,
-        "ownerMessage": ownerMessage,
-        "ownerProfilePic": ownerProfilePic,
-        "companyTitle": companyTitle,
         "country": country,
         "email": email,
-        "website": website,
+        "state": state,
+        "city": city,
         "address": address,
         "description": description,
         "mobile": mobile,
-        "landline": landline,
-        "whatsapp": whatsapp,
+        "purpose": purpose,
+        "propertyType": propertyType,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
         "userId": userId,
-        "slugId": slugId,
         "status": status,
+        "slug": slug,
       };
 }

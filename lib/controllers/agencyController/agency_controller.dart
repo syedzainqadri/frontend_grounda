@@ -7,17 +7,20 @@ import 'package:frontend_grounda/models/agencyModel/agency_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 
 class AgencyController extends GetxController {
   late FocusNode formFocus;
+  late FocusNode agencyOwnerNameFieldFocus;
   late FocusNode agencyEmailFieldFocus;
   late FocusNode agencyPhoneFieldFocus;
   late FocusNode agencyPasswordFieldFocus;
   var agencies = <AgencyModel>[].obs;
-  var logo = ''.obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
+  var logo = ''.obs;
+  var banner = ''.obs;
   var token = ''.obs;
   var countryCode = ''.obs;
   var countryName = 'PK'.obs;
@@ -30,12 +33,27 @@ class AgencyController extends GetxController {
   RxDouble latitude = 0.0.obs;
   RxDouble longitude = 0.0.obs;
   Location location = Location();
+  var country = ''.obs;
+  var state = ''.obs;
+  var city = ''.obs;
+  var userId = 0.obs;
+
+  TextEditingController agencyNameController = TextEditingController();
+  TextEditingController agencyOwnerNameController = TextEditingController();
+  TextEditingController agencyEmailController = TextEditingController();
+  TextEditingController agencyPhoneController = TextEditingController();
+  TextEditingController agencyPasswordController = TextEditingController();
+  TextEditingController countryNameController = TextEditingController();
+  TextEditingController agencyAddressController = TextEditingController();
+  HtmlEditorController htmlEditorController = HtmlEditorController();
 
   @override
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
+    userId.value = int.parse(tokenHiveBox.get('userId'));
     formFocus = FocusNode();
+    agencyOwnerNameFieldFocus = FocusNode();
     agencyEmailFieldFocus = FocusNode();
     agencyPhoneFieldFocus = FocusNode();
     agencyPasswordFieldFocus = FocusNode();
@@ -87,46 +105,38 @@ class AgencyController extends GetxController {
 
   Future<void> create(
     String title,
-    String companyTitle,
     String ownerName,
-    String ownerMessage,
-    String ownerProfilePic,
-    String ownerDesignation,
-    String country,
-    String email,
-    String website,
-    String address,
     String description,
-    String mobile,
-    String landLine,
-    String whatsApp,
-    int userId,
-    String featuredImage,
     String logoImage,
+    String featuredImage,
+    String email,
+    String mobile,
+    String address,
+    String country,
+    String state,
+    String city,
+    String purpose,
+    String propertyType,
+    int userId,
     String slug,
-    int refrenceId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "title": title,
-      "companyTitle": companyTitle,
       "ownerName": ownerName,
-      "ownerMessage": ownerMessage,
-      "ownerProfilePic": ownerProfilePic,
-      "ownerDesignation": ownerDesignation,
-      "country": country,
-      "email": email,
-      "website": website,
-      "address": address,
       "description": description,
-      "mobile": mobile,
-      "landLine": landLine,
-      "whatsapp": whatsApp,
-      "userID": 1,
-      "featuredImage": featuredImage,
       "logoImage": logoImage,
+      "featuredImage": featuredImage,
+      "email": email,
+      "country": country,
+      "address": address,
+      "state": state,
+      "city": city,
+      "mobile": mobile,
+      "userID": userId,
+      "purpose": purpose,
+      "propertyType": propertyType,
       "slug": slug,
-      "refrenceId": refrenceId
     };
 
     var response = await http.post(
@@ -249,10 +259,26 @@ class AgencyController extends GetxController {
 
       // Upload file
       var upload = await FirebaseStorage.instance
-          .ref('uploads/developers/logos/$fileName')
+          .ref('uploads/agency/logos/$fileName')
           .putData(fileBytes);
       final url = upload.ref.getDownloadURL().then((value) {
         logo.value = value;
+      });
+    }
+  }
+
+  getAgencyBanner() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      Uint8List fileBytes = result.files.first.bytes!;
+      String fileName = result.files.first.name;
+
+      // Upload file
+      var upload = await FirebaseStorage.instance
+          .ref('uploads/agency/banners/$fileName')
+          .putData(fileBytes);
+      final url = upload.ref.getDownloadURL().then((value) {
+        banner.value = value;
       });
     }
   }
