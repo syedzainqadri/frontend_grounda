@@ -19,7 +19,6 @@ class UserModel {
     this.preferencesEmailNotification,
     this.preferencesNewsletter,
     this.preferencesAutomatedReport,
-    this.memberSince,
   });
 
   int? id;
@@ -31,7 +30,6 @@ class UserModel {
   bool? preferencesEmailNotification;
   bool? preferencesNewsletter;
   bool? preferencesAutomatedReport;
-  DateTime? memberSince;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
@@ -43,7 +41,6 @@ class UserModel {
         preferencesEmailNotification: json["preferencesEmailNotification"],
         preferencesNewsletter: json["preferencesNewsletter"],
         preferencesAutomatedReport: json["preferencesAutomatedReport"],
-        memberSince: DateTime.parse(json["memberSince"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -56,6 +53,5 @@ class UserModel {
         "preferencesEmailNotification": preferencesEmailNotification,
         "preferencesNewsletter": preferencesNewsletter,
         "preferencesAutomatedReport": preferencesAutomatedReport,
-        "memberSince": memberSince!.toIso8601String(),
       };
 }

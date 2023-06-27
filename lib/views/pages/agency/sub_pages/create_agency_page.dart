@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:country_state_city_picker/country_state_city_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/agencyController/agency_controller.dart';
 import 'package:frontend_grounda/controllers/authController/auth_controller.dart';
@@ -32,6 +33,7 @@ class CreateAgency extends GetView<ThemeChangeController> {
   RxInt selectedIndex = 0.obs;
   var purpose = [].obs;
   RxBool isObsecure = true.obs;
+  RxBool statusValue = false.obs;
   bool isSelected(index, List indexs, List agencyCategory) {
     if (indexs.contains(index)) {
       return true;
@@ -298,92 +300,123 @@ class CreateAgency extends GetView<ThemeChangeController> {
                               SizedBox(
                                 height: height * .02,
                               ),
-                              DefaultButton(
-                                primaryColor: kPrimaryColor,
-                                hoverColor: kPrimaryColor,
-                                buttonText: 'Create',
-                                onPressed: () async {
-                                  if (agencyController.sell.value == true) {
-                                    purpose.add('sell');
-                                  }
-                                  if (agencyController.rent.value == true) {
-                                    purpose.add('rent');
-                                  }
-                                  if (purpose.isNotEmpty) {
-                                    purposeList.value = jsonEncode(purpose);
-                                  }
-                                  if (agencyCategory.isNotEmpty) {
-                                    categoryList.value =
-                                        jsonEncode(agencyCategory);
-                                  }
-                                  var description = agencyController
-                                      .htmlEditorController
-                                      .getText();
-                                  await authController
-                                      .registerUser(
-                                          agencyController
-                                              .agencyEmailController.text,
-                                          agencyController
-                                              .agencyPasswordController.text,
-                                          'AGENCY')
-                                      .then((value) {
-                                    agencyController.create(
-                                      agencyController
-                                          .agencyNameController.text,
-                                      agencyController
-                                          .agencyOwnerNameController.text,
-                                      description.toString(),
-                                      agencyController.logo.value,
-                                      agencyController.banner.value,
-                                      agencyController
-                                          .agencyEmailController.text,
-                                      agencyController
-                                          .agencyPhoneController.text,
-                                      agencyController
-                                          .agencyAddressController.text,
-                                      agencyController.country.value,
-                                      agencyController.state.value,
-                                      agencyController.city.value,
-                                      purposeList.value,
-                                      categoryList.value,
-                                      authController.userModel.value.id!,
-                                      agencyController
-                                              .agencyNameController.text +
-                                          agencyController
-                                              .agencyOwnerNameController.text,
-                                    );
-                                  });
-                                },
-                                width: width * 2,
-                                height: height * 0.08,
+                              Row(
+                                children: [
+                                  Text(
+                                    "Status",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  SizedBox(
+                                    width: width * .01,
+                                  ),
+                                  CupertinoSwitch(
+                                    activeColor: kPrimaryColor,
+                                    value: statusValue.value,
+                                    onChanged: (value) {
+                                      statusValue.value = value;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: width * .01,
+                                  ),
+                                  DefaultButton(
+                                    primaryColor: kPrimaryColor,
+                                    hoverColor: kPrimaryColor,
+                                    buttonText: 'Create',
+                                    onPressed: () async {
+                                      if (agencyController.sell.value == true) {
+                                        purpose.add('sell');
+                                      }
+                                      if (agencyController.rent.value == true) {
+                                        purpose.add('rent');
+                                      }
+                                      if (purpose.isNotEmpty) {
+                                        purposeList.value = jsonEncode(purpose);
+                                      }
+                                      if (agencyCategory.isNotEmpty) {
+                                        categoryList.value =
+                                            jsonEncode(agencyCategory);
+                                      }
+                                      var description = agencyController
+                                          .htmlEditorController
+                                          .getText();
+                                      Get.defaultDialog(
+                                        barrierDismissible: false,
+                                        title: 'Creating Agency',
+                                        content: const Center(
+                                          child: CircularProgressIndicator(
+                                              color: kPrimaryColor),
+                                        ),
+                                      );
+                                      await authController
+                                          .registerUser(
+                                              agencyController
+                                                  .agencyEmailController.text,
+                                              agencyController
+                                                  .agencyPasswordController
+                                                  .text,
+                                              'AGENCY')
+                                          .then(
+                                        (value) {
+                                          if (value) {
+                                            agencyController
+                                                .create(
+                                                    agencyController
+                                                        .agencyNameController
+                                                        .text,
+                                                    agencyController
+                                                        .agencyOwnerNameController
+                                                        .text,
+                                                    description.toString(),
+                                                    agencyController.logo.value,
+                                                    agencyController
+                                                        .banner.value,
+                                                    agencyController
+                                                        .agencyEmailController
+                                                        .text,
+                                                    agencyController
+                                                        .agencyPhoneController
+                                                        .text,
+                                                    agencyController
+                                                        .agencyAddressController
+                                                        .text,
+                                                    agencyController
+                                                        .country.value,
+                                                    agencyController
+                                                        .state.value,
+                                                    agencyController.city.value,
+                                                    purposeList.value,
+                                                    categoryList.value,
+                                                    authController
+                                                        .userModel.value.id!,
+                                                    agencyController
+                                                            .agencyNameController
+                                                            .text +
+                                                        agencyController
+                                                            .agencyOwnerNameController
+                                                            .text,
+                                                    statusValue.value)
+                                                .then(
+                                              (value) {
+                                                if (value) {
+                                                  Get.back();
+                                                }
+                                              },
+                                            );
+                                          }
+                                        },
+                                      );
+                                      Navigator.pop(context);
+                                    },
+                                    width: width * .09,
+                                    height: height * 0.04,
+                                  ),
+                                ],
                               ),
-                              // Container(
-                              //   decoration: BoxDecoration(
-                              //     borderRadius: BorderRadius.circular(20),
-                              //     color: controller.isDarkMode == true
-                              //         ? kDarkCardColor
-                              //         : kCardColor,
-                              //   ),
-                              //   child: Padding(
-                              //     padding:
-                              //         const EdgeInsets.symmetric(horizontal: 8.0),
-                              //     child: DropdownButton(
-                              //       borderRadius: BorderRadius.circular(15),
-                              //       hint: const Text("Select Post Type"),
-                              //       isExpanded: true,
-                              //       value: selectedValue,
-                              //       icon: const Icon(Icons.arrow_downward),
-                              //       elevation: 16,
-                              //       style: Theme.of(context).textTheme.bodyMedium,
-                              //       underline: Container(
-                              //         height: 2,
-                              //         color: Colors.transparent,
-                              //       ),
-                              //       onChanged: (value) {},
-                              //       items: dropdownItems,
-                              //     ),
-                              //   ),
-                              // ),
+                              SizedBox(
+                                height: height * .02,
+                              ),
                             ],
                           ),
                         ),

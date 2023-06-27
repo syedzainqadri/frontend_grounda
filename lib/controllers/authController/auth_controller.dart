@@ -114,7 +114,7 @@ class AuthController extends GetxController {
   //   }
   // }
 
-  Future registerUser(String email, String password, String role) async {
+  Future<bool> registerUser(String email, String password, String role) async {
     var bodyPrepare = {
       "email": email,
       "password": password,
@@ -122,7 +122,15 @@ class AuthController extends GetxController {
     };
     var response = await http.post(Uri.parse(baseUrl + createUser),
         body: jsonEncode(bodyPrepare));
-    userModel.value = userModelFromJson(response.body);
+
+    print(response.body);
+    if (response.statusCode == 200) {
+      userModel.value = userModelFromJson(response.body);
+    } else {
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+    }
+    return true;
   }
 
   Future<void> signIn(String email, String password) async {
@@ -132,6 +140,7 @@ class AuthController extends GetxController {
     };
     var response = await http.post(Uri.parse(baseUrl + userLogin),
         body: jsonEncode(bodyPrepare));
+    print(response.body);
     if (response.statusCode == 200) {
       userModel.value = userModelFromJson(response.body);
       _updateHiveTokeng(

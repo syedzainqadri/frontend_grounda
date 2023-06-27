@@ -104,23 +104,23 @@ class AgencyController extends GetxController {
     }
   }
 
-  Future<void> create(
-    String title,
-    String ownerName,
-    String description,
-    String logoImage,
-    String featuredImage,
-    String email,
-    String mobile,
-    String address,
-    String country,
-    String state,
-    String city,
-    String purpose,
-    String propertyType,
-    int userId,
-    String slug,
-  ) async {
+  Future<bool> create(
+      String title,
+      String ownerName,
+      String description,
+      String logoImage,
+      String featuredImage,
+      String email,
+      String mobile,
+      String address,
+      String country,
+      String state,
+      String city,
+      String purpose,
+      String propertyType,
+      int userId,
+      String slug,
+      bool status) async {
     isLoading.value = true;
     var bodyPrepare = {
       "title": title,
@@ -138,6 +138,7 @@ class AgencyController extends GetxController {
       "purpose": purpose,
       "propertyType": propertyType,
       "slug": slug,
+      "status": status
     };
 
     var response = await http.post(
@@ -151,12 +152,14 @@ class AgencyController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      agencies.addAll(agencyModelFromJson(response.body));
+      getAll();
       isLoading.value = false;
+      return true;
     } else {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
+      return false;
     }
   }
 
