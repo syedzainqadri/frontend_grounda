@@ -114,10 +114,11 @@ class AuthController extends GetxController {
   //   }
   // }
 
-  void registerUser(String email, String password) async {
+  Future registerUser(String email, String password, String role) async {
     var bodyPrepare = {
       "email": email,
       "password": password,
+      "role": role,
     };
     var response = await http.post(Uri.parse(baseUrl + createUser),
         body: jsonEncode(bodyPrepare));

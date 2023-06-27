@@ -76,6 +76,7 @@ class AgencyController extends GetxController {
       agencies.value = agencyModelFromJson(response.body);
       isLoading.value = false;
     } else {
+      print('this is getting error here');
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/agencyController/agency_controller.dart';
+import 'package:frontend_grounda/controllers/authController/auth_controller.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
@@ -20,6 +21,7 @@ class CreateAgency extends GetView<ThemeChangeController> {
       ScrollController(initialScrollOffset: 00.0);
   AgencyController agencyController = Get.find<AgencyController>();
   CategoryController categoryController = Get.find<CategoryController>();
+  AuthController authController = Get.find<AuthController>();
   var height = Get.height;
   var width = Get.width;
 
@@ -29,6 +31,7 @@ class CreateAgency extends GetView<ThemeChangeController> {
   var categoryList = ''.obs;
   RxInt selectedIndex = 0.obs;
   var purpose = [].obs;
+  RxBool isObsecure = true.obs;
   bool isSelected(index, List indexs, List agencyCategory) {
     if (indexs.contains(index)) {
       return true;
@@ -207,7 +210,18 @@ class CreateAgency extends GetView<ThemeChangeController> {
                                 maxLength: 14,
                                 hintText: 'Password',
                                 labelText: 'Password',
-                                isPassword: false,
+                                isPassword: isObsecure.value,
+                                maxLines: 1,
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    isObsecure.value =
+                                        isObsecure.value ? false : true;
+                                  },
+                                  icon: isObsecure.value
+                                      ? const Icon(Icons.password)
+                                      : const Icon(Icons.remove_red_eye),
+                                  // icon: const Icon(Icons.remove_red_eye),
+                                ),
                                 textEditingController:
                                     agencyController.agencyPasswordController,
                                 // onFieldSubmitted: (value) {
@@ -287,8 +301,8 @@ class CreateAgency extends GetView<ThemeChangeController> {
                               DefaultButton(
                                 primaryColor: kPrimaryColor,
                                 hoverColor: kPrimaryColor,
-                                buttonText: 'Submit',
-                                onPressed: () {
+                                buttonText: 'Create',
+                                onPressed: () async {
                                   if (agencyController.sell.value == true) {
                                     purpose.add('sell');
                                   }
@@ -305,27 +319,40 @@ class CreateAgency extends GetView<ThemeChangeController> {
                                   var description = agencyController
                                       .htmlEditorController
                                       .getText();
-                                  agencyController.create(
-                                    agencyController.agencyNameController.text,
-                                    agencyController
-                                        .agencyOwnerNameController.text,
-                                    description.toString(),
-                                    agencyController.logo.value,
-                                    agencyController.banner.value,
-                                    agencyController.agencyEmailController.text,
-                                    agencyController.agencyPhoneController.text,
-                                    agencyController
-                                        .agencyAddressController.text,
-                                    agencyController.country.value,
-                                    agencyController.state.value,
-                                    agencyController.city.value,
-                                    purposeList.value,
-                                    categoryList.value,
-                                    agencyController.userId.value,
-                                    agencyController.agencyNameController.text +
-                                        agencyController
-                                            .agencyOwnerNameController.text,
-                                  );
+                                  await authController
+                                      .registerUser(
+                                          agencyController
+                                              .agencyEmailController.text,
+                                          agencyController
+                                              .agencyPasswordController.text,
+                                          'AGENCY')
+                                      .then((value) {
+                                    agencyController.create(
+                                      agencyController
+                                          .agencyNameController.text,
+                                      agencyController
+                                          .agencyOwnerNameController.text,
+                                      description.toString(),
+                                      agencyController.logo.value,
+                                      agencyController.banner.value,
+                                      agencyController
+                                          .agencyEmailController.text,
+                                      agencyController
+                                          .agencyPhoneController.text,
+                                      agencyController
+                                          .agencyAddressController.text,
+                                      agencyController.country.value,
+                                      agencyController.state.value,
+                                      agencyController.city.value,
+                                      purposeList.value,
+                                      categoryList.value,
+                                      authController.userModel.value.id!,
+                                      agencyController
+                                              .agencyNameController.text +
+                                          agencyController
+                                              .agencyOwnerNameController.text,
+                                    );
+                                  });
                                 },
                                 width: width * 2,
                                 height: height * 0.08,
