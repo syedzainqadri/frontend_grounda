@@ -195,7 +195,15 @@ class AgencyPage extends GetView<ThemeChangeController> {
                                         Row(
                                           children: [
                                             IconButton(
-                                              onPressed: () async {},
+                                              onPressed: () async {
+                                                //Todo: please add edit function
+                                                Get.toNamed('/agency/create');
+                                                agencyController.getbyId(
+                                                  agencyController
+                                                      .agencies[index].id
+                                                      .toString(),
+                                                );
+                                              },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/edit.svg"),
                                             ),
@@ -203,7 +211,13 @@ class AgencyPage extends GetView<ThemeChangeController> {
                                               width: 20,
                                             ),
                                             IconButton(
-                                              onPressed: () async {},
+                                              onPressed: () async {
+                                                agencyController.delete(
+                                                  agencyController
+                                                      .agencies[index].id
+                                                      .toString(),
+                                                );
+                                              },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/trash.svg"),
                                             ),

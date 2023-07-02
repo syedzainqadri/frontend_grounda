@@ -18,6 +18,7 @@ class AgencyController extends GetxController {
   late FocusNode agencyPhoneFieldFocus;
   late FocusNode agencyPasswordFieldFocus;
   var agencies = <AgencyModel>[].obs;
+  var singleAgencies = SingleAgencies().obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var logo = ''.obs;
   var banner = ''.obs;
@@ -87,15 +88,24 @@ class AgencyController extends GetxController {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
-        baseUrl + getAgency + id,
+        '$baseUrl$getAgency/$id',
       ),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       },
     );
+    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
-      agencies.value = agencyModelFromJson(response.body);
+      singleAgencies.value = singleAgenciesFromJson(response.body);
+      agencyNameController.text = singleAgencies.value.title!;
+      agencyOwnerNameController.text = singleAgencies.value.ownerName!;
+      agencyEmailController.text = singleAgencies.value.email!;
+      agencyAddressController.text = singleAgencies.value.address!;
+      agencyPhoneController.text = singleAgencies.value.mobile!;
+      logo.value = singleAgencies.value.logoImage!;
+      banner.value = singleAgencies.value.featuredImage!;
+
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
