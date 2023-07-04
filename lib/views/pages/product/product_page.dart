@@ -2,42 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 
-import 'package:frontend_grounda/controllers/postController/post_controller.dart';
+import 'package:frontend_grounda/controllers/productsController/products_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/Buttons.dart';
 import 'package:frontend_grounda/widgets/darkmode/text_fields.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
 
 class ProductPage extends GetView<ThemeChangeController> {
   ProductPage({Key? key}) : super(key: key);
-  final TextEditingController searchCategory = TextEditingController();
-  QuillEditorController contentController = QuillEditorController();
-  TextEditingController categoryNameController = TextEditingController();
-  TextEditingController productShortDescriptionController =
-      TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController areaController = TextEditingController();
-  TextEditingController plotNumberController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController videoUrlController = TextEditingController();
-  TextEditingController advanceController = TextEditingController();
-  TextEditingController noOfInstallmentController = TextEditingController();
-  TextEditingController monthlyInstallmentController = TextEditingController();
-  TextEditingController contactPersonsLandlineController =
-      TextEditingController();
-  TextEditingController contactPersonsMobileController =
-      TextEditingController();
-  TextEditingController contactPersonsEmailController = TextEditingController();
-  TextEditingController contactPersonsNameController = TextEditingController();
-  TextEditingController bedroomController = TextEditingController();
-  TextEditingController bathroomController = TextEditingController();
-  CategoryController categoryController = Get.find<CategoryController>();
-  PostController productController = Get.find<PostController>();
+  final TextEditingController searchProduct = TextEditingController();
+  ProductsController productController = Get.find<ProductsController>();
   var selectedItemId = 0.obs;
   var isPublished = false.obs;
   var hasInstallments = false.obs;
@@ -85,7 +62,7 @@ class ProductPage extends GetView<ThemeChangeController> {
                           SizedBox(
                             width: width * .45,
                             child: DefaultTextField(
-                              textEditingController: searchCategory,
+                              textEditingController: searchProduct,
                               hintText: "Search Product",
                               labelText: "Search",
                               isPassword: false,
@@ -112,7 +89,7 @@ class ProductPage extends GetView<ThemeChangeController> {
                         height: height * .6,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
-                          itemCount: productController.post.length,
+                          itemCount: productController.products.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               color: controller.isDarkMode.value
@@ -128,31 +105,6 @@ class ProductPage extends GetView<ThemeChangeController> {
                                       children: [
                                         Row(
                                           children: [
-                                            SizedBox(
-                                              width: width * .06,
-                                              child: CircleAvatar(
-                                                backgroundColor: kWhiteColor,
-                                                radius: 30,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  child: productController
-                                                              .post[index]
-                                                              .featuredImages !=
-                                                          null
-                                                      ? Image.network(
-                                                          productController
-                                                              .post[index]
-                                                              .featuredImages!)
-                                                      : SvgPicture.asset(
-                                                          '/images/logo.svg',
-                                                          fit: BoxFit.cover,
-                                                          width: 30,
-                                                          height: 30,
-                                                        ),
-                                                ),
-                                              ),
-                                            ),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
@@ -164,7 +116,7 @@ class ProductPage extends GetView<ThemeChangeController> {
                                                 children: [
                                                   Text(
                                                     productController
-                                                        .post[index].title!,
+                                                        .products[index].title!,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .bodyLarge,
@@ -181,7 +133,8 @@ class ProductPage extends GetView<ThemeChangeController> {
                                                             .bodySmall,
                                                       ),
                                                       productController
-                                                                  .post[index]
+                                                                  .products[
+                                                                      index]
                                                                   .status ==
                                                               true
                                                           ? Text(
@@ -219,13 +172,7 @@ class ProductPage extends GetView<ThemeChangeController> {
                                           children: [
                                             IconButton(
                                               onPressed: () async {
-                                                await productController
-                                                    .getPostById(
-                                                  productController
-                                                      .post[index].id
-                                                      .toString(),
-                                                );
-                                                Get.toNamed('/product/create');
+                                                //Todo: add edit function here
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/edit.svg"),
@@ -235,146 +182,7 @@ class ProductPage extends GetView<ThemeChangeController> {
                                             ),
                                             IconButton(
                                               onPressed: () async {
-                                                print(
-                                                    'product deleted pressed');
-                                                print(productController
-                                                    .post[index].id!
-                                                    .toString());
-                                                print(productController
-                                                    .post[index].title);
-                                                print(productController
-                                                    .post[index]
-                                                    .propertyNumber);
-                                                print(productController
-                                                    .post[index].description);
-                                                print(productController
-                                                    .post[index]
-                                                    .featuredImages);
-                                                print(productController
-                                                    .post[index].galleryImages);
-                                                print(productController
-                                                    .post[index]
-                                                    .longDescription);
-                                                print(productController
-                                                    .post[index].longitude);
-                                                print(productController
-                                                    .post[index].latitude);
-                                                print(productController
-                                                    .post[index]
-                                                    .propertyNumber);
-                                                print(productController
-                                                    .post[index].price);
-                                                print(productController
-                                                    .post[index].city);
-                                                print(productController
-                                                    .post[index].area);
-                                                print(productController
-                                                    .post[index]
-                                                    .isInstallmentAvailable);
-                                                print(productController
-                                                    .post[index]
-                                                    .showContactDetails);
-                                                print(productController
-                                                    .post[index].advanceAmount);
-                                                print(productController
-                                                    .post[index]
-                                                    .noOfInstallments);
-                                                print(productController
-                                                    .post[index]
-                                                    .monthlyInstallments);
-                                                print(productController
-                                                    .post[index]
-                                                    .readyForPossession);
-                                                print(productController
-                                                    .post[index].areaSizeUnit);
-                                                print(productController
-                                                    .post[index].purpose);
-                                                print(productController
-                                                    .post[index]
-                                                    .amenitiesIconCodes);
-                                                print(productController
-                                                    .post[index]
-                                                    .amenitiesNames);
-                                                print(productController
-                                                    .post[index].categoryId);
-                                                await productController.delete(
-                                                    productController
-                                                        .post[index].id!
-                                                        .toString(),
-                                                    productController
-                                                        .post[index].title!,
-                                                    productController
-                                                        .post[index]
-                                                        .propertyNumber!,
-                                                    productController
-                                                        .post[index]
-                                                        .description!,
-                                                    productController
-                                                        .post[index]
-                                                        .featuredImages!,
-                                                    productController
-                                                        .post[index]
-                                                        .galleryImages!,
-                                                    productController
-                                                        .post[index].video!,
-                                                    productController
-                                                        .post[index]
-                                                        .longDescription!,
-                                                    productController
-                                                        .post[index].longitude!,
-                                                    productController
-                                                        .post[index].latitude!,
-                                                    productController
-                                                        .post[index]
-                                                        .plotNumber!,
-                                                    productController
-                                                        .post[index].price!,
-                                                    productController
-                                                        .post[index].city!,
-                                                    productController
-                                                        .post[index].area!,
-                                                    productController
-                                                        .post[index]
-                                                        .isInstallmentAvailable!,
-                                                    productController
-                                                        .post[index]
-                                                        .showContactDetails!,
-                                                    productController
-                                                        .post[index]
-                                                        .advanceAmount!,
-                                                    productController
-                                                        .post[index]
-                                                        .noOfInstallments!,
-                                                    productController
-                                                        .post[index]
-                                                        .monthlyInstallments!,
-                                                    productController
-                                                        .post[index]
-                                                        .readyForPossession!,
-                                                    productController
-                                                        .post[index]
-                                                        .areaSizeUnit!,
-                                                    productController
-                                                        .post[index].purpose!,
-                                                    productController
-                                                        .post[index]
-                                                        .totalAreaSize!,
-                                                    productController
-                                                        .post[index].bedroooms!,
-                                                    productController
-                                                        .post[index].bathroom!,
-                                                    productController
-                                                        .post[index]
-                                                        .amenitiesIconCodes!,
-                                                    productController
-                                                        .post[index]
-                                                        .amenitiesNames!,
-                                                    productController
-                                                        .post[index]
-                                                        .categoryId!,
-                                                    productController
-                                                        .post[index]
-                                                        .subCategoryId!);
+                                                //Todo: add delete Function here
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/trash.svg"),

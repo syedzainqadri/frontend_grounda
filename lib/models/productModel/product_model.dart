@@ -17,7 +17,6 @@ class ProductsModel {
     this.title,
     this.price,
     this.salePrice,
-    this.image,
     this.productType,
     this.description,
     this.productLifeInDays,
@@ -30,7 +29,6 @@ class ProductsModel {
   String? title;
   int? price;
   int? salePrice;
-  String? image;
   String? productType;
   String? description;
   int? productLifeInDays;
@@ -43,7 +41,6 @@ class ProductsModel {
         title: json["title"],
         price: json["price"],
         salePrice: json["salePrice"],
-        image: json["image"],
         productType: json["productType"],
         description: json["description"],
         productLifeInDays: json["productLifeInDays"],
@@ -57,7 +54,6 @@ class ProductsModel {
         "title": title,
         "price": price,
         "salePrice": salePrice,
-        "image": image,
         "productType": productType,
         "description": description,
         "productLifeInDays": productLifeInDays,

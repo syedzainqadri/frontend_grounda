@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:frontend_grounda/models/productModel/product_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ class ProductsController extends GetxController {
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
+
+  TextEditingController searchProductController = TextEditingController();
 
   @override
   void onInit() {
