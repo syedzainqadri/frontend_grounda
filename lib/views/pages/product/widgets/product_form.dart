@@ -1,136 +1,84 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:country_currency_pickers/country.dart';
-import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
-import 'package:frontend_grounda/widgets/text_ediotor.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 
 class ProductForm extends GetView<ThemeChangeController> {
-  ProductForm(
-      {required this.postTitleController,
-      required this.categoryDropDownList,
-      required this.categoryDropDownValue,
-      required this.categoryOnChange,
-      required this.subCategoryDropDownList,
-      required this.subCategoryDropDownValue,
-      required this.subCategoryOnChange,
-      required this.statusChanges,
-      required this.formSubmit,
-      required this.statusValue,
-      required this.uploadImages,
-      required this.buttonText,
-      required this.pictureButtonText,
-      required this.cancelText,
-      required this.onTap,
-      required this.videoUrlController,
-      required this.cityController,
-      required this.areaController,
-      required this.plotNumberController,
-      required this.priceController,
-      required this.hasInstallmentValue,
-      required this.installmentStatusChanges,
-      required this.posessionChanges,
-      required this.posessionValue,
-      required this.bathRoomController,
-      required this.bedRoomController,
-      required this.advanceController,
-      required this.noOfInstallmentController,
-      required this.monthlyInstallmentValueController,
-      required this.showContactDetails,
-      required this.images,
-      required this.amenities,
-      required this.totalAreaController,
-      required this.propertyAreaUnitList,
-      required this.propertyAreaUnitOnChange,
-      required this.propertyAreaUnitValue,
-      required this.purposeList,
-      required this.purposeOnChange,
-      required this.purposeValue,
-      required this.postTitleValidator,
-      required this.cityValidator,
-      required this.areaValidator,
-      required this.priceValidator,
-      required this.advanceValidator,
-      required this.bathroomValidator,
-      required this.bedroomValidator,
-      required this.monthlyInstallmentValidator,
-      required this.noOfInstallmentValidator,
-      required this.propertyAreaValidator,
-      required this.plotNumberValidator,
-      required this.contentController,
-      required this.showContactDetailsChanges,
-      required this.titleFieldSubmitted,
-      required this.titleFocus,
-      required this.cityFocus,
-      required this.cityFieldSubmitted,
-      this.selectedAmenities,
-      super.key});
+  ProductForm({
+    this.titleFocus,
+    this.titleFieldSubmitted,
+    this.postTitleController,
+    this.postTitleValidator,
+    this.priceValidator,
+    this.priceController,
+    this.htmlEditorController,
+    this.productLifeController,
+    this.productLifeValidator,
+    this.statusValue,
+    this.typeList,
+    this.typeOnChange,
+    this.typeValue,
+    this.formSubmit,
+    this.statusChanges,
+    this.buttonText,
+    this.cancelText,
+    this.onTap,
+    super.key,
+  });
+
+  //General String, int, bool and doubles
+  //value will be passed on the page we will consume this widget on
+  //the variable will be declared in controller.
+
   double width = Get.width;
   double height = Get.height;
-  String categoryDropDownValue;
-  String subCategoryDropDownValue;
-  dynamic categoryOnChange;
-  dynamic subCategoryOnChange;
-  dynamic statusChanges;
-  dynamic posessionChanges;
-  dynamic showContactDetailsChanges;
-  dynamic installmentStatusChanges;
-  dynamic formSubmit;
-  dynamic uploadImages;
-  dynamic onTap;
-  dynamic postTitleValidator;
-  dynamic cityValidator;
-  dynamic areaValidator;
-  dynamic propertyAreaValidator;
-  dynamic plotNumberValidator;
-  dynamic bathroomValidator;
-  dynamic bedroomValidator;
-  dynamic noOfInstallmentValidator;
-  dynamic monthlyInstallmentValidator;
-  dynamic advanceValidator;
-  bool posessionValue;
-  bool showContactDetails;
-  bool statusValue;
-  bool hasInstallmentValue;
-  String buttonText;
-  String pictureButtonText;
-  String cancelText;
-  String purposeValue;
-  dynamic purposeOnChange;
-  dynamic propertyAreaUnitOnChange;
-  dynamic priceValidator;
+  String? typeValue;
+  bool? statusValue;
+  String? buttonText;
+  String? cancelText;
+
+  //Dropdownlistvalues
+  //value will be passed on the page we will consume this widget on
+  //the variable will be declared in controller.
+  List<DropdownMenuItem<String>>? typeList;
+
+  //Focus Nodes for the user to jump from one field to another field
+  //value for this focus node will be provided on the page where this specific
+  //widget will be consumes.
+
+  FocusNode? titleFocus;
+
+  //Dynamics are the functions subjec to use of the elements they are applied to
+  //the functions related to each dynamic are implemented at the file this
+  //widget will be consumed.
+
   dynamic titleFieldSubmitted;
-  dynamic cityFieldSubmitted;
-  String propertyAreaUnitValue;
-  List<DropdownMenuItem<String>> propertyAreaUnitList;
-  List<DropdownMenuItem<String>> categoryDropDownList;
-  List<DropdownMenuItem<String>> subCategoryDropDownList;
-  List<DropdownMenuItem<String>> purposeList;
-  TextEditingController postTitleController;
-  TextEditingController totalAreaController;
-  TextEditingController videoUrlController;
-  TextEditingController cityController;
-  TextEditingController areaController;
-  TextEditingController plotNumberController;
-  TextEditingController priceController;
-  TextEditingController bathRoomController;
-  TextEditingController bedRoomController;
-  TextEditingController advanceController;
-  TextEditingController noOfInstallmentController;
-  TextEditingController monthlyInstallmentValueController;
-  QuillEditorController contentController;
-  Widget images;
-  Widget amenities;
-  Widget? selectedAmenities;
-  FocusNode titleFocus;
-  FocusNode cityFocus;
+  dynamic postTitleValidator;
+  dynamic priceValidator;
+  dynamic typeOnChange;
+  dynamic productLifeValidator;
+  dynamic statusChanges;
+  dynamic formSubmit;
+  dynamic onTap;
+
+  //Text Editing Controller are used to collect text values on any given text field
+  //the value will be passed from the page this widget will be consumed on
+  //where as actual controller will be passed on the controller.
+
+  TextEditingController? postTitleController;
+  TextEditingController? priceController;
+  TextEditingController? productLifeController;
+
+  //Html Editor is for the text are and html editor.
+  //the value will be passed from the page this widget will be consumed on
+  //where as actual controller will be passed on the controller.
+  HtmlEditorController? htmlEditorController;
 
   @override
   Widget build(BuildContext context) {
@@ -175,8 +123,8 @@ class ProductForm extends GetView<ThemeChangeController> {
                       hintText: "Price",
                       labelText: "Price",
                       isPassword: false,
-                      textEditingController: areaController,
-                      validator: areaValidator,
+                      textEditingController: priceController,
+                      validator: priceValidator,
                       maxLength: 50,
                     ),
                   ),
@@ -205,7 +153,7 @@ class ProductForm extends GetView<ThemeChangeController> {
               //TODO: text editor must not be empty validation please
               SizedBox(
                 height: 250,
-                child: TextEditor(textController: contentController),
+                child: HtmlEditor(controller: htmlEditorController!),
               ),
 
               SizedBox(
@@ -225,453 +173,72 @@ class ProductForm extends GetView<ThemeChangeController> {
               SizedBox(
                 height: height * 0.015,
               ),
-              // gallery preview
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: width * .1,
-                    height: height * .14,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        right: 8.0,
-                      ),
-                      child: InkWell(
-                        onTap: uploadImages,
-                        child: Container(
-                          alignment: Alignment.center,
-                          color: controller.isDarkMode == true
-                              ? kDarkCardColor
-                              : kCardColor,
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(Icons.add_a_photo),
+                    height: 100,
+                    width: width * .19,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Select Product Type",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: kPrimaryColor),
+                          textAlign: TextAlign.start,
+                        ),
+                        SizedBox(
+                          height: height * .02,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: controller.isDarkMode == true
+                                ? kDarkCardColor
+                                : kCardColor,
+                          ),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              hint: const Text("Product Type"),
+                              isExpanded: true,
+                              value: typeValue,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.transparent,
+                              ),
+                              onChanged: typeOnChange,
+                              items: typeList,
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                  //TODO:place it to create_post_page//
-                  images
                 ],
               ),
 
               SizedBox(
-                height: height * 0.04,
+                height: height * .02,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: 100,
-                    width: width * .19,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Select Purpose",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: kPrimaryColor),
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(
-                          height: height * .02,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: controller.isDarkMode == true
-                                ? kDarkCardColor
-                                : kCardColor,
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: DropdownButton(
-                                borderRadius: BorderRadius.circular(15),
-                                hint: const Text("Purpose"),
-                                isExpanded: true,
-                                value: purposeValue,
-                                icon: const Icon(Icons.arrow_downward),
-                                elevation: 16,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                                underline: Container(
-                                  height: 2,
-                                  color: Colors.transparent,
-                                ),
-                                onChanged: purposeOnChange,
-                                items: purposeList),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * .02,
-                  ),
-                  SizedBox(
-                    height: 100,
-                    width: width * .19,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Post Type",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: kPrimaryColor),
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(
-                          height: height * .02,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: controller.isDarkMode == true
-                                ? kDarkCardColor
-                                : kCardColor,
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: DropdownButton(
-                              borderRadius: BorderRadius.circular(15),
-                              hint: const Text("Select Post Type"),
-                              isExpanded: true,
-                              value: categoryDropDownValue,
-                              icon: const Icon(Icons.arrow_downward),
-                              elevation: 16,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                              underline: Container(
-                                height: 2,
-                                color: Colors.transparent,
-                              ),
-                              onChanged: categoryOnChange,
-                              items: categoryDropDownList,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * .02,
-                  ),
-                  SizedBox(
-                    height: 100,
-                    width: width * .19,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Select Post Sub-Type",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: kPrimaryColor),
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(
-                          height: height * .02,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: controller.isDarkMode == true
-                                ? kDarkCardColor
-                                : kCardColor,
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: DropdownButton(
-                              borderRadius: BorderRadius.circular(15),
-                              hint: const Text("Select Post Sub-Type"),
-                              isExpanded: true,
-                              value: subCategoryDropDownValue,
-                              icon: const Icon(Icons.arrow_downward),
-                              elevation: 16,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                              underline: Container(
-                                height: 2,
-                                color: Colors.transparent,
-                              ),
-                              onChanged: subCategoryOnChange,
-                              items: subCategoryDropDownList,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              DefaultTextField(
+                hintText: "Product Life",
+                labelText: "Product Life in Days",
+                isPassword: false,
+                textEditingController: productLifeController,
+                validator: productLifeValidator,
+                maxLength: 2,
               ),
-              //amenities and other fields
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: 500,
-                    width: width * .19,
-                    child: Column(
-                      children: [
-                        DefaultTextField(
-                          prefixIcon: const Icon(Icons.aspect_ratio),
-                          hintText: "Property Area",
-                          labelText: "Enter Total Area",
-                          isPassword: false,
-                          textEditingController: totalAreaController,
-                          validator: propertyAreaValidator,
-                          maxLength: 10,
-                        ),
-                        SizedBox(
-                          height: height * .02,
-                        ),
-                        DefaultTextField(
-                          hintText: "Add video url here",
-                          labelText: "Video URL",
-                          isPassword: false,
-                          textEditingController: videoUrlController,
-                        ),
-                        SizedBox(
-                          height: height * .02,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0, left: 0.0),
-                          child: Transform.scale(
-                            scale: .8,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Has Installments",
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                SizedBox(
-                                  width: width * .01,
-                                ),
-                                CupertinoSwitch(
-                                  activeColor: kPrimaryColor,
-                                  value: hasInstallmentValue,
-                                  onChanged: installmentStatusChanges,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        hasInstallmentValue
-                            ? SizedBox(
-                                height: height * .02,
-                              )
-                            : const Offstage(),
-                        hasInstallmentValue
-                            ? DefaultTextField(
-                                hintText: "Enter Advance Amount",
-                                labelText: "Advance Amount",
-                                isPassword: false,
-                                textEditingController: advanceController,
-                                validator: advanceValidator,
-                                maxLength: 10,
-                              )
-                            : const Offstage(),
-                        hasInstallmentValue
-                            ? SizedBox(
-                                height: height * .02,
-                              )
-                            : const Offstage(),
-                        hasInstallmentValue
-                            ? DefaultTextField(
-                                hintText: "Number of Installments",
-                                labelText: "No of Installments",
-                                isPassword: false,
-                                textEditingController:
-                                    noOfInstallmentController,
-                                validator: noOfInstallmentValidator,
-                                maxLength: 10,
-                              )
-                            : const Offstage(),
-                        hasInstallmentValue
-                            ? SizedBox(
-                                height: height * .02,
-                              )
-                            : const Offstage(),
-                        hasInstallmentValue
-                            ? DefaultTextField(
-                                hintText: "Monthly Installment Value",
-                                labelText: "Monthly Installement Value",
-                                isPassword: false,
-                                textEditingController:
-                                    monthlyInstallmentValueController,
-                                validator: monthlyInstallmentValidator,
-                                maxLength: 10,
-                              )
-                            : const Offstage(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * .02,
-                  ),
-                  SizedBox(
-                    height: 500,
-                    width: width * .19,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: controller.isDarkMode == true
-                                ? kDarkCardColor
-                                : kCardColor,
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: DropdownButton(
-                              borderRadius: BorderRadius.circular(15),
-                              hint: const Text("Property Area Unit"),
-                              isExpanded: true,
-                              value: propertyAreaUnitValue,
-                              icon: const Icon(Icons.arrow_downward),
-                              elevation: 16,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                              underline: Container(
-                                height: 2,
-                                color: Colors.transparent,
-                              ),
-                              onChanged: propertyAreaUnitOnChange,
-                              items: propertyAreaUnitList,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: height * .02,
-                        ),
-                        DefaultTextField(
-                          hintText: "Plot / Flat Number",
-                          labelText: "Plot / Flat Number",
-                          isPassword: false,
-                          textEditingController: plotNumberController,
-                          validator: plotNumberValidator,
-                          maxLength: 10,
-                        ),
-                        SizedBox(
-                          height: height * .02,
-                        ),
-                        //possession
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0, left: 0.0),
-                          child: Transform.scale(
-                            scale: .8,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Ready for Possession",
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                SizedBox(
-                                  width: width * .01,
-                                ),
-                                CupertinoSwitch(
-                                  activeColor: kPrimaryColor,
-                                  value: posessionValue,
-                                  onChanged: posessionChanges,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        posessionValue
-                            ? SizedBox(
-                                height: height * 0.02,
-                              )
-                            : const Offstage(),
-                        posessionValue
-                            ? DefaultTextField(
-                                hintText: "Enter Number of Bedrooms",
-                                labelText: "Bedrooms",
-                                isPassword: false,
-                                textEditingController: bedRoomController,
-                                validator: bedroomValidator,
-                                maxLength: 2,
-                              )
-                            : const Offstage(),
-                        posessionValue
-                            ? SizedBox(
-                                height: height * 0.02,
-                              )
-                            : const Offstage(),
-                        posessionValue
-                            ? DefaultTextField(
-                                hintText: "Enter Number of Bath Rooms",
-                                labelText: "Bathrooms",
-                                isPassword: false,
-                                textEditingController: bathRoomController,
-                                validator: bathroomValidator,
-                                maxLength: 2,
-                              )
-                            : const Offstage(),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 25.0, left: 0.0),
-                          child: Transform.scale(
-                            scale: .8,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Show Contact Details",
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                SizedBox(
-                                  width: width * .01,
-                                ),
-                                CupertinoSwitch(
-                                  activeColor: kPrimaryColor,
-                                  value: showContactDetails,
-                                  onChanged: showContactDetailsChanges,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * .02,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      selectedAmenities!,
-                      Text(
-                        'Select Amenities',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: kPrimaryColor),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        height: 290,
-                        width: width * .19,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: amenities,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              SizedBox(
-                height: height * 0.04,
-              ),
+
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 0.0),
                 child: Transform.scale(
@@ -690,7 +257,7 @@ class ProductForm extends GetView<ThemeChangeController> {
                           ),
                           CupertinoSwitch(
                             activeColor: kPrimaryColor,
-                            value: statusValue,
+                            value: statusValue!,
                             onChanged: statusChanges,
                           ),
                         ],
@@ -698,7 +265,7 @@ class ProductForm extends GetView<ThemeChangeController> {
                       DefaultButton(
                         primaryColor: kPrimaryColor,
                         hoverColor: kDarkColor,
-                        buttonText: buttonText,
+                        buttonText: buttonText!,
                         width: width * .2,
                         height: height * .05,
                         onPressed: formSubmit,
@@ -714,7 +281,7 @@ class ProductForm extends GetView<ThemeChangeController> {
                 child: InkWell(
                   onTap: onTap,
                   child: Text(
-                    cancelText,
+                    cancelText!,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
@@ -728,16 +295,4 @@ class ProductForm extends GetView<ThemeChangeController> {
       ),
     );
   }
-
-  Widget _buildDropdownItem(Country country) => Container(
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            const SizedBox(
-              width: 8.0,
-            ),
-            Text("+${country.phoneCode}(${country.isoCode})"),
-          ],
-        ),
-      );
 }
