@@ -1,25 +1,19 @@
 // ignore_for_file: must_be_immutable, unrelated_type_equality_checks, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:frontend_grounda/controllers/postController/post_controller.dart';
+import 'package:frontend_grounda/controllers/productsController/products_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/product/widgets/product_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
 
 class CreateProductPage extends GetView<ThemeChangeController> {
   CreateProductPage({Key? key}) : super(key: key);
 
   //<=============== Data Controllers ========================>
 
-  PostController postController = Get.find<PostController>();
-
-  //<=============== Text Editor Controllers ========================>
-  QuillEditorController descriptionController = QuillEditorController();
-
-  final TextEditingController searchCategory = TextEditingController();
+  ProductsController productsController = Get.find<ProductsController>();
 
   final _createPostFormKey = GlobalKey<FormState>();
 
@@ -64,10 +58,16 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 50.0, vertical: 25),
                   child: Focus(
-                    focusNode: postController.formFocus,
+                    focusNode: productsController.formFocus,
                     child: Form(
                       key: _createPostFormKey,
-                      child: ProductForm(),
+                      child: ProductForm(
+                        productTitleController:
+                            productsController.productTitleController,
+                        productTitleValidator: () {
+                          //Todo: write validation
+                        },
+                      ),
                     ),
                   ),
                 ),

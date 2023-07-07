@@ -11,24 +11,24 @@ import 'package:html_editor_enhanced/html_editor.dart';
 
 class ProductForm extends GetView<ThemeChangeController> {
   ProductForm({
-    this.titleFocus,
-    this.titleFieldSubmitted,
-    this.postTitleController,
-    this.postTitleValidator,
-    this.priceValidator,
-    this.priceController,
-    this.htmlEditorController,
-    this.productLifeController,
-    this.productLifeValidator,
-    this.statusValue,
-    this.typeList,
-    this.typeOnChange,
-    this.typeValue,
-    this.formSubmit,
-    this.statusChanges,
-    this.buttonText,
-    this.cancelText,
-    this.onTap,
+    required this.titleFocus,
+    required this.titleFieldSubmitted,
+    required this.productTitleController,
+    required this.productTitleValidator,
+    required this.priceValidator,
+    required this.priceController,
+    required this.htmlEditorController,
+    required this.productLifeController,
+    required this.productLifeValidator,
+    required this.statusValue,
+    required this.typeList,
+    required this.typeOnChange,
+    required this.typeValue,
+    required this.formSubmit,
+    required this.statusChanges,
+    required this.buttonText,
+    required this.cancelText,
+    required this.onTap,
     super.key,
   });
 
@@ -38,28 +38,28 @@ class ProductForm extends GetView<ThemeChangeController> {
 
   double width = Get.width;
   double height = Get.height;
-  String? typeValue;
-  bool? statusValue;
-  String? buttonText;
-  String? cancelText;
+  String typeValue;
+  bool statusValue;
+  String buttonText;
+  String cancelText;
 
   //Dropdownlistvalues
   //value will be passed on the page we will consume this widget on
   //the variable will be declared in controller.
-  List<DropdownMenuItem<String>>? typeList;
+  List<DropdownMenuItem<String>> typeList;
 
   //Focus Nodes for the user to jump from one field to another field
   //value for this focus node will be provided on the page where this specific
   //widget will be consumes.
 
-  FocusNode? titleFocus;
+  FocusNode titleFocus;
 
   //Dynamics are the functions subjec to use of the elements they are applied to
   //the functions related to each dynamic are implemented at the file this
   //widget will be consumed.
 
   dynamic titleFieldSubmitted;
-  dynamic postTitleValidator;
+  dynamic productTitleValidator;
   dynamic priceValidator;
   dynamic typeOnChange;
   dynamic productLifeValidator;
@@ -71,14 +71,14 @@ class ProductForm extends GetView<ThemeChangeController> {
   //the value will be passed from the page this widget will be consumed on
   //where as actual controller will be passed on the controller.
 
-  TextEditingController? postTitleController;
-  TextEditingController? priceController;
-  TextEditingController? productLifeController;
+  TextEditingController productTitleController;
+  TextEditingController priceController;
+  TextEditingController productLifeController;
 
   //Html Editor is for the text are and html editor.
   //the value will be passed from the page this widget will be consumed on
   //where as actual controller will be passed on the controller.
-  HtmlEditorController? htmlEditorController;
+  HtmlEditorController htmlEditorController;
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +105,8 @@ class ProductForm extends GetView<ThemeChangeController> {
                 hintText: "Enter Product Title",
                 labelText: "Product Title",
                 isPassword: false,
-                textEditingController: postTitleController,
-                validator: postTitleValidator,
+                textEditingController: productTitleController,
+                validator: productTitleValidator,
                 maxLength: 200,
               ),
               SizedBox(
@@ -153,7 +153,7 @@ class ProductForm extends GetView<ThemeChangeController> {
               //TODO: text editor must not be empty validation please
               SizedBox(
                 height: 250,
-                child: HtmlEditor(controller: htmlEditorController!),
+                child: HtmlEditor(controller: htmlEditorController),
               ),
 
               SizedBox(
@@ -257,7 +257,7 @@ class ProductForm extends GetView<ThemeChangeController> {
                           ),
                           CupertinoSwitch(
                             activeColor: kPrimaryColor,
-                            value: statusValue!,
+                            value: statusValue,
                             onChanged: statusChanges,
                           ),
                         ],
@@ -265,7 +265,7 @@ class ProductForm extends GetView<ThemeChangeController> {
                       DefaultButton(
                         primaryColor: kPrimaryColor,
                         hoverColor: kDarkColor,
-                        buttonText: buttonText!,
+                        buttonText: buttonText,
                         width: width * .2,
                         height: height * .05,
                         onPressed: formSubmit,
@@ -281,7 +281,7 @@ class ProductForm extends GetView<ThemeChangeController> {
                 child: InkWell(
                   onTap: onTap,
                   child: Text(
-                    cancelText!,
+                    cancelText,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!

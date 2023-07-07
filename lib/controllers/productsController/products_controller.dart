@@ -8,17 +8,20 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class ProductsController extends GetxController {
+  late FocusNode formFocus;
   var products = <ProductsModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
 
   TextEditingController searchProductController = TextEditingController();
+  TextEditingController productTitleController = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
+    formFocus = FocusNode();
   }
 
   Future<void> getAll() async {
