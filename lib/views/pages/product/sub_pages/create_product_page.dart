@@ -15,7 +15,7 @@ class CreateProductPage extends GetView<ThemeChangeController> {
 
   ProductsController productsController = Get.find<ProductsController>();
 
-  final _createPostFormKey = GlobalKey<FormState>();
+  final _createProductFormKey = GlobalKey<FormState>();
 
   var selectedItemId = 0.obs;
 
@@ -60,13 +60,43 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                   child: Focus(
                     focusNode: productsController.formFocus,
                     child: Form(
-                      key: _createPostFormKey,
+                      key: _createProductFormKey,
                       child: ProductForm(
+                        //Todo: add sale price controller validator and submit focus
                         productTitleController:
                             productsController.productTitleController,
-                        productTitleValidator: () {
+                        titleFocus: productsController.titleFocus,
+                        productTitleValidator: (value) {
                           //Todo: write validation
                         },
+                        titleFieldSubmitted: (value) {
+                          //Todo: add what happens upon submit
+                        },
+                        priceController: productsController.priceController,
+                        priceValidator: (value) {
+                          //Todo: price Validator
+                        },
+                        productLifeController:
+                            productsController.productLifeController,
+                        productLifeValidator: (value) {
+                          //Todo: lifeValidator
+                        },
+                        htmlEditorController: productsController.htmlController,
+                        typeList: productsController.dropDownList
+                            .map<DropdownMenuItem<String>>((value) {
+                          return DropdownMenuItem<String>(
+                              value: value, child: Text(value));
+                        }).toList(),
+                        typeValue: 'STANDARD',
+                        typeOnChange: (value) {
+                          print('Type changed to $value');
+                        },
+                        statusValue: true,
+                        statusChanges: (value) {},
+                        onTap: () {},
+                        formSubmit: () {},
+                        cancelText: '',
+                        buttonText: '',
                       ),
                     ),
                   ),

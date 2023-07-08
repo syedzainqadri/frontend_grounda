@@ -1,14 +1,16 @@
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend_grounda/models/productModel/product_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:http/http.dart' as http;
 
 class ProductsController extends GetxController {
   late FocusNode formFocus;
+  late FocusNode titleFocus;
   var products = <ProductsModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
@@ -16,12 +18,24 @@ class ProductsController extends GetxController {
 
   TextEditingController searchProductController = TextEditingController();
   TextEditingController productTitleController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController productLifeController = TextEditingController();
+  HtmlEditorController htmlController = HtmlEditorController();
+
+  List dropDownList = [
+    'HOT',
+    'FEATURED',
+    'TOP',
+    'BUMPED',
+    'STANDARD',
+  ];
 
   @override
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
     formFocus = FocusNode();
+    titleFocus = FocusNode();
   }
 
   Future<void> getAll() async {
