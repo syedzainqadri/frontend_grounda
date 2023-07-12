@@ -172,7 +172,10 @@ class ProductPage extends GetView<ThemeChangeController> {
                                           children: [
                                             IconButton(
                                               onPressed: () async {
-                                                //Todo: add edit function here
+                                                await productController.getbyId(
+                                                    productController
+                                                        .products[index].id!);
+                                                Get.toNamed('/product/create');
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/edit.svg"),
@@ -182,7 +185,9 @@ class ProductPage extends GetView<ThemeChangeController> {
                                             ),
                                             IconButton(
                                               onPressed: () async {
-                                                //Todo: add delete Function here
+                                                productController.delete(
+                                                    productController
+                                                        .products[index].id!);
                                               },
                                               icon: SvgPicture.asset(
                                                   "assets/icons/trash.svg"),

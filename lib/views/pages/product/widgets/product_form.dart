@@ -12,7 +12,11 @@ import 'package:html_editor_enhanced/html_editor.dart';
 class ProductForm extends GetView<ThemeChangeController> {
   ProductForm({
     required this.titleFocus,
-    required this.titleFieldSubmitted,
+    required this.priceFocus,
+    required this.salePriceFocus,
+    required this.titleFieldSubmit,
+    required this.priceSubmit,
+    required this.salePriceSubmit,
     required this.productTitleController,
     required this.productTitleValidator,
     required this.priceValidator,
@@ -29,6 +33,8 @@ class ProductForm extends GetView<ThemeChangeController> {
     required this.buttonText,
     required this.cancelText,
     required this.onTap,
+    required this.salePriceController,
+    required this.salePriceValidator,
     super.key,
   });
 
@@ -53,14 +59,19 @@ class ProductForm extends GetView<ThemeChangeController> {
   //widget will be consumes.
 
   FocusNode titleFocus;
+  FocusNode priceFocus;
+  FocusNode salePriceFocus;
 
   //Dynamics are the functions subjec to use of the elements they are applied to
   //the functions related to each dynamic are implemented at the file this
   //widget will be consumed.
 
-  dynamic titleFieldSubmitted;
+  dynamic titleFieldSubmit;
+  dynamic priceSubmit;
+  dynamic salePriceSubmit;
   dynamic productTitleValidator;
   dynamic priceValidator;
+  dynamic salePriceValidator;
   dynamic typeOnChange;
   dynamic productLifeValidator;
   dynamic statusChanges;
@@ -73,6 +84,7 @@ class ProductForm extends GetView<ThemeChangeController> {
 
   TextEditingController productTitleController;
   TextEditingController priceController;
+  TextEditingController salePriceController;
   TextEditingController productLifeController;
 
   //Html Editor is for the text are and html editor.
@@ -101,7 +113,7 @@ class ProductForm extends GetView<ThemeChangeController> {
               DefaultTextField(
                 autofocus: true,
                 focusNode: titleFocus,
-                onFieldSubmitted: titleFieldSubmitted,
+                onFieldSubmitted: titleFieldSubmit,
                 hintText: "Enter Product Title",
                 labelText: "Product Title",
                 isPassword: false,
@@ -125,6 +137,8 @@ class ProductForm extends GetView<ThemeChangeController> {
                       isPassword: false,
                       textEditingController: priceController,
                       validator: priceValidator,
+                      focusNode: priceFocus,
+                      onFieldSubmitted: priceSubmit,
                       maxLength: 50,
                     ),
                   ),
@@ -138,8 +152,10 @@ class ProductForm extends GetView<ThemeChangeController> {
                       hintText: "Sale Price",
                       labelText: "Sale Price",
                       isPassword: false,
-                      textEditingController: priceController,
-                      validator: priceValidator,
+                      textEditingController: salePriceController,
+                      validator: salePriceValidator,
+                      focusNode: salePriceFocus,
+                      onFieldSubmitted: salePriceSubmit,
                       maxLength: 25,
                     ),
                   ),
@@ -153,28 +169,28 @@ class ProductForm extends GetView<ThemeChangeController> {
               //TODO: text editor must not be empty validation please
               SizedBox(
                 height: 250,
-                child: HtmlEditor(controller: htmlEditorController),
-              ),
-
-              SizedBox(
-                height: height * 0.02,
-              ),
-
-              // Gallery Heading and button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Gallery",
-                    style: Theme.of(context).textTheme.bodyMedium,
+                child: HtmlEditor(
+                  controller: htmlEditorController,
+                  htmlEditorOptions: const HtmlEditorOptions(
+                      autoAdjustHeight: true,
+                      adjustHeightForKeyboard: true,
+                      hint: "Product Descrioption"),
+                  otherOptions: const OtherOptions(height: 150),
+                  htmlToolbarOptions: const HtmlToolbarOptions(
+                    defaultToolbarButtons: [
+                      FontSettingButtons(),
+                      FontButtons(),
+                      StyleButtons(),
+                      ListButtons(),
+                    ],
                   ),
-                ],
+                ),
               ),
               SizedBox(
                 height: height * 0.015,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 100,
@@ -224,19 +240,24 @@ class ProductForm extends GetView<ThemeChangeController> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    width: width * .02,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50.0),
+                    child: SizedBox(
+                      width: width * 0.2,
+                      child: DefaultTextField(
+                        hintText: "Product Life",
+                        labelText: "Product Life in Days",
+                        isPassword: false,
+                        textEditingController: productLifeController,
+                        validator: productLifeValidator,
+                        maxLength: 2,
+                      ),
+                    ),
+                  ),
                 ],
-              ),
-
-              SizedBox(
-                height: height * .02,
-              ),
-              DefaultTextField(
-                hintText: "Product Life",
-                labelText: "Product Life in Days",
-                isPassword: false,
-                textEditingController: productLifeController,
-                validator: productLifeValidator,
-                maxLength: 2,
               ),
 
               Padding(

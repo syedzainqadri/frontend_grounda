@@ -67,19 +67,48 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                             productsController.productTitleController,
                         titleFocus: productsController.titleFocus,
                         productTitleValidator: (value) {
-                          //Todo: write validation
+                          if (value == null || value == '') {
+                            return 'Title cannot be empty';
+                          }
                         },
-                        titleFieldSubmitted: (value) {
-                          //Todo: add what happens upon submit
+                        titleFieldSubmit: (value) {
+                          FocusScope.of(context)
+                              .requestFocus(productsController.priceFocus);
                         },
                         priceController: productsController.priceController,
+                        priceFocus: productsController.priceFocus,
                         priceValidator: (value) {
-                          //Todo: price Validator
+                          if (value == null || value == '') {
+                            return 'Price cannot be empty';
+                          }
+                        },
+                        priceSubmit: (value) {
+                          FocusScope.of(context)
+                              .requestFocus(productsController.salePriceFocus);
+                        },
+                        salePriceController:
+                            productsController.salePriceController,
+                        salePriceFocus: productsController.salePriceFocus,
+                        salePriceValidator: (value) {
+                          if (productsController.priceController ==
+                                  productsController.salePriceController ||
+                              int.parse(productsController
+                                      .salePriceController.text) <
+                                  int.parse(productsController
+                                      .priceController.text)) {
+                            return 'Sale price cannot be equal or less than Price';
+                          }
+                        },
+                        salePriceSubmit: (Value) {
+                          // FocusScope.of(context)
+                          // .requestFocus(productsController.priceFocus);
                         },
                         productLifeController:
                             productsController.productLifeController,
                         productLifeValidator: (value) {
-                          //Todo: lifeValidator
+                          if (value == Null || value == '') {
+                            return 'Product Life cannot be Empty';
+                          }
                         },
                         htmlEditorController: productsController.htmlController,
                         typeList: productsController.dropDownList
@@ -87,16 +116,57 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                           return DropdownMenuItem<String>(
                               value: value, child: Text(value));
                         }).toList(),
-                        typeValue: 'STANDARD',
+                        typeValue: productsController.typeValue.value,
                         typeOnChange: (value) {
+                          productsController.type.value = value;
+                          productsController.typeValue.value = value;
                           print('Type changed to $value');
                         },
-                        statusValue: true,
-                        statusChanges: (value) {},
-                        onTap: () {},
-                        formSubmit: () {},
-                        cancelText: '',
-                        buttonText: '',
+                        statusValue: productsController.status.value,
+                        statusChanges: (value) {
+                          productsController.status.value = value;
+                        },
+                        formSubmit: () async {
+                          if (productsController.htmlController != '' ||
+                              productsController.htmlController != null) {
+                            productsController.description.value =
+                                await productsController.htmlController
+                                    .getText();
+                          }
+                          if (productsController.priceController != '' ||
+                              productsController.priceController != null) {
+                            // productsController.price.value ==
+                            //     double.parse(
+                            //         productsController.priceController.text);
+                            // print(double.parse(
+                            //     productsController.priceController.text));
+                            productsController.price.value = double.parse(
+                                productsController.priceController.text);
+                            print(productsController.price.value);
+                          }
+                          if (productsController.salePriceController != '' ||
+                              productsController.salePriceController != null) {
+                            productsController.salePrice.value = double.parse(
+                                productsController.salePriceController.text);
+                            print(productsController.salePrice.value);
+                          }
+                          await productsController.create(
+                            productsController.productTitleController.text,
+                            productsController.price.value,
+                            productsController.salePrice.value,
+                            int.parse(
+                                productsController.productLifeController.text),
+                            productsController.type.value,
+                            productsController.description.value,
+                            productsController.status.value,
+                          );
+                          //Todo: submit function here
+                        },
+                        onTap: () {
+                          Get.back();
+                        },
+                        cancelText: 'cancle',
+                        buttonText: 'Submit',
                       ),
                     ),
                   ),

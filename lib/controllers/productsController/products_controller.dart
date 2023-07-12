@@ -11,14 +11,25 @@ import 'package:http/http.dart' as http;
 class ProductsController extends GetxController {
   late FocusNode formFocus;
   late FocusNode titleFocus;
+  late FocusNode priceFocus;
+  late FocusNode salePriceFocus;
   var products = <ProductsModel>[].obs;
+  var singleProduct = SingleProduct().obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
+  var status = false.obs;
+  var type = ''.obs;
+  var description = ''.obs;
+  var price = 0.0.obs;
+  var salePrice = 0.0.obs;
+  var productId = 0.obs;
+  var typeValue = 'STANDARD'.obs;
 
   TextEditingController searchProductController = TextEditingController();
   TextEditingController productTitleController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController salePriceController = TextEditingController();
   TextEditingController productLifeController = TextEditingController();
   HtmlEditorController htmlController = HtmlEditorController();
 
@@ -36,6 +47,9 @@ class ProductsController extends GetxController {
     token.value = tokenHiveBox.get('token');
     formFocus = FocusNode();
     titleFocus = FocusNode();
+    priceFocus = FocusNode();
+    salePriceFocus = FocusNode();
+    getAll();
   }
 
   Future<void> getAll() async {
@@ -49,6 +63,7 @@ class ProductsController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
+    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       products.value = productsModelFromJson(response.body);
       isLoading.value = false;
@@ -59,19 +74,30 @@ class ProductsController extends GetxController {
     }
   }
 
-  Future<void> getbyId(String id) async {
+  Future<void> getbyId(int id) async {
     isLoading.value = true;
+    print(id);
     var response = await http.get(
       Uri.parse(
-        baseUrl + allProduct + id,
+        baseUrl + allProduct + id.toString(),
       ),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       },
     );
+    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
-      products.value = productsModelFromJson(response.body);
+      productId.value = singleProduct.value.id!;
+      singleProduct.value = singleProductFromJson(response.body);
+      productTitleController.text = singleProduct.value.title!;
+      productLifeController.text =
+          singleProduct.value.productLifeInDays!.toString();
+      priceController.text = singleProduct.value.price.toString();
+      salePriceController.text = singleProduct.value.salePrice.toString();
+      status.value = singleProduct.value.status!;
+      typeValue.value = singleProduct.value.productType!;
+      htmlController.insertHtml(singleProduct.value.description!);
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -84,18 +110,16 @@ class ProductsController extends GetxController {
     String title,
     double price,
     double salesPrice,
-    String image,
     int productLifeInDays,
     String productType,
     String description,
-    String status,
+    bool status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
       "title": title,
       "price": price,
       "salePrice": salesPrice,
-      "image": image,
       "productLifeInDays": productLifeInDays,
       "productType": productType,
       "description": description,
@@ -113,7 +137,7 @@ class ProductsController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
-      products.addAll(productsModelFromJson(response.body));
+      //add single product
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -167,12 +191,12 @@ class ProductsController extends GetxController {
   }
 
   Future<void> delete(
-    String id,
+    int id,
   ) async {
     isLoading.value = true;
     var response = await http.delete(
       Uri.parse(
-        baseUrl + deleteProduct + id,
+        baseUrl + deleteProduct + id.toString(),
       ),
       headers: {
         "Content-Type": "application/json",
