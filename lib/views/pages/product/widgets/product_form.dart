@@ -35,6 +35,7 @@ class ProductForm extends GetView<ThemeChangeController> {
     required this.onTap,
     required this.salePriceController,
     required this.salePriceValidator,
+    required this.initialHtml,
     super.key,
   });
 
@@ -48,6 +49,7 @@ class ProductForm extends GetView<ThemeChangeController> {
   bool statusValue;
   String buttonText;
   String cancelText;
+  String initialHtml;
 
   //Dropdownlistvalues
   //value will be passed on the page we will consume this widget on
@@ -171,10 +173,11 @@ class ProductForm extends GetView<ThemeChangeController> {
                 height: 250,
                 child: HtmlEditor(
                   controller: htmlEditorController,
-                  htmlEditorOptions: const HtmlEditorOptions(
+                  htmlEditorOptions: HtmlEditorOptions(
                       autoAdjustHeight: true,
                       adjustHeightForKeyboard: true,
-                      hint: "Product Descrioption"),
+                      hint: "Product Descrioption",
+                      initialText: initialHtml),
                   otherOptions: const OtherOptions(height: 150),
                   htmlToolbarOptions: const HtmlToolbarOptions(
                     defaultToolbarButtons: [

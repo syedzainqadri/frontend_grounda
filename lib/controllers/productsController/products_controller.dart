@@ -88,8 +88,9 @@ class ProductsController extends GetxController {
     );
     print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
-      productId.value = singleProduct.value.id!;
       singleProduct.value = singleProductFromJson(response.body);
+      productId.value = singleProduct.value.id!;
+
       productTitleController.text = singleProduct.value.title!;
       productLifeController.text =
           singleProduct.value.productLifeInDays!.toString();
@@ -97,7 +98,9 @@ class ProductsController extends GetxController {
       salePriceController.text = singleProduct.value.salePrice.toString();
       status.value = singleProduct.value.status!;
       typeValue.value = singleProduct.value.productType!;
-      htmlController.insertHtml(singleProduct.value.description!);
+      // htmlController.insertText(singleProduct.value.description!);
+      // description.value = await htmlController.getText();
+      description.value = singleProduct.value.description!;
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -146,16 +149,15 @@ class ProductsController extends GetxController {
     }
   }
 
-  Future<void> updatePaymentMethod(
+  Future<void> updateProduct(
     int id,
     String title,
     double price,
     double salesPrice,
-    String image,
     int productLifeInDays,
     String productType,
     String description,
-    String status,
+    bool status,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
@@ -163,7 +165,6 @@ class ProductsController extends GetxController {
       "title": title,
       "price": price,
       "salePrice": salesPrice,
-      "image": image,
       "productLifeInDays": productLifeInDays,
       "productType": productType,
       "description": description,

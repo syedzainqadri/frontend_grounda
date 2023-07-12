@@ -111,6 +111,7 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                           }
                         },
                         htmlEditorController: productsController.htmlController,
+                        initialHtml: productsController.description.value,
                         typeList: productsController.dropDownList
                             .map<DropdownMenuItem<String>>((value) {
                           return DropdownMenuItem<String>(
@@ -150,23 +151,64 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                                 productsController.salePriceController.text);
                             print(productsController.salePrice.value);
                           }
-                          await productsController.create(
-                            productsController.productTitleController.text,
-                            productsController.price.value,
-                            productsController.salePrice.value,
-                            int.parse(
-                                productsController.productLifeController.text),
-                            productsController.type.value,
-                            productsController.description.value,
-                            productsController.status.value,
-                          );
+                          if (productsController.productId.value == 0) {
+                            // if (_createProductFormKey.currentState!
+                            //     .validate()) {
+                            Get.defaultDialog(
+                              barrierDismissible: false,
+                              title: 'Creating Product',
+                              content: const Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor),
+                              ),
+                            );
+                            await productsController.create(
+                              productsController.productTitleController.text,
+                              productsController.price.value,
+                              productsController.salePrice.value,
+                              int.parse(productsController
+                                  .productLifeController.text),
+                              productsController.type.value,
+                              productsController.description.value,
+                              productsController.status.value,
+                            );
+                            Navigator.pop(context);
+                            // }
+                          } else {
+                            //  if (_createProductFormKey.currentState!
+                            //       .validate()) {
+                            Get.defaultDialog(
+                              barrierDismissible: false,
+                              title: 'Updating Product',
+                              content: const Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor),
+                              ),
+                            );
+                            await productsController.updateProduct(
+                              productsController.productId.value,
+                              productsController.productTitleController.text,
+                              productsController.price.value,
+                              productsController.salePrice.value,
+                              int.parse(productsController
+                                  .productLifeController.text),
+                              productsController.typeValue.value,
+                              productsController.description.value,
+                              productsController.status.value,
+                            );
+                            Navigator.pop(context);
+                            Get.toNamed('/product/');
+                            // }
+                          }
                           //Todo: submit function here
                         },
                         onTap: () {
                           Get.back();
                         },
                         cancelText: 'cancle',
-                        buttonText: 'Submit',
+                        buttonText: productsController.productId == 0
+                            ? 'Submit'
+                            : 'Update',
                       ),
                     ),
                   ),
