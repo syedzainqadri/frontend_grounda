@@ -15,9 +15,17 @@ import 'package:location/location.dart';
 //will be considered a customer
 class CustomerController extends GetxController {
   late FocusNode formFocus;
-  late FocusNode agencyEmailFieldFocus;
-  late FocusNode agencyPhoneFieldFocus;
-  late FocusNode agencyPasswordFieldFocus;
+  late FocusNode firstNameFocus;
+  late FocusNode lastNameFocus;
+  late FocusNode phoneFocus;
+  late FocusNode phoneTwoFocus;
+  late FocusNode dobFocus;
+  late FocusNode whatsAppFocus;
+  late FocusNode emailFocus;
+  late FocusNode passwordFocus;
+  late FocusNode postCodeFocus;
+  late FocusNode addressLineOneFocus;
+  late FocusNode addressLineTwoFocus;
   var agencies = <AgencyModel>[].obs;
   var logo = ''.obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
@@ -27,6 +35,9 @@ class CustomerController extends GetxController {
   var isLoading = false.obs;
   var sell = false.obs;
   var rent = false.obs;
+  var country = ''.obs;
+  var state = ''.obs;
+  var city = ''.obs;
   late bool _serviceEnabled;
   late PermissionStatus _permissionGranted;
   late LocationData _locationData;
@@ -34,14 +45,38 @@ class CustomerController extends GetxController {
   RxDouble longitude = 0.0.obs;
   Location location = Location();
 
+  //Text Field Controllers
+
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController phoneTwoController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController postCodeController = TextEditingController();
+  final TextEditingController addressLineOneController =
+      TextEditingController();
+  final TextEditingController addressLineTwoController =
+      TextEditingController();
+  final TextEditingController whatsAppController = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
     token.value = tokenHiveBox.get('token');
     formFocus = FocusNode();
-    agencyEmailFieldFocus = FocusNode();
-    agencyPhoneFieldFocus = FocusNode();
-    agencyPasswordFieldFocus = FocusNode();
+    firstNameFocus = FocusNode();
+    lastNameFocus = FocusNode();
+    phoneFocus = FocusNode();
+    phoneTwoFocus = FocusNode();
+    dobFocus = FocusNode();
+    whatsAppFocus = FocusNode();
+    emailFocus = FocusNode();
+    passwordFocus = FocusNode();
+    postCodeFocus = FocusNode();
+    addressLineOneFocus = FocusNode();
+    addressLineTwoFocus = FocusNode();
     getAll();
     getLocation();
   }

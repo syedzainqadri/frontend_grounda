@@ -1,145 +1,131 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:country_currency_pickers/country.dart';
-import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend_grounda/controllers/customerController/customer_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/Buttons.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
-import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../../../widgets/maps.dart';
 
 class CustomerForm extends GetView<ThemeChangeController> {
-  CustomerForm(
-      {required this.postTitleController,
-      required this.categoryDropDownList,
-      required this.categoryDropDownValue,
-      required this.categoryOnChange,
-      required this.subCategoryDropDownList,
-      required this.subCategoryDropDownValue,
-      required this.subCategoryOnChange,
-      required this.statusChanges,
-      required this.formSubmit,
-      required this.statusValue,
-      required this.uploadImages,
-      required this.buttonText,
-      required this.pictureButtonText,
-      required this.cancelText,
-      required this.onTap,
-      required this.videoUrlController,
-      required this.cityController,
-      required this.areaController,
-      required this.plotNumberController,
-      required this.priceController,
-      required this.hasInstallmentValue,
-      required this.installmentStatusChanges,
-      required this.posessionChanges,
-      required this.posessionValue,
-      required this.bathRoomController,
-      required this.bedRoomController,
-      required this.advanceController,
-      required this.noOfInstallmentController,
-      required this.monthlyInstallmentValueController,
-      required this.showContactDetails,
-      required this.images,
-      required this.amenities,
-      required this.totalAreaController,
-      required this.propertyAreaUnitList,
-      required this.propertyAreaUnitOnChange,
-      required this.propertyAreaUnitValue,
-      required this.purposeList,
-      required this.purposeOnChange,
-      required this.purposeValue,
-      required this.postTitleValidator,
-      required this.cityValidator,
-      required this.areaValidator,
-      required this.priceValidator,
-      required this.advanceValidator,
-      required this.bathroomValidator,
-      required this.bedroomValidator,
-      required this.monthlyInstallmentValidator,
-      required this.noOfInstallmentValidator,
-      required this.propertyAreaValidator,
-      required this.plotNumberValidator,
-      required this.contentController,
-      required this.showContactDetailsChanges,
-      required this.titleFieldSubmitted,
-      required this.titleFocus,
-      required this.cityFocus,
-      required this.cityFieldSubmitted,
-      this.selectedAmenities,
-      super.key});
+  CustomerForm({
+    super.key,
+    required this.firstNameController,
+    required this.lastNameController,
+    required this.phoneController,
+    required this.phoneTwoController,
+    required this.dobController,
+    required this.emailController,
+    required this.passwordController,
+    required this.postCodeController,
+    required this.addressLineOneController,
+    required this.addressLineTwoController,
+    required this.whatsAppController,
+    required this.firstNameFieldSubmited,
+    required this.firstNameValidator,
+    required this.lastNameFieldSubmited,
+    required this.lastNameValidator,
+    required this.phoneFieldSubmited,
+    required this.phoneValidator,
+    required this.phoneTwoFieldSubmited,
+    required this.phoneTwoValidator,
+    required this.dobFieldSubmited,
+    required this.dobValidator,
+    required this.emailFieldSubmited,
+    required this.emailValidator,
+    required this.passwordFieldSubmited,
+    required this.passwordValidator,
+    required this.postCodeFieldSubmited,
+    required this.postCodeValidator,
+    required this.addressLineOneFieldSubmited,
+    required this.addressLineOneValidator,
+    required this.whatsAppFieldSubmited,
+    required this.whatsAppValidator,
+    required this.onFormSubmited,
+    required this.firstNameFocus,
+    required this.lastNameFocus,
+    required this.phoneFocus,
+    required this.phoneTwoFocus,
+    required this.dobFocus,
+    required this.whatsAppFocus,
+    required this.emailFocus,
+    required this.passwordFocus,
+    required this.postCodeFocus,
+    required this.addressLineOneFocus,
+    required this.addressLineTwoFocus,
+    required this.selectState,
+    required this.latitude,
+    required this.longitude,
+    required this.onCancleTap,
+  });
   double width = Get.width;
   double height = Get.height;
-  String categoryDropDownValue;
-  String subCategoryDropDownValue;
-  dynamic categoryOnChange;
-  dynamic subCategoryOnChange;
-  dynamic statusChanges;
-  dynamic posessionChanges;
-  dynamic showContactDetailsChanges;
-  dynamic installmentStatusChanges;
-  dynamic formSubmit;
-  dynamic uploadImages;
-  dynamic onTap;
-  dynamic postTitleValidator;
-  dynamic cityValidator;
-  dynamic areaValidator;
-  dynamic propertyAreaValidator;
-  dynamic plotNumberValidator;
-  dynamic bathroomValidator;
-  dynamic bedroomValidator;
-  dynamic noOfInstallmentValidator;
-  dynamic monthlyInstallmentValidator;
-  dynamic advanceValidator;
-  bool posessionValue;
-  bool showContactDetails;
-  bool statusValue;
-  bool hasInstallmentValue;
-  String buttonText;
-  String pictureButtonText;
-  String cancelText;
-  String purposeValue;
-  dynamic purposeOnChange;
-  dynamic propertyAreaUnitOnChange;
-  dynamic priceValidator;
-  dynamic titleFieldSubmitted;
-  dynamic cityFieldSubmitted;
-  String propertyAreaUnitValue;
-  List<DropdownMenuItem<String>> propertyAreaUnitList;
-  List<DropdownMenuItem<String>> categoryDropDownList;
-  List<DropdownMenuItem<String>> subCategoryDropDownList;
-  List<DropdownMenuItem<String>> purposeList;
-  // controllers
-  TextEditingController postTitleController;
-  TextEditingController totalAreaController;
-  TextEditingController videoUrlController;
-  TextEditingController cityController;
-  TextEditingController areaController;
-  TextEditingController plotNumberController;
-  TextEditingController priceController;
-  TextEditingController bathRoomController;
-  TextEditingController bedRoomController;
-  TextEditingController advanceController;
-  TextEditingController noOfInstallmentController;
-  TextEditingController monthlyInstallmentValueController;
 
-  CustomerController customerController = Get.find<CustomerController>();
+  //Text Editng Controllers
 
-  QuillEditorController contentController;
-  Widget images;
-  Widget amenities;
-  Widget? selectedAmenities;
-  FocusNode titleFocus;
-  FocusNode cityFocus;
+  TextEditingController firstNameController;
+  TextEditingController lastNameController;
+  TextEditingController phoneController;
+  TextEditingController phoneTwoController;
+  TextEditingController dobController;
+  TextEditingController emailController;
+  TextEditingController passwordController;
+  TextEditingController postCodeController;
+  TextEditingController addressLineOneController;
+  TextEditingController addressLineTwoController;
+  TextEditingController whatsAppController;
+
+  //Functions
+
+  dynamic firstNameFieldSubmited;
+  dynamic firstNameValidator;
+  dynamic lastNameFieldSubmited;
+  dynamic lastNameValidator;
+  dynamic phoneFieldSubmited;
+  dynamic phoneValidator;
+  dynamic phoneTwoFieldSubmited;
+  dynamic phoneTwoValidator;
+  dynamic dobFieldSubmited;
+  dynamic dobValidator;
+  dynamic emailFieldSubmited;
+  dynamic emailValidator;
+  dynamic passwordFieldSubmited;
+  dynamic passwordValidator;
+  dynamic postCodeFieldSubmited;
+  dynamic postCodeValidator;
+  dynamic addressLineOneFieldSubmited;
+  dynamic addressLineOneValidator;
+  dynamic whatsAppFieldSubmited;
+  dynamic whatsAppValidator;
+  dynamic onFormSubmited;
+  dynamic onCancleTap;
+  //Focus
+
+  FocusNode firstNameFocus;
+  FocusNode lastNameFocus;
+  FocusNode phoneFocus;
+  FocusNode phoneTwoFocus;
+  FocusNode dobFocus;
+  FocusNode whatsAppFocus;
+  FocusNode emailFocus;
+  FocusNode passwordFocus;
+  FocusNode postCodeFocus;
+  FocusNode addressLineOneFocus;
+  FocusNode addressLineTwoFocus;
+
+  //Widgets
+
+  Widget selectState;
+
+  //var
+
+  var latitude;
+  var longitude;
 
   @override
   Widget build(BuildContext context) {
-    var agencyController;
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
@@ -148,14 +134,6 @@ class CustomerForm extends GetView<ThemeChangeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text(
-              //   "Add Customer",
-              //   style: Theme.of(context).textTheme.bodyLarge,
-              //   textAlign: TextAlign.start,
-              // ),
-              // SizedBox(
-              //   height: height * 0.015,
-              // ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -166,13 +144,13 @@ class CustomerForm extends GetView<ThemeChangeController> {
                       children: [
                         // First Name
                         DefaultTextField(
-                          focusNode: cityFocus,
-                          onFieldSubmitted: cityFieldSubmitted,
+                          focusNode: firstNameFocus,
+                          onFieldSubmitted: firstNameFieldSubmited,
                           hintText: "First Name",
                           labelText: "First Name",
                           isPassword: false,
-                          textEditingController: cityController,
-                          validator: cityValidator,
+                          textEditingController: firstNameController,
+                          validator: firstNameValidator,
                           maxLength: 25,
                         ),
                         SizedBox(
@@ -180,13 +158,13 @@ class CustomerForm extends GetView<ThemeChangeController> {
                         ),
                         // Last Name
                         DefaultTextField(
-                          focusNode: cityFocus,
-                          onFieldSubmitted: cityFieldSubmitted,
+                          focusNode: lastNameFocus,
+                          onFieldSubmitted: lastNameFieldSubmited,
                           hintText: "Last name",
                           labelText: "Last name",
                           isPassword: false,
-                          textEditingController: cityController,
-                          validator: cityValidator,
+                          textEditingController: lastNameController,
+                          validator: lastNameValidator,
                           maxLength: 25,
                         ),
                         SizedBox(
@@ -194,13 +172,13 @@ class CustomerForm extends GetView<ThemeChangeController> {
                         ),
                         // Phone
                         DefaultTextField(
-                          focusNode: cityFocus,
-                          onFieldSubmitted: cityFieldSubmitted,
+                          focusNode: phoneFocus,
+                          onFieldSubmitted: phoneFieldSubmited,
                           hintText: "Phone",
                           labelText: "Phone",
                           isPassword: false,
-                          textEditingController: cityController,
-                          validator: cityValidator,
+                          textEditingController: phoneController,
+                          validator: phoneValidator,
                           maxLength: 25,
                         ),
                         SizedBox(
@@ -208,13 +186,13 @@ class CustomerForm extends GetView<ThemeChangeController> {
                         ),
                         // Phone 2
                         DefaultTextField(
-                          focusNode: cityFocus,
-                          onFieldSubmitted: cityFieldSubmitted,
+                          focusNode: phoneTwoFocus,
+                          onFieldSubmitted: phoneTwoFieldSubmited,
                           hintText: "Phone 2",
                           labelText: "Phone 2",
                           isPassword: false,
-                          textEditingController: cityController,
-                          validator: cityValidator,
+                          textEditingController: phoneTwoController,
+                          validator: phoneTwoValidator,
                           maxLength: 25,
                         ),
                         SizedBox(
@@ -222,13 +200,13 @@ class CustomerForm extends GetView<ThemeChangeController> {
                         ),
                         // Whatsapp Number
                         DefaultTextField(
-                          focusNode: cityFocus,
-                          onFieldSubmitted: cityFieldSubmitted,
+                          focusNode: whatsAppFocus,
+                          onFieldSubmitted: whatsAppFieldSubmited,
                           hintText: "Whatsapp Number",
                           labelText: "Whatsapp Number",
                           isPassword: false,
-                          textEditingController: cityController,
-                          validator: cityValidator,
+                          textEditingController: whatsAppController,
+                          validator: whatsAppValidator,
                           maxLength: 25,
                         ),
                         SizedBox(
@@ -236,13 +214,13 @@ class CustomerForm extends GetView<ThemeChangeController> {
                         ),
                         // Whatsapp Number
                         DefaultTextField(
-                          focusNode: cityFocus,
-                          onFieldSubmitted: cityFieldSubmitted,
+                          focusNode: dobFocus,
+                          onFieldSubmitted: dobFieldSubmited,
                           hintText: "Date of Birth",
                           labelText: "Date of Birth",
                           isPassword: false,
-                          textEditingController: cityController,
-                          validator: cityValidator,
+                          textEditingController: dobController,
+                          validator: dobValidator,
                           maxLength: 25,
                         ),
                         SizedBox(
@@ -261,13 +239,13 @@ class CustomerForm extends GetView<ThemeChangeController> {
                         ),
                         // Login Credentials
                         DefaultTextField(
-                          focusNode: cityFocus,
-                          onFieldSubmitted: cityFieldSubmitted,
+                          focusNode: emailFocus,
+                          onFieldSubmitted: emailFieldSubmited,
                           hintText: "E-mail",
                           labelText: "E-mail",
                           isPassword: false,
-                          textEditingController: cityController,
-                          validator: cityValidator,
+                          textEditingController: emailController,
+                          validator: emailValidator,
                           maxLength: 25,
                         ),
                         SizedBox(
@@ -275,13 +253,13 @@ class CustomerForm extends GetView<ThemeChangeController> {
                         ),
                         // Password - Login Credentials
                         DefaultTextField(
-                          focusNode: cityFocus,
-                          onFieldSubmitted: cityFieldSubmitted,
+                          focusNode: passwordFocus,
+                          onFieldSubmitted: passwordFieldSubmited,
                           hintText: "Password",
                           labelText: "Password",
                           isPassword: false,
-                          textEditingController: cityController,
-                          validator: cityValidator,
+                          textEditingController: passwordController,
+                          validator: passwordValidator,
                           maxLength: 25,
                         ),
                         SizedBox(
@@ -329,180 +307,12 @@ class CustomerForm extends GetView<ThemeChangeController> {
                                     height: height * .050,
                                   ),
                                   // Country
+
                                   SizedBox(
-                                    height: 100,
-                                    width: width * .22,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Country",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(color: kPrimaryColor),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        SizedBox(
-                                          height: height * .02,
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: controller.isDarkMode == true
-                                                ? kDarkCardColor
-                                                : kCardColor,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                            child: DropdownButton(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              hint:
-                                                  const Text("Select Country"),
-                                              isExpanded: true,
-                                              value: categoryDropDownValue,
-                                              icon: const Icon(
-                                                  Icons.arrow_downward),
-                                              elevation: 16,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                              underline: Container(
-                                                height: 2,
-                                                color: Colors.transparent,
-                                              ),
-                                              onChanged: categoryOnChange,
-                                              items: categoryDropDownList,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: width * .02,
-                                  ),
-                                  // State
-                                  SizedBox(
-                                    height: 100,
-                                    width: width * .22,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "State",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(color: kPrimaryColor),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        SizedBox(
-                                          height: height * .02,
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: controller.isDarkMode == true
-                                                ? kDarkCardColor
-                                                : kCardColor,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                            child: DropdownButton(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              hint: const Text("Select State"),
-                                              isExpanded: true,
-                                              value: categoryDropDownValue,
-                                              icon: const Icon(
-                                                  Icons.arrow_downward),
-                                              elevation: 16,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                              underline: Container(
-                                                height: 2,
-                                                color: Colors.transparent,
-                                              ),
-                                              onChanged: categoryOnChange,
-                                              items: categoryDropDownList,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: width * .02,
-                                  ),
-                                  // City
-                                  SizedBox(
-                                    height: 100,
-                                    width: width * .22,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "City",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(color: kPrimaryColor),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        SizedBox(
-                                          height: height * .02,
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: controller.isDarkMode == true
-                                                ? kDarkCardColor
-                                                : kCardColor,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                            child: DropdownButton(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              hint: const Text("Select City"),
-                                              isExpanded: true,
-                                              value: categoryDropDownValue,
-                                              icon: const Icon(
-                                                  Icons.arrow_downward),
-                                              elevation: 16,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                              underline: Container(
-                                                height: 2,
-                                                color: Colors.transparent,
-                                              ),
-                                              onChanged: categoryOnChange,
-                                              items: categoryDropDownList,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                      width: width * .23,
+                                      // height: height * .26,
+                                      child: selectState),
+
                                   SizedBox(
                                     width: width * .02,
                                   ),
@@ -510,13 +320,13 @@ class CustomerForm extends GetView<ThemeChangeController> {
                                   SizedBox(
                                     width: width * 0.23,
                                     child: DefaultTextField(
-                                      focusNode: cityFocus,
-                                      onFieldSubmitted: cityFieldSubmitted,
+                                      focusNode: postCodeFocus,
+                                      onFieldSubmitted: postCodeFieldSubmited,
                                       hintText: "Postal Code",
                                       labelText: "Postal Code",
                                       isPassword: false,
-                                      textEditingController: cityController,
-                                      validator: cityValidator,
+                                      textEditingController: postCodeController,
+                                      validator: postCodeValidator,
                                       maxLength: 25,
                                     ),
                                   ),
@@ -527,13 +337,15 @@ class CustomerForm extends GetView<ThemeChangeController> {
                                   SizedBox(
                                     width: width * 0.23,
                                     child: DefaultTextField(
-                                      focusNode: cityFocus,
-                                      onFieldSubmitted: cityFieldSubmitted,
+                                      focusNode: addressLineOneFocus,
+                                      onFieldSubmitted:
+                                          addressLineOneFieldSubmited,
                                       hintText: "Address Line 1",
                                       labelText: "Address Line 1",
                                       isPassword: false,
-                                      textEditingController: cityController,
-                                      validator: cityValidator,
+                                      textEditingController:
+                                          addressLineOneController,
+                                      validator: addressLineOneValidator,
                                       maxLength: 25,
                                     ),
                                   ),
@@ -544,19 +356,17 @@ class CustomerForm extends GetView<ThemeChangeController> {
                                   SizedBox(
                                     width: width * 0.23,
                                     child: DefaultTextField(
-                                      focusNode: cityFocus,
-                                      onFieldSubmitted: cityFieldSubmitted,
+                                      focusNode: addressLineTwoFocus,
                                       hintText: "Address Line 2",
                                       labelText: "Address Line 2",
                                       isPassword: false,
-                                      textEditingController: cityController,
-                                      validator: cityValidator,
+                                      textEditingController:
+                                          addressLineTwoController,
                                       maxLength: 25,
                                     ),
                                   ),
                                 ],
                               ),
-                              // TODO; add map
                             ),
                             SizedBox(
                               width: width * 0.007,
@@ -570,8 +380,6 @@ class CustomerForm extends GetView<ThemeChangeController> {
                                     width: width * .008,
                                     height: height * .05,
                                   ),
-                                  // MAP
-
                                   Container(
                                     width: width * .22,
                                     height: height * .57,
@@ -579,18 +387,15 @@ class CustomerForm extends GetView<ThemeChangeController> {
                                       color: kDarkCardColor,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child: customerController.latitude.value ==
-                                            0
+                                    child: latitude == 0
                                         ? const Center(
                                             child: CircularProgressIndicator(
                                               color: kPrimaryColor,
                                             ),
                                           )
                                         : GoogleMap(
-                                            lang: customerController
-                                                .longitude.value,
-                                            lat: customerController
-                                                .latitude.value,
+                                            lang: longitude,
+                                            lat: latitude,
                                           ),
                                   ),
                                 ],
@@ -607,25 +412,28 @@ class CustomerForm extends GetView<ThemeChangeController> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   DefaultButton(
-                    buttonText: "Submit",
-                    onPressed: onTap,
+                    buttonText: "Update",
+                    onPressed: onFormSubmited,
                     key: key,
                     primaryColor: kPrimaryColor,
                     hoverColor: kDarkColor,
                     width: width * .12,
                     height: height * .05,
                   ),
+                  SizedBox(
+                    width: width * .03,
+                  ),
+                  InkWell(
+                    onTap: onCancleTap,
+                    child: Text(
+                      'Cancel',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: kPrimaryColor),
+                    ),
+                  ),
                 ],
-                // InkWell(
-                //   onTap: onTap,
-                //   child: Text(
-                //     cancelText,
-                //     style: Theme.of(context)
-                //         .textTheme
-                //         .bodyMedium!
-                //         .copyWith(color: kPrimaryColor),
-                //   ),
-                // ),
               ),
             ],
           ),
@@ -633,16 +441,4 @@ class CustomerForm extends GetView<ThemeChangeController> {
       ),
     );
   }
-
-  Widget _buildDropdownItem(Country country) => Container(
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            const SizedBox(
-              width: 8.0,
-            ),
-            Text("+${country.phoneCode}(${country.isoCode})"),
-          ],
-        ),
-      );
 }
