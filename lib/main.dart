@@ -25,6 +25,7 @@ void main() async {
   Get.put(AuthController());
   Get.put(ThemeController());
   Get.put(ThemeChangeController());
+  // Get.put(DashboardController());
   // Get.put(ProjectController());
   setPathUrlStrategy();
   runApp(MyApp());

@@ -60,8 +60,11 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.more_vert,
+                    color: controller.isDarkMode.value
+                        ? kWhiteColor
+                        : kDarkCardColor,
                   ),
                 )
               ],
@@ -78,14 +81,20 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
                   children: [
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      style: TextStyle(
+                          color: controller.isDarkMode.value
+                              ? kWhiteColor
+                              : kDarkCardColor),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     Text(
                       subTitle,
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: TextStyle(
+                          color: controller.isDarkMode.value
+                              ? kWhiteColor
+                              : kDarkCardColor),
                     ),
                   ],
                 ),
@@ -109,10 +118,13 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
                           GaugeAnnotation(
                               verticalAlignment: GaugeAlignment.far,
                               positionFactor: .2,
-                              widget: Text("$percentage%",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall)),
+                              widget: Text(
+                                "$percentage%",
+                                style: TextStyle(
+                                    color: controller.isDarkMode.value
+                                        ? kWhiteColor
+                                        : kDarkCardColor),
+                              )),
                         ],
                         pointers: <GaugePointer>[
                           RangePointer(
