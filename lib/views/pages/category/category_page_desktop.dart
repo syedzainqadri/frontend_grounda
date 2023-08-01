@@ -43,7 +43,11 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
     double height = Get.height;
     const bool isMobile = false;
     return Scaffold(
-      appBar: DashBoardAppBar(title: 'Category'),
+      backgroundColor:
+          controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+      appBar: DashBoardAppBar(
+        title: 'Category',
+      ),
       body: Obx(
         () => Center(
           child: Row(
@@ -60,8 +64,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -98,7 +102,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                     //Ameneties
                     amenetiesListView: iconData.isEmpty
                         ? Text(
-                            'Please Select Amenitied',
+                            'Please Select Amenities',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -113,6 +117,9 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                     int.parse(iconData[index]),
                                     fontFamily: iconFontFamily.value,
                                   ),
+                                  color: controller.isDarkMode.value
+                                      ? kWhiteColor
+                                      : kDarkColor,
                                   size: 50,
                                 ),
                                 Positioned(
@@ -139,8 +146,13 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                         value: value.name,
                         child: Row(
                           children: [
-                            Icon(IconData(int.parse(value.icon!),
-                                fontFamily: "MaterialIcons")),
+                            Icon(
+                              IconData(int.parse(value.icon!),
+                                  fontFamily: "MaterialIcons"),
+                              color: controller.isDarkMode.value
+                                  ? kWhiteColor
+                                  : kDarkColor,
+                            ),
                             SizedBox(
                               width: width * .01,
                             ),
@@ -264,8 +276,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -302,9 +314,11 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                           itemCount: categoryController.category.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
-                              color: controller.isDarkMode.value
-                                  ? kDarkCardColor
-                                  : kCardColor,
+                              color:
+                                  // Colors.amber,
+                                  controller.isDarkMode.value
+                                      ? kDarkCardColor
+                                      : kCardColor,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
@@ -352,9 +366,12 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                   Text(
                                                     categoryController
                                                         .category[index].name!,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge,
+                                                    style: TextStyle(
+                                                      color: controller
+                                                              .isDarkMode.value
+                                                          ? kWhiteColor
+                                                          : kDarkColor,
+                                                    ),
                                                   ),
                                                   const SizedBox(
                                                     height: 10,
@@ -363,9 +380,13 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                     children: [
                                                       Text(
                                                         "Status: ",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall,
+                                                        style: TextStyle(
+                                                          color: controller
+                                                                  .isDarkMode
+                                                                  .value
+                                                              ? kWhiteColor
+                                                              : kDarkColor,
+                                                        ),
                                                       ),
                                                       categoryController
                                                                   .category[
@@ -406,6 +427,9 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                         Row(
                                           children: [
                                             IconButton(
+                                              color: controller.isDarkMode.value
+                                                  ? kWhiteColor
+                                                  : kDarkColor,
                                               onPressed: () async {
                                                 descriptionController.clear();
                                                 categoryNameController.text =
@@ -451,12 +475,20 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                         .split(',');
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/edit.svg"),
+                                                "assets/icons/edit.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkColor,
+                                              ),
                                             ),
                                             const SizedBox(
                                               width: 20,
                                             ),
                                             IconButton(
+                                              color: controller.isDarkMode.value
+                                                  ? kWhiteColor
+                                                  : kDarkColor,
                                               onPressed: () async {
                                                 Get.defaultDialog(
                                                   title: 'Deleting Category',
@@ -477,7 +509,12 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                 Navigator.pop(context);
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/trash.svg"),
+                                                "assets/icons/trash.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkColor,
+                                              ),
                                             ),
                                           ],
                                         ),

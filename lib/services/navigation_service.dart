@@ -36,7 +36,7 @@ appRoutes() => [
       ),
       GetPage(
         name: '/category',
-        page: () => const CategoryView(),
+        page: () => CategoryView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
