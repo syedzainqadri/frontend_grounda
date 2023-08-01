@@ -91,7 +91,7 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
             child: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset(
-                'assets/icons/message-notification.svg',
+                'assets/icons/person.svg',
                 color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
               ),
             ),
