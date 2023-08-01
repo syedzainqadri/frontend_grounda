@@ -132,7 +132,9 @@ class ProjectForm extends GetView<ThemeChangeController> {
             children: [
               Text(
                 "Create Project",
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: TextStyle(
+                    color:
+                        controller.isDarkMode.value ? kWhiteColor : kDarkColor),
                 textAlign: TextAlign.start,
               ),
               SizedBox(
@@ -286,7 +288,10 @@ class ProjectForm extends GetView<ThemeChangeController> {
                 children: [
                   Text(
                     "Gallery",
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: TextStyle(
+                        color: controller.isDarkMode.value
+                            ? kWhiteColor
+                            : kDarkColor),
                   ),
                 ],
               ),
@@ -307,7 +312,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
                         onTap: uploadImages,
                         child: Container(
                           alignment: Alignment.center,
-                          color: controller.isDarkMode == true
+                          color: controller.isDarkMode.value
                               ? kDarkCardColor
                               : kCardColor,
                           child: const Padding(
@@ -348,10 +353,10 @@ class ProjectForm extends GetView<ThemeChangeController> {
                       children: [
                         Text(
                           "Project Type",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: kPrimaryColor),
+                          style: TextStyle(
+                              color: controller.isDarkMode.value
+                                  ? kWhiteColor
+                                  : kDarkColor),
                           textAlign: TextAlign.start,
                         ),
                         SizedBox(
@@ -399,10 +404,10 @@ class ProjectForm extends GetView<ThemeChangeController> {
                       children: [
                         Text(
                           "Project Developer",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: kPrimaryColor),
+                          style: TextStyle(
+                              color: controller.isDarkMode.value
+                                  ? kWhiteColor
+                                  : kDarkColor),
                           textAlign: TextAlign.start,
                         ),
                         SizedBox(
@@ -450,13 +455,15 @@ class ProjectForm extends GetView<ThemeChangeController> {
                       selectedProjectNearByPlaces!,
                       Text(
                         'Select Amenities',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: kPrimaryColor),
+                        style: TextStyle(
+                            color: controller.isDarkMode.value
+                                ? kWhiteColor
+                                : kDarkColor),
                       ),
                       Container(
-                        color: Colors.white,
+                        color: controller.isDarkMode.value
+                            ? kWhiteColor
+                            : kDarkColor,
                         height: 290,
                         width: width * .19,
                         child: Padding(
@@ -483,7 +490,10 @@ class ProjectForm extends GetView<ThemeChangeController> {
                         children: [
                           Text(
                             "Status",
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: TextStyle(
+                                color: controller.isDarkMode.value
+                                    ? kWhiteColor
+                                    : kDarkColor),
                           ),
                           SizedBox(
                             width: width * .01,
@@ -492,6 +502,9 @@ class ProjectForm extends GetView<ThemeChangeController> {
                             activeColor: kPrimaryColor,
                             value: statusValue,
                             onChanged: statusChanges,
+                            trackColor: controller.isDarkMode.value
+                                ? kWhiteColor
+                                : kDarkCardColor,
                           ),
                         ],
                       ),

@@ -52,10 +52,12 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Projects'),
-      body: Obx(
-        () => Center(
+    return Obx(
+      () => Scaffold(
+        backgroundColor:
+            controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+        appBar: DashBoardAppBar(title: 'Projects'),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -70,8 +72,8 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -184,7 +186,10 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                         images: projectController.imageUrl.isEmpty
                             ? Text(
                                 'Please add Images',
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: TextStyle(
+                                    color: controller.isDarkMode.value
+                                        ? kWhiteColor
+                                        : kDarkColor),
                               )
                             : SizedBox(
                                 height: height * 0.14,

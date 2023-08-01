@@ -46,10 +46,12 @@ class ProjectPage extends GetView<ThemeChangeController> {
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Projects'),
-      body: Obx(
-        () => Center(
+    return Obx(
+      () => Scaffold(
+        backgroundColor:
+            controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+        appBar: DashBoardAppBar(title: 'Projects'),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -86,8 +88,12 @@ class ProjectPage extends GetView<ThemeChangeController> {
                               hintText: "Search Project",
                               labelText: "Search",
                               isPassword: false,
-                              suffixIcon:
-                                  SvgPicture.asset('assets/icons/search.svg'),
+                              suffixIcon: SvgPicture.asset(
+                                'assets/icons/search.svg',
+                                color: controller.isDarkMode.value
+                                    ? kWhiteColor
+                                    : kDarkColor,
+                              ),
                             ),
                           ),
                           DefaultButton(
@@ -162,9 +168,12 @@ class ProjectPage extends GetView<ThemeChangeController> {
                                                   Text(
                                                     projectController
                                                         .project[index].title!,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge,
+                                                    style: TextStyle(
+                                                      color: controller
+                                                              .isDarkMode.value
+                                                          ? kWhiteColor
+                                                          : kDarkColor,
+                                                    ),
                                                   ),
                                                   const SizedBox(
                                                     height: 10,
@@ -173,9 +182,13 @@ class ProjectPage extends GetView<ThemeChangeController> {
                                                     children: [
                                                       Text(
                                                         "Status: ",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall,
+                                                        style: TextStyle(
+                                                          color: controller
+                                                                  .isDarkMode
+                                                                  .value
+                                                              ? kWhiteColor
+                                                              : kDarkColor,
+                                                        ),
                                                       ),
                                                       projectController
                                                                   .project[
@@ -225,7 +238,12 @@ class ProjectPage extends GetView<ThemeChangeController> {
                                                 Get.toNamed('/project/create');
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/edit.svg"),
+                                                "assets/icons/edit.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkColor,
+                                              ),
                                             ),
                                             const SizedBox(
                                               width: 20,
@@ -245,7 +263,12 @@ class ProjectPage extends GetView<ThemeChangeController> {
                                                 );
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/trash.svg"),
+                                                "assets/icons/trash.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkColor,
+                                              ),
                                             ),
                                           ],
                                         ),
