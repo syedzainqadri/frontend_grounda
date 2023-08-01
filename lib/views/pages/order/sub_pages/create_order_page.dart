@@ -182,7 +182,11 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                         images: postController.imageUrl.isEmpty
                             ? Text(
                                 'Please add Images',
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: TextStyle(
+                                    color:
+                                        themeChangeController.isDarkMode.value
+                                            ? kWhiteColor
+                                            : kDarkColor),
                               )
                             : SizedBox(
                                 height: height * 0.14,
