@@ -365,7 +365,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: controller.isDarkMode == true
+                            color: controller.isDarkMode.value
                                 ? kDarkCardColor
                                 : kCardColor,
                           ),
@@ -373,13 +373,23 @@ class ProjectForm extends GetView<ThemeChangeController> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton(
+                              style: TextStyle(
+                                color: controller.isDarkMode.value
+                                    ? kWhiteColor
+                                    : kDarkColor,
+                              ),
+                              iconDisabledColor: controller.isDarkMode.value
+                                  ? kWhiteColor
+                                  : kDarkColor,
+                              iconEnabledColor: controller.isDarkMode.value
+                                  ? kWhiteColor
+                                  : kDarkColor,
                               borderRadius: BorderRadius.circular(15),
                               hint: const Text("Select Project Type"),
                               isExpanded: true,
                               value: categoryDropDownValue,
                               icon: const Icon(Icons.arrow_downward),
                               elevation: 16,
-                              style: Theme.of(context).textTheme.bodyMedium,
                               underline: Container(
                                 height: 2,
                                 color: Colors.transparent,
@@ -424,13 +434,23 @@ class ProjectForm extends GetView<ThemeChangeController> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton(
+                              style: TextStyle(
+                                color: controller.isDarkMode.value
+                                    ? kWhiteColor
+                                    : kDarkColor,
+                              ),
+                              iconDisabledColor: controller.isDarkMode.value
+                                  ? kWhiteColor
+                                  : kDarkColor,
+                              iconEnabledColor: controller.isDarkMode.value
+                                  ? kWhiteColor
+                                  : kDarkColor,
                               borderRadius: BorderRadius.circular(15),
                               hint: const Text("Select Project's Developer"),
                               isExpanded: true,
                               value: developerDropDownValue,
                               icon: const Icon(Icons.arrow_downward),
                               elevation: 16,
-                              style: Theme.of(context).textTheme.bodyMedium,
                               underline: Container(
                                 height: 2,
                                 color: Colors.transparent,
@@ -462,8 +482,8 @@ class ProjectForm extends GetView<ThemeChangeController> {
                       ),
                       Container(
                         color: controller.isDarkMode.value
-                            ? kWhiteColor
-                            : kDarkColor,
+                            ? kDarkColor
+                            : kWhiteColor,
                         height: 290,
                         width: width * .19,
                         child: Padding(

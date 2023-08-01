@@ -437,9 +437,11 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                       Text(
                                         projectNearByPlacesController
                                             .projectNearByPlace[index].name!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
+                                        style: TextStyle(
+                                          color: controller.isDarkMode.value
+                                              ? kWhiteColor
+                                              : kDarkColor,
+                                        ),
                                       ),
                                     ],
                                   ),
