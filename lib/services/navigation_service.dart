@@ -42,7 +42,7 @@ appRoutes() => [
       ),
       GetPage(
         name: '/post',
-        page: () => const PostView(),
+        page: () => PostView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),

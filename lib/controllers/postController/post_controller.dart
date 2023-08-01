@@ -325,7 +325,7 @@ class PostController extends GetxController {
         });
     print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
-      post.value = postModelFromJson(response.body);
+      // post.value = postModelFromJson(response.body);
       getAll();
       isLoading.value = false;
     } else {

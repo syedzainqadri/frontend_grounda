@@ -89,10 +89,13 @@ class _CreatePostPageState extends State<CreatePostPage> {
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Posts'),
-      body: Obx(
-        () => Center(
+    return Obx(
+      () => Scaffold(
+        backgroundColor: themeChangeController.isDarkMode.value
+            ? kDarkCardColor
+            : kWhiteColor,
+        appBar: DashBoardAppBar(title: 'Posts'),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -107,8 +110,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   boxShadow: [
                     BoxShadow(
                       color: themeChangeController.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow

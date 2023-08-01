@@ -49,6 +49,8 @@ class PostPage extends GetView<ThemeChangeController> {
     double height = Get.height;
     const bool isMobile = false;
     return Scaffold(
+      backgroundColor:
+          controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
       appBar: DashBoardAppBar(title: 'Posts'),
       body: Obx(
         () => Center(
@@ -230,8 +232,8 @@ class PostPage extends GetView<ThemeChangeController> {
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -328,9 +330,12 @@ class PostPage extends GetView<ThemeChangeController> {
                                                   Text(
                                                     postController
                                                         .post[index].title!,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge,
+                                                    style: TextStyle(
+                                                      color: controller
+                                                              .isDarkMode.value
+                                                          ? kWhiteColor
+                                                          : kDarkColor,
+                                                    ),
                                                   ),
                                                   const SizedBox(
                                                     height: 10,
@@ -339,9 +344,13 @@ class PostPage extends GetView<ThemeChangeController> {
                                                     children: [
                                                       Text(
                                                         "Status: ",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall,
+                                                        style: TextStyle(
+                                                          color: controller
+                                                                  .isDarkMode
+                                                                  .value
+                                                              ? kWhiteColor
+                                                              : kDarkColor,
+                                                        ),
                                                       ),
                                                       postController.post[index]
                                                                   .status ==
@@ -389,7 +398,12 @@ class PostPage extends GetView<ThemeChangeController> {
                                                 Get.toNamed('/post/create');
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/edit.svg"),
+                                                "assets/icons/edit.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkColor,
+                                              ),
                                             ),
                                             const SizedBox(
                                               width: 20,
@@ -508,7 +522,12 @@ class PostPage extends GetView<ThemeChangeController> {
                                                         .subCategoryId!);
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/trash.svg"),
+                                                "assets/icons/trash.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkColor,
+                                              ),
                                             ),
                                           ],
                                         ),

@@ -144,7 +144,9 @@ class PostForm extends GetView<ThemeChangeController> {
             children: [
               Text(
                 "Create Post",
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: TextStyle(
+                    color:
+                        controller.isDarkMode.value ? kWhiteColor : kDarkColor),
                 textAlign: TextAlign.start,
               ),
               SizedBox(
@@ -234,7 +236,11 @@ class PostForm extends GetView<ThemeChangeController> {
                 children: [
                   Text(
                     "Gallery",
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: TextStyle(
+                      color: controller.isDarkMode.value
+                          ? kWhiteColor
+                          : kDarkColor,
+                    ),
                   ),
                 ],
               ),
@@ -258,9 +264,12 @@ class PostForm extends GetView<ThemeChangeController> {
                           color: controller.isDarkMode == true
                               ? kDarkCardColor
                               : kCardColor,
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(Icons.add_a_photo),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(Icons.add_a_photo,
+                                color: controller.isDarkMode.value
+                                    ? kWhiteColor
+                                    : kDarkColor),
                           ),
                         ),
                       ),
