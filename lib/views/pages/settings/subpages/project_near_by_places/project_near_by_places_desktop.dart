@@ -35,10 +35,11 @@ class ProjectNearByPlacesDesktop extends GetView<ThemeChangeController> {
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Project Near By Places'),
-      body: Obx(
-        () => Center(
+    return Obx(
+      () => Scaffold(
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
+        appBar: DashBoardAppBar(title: 'Project Near By Places'),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -64,9 +65,17 @@ class ProjectNearByPlacesDesktop extends GetView<ThemeChangeController> {
                   padding: const EdgeInsets.all(25.0),
                   child: ProjectNearByPlacesForm(
                     iconPicker: IconPicker(
+                      style: TextStyle(
+                        color: controller.isDarkMode.value
+                            ? kDarkTextColor
+                            : kTextColor,
+                      ),
                       initialValue: 'Please Select an Icon',
                       icon: Icon(
                         IconData(icon.value, fontFamily: iconFontFamily.value),
+                        color: controller.isDarkMode.value
+                            ? kDarkTextColor
+                            : kTextColor,
                       ),
                       labelText: "Icon",
                       title: "Select an icon",
@@ -197,8 +206,8 @@ class ProjectNearByPlacesDesktop extends GetView<ThemeChangeController> {
                                       (BuildContext context, int index) {
                                     return Card(
                                       color: controller.isDarkMode.value
-                                          ? kDarkCardColor
-                                          : kCardColor,
+                                          ? kDarkBgColor
+                                          : kBgColor,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(

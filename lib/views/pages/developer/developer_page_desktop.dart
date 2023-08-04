@@ -40,8 +40,7 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
     const bool isMobile = false;
     return Obx(
       () => Scaffold(
-        backgroundColor:
-            controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
         appBar: DashBoardAppBar(title: 'Developers'),
         body: Center(
           child: Row(
@@ -207,8 +206,8 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               color: controller.isDarkMode.value
-                                  ? kDarkCardColor
-                                  : kCardColor,
+                                  ? kDarkBgColor
+                                  : kBgColor,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
