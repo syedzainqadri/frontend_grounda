@@ -43,35 +43,37 @@ class CreateAgency extends GetView<ThemeChangeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Agency'),
-      body: Center(
-        child: Container(
-          height: height * .8,
-          width: width * .8,
-          decoration: BoxDecoration(
-            color: controller.isDarkMode.value ? kDarkFrameColor : kFrameColor,
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            boxShadow: [
-              BoxShadow(
-                color: controller.isDarkMode.value
-                    ? kDarkShadowColor.withOpacity(.9)
-                    : kShadowColor.withOpacity(.5),
-                spreadRadius: 3,
-                blurRadius: 4,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              bottom: 25.0,
-              top: 10,
-              right: 20,
-              left: 20,
+    return Obx(
+      () => Scaffold(
+        backgroundColor:
+            controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+        appBar: DashBoardAppBar(title: 'Agency'),
+        body: Center(
+          child: Container(
+            height: height * .8,
+            width: width * .8,
+            decoration: BoxDecoration(
+              color: controller.isDarkMode.value ? kDarkCardColor : kCardColor,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                  color: controller.isDarkMode.value
+                      ? kDarkShadowColor.withOpacity(.2)
+                      : kShadowColor.withOpacity(.2),
+                  spreadRadius: 3,
+                  blurRadius: 4,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
             ),
-            child: Obx(
-              () => Row(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                bottom: 25.0,
+                top: 10,
+                right: 20,
+                left: 20,
+              ),
+              child: Row(
                 children: [
                   //form
                   SizedBox(
@@ -304,8 +306,11 @@ class CreateAgency extends GetView<ThemeChangeController> {
                                 children: [
                                   Text(
                                     "Status",
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
+                                    style: TextStyle(
+                                      color: controller.isDarkMode.value
+                                          ? kWhiteColor
+                                          : kDarkCardColor,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: width * .01,
@@ -316,6 +321,9 @@ class CreateAgency extends GetView<ThemeChangeController> {
                                     onChanged: (value) {
                                       statusValue.value = value;
                                     },
+                                    trackColor: controller.isDarkMode.value
+                                        ? kWhiteColor
+                                        : kDarkCardColor,
                                   ),
                                   SizedBox(
                                     width: width * .01,
@@ -538,6 +546,11 @@ class CreateAgency extends GetView<ThemeChangeController> {
                                       onStateChanged: (String value) {
                                         agencyController.city.value = value;
                                       },
+                                      style: TextStyle(
+                                        color: controller.isDarkMode.value
+                                            ? kWhiteColor
+                                            : kDarkCardColor,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
@@ -578,6 +591,7 @@ class CreateAgency extends GetView<ThemeChangeController> {
                                 ),
                                 SizedBox(
                                   width: width * .5,
+                                  height: 100,
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 20.0),
                                     child: Wrap(

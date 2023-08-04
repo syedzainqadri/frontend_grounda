@@ -1,7 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:country_currency_pickers/country.dart';
-import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
@@ -145,8 +143,9 @@ class PostForm extends GetView<ThemeChangeController> {
               Text(
                 "Create Post",
                 style: TextStyle(
-                    color:
-                        controller.isDarkMode.value ? kWhiteColor : kDarkColor),
+                    color: controller.isDarkMode.value
+                        ? kDarkTextColor
+                        : kTextColor),
                 textAlign: TextAlign.start,
               ),
               SizedBox(
@@ -238,8 +237,8 @@ class PostForm extends GetView<ThemeChangeController> {
                     "Gallery",
                     style: TextStyle(
                       color: controller.isDarkMode.value
-                          ? kWhiteColor
-                          : kDarkColor,
+                          ? kDarkTextColor
+                          : kTextColor,
                     ),
                   ),
                 ],
@@ -269,7 +268,7 @@ class PostForm extends GetView<ThemeChangeController> {
                             child: Icon(Icons.add_a_photo,
                                 color: controller.isDarkMode.value
                                     ? kWhiteColor
-                                    : kDarkColor),
+                                    : kDarkCardColor),
                           ),
                         ),
                       ),
@@ -297,8 +296,8 @@ class PostForm extends GetView<ThemeChangeController> {
                           "Select Purpose",
                           style: TextStyle(
                             color: controller.isDarkMode.value
-                                ? kWhiteColor
-                                : kDarkColor,
+                                ? kDarkTextColor
+                                : kTextColor,
                           ),
                           textAlign: TextAlign.start,
                         ),
@@ -308,9 +307,9 @@ class PostForm extends GetView<ThemeChangeController> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: controller.isDarkMode == true
-                                ? kDarkCardColor
-                                : kCardColor,
+                            color: controller.isDarkMode.value
+                                ? kDarkFillColor
+                                : kFillColor,
                           ),
                           child: Padding(
                             padding:
@@ -318,29 +317,29 @@ class PostForm extends GetView<ThemeChangeController> {
                             child: DropdownButton(
                                 style: TextStyle(
                                   color: controller.isDarkMode.value
-                                      ? kWhiteColor
-                                      : kDarkColor,
+                                      ? kDarkTextColor
+                                      : kTextColor,
                                 ),
                                 iconDisabledColor: controller.isDarkMode.value
-                                    ? kWhiteColor
-                                    : kDarkColor,
+                                    ? kDarkTextColor
+                                    : kTextColor,
                                 iconEnabledColor: controller.isDarkMode.value
-                                    ? kWhiteColor
-                                    : kDarkColor,
+                                    ? kDarkTextColor
+                                    : kTextColor,
                                 borderRadius: BorderRadius.circular(15),
                                 hint: Text(
                                   "Purpose",
                                   style: TextStyle(
                                     color: controller.isDarkMode.value
-                                        ? kWhiteColor
-                                        : kDarkColor,
+                                        ? kDarkTextColor
+                                        : kTextColor,
                                   ),
                                 ),
                                 isExpanded: true,
                                 value: purposeValue,
                                 dropdownColor: controller.isDarkMode.value
-                                    ? kDarkCardColor
-                                    : kWhiteColor,
+                                    ? kDarkTextColor
+                                    : kTextColor,
                                 icon: const Icon(Icons.arrow_downward),
                                 elevation: 16,
                                 underline: Container(
@@ -369,7 +368,7 @@ class PostForm extends GetView<ThemeChangeController> {
                           style: TextStyle(
                             color: controller.isDarkMode.value
                                 ? kWhiteColor
-                                : kDarkColor,
+                                : kDarkCardColor,
                           ),
                           textAlign: TextAlign.start,
                         ),
@@ -379,37 +378,42 @@ class PostForm extends GetView<ThemeChangeController> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: controller.isDarkMode == true
-                                ? kDarkCardColor
-                                : kCardColor,
+                            color: controller.isDarkMode.value
+                                ? kDarkFillColor
+                                : kFillColor,
                           ),
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton(
                               iconDisabledColor: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
+                                  ? kDarkBgColor
+                                  : kBgColor,
                               iconEnabledColor: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
+                                  ? kDarkBgColor
+                                  : kBgColor,
                               borderRadius: BorderRadius.circular(15),
                               hint: Text(
                                 "Select Post Type",
                                 style: TextStyle(
                                   color: controller.isDarkMode.value
-                                      ? kWhiteColor
-                                      : kDarkColor,
+                                      ? kDarkTextColor
+                                      : kTextColor,
                                 ),
                               ),
                               isExpanded: true,
                               value: categoryDropDownValue,
-                              icon: const Icon(Icons.arrow_downward),
+                              icon: Icon(
+                                Icons.arrow_downward,
+                                color: controller.isDarkMode.value
+                                    ? kDarkTextColor
+                                    : kTextColor,
+                              ),
                               elevation: 16,
                               style: TextStyle(
                                 color: controller.isDarkMode.value
-                                    ? kWhiteColor
-                                    : kDarkColor,
+                                    ? kDarkTextColor
+                                    : kTextColor,
                               ),
                               underline: Container(
                                 height: 2,
@@ -437,8 +441,8 @@ class PostForm extends GetView<ThemeChangeController> {
                           "Select Post Sub-Type",
                           style: TextStyle(
                             color: controller.isDarkMode.value
-                                ? kWhiteColor
-                                : kDarkColor,
+                                ? kDarkTextColor
+                                : kTextColor,
                           ),
                           textAlign: TextAlign.start,
                         ),
@@ -448,27 +452,27 @@ class PostForm extends GetView<ThemeChangeController> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: controller.isDarkMode == true
-                                ? kDarkCardColor
-                                : kCardColor,
+                            color: controller.isDarkMode.value
+                                ? kDarkFillColor
+                                : kFillColor,
                           ),
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton(
                               iconDisabledColor: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
+                                  ? kDarkTextColor
+                                  : kTextColor,
                               iconEnabledColor: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
+                                  ? kDarkTextColor
+                                  : kTextColor,
                               borderRadius: BorderRadius.circular(15),
                               hint: Text(
                                 "Select Post Sub-Type",
                                 style: TextStyle(
                                   color: controller.isDarkMode.value
-                                      ? kWhiteColor
-                                      : kDarkColor,
+                                      ? kDarkTextColor
+                                      : kTextColor,
                                 ),
                               ),
                               isExpanded: true,
@@ -477,8 +481,8 @@ class PostForm extends GetView<ThemeChangeController> {
                               elevation: 16,
                               style: TextStyle(
                                 color: controller.isDarkMode.value
-                                    ? kWhiteColor
-                                    : kDarkColor,
+                                    ? kDarkTextColor
+                                    : kTextColor,
                               ),
                               underline: Container(
                                 height: 2,
@@ -537,8 +541,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                     "Has Installments",
                                     style: TextStyle(
                                       color: controller.isDarkMode.value
-                                          ? kWhiteColor
-                                          : kDarkColor,
+                                          ? kDarkTextColor
+                                          : kTextColor,
                                     ),
                                   ),
                                   SizedBox(
@@ -549,8 +553,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                     value: hasInstallmentValue,
                                     onChanged: installmentStatusChanges,
                                     trackColor: controller.isDarkMode.value
-                                        ? kWhiteColor
-                                        : kDarkColor,
+                                        ? kDarkTextColor
+                                        : kTextColor,
                                   ),
                                 ],
                               ),
@@ -620,19 +624,19 @@ class PostForm extends GetView<ThemeChangeController> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: controller.isDarkMode.value
-                                ? kDarkCardColor
-                                : kCardColor,
+                                ? kDarkFillColor
+                                : kFillColor,
                           ),
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton(
                               iconDisabledColor: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
+                                  ? kDarkTextColor
+                                  : kTextColor,
                               iconEnabledColor: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
+                                  ? kDarkTextColor
+                                  : kTextColor,
                               borderRadius: BorderRadius.circular(15),
                               hint: const Text("Property Area Unit"),
                               isExpanded: true,
@@ -641,8 +645,8 @@ class PostForm extends GetView<ThemeChangeController> {
                               elevation: 16,
                               style: TextStyle(
                                 color: controller.isDarkMode.value
-                                    ? kWhiteColor
-                                    : kDarkColor,
+                                    ? kDarkTextColor
+                                    : kTextColor,
                               ),
                               underline: Container(
                                 height: 2,
@@ -678,8 +682,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                   "Ready for Possession",
                                   style: TextStyle(
                                     color: controller.isDarkMode.value
-                                        ? kWhiteColor
-                                        : kDarkColor,
+                                        ? kDarkTextColor
+                                        : kTextColor,
                                   ),
                                 ),
                                 SizedBox(
@@ -690,8 +694,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                   value: posessionValue,
                                   onChanged: posessionChanges,
                                   trackColor: controller.isDarkMode.value
-                                      ? kWhiteColor
-                                      : kDarkColor,
+                                      ? kDarkTextColor
+                                      : kTextColor,
                                 ),
                               ],
                             ),
@@ -737,8 +741,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                   "Show Contact Details",
                                   style: TextStyle(
                                     color: controller.isDarkMode.value
-                                        ? kWhiteColor
-                                        : kDarkColor,
+                                        ? kDarkTextColor
+                                        : kTextColor,
                                   ),
                                 ),
                                 SizedBox(
@@ -749,8 +753,8 @@ class PostForm extends GetView<ThemeChangeController> {
                                   value: showContactDetails,
                                   onChanged: showContactDetailsChanges,
                                   trackColor: controller.isDarkMode.value
-                                      ? kWhiteColor
-                                      : kDarkColor,
+                                      ? kDarkTextColor
+                                      : kTextColor,
                                 ),
                               ],
                             ),
@@ -772,14 +776,14 @@ class PostForm extends GetView<ThemeChangeController> {
                           'Select Amenities',
                           style: TextStyle(
                             color: controller.isDarkMode.value
-                                ? kWhiteColor
-                                : kDarkColor,
+                                ? kDarkTextColor
+                                : kTextColor,
                           ),
                         ),
                         Container(
                           color: controller.isDarkMode.value
-                              ? kDarkColor
-                              : Colors.white,
+                              ? kDarkFillColor
+                              : kFillColor,
                           height: 290,
                           width: width * .19,
                           child: Padding(
@@ -808,8 +812,8 @@ class PostForm extends GetView<ThemeChangeController> {
                             "Status",
                             style: TextStyle(
                               color: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
+                                  ? kDarkTextColor
+                                  : kTextColor,
                             ),
                           ),
                           SizedBox(
@@ -820,14 +824,14 @@ class PostForm extends GetView<ThemeChangeController> {
                             value: statusValue,
                             onChanged: statusChanges,
                             trackColor: controller.isDarkMode.value
-                                ? kWhiteColor
-                                : kDarkColor,
+                                ? kDarkTextColor
+                                : kTextColor,
                           ),
                         ],
                       ),
                       DefaultButton(
                         primaryColor: kPrimaryColor,
-                        hoverColor: kDarkColor,
+                        hoverColor: kDarkCardColor,
                         buttonText: buttonText,
                         width: width * .2,
                         height: height * .05,
@@ -859,15 +863,15 @@ class PostForm extends GetView<ThemeChangeController> {
     );
   }
 
-  Widget _buildDropdownItem(Country country) => Container(
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            const SizedBox(
-              width: 8.0,
-            ),
-            Text("+${country.phoneCode}(${country.isoCode})"),
-          ],
-        ),
-      );
+  // Widget _buildDropdownItem(Country country) => Container(
+  //       child: Row(
+  //         children: <Widget>[
+  //           CountryPickerUtils.getDefaultFlagImage(country),
+  //           const SizedBox(
+  //             width: 8.0,
+  //           ),
+  //           Text("+${country.phoneCode}(${country.isoCode})"),
+  //         ],
+  //       ),
+  //     );
 }

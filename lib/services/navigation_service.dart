@@ -126,7 +126,7 @@ appRoutes() => [
       ),
       GetPage(
         name: '/settings',
-        page: () => const SettingsView(),
+        page: () => SettingsView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),

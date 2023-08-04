@@ -49,7 +49,9 @@ class DeveloperForm extends GetView<ThemeChangeController> {
       children: [
         Text(
           "Create Developer",
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: TextStyle(
+            color: controller.isDarkMode.value ? kWhiteColor : kDarkCardColor,
+          ),
           textAlign: TextAlign.start,
         ),
         SizedBox(
@@ -76,7 +78,11 @@ class DeveloperForm extends GetView<ThemeChangeController> {
               children: [
                 Text(
                   "Status",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: TextStyle(
+                    color: controller.isDarkMode.value
+                        ? kWhiteColor
+                        : kDarkCardColor,
+                  ),
                 ),
                 SizedBox(
                   width: width * .01,
@@ -85,6 +91,9 @@ class DeveloperForm extends GetView<ThemeChangeController> {
                   activeColor: kPrimaryColor,
                   value: statusValue,
                   onChanged: statusChanges,
+                  trackColor: controller.isDarkMode.value
+                      ? kWhiteColor
+                      : kDarkCardColor,
                 ),
               ],
             ),
@@ -95,7 +104,7 @@ class DeveloperForm extends GetView<ThemeChangeController> {
         ),
         DefaultButton(
           primaryColor: kPrimaryColor,
-          hoverColor: kDarkColor,
+          hoverColor: kDarkCardColor,
           buttonText: pictureButtonText,
           width: width * .2,
           height: height * .05,
@@ -106,7 +115,7 @@ class DeveloperForm extends GetView<ThemeChangeController> {
         ),
         DefaultButton(
           primaryColor: kPrimaryColor,
-          hoverColor: kDarkColor,
+          hoverColor: kDarkCardColor,
           buttonText: buttonText,
           width: width * .2,
           height: height * .05,

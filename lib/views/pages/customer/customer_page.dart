@@ -6,8 +6,8 @@ import 'package:frontend_grounda/controllers/customerController/customer_control
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/Buttons.dart';
-import 'package:frontend_grounda/widgets/darkmode/text_fields.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
+import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class CustomerPage extends GetView<ThemeChangeController> {
@@ -26,10 +26,11 @@ class CustomerPage extends GetView<ThemeChangeController> {
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Customers'),
-      body: Obx(
-        () => Center(
+    return Obx(
+      () => Scaffold(
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
+        appBar: DashBoardAppBar(title: 'Customers'),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -201,15 +202,14 @@ class CustomerPage extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .8,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -236,7 +236,7 @@ class CustomerPage extends GetView<ThemeChangeController> {
                           ),
                           DefaultButton(
                             primaryColor: kPrimaryColor,
-                            hoverColor: kDarkColor,
+                            hoverColor: kDarkCardColor,
                             buttonText: "Create Customer",
                             width: width * .12,
                             height: height * .05,

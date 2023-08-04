@@ -42,7 +42,7 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                             width: width,
                             percentage: dashboardController.percentage.value,
                             svgIconPath: "assets/icons/post-list.svg",
-                            color: kGoldenColor,
+                            color: kPrimaryColor,
                             isMobile: isMobile,
                           ),
                         ),
@@ -62,8 +62,8 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                             percentage: 0,
                             svgIconPath: "assets/icons/order-list.svg",
                             color: controller.isDarkMode.value
-                                ? kGoldenColor
-                                : kDarkColor,
+                                ? kPrimaryColor
+                                : kDarkCardColor,
                             isMobile: isMobile,
                           ),
                         ),
@@ -84,11 +84,11 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                     borderRadius: const BorderRadius.all(
                       Radius.circular(20),
                     ),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: kShadowColor,
-                        blurRadius: 2,
-                        spreadRadius: 1,
+                        color: controller.isDarkMode.value
+                            ? kDarkShadowColor.withOpacity(.2)
+                            : kShadowColor.withOpacity(.2),
                       ),
                     ],
                   ),
@@ -132,11 +132,11 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                     borderRadius: const BorderRadius.all(
                       Radius.circular(20),
                     ),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: kShadowColor,
-                        blurRadius: 2,
-                        spreadRadius: 1,
+                        color: controller.isDarkMode.value
+                            ? kDarkShadowColor.withOpacity(.2)
+                            : kShadowColor.withOpacity(.2),
                       ),
                     ],
                   ),
@@ -332,11 +332,11 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                     borderRadius: const BorderRadius.all(
                       Radius.circular(20),
                     ),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: kShadowColor,
-                        blurRadius: 2,
-                        spreadRadius: 1,
+                        color: controller.isDarkMode.value
+                            ? kDarkShadowColor.withOpacity(.2)
+                            : kShadowColor.withOpacity(.2),
                       ),
                     ],
                   ),
@@ -597,11 +597,11 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                     borderRadius: const BorderRadius.all(
                       Radius.circular(20),
                     ),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: kShadowColor,
-                        blurRadius: 2,
-                        spreadRadius: 1,
+                        color: controller.isDarkMode.value
+                            ? kDarkShadowColor.withOpacity(.2)
+                            : kShadowColor.withOpacity(.2),
                       ),
                     ],
                   ),

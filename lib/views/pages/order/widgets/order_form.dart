@@ -713,7 +713,7 @@ class OrderForm extends GetView<ThemeChangeController> {
                       ),
                       DefaultButton(
                         primaryColor: kPrimaryColor,
-                        hoverColor: kDarkColor,
+                        hoverColor: kDarkCardColor,
                         buttonText: buttonText,
                         width: width * .2,
                         height: height * .05,

@@ -4,9 +4,8 @@ import 'package:frontend_grounda/controllers/themeController/theme_change_contro
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/buttons.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
+import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
-
-import '../../../widgets/darkmode/text_fields.dart';
 
 class HelpPage extends GetView<ThemeChangeController> {
   HelpPage({Key? key}) : super(key: key);
@@ -29,9 +28,8 @@ class HelpPage extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .8,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -64,7 +62,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                           ),
                           DefaultButton(
                             primaryColor: kPrimaryColor,
-                            hoverColor: kDarkColor,
+                            hoverColor: kDarkCardColor,
                             buttonText: "Create Tickets",
                             width: width * .12,
                             height: height * .05,

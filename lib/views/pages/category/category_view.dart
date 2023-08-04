@@ -22,7 +22,8 @@ class CategoryView extends GetView<ThemeChangeController> {
 
     return Obx(
       () => Scaffold(
-        backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
+        backgroundColor:
+            controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
         // key: controller.scaffoldKey,
         body: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

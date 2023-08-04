@@ -69,7 +69,7 @@ class DashboardView extends GetView<SideBarController> {
                   const ProjectView(),
                   const AgencyView(),
                   const DeveloperView(),
-                  const SettingsView(),
+                  SettingsView(),
                   const HelpView(),
                 ],
               ),

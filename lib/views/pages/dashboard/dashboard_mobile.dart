@@ -36,7 +36,7 @@ class DashboardMobile extends GetView<ThemeChangeController> {
                 width: width * .8,
                 percentage: 80,
                 svgIconPath: "assets/icons/post-list.svg",
-                color: kGoldenColor,
+                color: kPrimaryColor,
                 isMobile: isMobile,
               ),
               const SizedBox(
@@ -48,7 +48,7 @@ class DashboardMobile extends GetView<ThemeChangeController> {
                 width: width * .8,
                 percentage: 65,
                 svgIconPath: "assets/icons/order-list.svg",
-                color: kDarkColor,
+                color: kDarkCardColor,
                 isMobile: isMobile,
               ),
               const SizedBox(
@@ -56,13 +56,14 @@ class DashboardMobile extends GetView<ThemeChangeController> {
               ),
               Container(
                 width: width * .8,
-                decoration: const BoxDecoration(
-                  color: kFrameColor,
+                decoration: BoxDecoration(
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: kShadowColor,
                       blurRadius: 2,
@@ -90,13 +91,14 @@ class DashboardMobile extends GetView<ThemeChangeController> {
               ),
               Container(
                 width: width * .8,
-                decoration: const BoxDecoration(
-                  color: kFrameColor,
+                decoration: BoxDecoration(
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: kShadowColor,
                       blurRadius: 2,
@@ -186,13 +188,14 @@ class DashboardMobile extends GetView<ThemeChangeController> {
               ),
               Container(
                 width: width * .8,
-                decoration: const BoxDecoration(
-                  color: kFrameColor,
+                decoration: BoxDecoration(
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: kShadowColor,
                       blurRadius: 2,
@@ -316,13 +319,14 @@ class DashboardMobile extends GetView<ThemeChangeController> {
               ),
               Container(
                 width: width * .8,
-                decoration: const BoxDecoration(
-                  color: kFrameColor,
+                decoration: BoxDecoration(
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: kShadowColor,
                       blurRadius: 2,

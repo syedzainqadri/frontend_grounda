@@ -6,8 +6,8 @@ import 'package:frontend_grounda/controllers/projectController/project_controlle
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/Buttons.dart';
-import 'package:frontend_grounda/widgets/darkmode/text_fields.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
+import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
@@ -48,8 +48,7 @@ class ProjectPage extends GetView<ThemeChangeController> {
     const bool isMobile = false;
     return Obx(
       () => Scaffold(
-        backgroundColor:
-            controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
         appBar: DashBoardAppBar(title: 'Projects'),
         body: Center(
           child: Row(
@@ -59,9 +58,8 @@ class ProjectPage extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .8,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -92,13 +90,13 @@ class ProjectPage extends GetView<ThemeChangeController> {
                                 'assets/icons/search.svg',
                                 color: controller.isDarkMode.value
                                     ? kWhiteColor
-                                    : kDarkColor,
+                                    : kDarkCardColor,
                               ),
                             ),
                           ),
                           DefaultButton(
                             primaryColor: kPrimaryColor,
-                            hoverColor: kDarkColor,
+                            hoverColor: kDarkCardColor,
                             buttonText: "Create Project",
                             width: width * .12,
                             height: height * .05,
@@ -119,8 +117,8 @@ class ProjectPage extends GetView<ThemeChangeController> {
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               color: controller.isDarkMode.value
-                                  ? kDarkCardColor
-                                  : kCardColor,
+                                  ? kDarkBgColor
+                                  : kBgColor,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
@@ -172,7 +170,7 @@ class ProjectPage extends GetView<ThemeChangeController> {
                                                       color: controller
                                                               .isDarkMode.value
                                                           ? kWhiteColor
-                                                          : kDarkColor,
+                                                          : kDarkCardColor,
                                                     ),
                                                   ),
                                                   const SizedBox(
@@ -187,7 +185,7 @@ class ProjectPage extends GetView<ThemeChangeController> {
                                                                   .isDarkMode
                                                                   .value
                                                               ? kWhiteColor
-                                                              : kDarkColor,
+                                                              : kDarkCardColor,
                                                         ),
                                                       ),
                                                       projectController
@@ -242,7 +240,7 @@ class ProjectPage extends GetView<ThemeChangeController> {
                                                 color:
                                                     controller.isDarkMode.value
                                                         ? kWhiteColor
-                                                        : kDarkColor,
+                                                        : kDarkCardColor,
                                               ),
                                             ),
                                             const SizedBox(
@@ -267,7 +265,7 @@ class ProjectPage extends GetView<ThemeChangeController> {
                                                 color:
                                                     controller.isDarkMode.value
                                                         ? kWhiteColor
-                                                        : kDarkColor,
+                                                        : kDarkCardColor,
                                               ),
                                             ),
                                           ],

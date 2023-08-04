@@ -38,10 +38,12 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Developers'),
-      body: Obx(
-        () => Center(
+    return Obx(
+      () => Scaffold(
+        backgroundColor:
+            controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+        appBar: DashBoardAppBar(title: 'Developers'),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -49,15 +51,14 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .25,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -161,15 +162,14 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .5,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -257,9 +257,12 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                                     developerController
                                                         .developers[index]
                                                         .title!,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge,
+                                                    style: TextStyle(
+                                                      color: controller
+                                                              .isDarkMode.value
+                                                          ? kWhiteColor
+                                                          : kDarkCardColor,
+                                                    ),
                                                   ),
                                                   const SizedBox(
                                                     height: 10,
@@ -268,9 +271,13 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                                     children: [
                                                       Text(
                                                         "Status: ",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall,
+                                                        style: TextStyle(
+                                                          color: controller
+                                                                  .isDarkMode
+                                                                  .value
+                                                              ? kWhiteColor
+                                                              : kDarkCardColor,
+                                                        ),
                                                       ),
                                                       developerController
                                                                   .developers[
@@ -338,7 +345,12 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                                         .logo!;
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/edit.svg"),
+                                                "assets/icons/edit.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkCardColor,
+                                              ),
                                             ),
                                             const SizedBox(
                                               width: 20,
@@ -362,7 +374,12 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                                 Navigator.pop(context);
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/trash.svg"),
+                                                "assets/icons/trash.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkCardColor,
+                                              ),
                                             ),
                                           ],
                                         ),

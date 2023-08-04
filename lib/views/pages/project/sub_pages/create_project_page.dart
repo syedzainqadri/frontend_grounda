@@ -54,8 +54,7 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
     const bool isMobile = false;
     return Obx(
       () => Scaffold(
-        backgroundColor:
-            controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
         appBar: DashBoardAppBar(title: 'Projects'),
         body: Center(
           child: Row(
@@ -65,9 +64,8 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .8,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -189,7 +187,7 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                 style: TextStyle(
                                     color: controller.isDarkMode.value
                                         ? kWhiteColor
-                                        : kDarkColor),
+                                        : kDarkCardColor),
                               )
                             : SizedBox(
                                 height: height * 0.14,
@@ -359,7 +357,7 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                 () => CheckboxListTile(
                                   selectedTileColor: kPrimaryColor,
                                   tileColor: kWhiteColor,
-                                  checkColor: kDarkColor,
+                                  checkColor: kDarkCardColor,
                                   activeColor: kPrimaryColor,
                                   value: projectNearByPlaces[index],
                                   onChanged: (value) {
@@ -440,7 +438,7 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                         style: TextStyle(
                                           color: controller.isDarkMode.value
                                               ? kWhiteColor
-                                              : kDarkColor,
+                                              : kDarkCardColor,
                                         ),
                                       ),
                                     ],

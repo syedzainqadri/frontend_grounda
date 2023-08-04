@@ -6,8 +6,8 @@ import 'package:frontend_grounda/controllers/categoryController/category_control
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/Buttons.dart';
-import 'package:frontend_grounda/widgets/darkmode/text_fields.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
+import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
@@ -60,9 +60,8 @@ class OrderPage extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .8,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -95,7 +94,7 @@ class OrderPage extends GetView<ThemeChangeController> {
                           ),
                           DefaultButton(
                             primaryColor: kPrimaryColor,
-                            hoverColor: kDarkColor,
+                            hoverColor: kDarkCardColor,
                             buttonText: "Create Order",
                             width: width * .12,
                             height: height * .05,

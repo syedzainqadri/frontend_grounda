@@ -67,7 +67,8 @@ class CategoryForm extends GetView<ThemeChangeController> {
             Text(
               "Create Category",
               style: TextStyle(
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kDarkTextColor : kTextColor,
               ),
               textAlign: TextAlign.start,
             ),
@@ -75,18 +76,31 @@ class CategoryForm extends GetView<ThemeChangeController> {
               height: height * 0.03,
             ),
             DropdownButton(
+              dropdownColor:
+                  controller.isDarkMode.value ? kDarkTextColor : kTextColor,
               borderRadius: BorderRadius.circular(15),
-              hint: const Text("Select Parent Category"),
+              hint: Text(
+                "Select Parent Category",
+                style: TextStyle(
+                  color:
+                      controller.isDarkMode.value ? kDarkTextColor : kTextColor,
+                ),
+              ),
               isExpanded: true,
               value: dropDownValue,
-              icon: const Icon(Icons.arrow_downward),
+              icon: Icon(
+                Icons.arrow_downward,
+                color:
+                    controller.isDarkMode.value ? kWhiteColor : kDarkCardColor,
+              ),
               elevation: 16,
               style: TextStyle(
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kDarkTextColor : kTextColor,
               ),
               underline: Container(
                 height: 2,
-                color: kDarkColor,
+                color: kDarkCardColor,
               ),
               onChanged: onChange,
               items: dropDownList,
@@ -119,7 +133,8 @@ class CategoryForm extends GetView<ThemeChangeController> {
             Text(
               'Selected Amenities',
               style: TextStyle(
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kDarkTextColor : kTextColor,
               ),
             ),
             SizedBox(
@@ -149,22 +164,25 @@ class CategoryForm extends GetView<ThemeChangeController> {
               hint: Text(
                 "Select Ameneties",
                 style: TextStyle(
-                  color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkTextColor : kTextColor,
                 ),
               ),
               isExpanded: true,
               value: amenitiesDropDownValue,
               icon: Icon(
                 Icons.arrow_downward,
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kDarkTextColor : kTextColor,
               ),
               elevation: 16,
               style: TextStyle(
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kDarkTextColor : kTextColor,
               ),
               underline: Container(
                 height: 2,
-                color: kDarkColor,
+                color: kDarkCardColor,
               ),
               onChanged: amenitiesOnChange,
               items: amenitiesDropDownList,
@@ -179,8 +197,8 @@ class CategoryForm extends GetView<ThemeChangeController> {
                       "Status",
                       style: TextStyle(
                         color: controller.isDarkMode.value
-                            ? kWhiteColor
-                            : kDarkColor,
+                            ? kDarkTextColor
+                            : kTextColor,
                       ),
                     ),
                     SizedBox(
@@ -191,8 +209,8 @@ class CategoryForm extends GetView<ThemeChangeController> {
                       value: statusValue,
                       onChanged: statusChanges,
                       trackColor: controller.isDarkMode.value
-                          ? kWhiteColor
-                          : kDarkColor,
+                          ? kDarkTextColor
+                          : kTextColor,
                     ),
                   ],
                 ),
@@ -203,7 +221,7 @@ class CategoryForm extends GetView<ThemeChangeController> {
             ),
             DefaultButton(
               primaryColor: kPrimaryColor,
-              hoverColor: kDarkColor,
+              hoverColor: kDarkCardColor,
               buttonText: pictureButtonText,
               width: width * .2,
               height: height * .05,
@@ -214,7 +232,7 @@ class CategoryForm extends GetView<ThemeChangeController> {
             ),
             DefaultButton(
               primaryColor: kPrimaryColor,
-              hoverColor: kDarkColor,
+              hoverColor: kDarkCardColor,
               buttonText: buttonText,
               width: width * .2,
               height: height * .05,

@@ -6,8 +6,8 @@ import 'package:frontend_grounda/controllers/agencyController/agency_controller.
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/widgets/Buttons.dart';
-import 'package:frontend_grounda/widgets/darkmode/text_fields.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
+import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class AgencyPage extends GetView<ThemeChangeController> {
@@ -25,10 +25,11 @@ class AgencyPage extends GetView<ThemeChangeController> {
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Agencies'),
-      body: Obx(
-        () => Center(
+    return Obx(
+      () => Scaffold(
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
+        appBar: DashBoardAppBar(title: 'Agencies'),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -36,15 +37,14 @@ class AgencyPage extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .8,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -71,7 +71,7 @@ class AgencyPage extends GetView<ThemeChangeController> {
                           ),
                           DefaultButton(
                             primaryColor: kPrimaryColor,
-                            hoverColor: kDarkColor,
+                            hoverColor: kDarkCardColor,
                             buttonText: "Create Agency",
                             width: width * .12,
                             height: height * .05,
@@ -92,8 +92,8 @@ class AgencyPage extends GetView<ThemeChangeController> {
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               color: controller.isDarkMode.value
-                                  ? kDarkCardColor
-                                  : kCardColor,
+                                  ? kDarkBgColor
+                                  : kBgColor,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
@@ -141,9 +141,12 @@ class AgencyPage extends GetView<ThemeChangeController> {
                                                   Text(
                                                     agencyController
                                                         .agencies[index].title!,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge,
+                                                    style: TextStyle(
+                                                      color: controller
+                                                              .isDarkMode.value
+                                                          ? kWhiteColor
+                                                          : kDarkCardColor,
+                                                    ),
                                                   ),
                                                   const SizedBox(
                                                     height: 10,
@@ -152,9 +155,13 @@ class AgencyPage extends GetView<ThemeChangeController> {
                                                     children: [
                                                       Text(
                                                         "Status: ",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall,
+                                                        style: TextStyle(
+                                                          color: controller
+                                                                  .isDarkMode
+                                                                  .value
+                                                              ? kWhiteColor
+                                                              : kDarkCardColor,
+                                                        ),
                                                       ),
                                                       agencyController
                                                                   .agencies[
@@ -205,7 +212,12 @@ class AgencyPage extends GetView<ThemeChangeController> {
                                                 );
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/edit.svg"),
+                                                "assets/icons/edit.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkCardColor,
+                                              ),
                                             ),
                                             const SizedBox(
                                               width: 20,
@@ -219,7 +231,12 @@ class AgencyPage extends GetView<ThemeChangeController> {
                                                 );
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/trash.svg"),
+                                                "assets/icons/trash.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkCardColor,
+                                              ),
                                             ),
                                           ],
                                         ),

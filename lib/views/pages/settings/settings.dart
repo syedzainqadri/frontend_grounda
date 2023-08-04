@@ -14,53 +14,55 @@ class SettingsPage extends GetView<ThemeChangeController> {
   var height = Get.height;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
-      appBar: DashBoardAppBar(title: "Settings"),
-      body: Center(
-        child: SizedBox(
-          height: height * .9,
-          width: width * .8,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SettingsMenuCard(
-                  height: height,
-                  width: width,
-                  text: 'Profile Settings',
-                  icon: 'assets/icons/person.svg',
-                  onPressed: () {
-                    Get.toNamed('/profile');
-                  },
-                ),
-                SettingsMenuCard(
-                  height: height,
-                  width: width,
-                  text: 'payment Methods',
-                  icon: 'assets/icons/person.svg',
-                  onPressed: () {
-                    Get.toNamed('/settings/payment-methods');
-                  },
-                ),
-                SettingsMenuCard(
-                  height: height,
-                  width: width,
-                  text: 'Amenities',
-                  icon: 'assets/icons/person.svg',
-                  onPressed: () {
-                    Get.toNamed('/settings/amenities');
-                  },
-                ),
-                SettingsMenuCard(
-                  height: height,
-                  width: width,
-                  text: 'Project Near By Places',
-                  icon: 'assets/icons/project-list.svg',
-                  onPressed: () {
-                    Get.toNamed('/settings/project-near-by-places');
-                  },
-                ),
-              ],
+    return Obx(
+      () => Scaffold(
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
+        appBar: DashBoardAppBar(title: "Settings"),
+        body: Center(
+          child: SizedBox(
+            height: height * .9,
+            width: width * .8,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SettingsMenuCard(
+                    height: height,
+                    width: width,
+                    text: 'Profile Settings',
+                    icon: 'assets/icons/person.svg',
+                    onPressed: () {
+                      Get.toNamed('/profile');
+                    },
+                  ),
+                  SettingsMenuCard(
+                    height: height,
+                    width: width,
+                    text: 'payment Methods',
+                    icon: 'assets/icons/person.svg',
+                    onPressed: () {
+                      Get.toNamed('/settings/payment-methods');
+                    },
+                  ),
+                  SettingsMenuCard(
+                    height: height,
+                    width: width,
+                    text: 'Amenities',
+                    icon: 'assets/icons/person.svg',
+                    onPressed: () {
+                      Get.toNamed('/settings/amenities');
+                    },
+                  ),
+                  SettingsMenuCard(
+                    height: height,
+                    width: width,
+                    text: 'Project Near By Places',
+                    icon: 'assets/icons/project-list.svg',
+                    onPressed: () {
+                      Get.toNamed('/settings/project-near-by-places');
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

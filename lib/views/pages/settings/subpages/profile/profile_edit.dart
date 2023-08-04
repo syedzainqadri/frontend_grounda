@@ -261,7 +261,7 @@ class ProfileEditPage extends StatelessWidget {
                   children: [
                     DefaultButton(
                       primaryColor: kDarkCardColor,
-                      hoverColor: kDarkColor,
+                      hoverColor: kDarkCardColor,
                       buttonText: 'Cancle',
                       onPressed: () {
                         Get.toNamed('/settings');
@@ -274,7 +274,7 @@ class ProfileEditPage extends StatelessWidget {
                     ),
                     DefaultButton(
                       primaryColor: kRedColor,
-                      hoverColor: kDarkColor,
+                      hoverColor: kDarkCardColor,
                       buttonText: 'Delete',
                       onPressed: () async {
                         Get.defaultDialog(
@@ -297,7 +297,7 @@ class ProfileEditPage extends StatelessWidget {
                     profileController.profile.value.firstName == ''
                         ? DefaultButton(
                             primaryColor: kPrimaryColor,
-                            hoverColor: kDarkColor,
+                            hoverColor: kDarkCardColor,
                             buttonText: 'Create',
                             onPressed: () async {
                               Get.defaultDialog(
@@ -384,7 +384,7 @@ class ProfileEditPage extends StatelessWidget {
                           )
                         : DefaultButton(
                             primaryColor: kPrimaryColor,
-                            hoverColor: kDarkColor,
+                            hoverColor: kDarkCardColor,
                             buttonText: 'Update',
                             onPressed: () async {
                               Get.defaultDialog(

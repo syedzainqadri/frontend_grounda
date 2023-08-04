@@ -35,11 +35,11 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
         ),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: kShadowColor,
-            blurRadius: 2,
-            spreadRadius: 1,
+            color: controller.isDarkMode.value
+                ? kDarkShadowColor.withOpacity(.2)
+                : kShadowColor.withOpacity(.5),
           ),
         ],
       ),

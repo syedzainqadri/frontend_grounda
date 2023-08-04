@@ -101,8 +101,8 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                 width: width * .8,
                 decoration: BoxDecoration(
                   color: themeChangeController.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                      ? kDarkCardColor
+                      : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -186,7 +186,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                                     color:
                                         themeChangeController.isDarkMode.value
                                             ? kWhiteColor
-                                            : kDarkColor),
+                                            : kDarkCardColor),
                               )
                             : SizedBox(
                                 height: height * 0.14,
@@ -431,7 +431,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                                 () => CheckboxListTile(
                                   selectedTileColor: kPrimaryColor,
                                   tileColor: kWhiteColor,
-                                  checkColor: kDarkColor,
+                                  checkColor: kDarkCardColor,
                                   activeColor: kPrimaryColor,
                                   value: amenities[index],
                                   onChanged: (value) {

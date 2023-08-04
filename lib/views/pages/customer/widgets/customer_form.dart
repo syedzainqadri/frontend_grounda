@@ -416,7 +416,7 @@ class CustomerForm extends GetView<ThemeChangeController> {
                     onPressed: onFormSubmited,
                     key: key,
                     primaryColor: kPrimaryColor,
-                    hoverColor: kDarkColor,
+                    hoverColor: kDarkCardColor,
                     width: width * .12,
                     height: height * .05,
                   ),

@@ -133,8 +133,9 @@ class ProjectForm extends GetView<ThemeChangeController> {
               Text(
                 "Create Project",
                 style: TextStyle(
-                    color:
-                        controller.isDarkMode.value ? kWhiteColor : kDarkColor),
+                    color: controller.isDarkMode.value
+                        ? kWhiteColor
+                        : kDarkCardColor),
                 textAlign: TextAlign.start,
               ),
               SizedBox(
@@ -252,7 +253,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
                 width: width * .79,
                 height: height * .3,
                 decoration: BoxDecoration(
-                  color: kCardColor,
+                  color: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: HtmlEditor(
@@ -291,7 +292,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
                     style: TextStyle(
                         color: controller.isDarkMode.value
                             ? kWhiteColor
-                            : kDarkColor),
+                            : kDarkCardColor),
                   ),
                 ],
               ),
@@ -356,7 +357,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
                           style: TextStyle(
                               color: controller.isDarkMode.value
                                   ? kWhiteColor
-                                  : kDarkColor),
+                                  : kDarkCardColor),
                           textAlign: TextAlign.start,
                         ),
                         SizedBox(
@@ -366,8 +367,8 @@ class ProjectForm extends GetView<ThemeChangeController> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: controller.isDarkMode.value
-                                ? kDarkCardColor
-                                : kCardColor,
+                                ? kDarkFillColor
+                                : kFillColor,
                           ),
                           child: Padding(
                             padding:
@@ -376,14 +377,14 @@ class ProjectForm extends GetView<ThemeChangeController> {
                               style: TextStyle(
                                 color: controller.isDarkMode.value
                                     ? kWhiteColor
-                                    : kDarkColor,
+                                    : kDarkCardColor,
                               ),
                               iconDisabledColor: controller.isDarkMode.value
                                   ? kWhiteColor
-                                  : kDarkColor,
+                                  : kDarkCardColor,
                               iconEnabledColor: controller.isDarkMode.value
                                   ? kWhiteColor
-                                  : kDarkColor,
+                                  : kDarkCardColor,
                               borderRadius: BorderRadius.circular(15),
                               hint: const Text("Select Project Type"),
                               isExpanded: true,
@@ -396,6 +397,9 @@ class ProjectForm extends GetView<ThemeChangeController> {
                               ),
                               onChanged: categoryOnChange,
                               items: categoryDropDownList,
+                              dropdownColor: controller.isDarkMode.value
+                                  ? kTextColor
+                                  : kDarkTextColor,
                             ),
                           ),
                         ),
@@ -417,7 +421,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
                           style: TextStyle(
                               color: controller.isDarkMode.value
                                   ? kWhiteColor
-                                  : kDarkColor),
+                                  : kDarkCardColor),
                           textAlign: TextAlign.start,
                         ),
                         SizedBox(
@@ -426,25 +430,28 @@ class ProjectForm extends GetView<ThemeChangeController> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: controller.isDarkMode == true
-                                ? kDarkCardColor
-                                : kCardColor,
+                            color: controller.isDarkMode.value
+                                ? kDarkFillColor
+                                : kFillColor,
                           ),
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton(
+                              dropdownColor: controller.isDarkMode.value
+                                  ? kTextColor
+                                  : kDarkTextColor,
+                              iconDisabledColor: controller.isDarkMode.value
+                                  ? kDarkBgColor
+                                  : kBgColor,
+                              iconEnabledColor: controller.isDarkMode.value
+                                  ? kDarkBgColor
+                                  : kBgColor,
                               style: TextStyle(
                                 color: controller.isDarkMode.value
-                                    ? kWhiteColor
-                                    : kDarkColor,
+                                    ? kDarkTextColor
+                                    : kTextColor,
                               ),
-                              iconDisabledColor: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
-                              iconEnabledColor: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
                               borderRadius: BorderRadius.circular(15),
                               hint: const Text("Select Project's Developer"),
                               isExpanded: true,
@@ -478,12 +485,12 @@ class ProjectForm extends GetView<ThemeChangeController> {
                         style: TextStyle(
                             color: controller.isDarkMode.value
                                 ? kWhiteColor
-                                : kDarkColor),
+                                : kDarkCardColor),
                       ),
                       Container(
                         color: controller.isDarkMode.value
-                            ? kDarkColor
-                            : kWhiteColor,
+                            ? kDarkBgColor
+                            : kBgColor,
                         height: 290,
                         width: width * .19,
                         child: Padding(
@@ -513,7 +520,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
                             style: TextStyle(
                                 color: controller.isDarkMode.value
                                     ? kWhiteColor
-                                    : kDarkColor),
+                                    : kDarkCardColor),
                           ),
                           SizedBox(
                             width: width * .01,
@@ -530,7 +537,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
                       ),
                       DefaultButton(
                         primaryColor: kPrimaryColor,
-                        hoverColor: kDarkColor,
+                        hoverColor: kDarkCardColor,
                         buttonText: buttonText,
                         width: width * .2,
                         height: height * .05,

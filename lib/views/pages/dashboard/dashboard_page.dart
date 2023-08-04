@@ -29,7 +29,7 @@ class DashboardPage extends GetView<ThemeChangeController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
         appBar: DashBoardAppBar(title: "Dashboard"),
         body: SingleChildScrollView(
           child: ResponsiveLayout(

@@ -24,7 +24,8 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
     return Obx(
       () => AppBar(
         leading: const Offstage(),
-        backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
+        backgroundColor:
+            controller.isDarkMode.value ? kDarkCardColor : kCardColor,
         title: SizedBox(
           width: width * .75,
           child: Row(
@@ -39,7 +40,7 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
                     style: TextStyle(
                       color: controller.isDarkMode.value
                           ? kWhiteColor
-                          : kDarkColor,
+                          : kDarkCardColor,
                     ),
                   ),
                 ),
@@ -72,7 +73,8 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
               onPressed: () {},
               icon: SvgPicture.asset(
                 'assets/icons/message-notification.svg',
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kWhiteColor : kDarkCardColor,
               ),
             ),
           ),
@@ -82,7 +84,8 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
               onPressed: () {},
               icon: SvgPicture.asset(
                 'assets/icons/notification.svg',
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kWhiteColor : kDarkCardColor,
               ),
             ),
           ),
@@ -92,7 +95,8 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
               onPressed: () {},
               icon: SvgPicture.asset(
                 'assets/icons/person.svg',
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kWhiteColor : kDarkCardColor,
               ),
             ),
           ),

@@ -70,7 +70,7 @@ class LoginView extends GetView<ThemeChangeController> {
                         // DefaultButton(
                         //   buttonText: "Read More",
                         //   primaryColor: kPrimaryColor,
-                        //   hoverColor: kDarkColor,
+                        //   hoverColor: kDarkCardColor,
                         //   width: width / 12,
                         //   height: height / 20,
                         //   onPressed: () {},
@@ -162,7 +162,7 @@ class LoginView extends GetView<ThemeChangeController> {
                                 ),
                                 DefaultButton(
                                   primaryColor: kPrimaryColor,
-                                  hoverColor: kDarkColor,
+                                  hoverColor: kDarkCardColor,
                                   buttonText: "Sign In",
                                   onPressed: () async {
                                     Get.defaultDialog(

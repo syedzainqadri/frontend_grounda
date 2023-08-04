@@ -43,8 +43,7 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
     double height = Get.height;
     const bool isMobile = false;
     return Scaffold(
-      backgroundColor:
-          controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+      backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
       appBar: DashBoardAppBar(
         title: 'Category',
       ),
@@ -57,9 +56,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .25,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -118,8 +116,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                     fontFamily: iconFontFamily.value,
                                   ),
                                   color: controller.isDarkMode.value
-                                      ? kWhiteColor
-                                      : kDarkColor,
+                                      ? kTextColor
+                                      : kDarkTextColor,
                                   size: 50,
                                 ),
                                 Positioned(
@@ -150,13 +148,20 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                               IconData(int.parse(value.icon!),
                                   fontFamily: "MaterialIcons"),
                               color: controller.isDarkMode.value
-                                  ? kWhiteColor
-                                  : kDarkColor,
+                                  ? kDarkTextColor
+                                  : kTextColor,
                             ),
                             SizedBox(
                               width: width * .01,
                             ),
-                            Text(value.name!),
+                            Text(
+                              value.name!,
+                              style: TextStyle(
+                                color: controller.isDarkMode.value
+                                    ? kDarkTextColor
+                                    : kTextColor,
+                              ),
+                            ),
                           ],
                         ),
                       );
@@ -269,9 +274,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .5,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -317,8 +321,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                               color:
                                   // Colors.amber,
                                   controller.isDarkMode.value
-                                      ? kDarkCardColor
-                                      : kCardColor,
+                                      ? kDarkBgColor
+                                      : kBgColor,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
@@ -369,8 +373,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                     style: TextStyle(
                                                       color: controller
                                                               .isDarkMode.value
-                                                          ? kWhiteColor
-                                                          : kDarkColor,
+                                                          ? kDarkTextColor
+                                                          : kTextColor,
                                                     ),
                                                   ),
                                                   const SizedBox(
@@ -384,8 +388,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                           color: controller
                                                                   .isDarkMode
                                                                   .value
-                                                              ? kWhiteColor
-                                                              : kDarkColor,
+                                                              ? kDarkTextColor
+                                                              : kTextColor,
                                                         ),
                                                       ),
                                                       categoryController
@@ -428,8 +432,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                           children: [
                                             IconButton(
                                               color: controller.isDarkMode.value
-                                                  ? kWhiteColor
-                                                  : kDarkColor,
+                                                  ? kDarkTextColor
+                                                  : kTextColor,
                                               onPressed: () async {
                                                 descriptionController.clear();
                                                 categoryNameController.text =
@@ -478,8 +482,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                 "assets/icons/edit.svg",
                                                 color:
                                                     controller.isDarkMode.value
-                                                        ? kWhiteColor
-                                                        : kDarkColor,
+                                                        ? kDarkTextColor
+                                                        : kTextColor,
                                               ),
                                             ),
                                             const SizedBox(
@@ -487,8 +491,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                             ),
                                             IconButton(
                                               color: controller.isDarkMode.value
-                                                  ? kWhiteColor
-                                                  : kDarkColor,
+                                                  ? kDarkTextColor
+                                                  : kTextColor,
                                               onPressed: () async {
                                                 Get.defaultDialog(
                                                   title: 'Deleting Category',
@@ -512,8 +516,8 @@ class CategoryPageDesktop extends GetView<ThemeChangeController> {
                                                 "assets/icons/trash.svg",
                                                 color:
                                                     controller.isDarkMode.value
-                                                        ? kWhiteColor
-                                                        : kDarkColor,
+                                                        ? kDarkTextColor
+                                                        : kTextColor,
                                               ),
                                             ),
                                           ],

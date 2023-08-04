@@ -91,9 +91,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
     const bool isMobile = false;
     return Obx(
       () => Scaffold(
-        backgroundColor: themeChangeController.isDarkMode.value
-            ? kDarkCardColor
-            : kWhiteColor,
+        backgroundColor:
+            themeChangeController.isDarkMode.value ? kDarkBgColor : kBgColor,
         appBar: DashBoardAppBar(title: 'Posts'),
         body: Center(
           child: Row(
@@ -104,8 +103,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 width: width * .8,
                 decoration: BoxDecoration(
                   color: themeChangeController.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                      ? kDarkCardColor
+                      : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -430,7 +429,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                 () => CheckboxListTile(
                                   selectedTileColor: kPrimaryColor,
                                   tileColor: kWhiteColor,
-                                  checkColor: kDarkColor,
+                                  checkColor: kDarkCardColor,
                                   activeColor: kPrimaryColor,
                                   value: amenities[index],
                                   onChanged: (value) {
