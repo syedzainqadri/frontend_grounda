@@ -60,7 +60,7 @@ dependencies:
   map_picker: ^0.0.3
   country_currency_pickers: ^2.0.0
   google_maps_flutter: ^2.2.5
-  map_pin_picker: ^0.0.1
+  # map_pin_picker: ^0.0.1.
   geocoding: ^2.1.0
   # open_street_map_search_and_pick: ^0.0.16
   permission_handler: ^10.2.0
