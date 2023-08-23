@@ -7,7 +7,7 @@ import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class DashBoardAppBar extends GetView<ThemeChangeController>
-    with PreferredSizeWidget {
+    implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
