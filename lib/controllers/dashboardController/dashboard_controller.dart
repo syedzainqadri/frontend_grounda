@@ -14,6 +14,9 @@ class DashboardController extends GetxController {
   var postModel = <PostModel>[].obs;
   var activepost = <PostModel>[].obs;
   var percentage = 0.0.obs;
+  var totalPostCount = 120.obs;
+  var totalPublishedPostCount = 90.obs;
+  var totalPendingPostCount = 30.obs;
 
   //Text Field Controllers
 

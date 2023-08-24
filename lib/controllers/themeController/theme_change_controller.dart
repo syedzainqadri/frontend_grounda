@@ -28,8 +28,8 @@ class ThemeChangeController extends GetxController
     animationController.reset();
     textColor = isDarkMode.value ? Colors.white : Colors.red;
     fontSize = isDarkMode.value ? 30 : 20;
-    //! <Not Related To Theme Just for Animation
 
+    //! <Not Related To Theme Just for Animation
     super.onInit();
   }
 

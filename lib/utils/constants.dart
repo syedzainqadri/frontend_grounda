@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 const kWhiteColor = Color.fromARGB(255, 229, 229, 229);
 const kRedColor = Colors.red;
 const kPrimaryColor = Color(0xffBC902D);
+const kSecondryColor = Color.fromRGBO(242, 201, 76, 1);
+const kAdditionalColor = Color.fromRGBO(153, 108, 251, 1);
+
 // const kGoldenColor = Color(0xffF2C94C);
 const kShadowColor = Color(0XFFCCCCCC);
 const kFillColor = Colors.white;
