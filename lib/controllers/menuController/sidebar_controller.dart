@@ -56,7 +56,7 @@ class SideBarController extends GetxController {
         Get.toNamed('/category');
         break;
       case 3:
-        Get.toNamed('/post');
+        Get.toNamed('/desktop-post');
         break;
       case 4:
         Get.toNamed('/project');
