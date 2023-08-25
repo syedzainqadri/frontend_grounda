@@ -7,7 +7,9 @@ import 'package:frontend_grounda/views/pages/developer/developer_view.dart';
 import 'package:frontend_grounda/views/pages/forum/forum_view.dart';
 import 'package:frontend_grounda/views/pages/login/login_view.dart';
 import 'package:frontend_grounda/views/dashboard_view.dart';
+import 'package:frontend_grounda/views/pages/order/order_page.dart';
 import 'package:frontend_grounda/views/pages/order/order_view.dart';
+import 'package:frontend_grounda/views/pages/post/post_page.dart';
 import 'package:frontend_grounda/views/pages/post/post_view.dart';
 import 'package:frontend_grounda/views/pages/post/sub_pages/post_create_view.dart';
 import 'package:frontend_grounda/views/pages/product/product_view.dart';
@@ -43,6 +45,12 @@ appRoutes() => [
       GetPage(
         name: '/post',
         page: () => PostView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
+        name: '/allpost',
+        page: () => PostPage(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
@@ -114,7 +122,13 @@ appRoutes() => [
       ),
       GetPage(
         name: '/order',
-        page: () => const OrderView(),
+        page: () => OrderView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
+        name: '/allorder',
+        page: () => OrderPage(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
