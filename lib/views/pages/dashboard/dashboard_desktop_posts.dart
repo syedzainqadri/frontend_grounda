@@ -24,7 +24,7 @@ class DashboardDesktopPosts extends GetView<ThemeChangeController> {
     return Obx(
       () => Scaffold(
         backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
-        appBar: DashBoardAppBar(title: 'Post Dashboard'),
+        appBar: DashBoardAppBar(title: 'Posts'),
         body: Padding(
           padding: const EdgeInsets.only(top: 24.0, left: 50, bottom: 24),
           child: SingleChildScrollView(

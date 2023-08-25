@@ -5,6 +5,7 @@ import 'package:frontend_grounda/views/pages/category/category_view.dart';
 import 'package:frontend_grounda/views/pages/customer/customer_view.dart';
 import 'package:frontend_grounda/views/pages/dashboard/dashboard_page.dart';
 import 'package:frontend_grounda/views/pages/developer/developer_view.dart';
+import 'package:frontend_grounda/views/pages/post/desktop_order_view.dart';
 import 'package:frontend_grounda/views/pages/post/desktop_posts_view.dart';
 import 'package:frontend_grounda/views/pages/product/product_view.dart';
 import 'package:frontend_grounda/views/pages/project/project_view.dart';
@@ -65,7 +66,7 @@ class DashboardView extends GetView<SideBarController> {
                   const AgencyView(),
                   const DeveloperView(),
                   const ProductView(),
-                  DesktopPostView(),
+                  DesktopOrderView(),
                   const ProjectView(),
                   const AgencyView(),
                   const DeveloperView(),

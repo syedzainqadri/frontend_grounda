@@ -71,7 +71,7 @@ class SideBarController extends GetxController {
         Get.toNamed('/product');
         break;
       case 8:
-        Get.toNamed('/order');
+        Get.toNamed('/desktop-order');
         break;
       case 9:
         Get.toNamed('/blog');

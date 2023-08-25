@@ -9,8 +9,8 @@ import 'package:frontend_grounda/views/pages/login/login_view.dart';
 import 'package:frontend_grounda/views/dashboard_view.dart';
 import 'package:frontend_grounda/views/pages/order/order_page.dart';
 import 'package:frontend_grounda/views/pages/order/order_view.dart';
+import 'package:frontend_grounda/views/pages/post/desktop_order_view.dart';
 import 'package:frontend_grounda/views/pages/post/desktop_posts_view.dart';
-import 'package:frontend_grounda/views/pages/post/post_page.dart';
 import 'package:frontend_grounda/views/pages/post/post_view.dart';
 import 'package:frontend_grounda/views/pages/post/sub_pages/post_create_view.dart';
 import 'package:frontend_grounda/views/pages/product/product_view.dart';
@@ -57,7 +57,7 @@ appRoutes() => [
       ),
       GetPage(
         name: '/allpost',
-        page: () => PostPage(),
+        page: () => PostView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
@@ -128,8 +128,14 @@ appRoutes() => [
         transitionDuration: const Duration(milliseconds: 1000),
       ),
       GetPage(
+        name: '/desktop-order',
+        page: () => DesktopOrderView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
         name: '/order',
-        page: () => OrderView(),
+        page: () => const OrderView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
