@@ -206,11 +206,11 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                     majorTickLines:
                                         const MajorTickLines(size: 0)),
                                 series: visitColumnSeriesData,
-                                tooltipBehavior: TooltipBehavior(
-                                    enable: true,
-                                    canShowMarker: false,
-                                    header: '',
-                                    format: 'point.y marks in point.x'),
+                                // tooltipBehavior: TooltipBehavior(
+                                //     enable: true,
+                                //     canShowMarker: false,
+                                //     header: '',
+                                //     format: 'point.y  in point.x'),
                               ),
                             ),
                           ],

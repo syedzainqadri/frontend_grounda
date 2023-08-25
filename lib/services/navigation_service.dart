@@ -9,6 +9,7 @@ import 'package:frontend_grounda/views/pages/login/login_view.dart';
 import 'package:frontend_grounda/views/dashboard_view.dart';
 import 'package:frontend_grounda/views/pages/order/order_page.dart';
 import 'package:frontend_grounda/views/pages/order/order_view.dart';
+import 'package:frontend_grounda/views/pages/post/desktop_posts_view.dart';
 import 'package:frontend_grounda/views/pages/post/post_page.dart';
 import 'package:frontend_grounda/views/pages/post/post_view.dart';
 import 'package:frontend_grounda/views/pages/post/sub_pages/post_create_view.dart';
@@ -39,6 +40,12 @@ appRoutes() => [
       GetPage(
         name: '/category',
         page: () => CategoryView(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+      GetPage(
+        name: '/desktop-post',
+        page: () => DesktopPostView(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),
