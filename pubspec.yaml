@@ -46,7 +46,7 @@ dependencies:
   google_fonts: ^4.0.0
   google_sign_in: ^5.4.3
   collapsible_sidebar: ^2.0.3+2
-  flutter_svg: ^1.1.6
+  flutter_svg: ^2.0.4
   sizer: ^2.0.15
   hive_flutter: ^1.1.0
   syncfusion_flutter_charts: ^20.4.44
