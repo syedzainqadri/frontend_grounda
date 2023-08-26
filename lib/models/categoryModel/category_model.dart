@@ -12,6 +12,18 @@ String categoryModelToJson(List<CategoryModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CategoryModel {
+  int? id;
+  String? name;
+  String? slug;
+  String? description;
+  String? image;
+  int? parentId;
+  bool? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? amenitiesNames;
+  String? amenitiesIconCodes;
+
   CategoryModel({
     this.id,
     this.name,
@@ -22,19 +34,9 @@ class CategoryModel {
     this.status,
     this.createdAt,
     this.updatedAt,
-    this.amenitiesIds,
+    this.amenitiesNames,
+    this.amenitiesIconCodes,
   });
-
-  int? id;
-  String? name;
-  String? slug;
-  String? description;
-  String? image;
-  int? parentId;
-  bool? status;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  String? amenitiesIds;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         id: json["id"],
@@ -46,7 +48,8 @@ class CategoryModel {
         status: json["status"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        amenitiesIds: json["amenitiesIds"],
+        amenitiesNames: json["amenitiesNames"],
+        amenitiesIconCodes: json["amenitiesIconCodes"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,7 +62,8 @@ class CategoryModel {
         "status": status,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
-        "amenitiesIds": amenitiesIds,
+        "amenitiesNames": amenitiesNames,
+        "amenitiesIconCodes": amenitiesIconCodes,
       };
 }
 

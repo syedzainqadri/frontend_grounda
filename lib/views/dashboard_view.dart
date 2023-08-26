@@ -5,7 +5,8 @@ import 'package:frontend_grounda/views/pages/category/category_view.dart';
 import 'package:frontend_grounda/views/pages/customer/customer_view.dart';
 import 'package:frontend_grounda/views/pages/dashboard/dashboard_page.dart';
 import 'package:frontend_grounda/views/pages/developer/developer_view.dart';
-import 'package:frontend_grounda/views/pages/post/post_view.dart';
+import 'package:frontend_grounda/views/pages/order/desktop_order_view.dart';
+import 'package:frontend_grounda/views/pages/post/desktop_posts_view.dart';
 import 'package:frontend_grounda/views/pages/product/product_view.dart';
 import 'package:frontend_grounda/views/pages/project/project_view.dart';
 import 'package:frontend_grounda/views/pages/settings/setting_view.dart';
@@ -24,7 +25,7 @@ class DashboardView extends GetView<SideBarController> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      key: controller.scaffoldKey,
+      // key: controller.scaffoldKey,
       body: Obx(
         () => Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,17 +60,17 @@ class DashboardView extends GetView<SideBarController> {
                 children: [
                   DashboardPage(),
                   const CustomerView(),
-                  const CategoryView(),
-                  const PostView(),
+                  CategoryView(),
+                  DesktopPostView(),
                   const ProjectView(),
                   const AgencyView(),
                   const DeveloperView(),
                   const ProductView(),
-                  const PostView(),
+                  DesktopOrderView(),
                   const ProjectView(),
                   const AgencyView(),
                   const DeveloperView(),
-                  const SettingsView(),
+                  SettingsView(),
                   const HelpView(),
                 ],
               ),

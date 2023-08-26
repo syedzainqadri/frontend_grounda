@@ -1,11 +1,15 @@
 import 'package:get/get.dart';
 
 RxBool show = false.obs;
-//api endpoints
 RxString pid = ''.obs;
 RxString iconFontFamily = "MaterialIcons".obs;
-//String baseUrl = 'https://starfish-app-mfjab.ondigitalocean.app';
-String baseUrl = 'http://127.0.0.1:8080';
+
+// Live api endpoints
+String baseUrl = 'https://server-pwo2qiqgmq-uc.a.run.app';
+
+// local api endpoint
+// String baseUrl = 'http://127.0.0.1:8080';
+
 String createUser = '/auth/register';
 String userLogin = '/auth/login';
 String allUsers = '/users/';
@@ -52,7 +56,7 @@ String deleteBlogCategory = '/blogCategory/deleteBlogCategory';
 String createDeveloper = '/developer/createDeveloper';
 String allDevelopers = '/developer/';
 String updateDeveloperUrl = '/developer/updateDeveloper';
-String deleteDeveloper = '/developer/deleteDeveloper';
+String deleteDeveloper = '/developer/deleteDeveloper/';
 String allFaq = '/faq/';
 String createFaq = '/faq/createFaqQuestionAnswer';
 String updateFaqUrl = '/faq/updateFaqQuestionAnswer';

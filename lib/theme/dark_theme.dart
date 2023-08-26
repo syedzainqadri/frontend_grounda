@@ -7,7 +7,7 @@ import '../utils/constants.dart';
 ThemeData DarkThemeData() {
   CustomTextTheme textTheme = CustomTextTheme();
   return ThemeData(
-    primaryColor: kDarkColor,
+    primaryColor: kDarkCardColor,
     brightness: Brightness
         .dark, //Setting the Brightness to Dark  so that this can be used as Dark ThemeData
     scaffoldBackgroundColor: Colors.black,

@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 class CategoryController extends GetxController {
   var token = ''.obs;
   var category = <CategoryModel>[].obs;
+  RxList<String> parentCategory = RxList.empty(growable: true);
   var subCategory = <SubCategoryModel>[].obs;
   var singleCategory = SingleCategoryModel().obs;
   var selectedItemName = ''.obs;
@@ -40,6 +41,11 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       category.value = categoryModelFromJson(response.body);
       selectedItemName.value = category.first.name!;
+      for (int i = 0; i < category.length; i++) {
+        // if (category.value[i].parentId == 0) {
+        parentCategory.add(category.value[i].name!);
+        // }
+      }
     } else {
       showErrorSnak('Error', response.body);
     }
@@ -68,16 +74,10 @@ class CategoryController extends GetxController {
 
     if (response.statusCode == 200) {
       singleCategory.value = singleCategoryModelFromJson(response.body);
-      print("====== BEFORE LIST EQULIZATION ========");
-      print(singleCategory.value.amenitiesNames);
-      print(singleCategory.value.amenitiesIconCodes);
       listOfAmenitiesNames.value =
           singleCategory.value.amenitiesNames!.split(",");
       listOfAmenitiesCodes.value =
           singleCategory.value.amenitiesIconCodes!.split(",");
-      print("======== List of Amenities ===========");
-      print(listOfAmenitiesNames);
-      print(listOfAmenitiesCodes);
     } else {
       showErrorSnak('Error', response.body);
     }
@@ -133,6 +133,7 @@ class CategoryController extends GetxController {
     String amenitiesIcons,
   ) async {
     var bodyPrepare = {
+      'id': id,
       'image': image,
       'name': name,
       'slug': slug,
@@ -140,8 +141,9 @@ class CategoryController extends GetxController {
       'parentId': parentId,
       'status': status,
       'amenitiesNames': amenitiesNames,
-      'amenitiesCode': amenitiesIcons
+      'amenitiesIconCodes': amenitiesIcons
     };
+    print(bodyPrepare);
     var response = await http.put(Uri.parse(baseUrl + updateCategory),
         body: jsonEncode(bodyPrepare),
         headers: {

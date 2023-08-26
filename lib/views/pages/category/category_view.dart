@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/menuController/sidebar_controller.dart';
+import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
+import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/category/category_page_desktop.dart';
 import 'package:frontend_grounda/views/pages/category/category_page_mobile.dart';
 import 'package:frontend_grounda/views/responsive/responsive_layout.dart';
@@ -9,17 +11,21 @@ import 'package:get/get.dart';
 import '../../../utils/global_variable.dart';
 import '../../sidebar/mobile_sidebar.dart';
 
-class CategoryView extends GetView<SideBarController> {
-  const CategoryView({super.key});
+class CategoryView extends GetView<ThemeChangeController> {
+  CategoryView({super.key});
+
+  final SideBarController sideBarController = Get.find<SideBarController>();
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      key: controller.scaffoldKey,
-      body: Obx(
-        () => Row(
+    return Obx(
+      () => Scaffold(
+        backgroundColor:
+            controller.isDarkMode.value ? kDarkCardColor : kWhiteColor,
+        // key: controller.scaffoldKey,
+        body: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AnimatedContainer(
@@ -37,17 +43,17 @@ class CategoryView extends GetView<SideBarController> {
                       : 0,
               child: width >= 920
                   ? show.value == false
-                      ? DesktopSidebar(sideBarController: controller)
-                      : TabletSidebar(sideBarController: controller)
+                      ? DesktopSidebar(sideBarController: sideBarController)
+                      : TabletSidebar(sideBarController: sideBarController)
                   : width < 920
                       ? show.value == false
-                          ? TabletSidebar(sideBarController: controller)
-                          : MobileSidebar(sideBarController: controller)
+                          ? TabletSidebar(sideBarController: sideBarController)
+                          : MobileSidebar(sideBarController: sideBarController)
                       : null,
             ),
             Flexible(
               child: PageView(
-                controller: controller.pageController,
+                controller: sideBarController.pageController,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   ResponsiveLayout(

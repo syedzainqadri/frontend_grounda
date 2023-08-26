@@ -7,7 +7,7 @@ import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class DashBoardAppBar extends GetView<ThemeChangeController>
-    with PreferredSizeWidget {
+    implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
@@ -23,9 +23,11 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
     double width = Get.width;
     return Obx(
       () => AppBar(
-        backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
+        leading: const Offstage(),
+        backgroundColor:
+            controller.isDarkMode.value ? kDarkCardColor : kCardColor,
         title: SizedBox(
-          width: width * .8,
+          width: width * .75,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -38,13 +40,13 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
                     style: TextStyle(
                       color: controller.isDarkMode.value
                           ? kWhiteColor
-                          : kDarkColor,
+                          : kDarkCardColor,
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                width: width * .4,
+                width: width < 1010 ? width * .2 : width * .3,
                 height: 40,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 5.0),
@@ -71,7 +73,8 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
               onPressed: () {},
               icon: SvgPicture.asset(
                 'assets/icons/message-notification.svg',
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kWhiteColor : kDarkCardColor,
               ),
             ),
           ),
@@ -81,7 +84,8 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
               onPressed: () {},
               icon: SvgPicture.asset(
                 'assets/icons/notification.svg',
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                color:
+                    controller.isDarkMode.value ? kWhiteColor : kDarkCardColor,
               ),
             ),
           ),
@@ -90,8 +94,9 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
             child: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset(
-                'assets/icons/message-notification.svg',
-                color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                'assets/icons/person.svg',
+                color:
+                    controller.isDarkMode.value ? kWhiteColor : kDarkCardColor,
               ),
             ),
           ),

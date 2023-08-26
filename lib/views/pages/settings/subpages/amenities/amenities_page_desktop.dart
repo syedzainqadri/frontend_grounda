@@ -34,10 +34,11 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Amenities'),
-      body: Obx(
-        () => Center(
+    return Obx(
+      () => Scaffold(
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
+        appBar: DashBoardAppBar(title: 'Amenities'),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -45,9 +46,8 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .25,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -64,9 +64,17 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                   padding: const EdgeInsets.all(25.0),
                   child: AmenitiesForm(
                     iconPicker: IconPicker(
+                      style: TextStyle(
+                        color: controller.isDarkMode.value
+                            ? kDarkTextColor
+                            : kTextColor,
+                      ),
                       initialValue: 'Please Select an Icon',
                       icon: Icon(
                         IconData(icon.value, fontFamily: iconFontFamily.value),
+                        color: controller.isDarkMode.value
+                            ? kDarkTextColor
+                            : kTextColor,
                       ),
                       labelText: "Icon",
                       title: "Select an icon",
@@ -138,9 +146,8 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .5,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
@@ -186,8 +193,8 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return Card(
                                     color: controller.isDarkMode.value
-                                        ? kDarkCardColor
-                                        : kCardColor,
+                                        ? kDarkBgColor
+                                        : kBgColor,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
@@ -233,10 +240,13 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                           children: [
                                                             Text(
                                                               "Status: ",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodySmall,
+                                                              style: TextStyle(
+                                                                color: controller
+                                                                        .isDarkMode
+                                                                        .value
+                                                                    ? kDarkTextColor
+                                                                    : kTextColor,
+                                                              ),
                                                             ),
                                                             amenitiesController
                                                                     .amenities[
@@ -299,7 +309,12 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                               .toString();
                                                     },
                                                     icon: SvgPicture.asset(
-                                                        "assets/icons/edit.svg"),
+                                                      "assets/icons/edit.svg",
+                                                      color: controller
+                                                              .isDarkMode.value
+                                                          ? kDarkTextColor
+                                                          : kTextColor,
+                                                    ),
                                                   ),
                                                   const SizedBox(
                                                     width: 20,
@@ -326,7 +341,12 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                                                       Navigator.pop(context);
                                                     },
                                                     icon: SvgPicture.asset(
-                                                        "assets/icons/trash.svg"),
+                                                      "assets/icons/trash.svg",
+                                                      color: controller
+                                                              .isDarkMode.value
+                                                          ? kDarkTextColor
+                                                          : kTextColor,
+                                                    ),
                                                   ),
                                                 ],
                                               ),

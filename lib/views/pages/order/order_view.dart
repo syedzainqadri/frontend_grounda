@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/menuController/sidebar_controller.dart';
+import 'package:frontend_grounda/models/visits_data.dart';
+import 'package:frontend_grounda/utils/constants.dart';
+import 'package:frontend_grounda/views/pages/order/order_page.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../utils/global_variable.dart';
 import '../../sidebar/mobile_sidebar.dart';
-import 'order_page.dart';
 
 class OrderView extends GetView<SideBarController> {
   const OrderView({super.key});
@@ -15,7 +18,7 @@ class OrderView extends GetView<SideBarController> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      key: controller.scaffoldKey,
+      // key: controller.scaffoldKey,
       body: Obx(
         () => Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,9 +50,7 @@ class OrderView extends GetView<SideBarController> {
               child: PageView(
                 controller: controller.pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  OrderPage(),
-                ],
+                children: [OrderPage()],
               ),
             ),
           ],

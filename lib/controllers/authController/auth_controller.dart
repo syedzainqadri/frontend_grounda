@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/models/userModel/user_model.dart';
 import 'package:frontend_grounda/utils/global_variable.dart';
@@ -11,10 +11,10 @@ import 'package:http/http.dart' as http;
 class AuthController extends GetxController {
   late FocusNode userNameFocus;
   late FocusNode passwordFocus;
-  FirebaseAuth auth = FirebaseAuth.instance;
-  Rxn<User> firebaseUser = Rxn<User>();
+  // FirebaseAuth auth = FirebaseAuth.instance;
+  // Rxn<User> firebaseUser = Rxn<User>();
 
-  User? get userGetter => firebaseUser.value;
+  // User? get userGetter => firebaseUser.value;
 
   var userModel = UserModel().obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
@@ -114,14 +114,23 @@ class AuthController extends GetxController {
   //   }
   // }
 
-  void registerUser(String email, String password) async {
+  Future<bool> registerUser(String email, String password, String role) async {
     var bodyPrepare = {
       "email": email,
       "password": password,
+      "role": role,
     };
     var response = await http.post(Uri.parse(baseUrl + createUser),
         body: jsonEncode(bodyPrepare));
-    userModel.value = userModelFromJson(response.body);
+
+    print(response.body);
+    if (response.statusCode == 200) {
+      userModel.value = userModelFromJson(response.body);
+    } else {
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+    }
+    return true;
   }
 
   Future<void> signIn(String email, String password) async {
@@ -131,6 +140,7 @@ class AuthController extends GetxController {
     };
     var response = await http.post(Uri.parse(baseUrl + userLogin),
         body: jsonEncode(bodyPrepare));
+    print(response.body);
     if (response.statusCode == 200) {
       userModel.value = userModelFromJson(response.body);
       _updateHiveTokeng(

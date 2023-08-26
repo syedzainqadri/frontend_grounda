@@ -29,17 +29,17 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: isMobile ? width : width / 4,
+      width: isMobile ? width : width * .25,
       decoration: BoxDecoration(
         color: controller.isDarkMode.value ? kDarkCardColor : kCardColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
         ),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: kShadowColor,
-            blurRadius: 2,
-            spreadRadius: 1,
+            color: controller.isDarkMode.value
+                ? kDarkShadowColor.withOpacity(.2)
+                : kShadowColor.withOpacity(.5),
           ),
         ],
       ),
@@ -60,8 +60,11 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.more_vert,
+                    color: controller.isDarkMode.value
+                        ? kWhiteColor
+                        : kDarkCardColor,
                   ),
                 )
               ],
@@ -78,19 +81,25 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
                   children: [
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: TextStyle(
+                          color: controller.isDarkMode.value
+                              ? kWhiteColor
+                              : kDarkCardColor),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     Text(
                       subTitle,
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: TextStyle(
+                          color: controller.isDarkMode.value
+                              ? kWhiteColor
+                              : kDarkCardColor),
                     ),
                   ],
                 ),
                 SizedBox(
-                  width: 180,
+                  width: isMobile ? width * .4 : width * .1,
                   height: 140,
                   child: SfRadialGauge(
                     axes: <RadialAxis>[
@@ -109,10 +118,13 @@ class DashboardSmallWidget extends GetView<ThemeChangeController> {
                           GaugeAnnotation(
                               verticalAlignment: GaugeAlignment.far,
                               positionFactor: .2,
-                              widget: Text("$percentage%",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium)),
+                              widget: Text(
+                                "$percentage%",
+                                style: TextStyle(
+                                    color: controller.isDarkMode.value
+                                        ? kWhiteColor
+                                        : kDarkCardColor),
+                              )),
                         ],
                         pointers: <GaugePointer>[
                           RangePointer(

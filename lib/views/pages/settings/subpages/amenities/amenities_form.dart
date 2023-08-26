@@ -49,7 +49,9 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
       children: [
         Text(
           "Create Amenity",
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: TextStyle(
+            color: controller.isDarkMode.value ? kDarkTextColor : kTextColor,
+          ),
           textAlign: TextAlign.start,
         ),
         SizedBox(
@@ -73,7 +75,7 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
         //     SvgPicture.network(iconImageUrl),
         //     DefaultButton(
         //       primaryColor: kPrimaryColor,
-        //       hoverColor: kDarkColor,
+        //       hoverColor: kDarkCardColor,
         //       buttonText: iconButtonText,
         //       onPressed: onIconPress,
         //       width: width * .1,
@@ -100,7 +102,11 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
               children: [
                 Text(
                   "Status",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: TextStyle(
+                    color: controller.isDarkMode.value
+                        ? kDarkTextColor
+                        : kTextColor,
+                  ),
                 ),
                 SizedBox(
                   width: width * .01,
@@ -109,6 +115,8 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
                   activeColor: kPrimaryColor,
                   value: statusValue,
                   onChanged: statusChanges,
+                  trackColor:
+                      controller.isDarkMode.value ? kDarkTextColor : kTextColor,
                 ),
               ],
             ),
@@ -123,7 +131,7 @@ class AmenitiesForm extends GetView<ThemeChangeController> {
         ),
         DefaultButton(
           primaryColor: kPrimaryColor,
-          hoverColor: kDarkColor,
+          hoverColor: kDarkCardColor,
           buttonText: buttonText,
           width: width * .2,
           height: height * .05,

@@ -21,11 +21,13 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
       TextEditingController();
   final DeveloperController developerController =
       Get.find<DeveloperController>();
-  QuillEditorController descriptionController = QuillEditorController();
+  QuillEditorController descriptionControllerDeveloperPage =
+      QuillEditorController();
   TextEditingController developerNameController = TextEditingController();
 
   TextEditingController categoryStatusController = TextEditingController();
   List<DevelopersModel> developersModel = [];
+  final _developerFormKey = GlobalKey<FormState>();
 
   var selectedItemId = 0.obs;
   var status = false.obs;
@@ -36,10 +38,11 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
     double width = Get.width;
     double height = Get.height;
     const bool isMobile = false;
-    return Scaffold(
-      appBar: DashBoardAppBar(title: 'Developers'),
-      body: Obx(
-        () => Center(
+    return Obx(
+      () => Scaffold(
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
+        appBar: DashBoardAppBar(title: 'Developers'),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -47,15 +50,14 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .25,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -64,77 +66,91 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: DeveloperForm(
-                    developerNameController: developerNameController,
-                    descriptionController: descriptionController,
-                    buttonText: devId.value == '' ? 'Submit' : 'Update',
-                    formSubmit: () async {
-                      if (devId.value == '') {
-                        Get.defaultDialog(
-                          title: 'Creating Developer',
-                          content: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                        var description = await descriptionController.getText();
-                        await developerController.create(
-                            developerNameController.text,
-                            description,
-                            developerController.logo.value,
-                            status.value);
-                        await developerController.getAll();
-                        Navigator.pop(context);
-                      } else {
-                        Get.defaultDialog(
-                          title: 'Updating Developer',
-                          content: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                        var description = await descriptionController.getText();
-                        await developerController.updateDeveloper(
-                            int.parse(devId.value),
-                            developerNameController.text,
-                            developerController.logo.value,
-                            description,
-                            status.value);
+                  child: Form(
+                    key: _developerFormKey,
+                    child: DeveloperForm(
+                      developerNameController: developerNameController,
+                      nameValidator: (value) {
+                        if (value == null || value == '') {
+                          return 'Post title cannot be empty';
+                        }
+                      },
+                      descriptionController: descriptionControllerDeveloperPage,
+                      buttonText: devId.value == '' ? 'Submit' : 'Update',
+                      formSubmit: () async {
+                        if (_developerFormKey.currentState!.validate()) {
+                          if (devId.value == '') {
+                            Get.defaultDialog(
+                              title: 'Creating Developer',
+                              content: const Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor),
+                              ),
+                            );
+                            var description =
+                                await descriptionControllerDeveloperPage
+                                    .getText();
+                            await developerController.create(
+                                developerNameController.text,
+                                description,
+                                developerController.logo.value,
+                                status.value);
+                            await developerController.getAll();
+                            Navigator.pop(context);
+                          } else {
+                            Get.defaultDialog(
+                              title: 'Updating Developer',
+                              content: const Center(
+                                child: CircularProgressIndicator(
+                                    color: kPrimaryColor),
+                              ),
+                            );
+                            var description =
+                                await descriptionControllerDeveloperPage
+                                    .getText();
+                            await developerController.updateDeveloper(
+                                int.parse(devId.value),
+                                developerNameController.text,
+                                description,
+                                developerController.logo.value,
+                                status.value);
+                            developerNameController.text = '';
+                            descriptionControllerDeveloperPage.clear();
+                            selectedItemId.value = 0;
+                            devId.value = '';
+                            await developerController.getAll();
+                            Navigator.pop(context);
+                          }
+                        }
+                      },
+                      cancelText: devId.value == '' ? '' : 'Cancel Update',
+                      onTap: () async {
                         developerNameController.text = '';
-                        descriptionController.clear();
+                        developerController.logo.value = '';
+                        descriptionControllerDeveloperPage.clear();
                         selectedItemId.value = 0;
                         devId.value = '';
                         await developerController.getAll();
+                      },
+                      pictureButtonText: developerController.logo.value.isEmpty
+                          ? 'Add Logo'
+                          : 'Update Logo',
+                      uploadImages: () async {
+                        Get.defaultDialog(
+                          title: 'Uploading Image',
+                          content: const Center(
+                            child:
+                                CircularProgressIndicator(color: kPrimaryColor),
+                          ),
+                        );
+                        await developerController.getDeveloperLogo();
                         Navigator.pop(context);
-                      }
-                    },
-                    cancelText: devId.value == '' ? '' : 'Cancel Update',
-                    onTap: () async {
-                      developerNameController.text = '';
-                      developerController.logo.value = '';
-                      descriptionController.clear();
-                      selectedItemId.value = 0;
-                      devId.value = '';
-                      await developerController.getAll();
-                    },
-                    pictureButtonText: developerController.logo.value.isEmpty
-                        ? 'Add Logo'
-                        : 'Update Logo',
-                    uploadImages: () async {
-                      Get.defaultDialog(
-                        title: 'Uploading Image',
-                        content: const Center(
-                          child:
-                              CircularProgressIndicator(color: kPrimaryColor),
-                        ),
-                      );
-                      await developerController.getDeveloperLogo();
-                      Navigator.pop(context);
-                    },
-                    statusValue: status.value,
-                    statusChanges: (value) {
-                      status.value = value;
-                    },
+                      },
+                      statusValue: status.value,
+                      statusChanges: (value) {
+                        status.value = value;
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -145,15 +161,14 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                 height: height * .8,
                 width: width * .5,
                 decoration: BoxDecoration(
-                  color: controller.isDarkMode.value
-                      ? kDarkFrameColor
-                      : kFrameColor,
+                  color:
+                      controller.isDarkMode.value ? kDarkCardColor : kCardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: controller.isDarkMode.value
-                          ? kDarkShadowColor.withOpacity(.9)
-                          : kShadowColor.withOpacity(.5),
+                          ? kDarkShadowColor.withOpacity(.2)
+                          : kShadowColor.withOpacity(.2),
                       spreadRadius: 3,
                       blurRadius: 4,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -191,8 +206,8 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               color: controller.isDarkMode.value
-                                  ? kDarkCardColor
-                                  : kCardColor,
+                                  ? kDarkBgColor
+                                  : kBgColor,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
@@ -241,9 +256,12 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                                     developerController
                                                         .developers[index]
                                                         .title!,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge,
+                                                    style: TextStyle(
+                                                      color: controller
+                                                              .isDarkMode.value
+                                                          ? kWhiteColor
+                                                          : kDarkCardColor,
+                                                    ),
                                                   ),
                                                   const SizedBox(
                                                     height: 10,
@@ -252,9 +270,13 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                                     children: [
                                                       Text(
                                                         "Status: ",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall,
+                                                        style: TextStyle(
+                                                          color: controller
+                                                                  .isDarkMode
+                                                                  .value
+                                                              ? kWhiteColor
+                                                              : kDarkCardColor,
+                                                        ),
                                                       ),
                                                       developerController
                                                                   .developers[
@@ -296,12 +318,13 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                           children: [
                                             IconButton(
                                               onPressed: () async {
-                                                descriptionController.clear();
+                                                descriptionControllerDeveloperPage
+                                                    .clear();
                                                 developerNameController.text =
                                                     developerController
                                                         .developers[index]
                                                         .title!;
-                                                descriptionController
+                                                descriptionControllerDeveloperPage
                                                     .insertText(
                                                         developerController
                                                             .developers[index]
@@ -321,7 +344,12 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                                         .logo!;
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/edit.svg"),
+                                                "assets/icons/edit.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkCardColor,
+                                              ),
                                             ),
                                             const SizedBox(
                                               width: 20,
@@ -345,7 +373,12 @@ class DeveloperPageDesktop extends GetView<ThemeChangeController> {
                                                 Navigator.pop(context);
                                               },
                                               icon: SvgPicture.asset(
-                                                  "assets/icons/trash.svg"),
+                                                "assets/icons/trash.svg",
+                                                color:
+                                                    controller.isDarkMode.value
+                                                        ? kWhiteColor
+                                                        : kDarkCardColor,
+                                              ),
                                             ),
                                           ],
                                         ),

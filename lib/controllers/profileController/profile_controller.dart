@@ -97,6 +97,7 @@ class ProfileController extends GetxController {
       "contactPersonType": contactPersonType,
       "status": true
     };
+    print(bodyPrepare);
     var response = await http.post(Uri.parse(baseUrl + createProfile),
         body: jsonEncode(bodyPrepare),
         headers: {

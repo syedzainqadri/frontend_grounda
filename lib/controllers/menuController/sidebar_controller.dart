@@ -42,8 +42,7 @@ class SideBarController extends GetxController {
   var show = false.obs;
   PageController get pageController => _pageController.value;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
+  // GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   onSelected(int index) {
     switch (index) {
@@ -57,7 +56,7 @@ class SideBarController extends GetxController {
         Get.toNamed('/category');
         break;
       case 3:
-        Get.toNamed('/post');
+        Get.toNamed('/desktop-post');
         break;
       case 4:
         Get.toNamed('/project');
@@ -72,7 +71,7 @@ class SideBarController extends GetxController {
         Get.toNamed('/product');
         break;
       case 8:
-        Get.toNamed('/order');
+        Get.toNamed('/desktop-order');
         break;
       case 9:
         Get.toNamed('/blog');
@@ -86,16 +85,19 @@ class SideBarController extends GetxController {
       case 12:
         Get.toNamed('/settings');
         break;
+      case 13:
+        Get.toNamed('/login');
+        break;
     }
     _pageController.value.jumpToPage(index);
     _pageController.value = pageController;
   }
 
-  void controlMenu() {
-    if (!_scaffoldKey.currentState!.isDrawerOpen) {
-      _scaffoldKey.currentState!.openDrawer();
-    }
-  }
+  // void controlMenu() {
+  //   if (scaffoldKey.currentState!.isDrawerOpen) {
+  //     scaffoldKey.currentState!.openDrawer();
+  //   }
+  // }
 
   changeName(String value) {
     title(value).obs;

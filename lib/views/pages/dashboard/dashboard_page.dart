@@ -27,17 +27,15 @@ class DashboardPage extends GetView<ThemeChangeController> {
 
   @override
   Widget build(BuildContext context) {
-    // var width = Get.width;
-    // var height = Get.height;
-
     return Obx(
       () => Scaffold(
-        backgroundColor: controller.isDarkMode.value ? kDarkColor : kWhiteColor,
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
         appBar: DashBoardAppBar(title: "Dashboard"),
         body: SingleChildScrollView(
           child: ResponsiveLayout(
-            desktopBody:
-                DashboardDesktop(visitSeriesData: getDefaultPanningSeries()),
+            desktopBody: DashboardDesktop(
+              visitSeriesData: getDefaultPanningSeries(),
+            ),
             mobileBody:
                 DashboardMobile(visitSeriesData: getDefaultPanningSeries()),
           ),

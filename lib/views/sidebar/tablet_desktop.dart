@@ -16,7 +16,7 @@ class TabletSidebar extends GetView<ThemeChangeController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Drawer(
-        backgroundColor: controller.isDarkMode.value ? kDarkColor : kFrameColor,
+        backgroundColor: controller.isDarkMode.value ? kDarkBgColor : kBgColor,
         child: Column(
           children: [
             const SizedBox(height: 4),

@@ -48,7 +48,9 @@ class SidebarItem extends GetView<ThemeChangeController> {
                 title!,
                 //style: Theme.of(context).textTheme.bodyMedium,
                 style: TextStyle(
-                  color: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+                  color: controller.isDarkMode.value
+                      ? kWhiteColor
+                      : kDarkCardColor,
                   fontSize: 16,
                 ),
               ),

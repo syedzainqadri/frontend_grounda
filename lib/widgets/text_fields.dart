@@ -47,20 +47,22 @@ class DefaultTextField extends GetView<ThemeChangeController> {
       obscureText: isPassword,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
-        suffixIconColor: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
+        suffixIconColor:
+            controller.isDarkMode.value ? kDarkTextColor : kTextColor,
         prefixIcon: prefixIcon,
-        prefixIconColor: controller.isDarkMode.value ? kWhiteColor : kDarkColor,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .labelLarge!
-            .copyWith(color: Colors.black12),
+        prefixIconColor:
+            controller.isDarkMode.value ? kDarkTextColor : kTextColor,
+        hintStyle: TextStyle(
+          color: controller.isDarkMode.value ? kDarkTextColor : kTextColor,
+        ),
         hintText: hintText,
         label: Text(
           labelText,
           style: TextStyle(
-              color: controller.isDarkMode.value ? kWhiteColor : kDarkColor),
+            color: controller.isDarkMode.value ? kDarkTextColor : kTextColor,
+          ),
         ),
-        fillColor: controller.isDarkMode.value ? kDarkColor : kInputBgColor,
+        fillColor: controller.isDarkMode.value ? kDarkFillColor : kFillColor,
         filled: true,
         border: OutlineInputBorder(
           borderSide: controller.isDarkMode.value
