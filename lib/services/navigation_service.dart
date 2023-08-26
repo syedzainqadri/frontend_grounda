@@ -9,7 +9,7 @@ import 'package:frontend_grounda/views/pages/login/login_view.dart';
 import 'package:frontend_grounda/views/dashboard_view.dart';
 import 'package:frontend_grounda/views/pages/order/order_page.dart';
 import 'package:frontend_grounda/views/pages/order/order_view.dart';
-import 'package:frontend_grounda/views/pages/post/desktop_order_view.dart';
+import 'package:frontend_grounda/views/pages/order/desktop_order_view.dart';
 import 'package:frontend_grounda/views/pages/post/desktop_posts_view.dart';
 import 'package:frontend_grounda/views/pages/post/post_view.dart';
 import 'package:frontend_grounda/views/pages/post/sub_pages/post_create_view.dart';
