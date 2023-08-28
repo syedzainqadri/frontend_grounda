@@ -62,11 +62,11 @@ class ProjectForm extends GetView<ThemeChangeController> {
         SizedBox(
           height: height * .02,
         ),
-        Expanded(child: TextEditor(controller: descriptionController)),
+        Expanded(child: TextEditor(textController: descriptionController)),
         SizedBox(
           height: height * .02,
         ),
-        Expanded(child: TextEditor(controller: descriptionController)),
+        Expanded(child: TextEditor(textController: descriptionController)),
         Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 0.0),
           child: Transform.scale(
@@ -94,7 +94,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
         ),
         DefaultButton(
           primaryColor: kPrimaryColor,
-          hoverColor: kDarkColor,
+          hoverColor: kDarkCardColor,
           buttonText: pictureButtonText,
           width: width * .2,
           height: height * .05,
@@ -105,7 +105,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
         ),
         DefaultButton(
           primaryColor: kPrimaryColor,
-          hoverColor: kDarkColor,
+          hoverColor: kDarkCardColor,
           buttonText: buttonText,
           width: width * .2,
           height: height * .05,
