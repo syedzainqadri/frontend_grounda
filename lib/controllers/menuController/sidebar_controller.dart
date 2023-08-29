@@ -33,7 +33,7 @@ class SideBarController extends GetxController {
     "Order",
     "Blog",
     "Forum",
-    "Help",
+    "Tickets",
     "setting",
     "Logout",
   ];

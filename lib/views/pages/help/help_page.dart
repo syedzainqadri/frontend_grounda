@@ -20,7 +20,7 @@ class HelpPage extends GetView<ThemeChangeController> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DashBoardAppBar(title: 'Help Center'),
+      appBar: DashBoardAppBar(title: 'Tickets'),
       body: Obx(
         () => SingleChildScrollView(
           child: Column(
