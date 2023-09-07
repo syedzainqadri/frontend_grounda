@@ -95,7 +95,7 @@ class OrderPage extends GetView<ThemeChangeController> {
                           DefaultButton(
                             primaryColor: kPrimaryColor,
                             hoverColor: kDarkCardColor,
-                            buttonText: "Create Order",
+                            buttonText: "Manage Order",
                             width: width * .12,
                             height: height * .05,
                             onPressed: () {
@@ -111,7 +111,7 @@ class OrderPage extends GetView<ThemeChangeController> {
                       SizedBox(
                           height: height * .6,
                           child: const Center(
-                            child: Text('Under Development'),
+                            child: Text(''),
                           )
 
                           // ListView.builder(

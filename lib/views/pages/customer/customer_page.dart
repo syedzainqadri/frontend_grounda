@@ -237,7 +237,7 @@ class CustomerPage extends GetView<ThemeChangeController> {
                           DefaultButton(
                             primaryColor: kPrimaryColor,
                             hoverColor: kDarkCardColor,
-                            buttonText: "Create Customer",
+                            buttonText: "Manage Customer",
                             width: width * .12,
                             height: height * .05,
                             onPressed: () {

@@ -95,7 +95,7 @@ class PostPage extends GetView<ThemeChangeController> {
                           DefaultButton(
                             primaryColor: kPrimaryColor,
                             hoverColor: kDarkCardColor,
-                            buttonText: "Create Post",
+                            buttonText: "Manage Post",
                             width: width * .12,
                             height: height * .05,
                             onPressed: () {

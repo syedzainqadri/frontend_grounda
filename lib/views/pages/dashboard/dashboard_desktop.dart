@@ -35,7 +35,7 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                     Column(
                       children: [
                         InkWell(
-                          onTap: () => Get.toNamed('/post'),
+                          onTap: () => Get.toNamed('/desktop-post'),
                           child: DashboardSmallWidget(
                             title: "Posts",
                             subTitle: "Published Posts",
@@ -54,7 +54,7 @@ class DashboardDesktop extends GetView<ThemeChangeController> {
                     Column(
                       children: [
                         InkWell(
-                          onTap: () => Get.toNamed('/order'),
+                          onTap: () => Get.toNamed('/desktop-order'),
                           child: DashboardSmallWidget(
                             title: "Orders",
                             subTitle: "Active Orders",
