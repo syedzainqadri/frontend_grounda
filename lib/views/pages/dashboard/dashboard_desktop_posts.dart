@@ -56,14 +56,20 @@ class DashboardDesktopPosts extends GetView<ThemeChangeController> {
                         isMobile: isMobile,
                       ),
                       const SizedBox(height: 16),
-                      DashboardTotalCountWidget(
-                        title: "Pending",
-                        subTitle: "Current month",
-                        width: width,
-                        totalCount:
-                            dashboardController.totalPendingPostCount.value,
-                        color: kPrimaryColor,
-                        isMobile: isMobile,
+                      InkWell(
+                        onTap: () {
+                          print("Pending Button Clicked");
+                          Get.toNamed('/pending/post');
+                        },
+                        child: DashboardTotalCountWidget(
+                          title: "Pending",
+                          subTitle: "Current month",
+                          width: width,
+                          totalCount:
+                              dashboardController.totalPendingPostCount.value,
+                          color: kPrimaryColor,
+                          isMobile: isMobile,
+                        ),
                       ),
                       const SizedBox(height: 24),
                     ],
@@ -93,14 +99,19 @@ class DashboardDesktopPosts extends GetView<ThemeChangeController> {
                         isMobile: isMobile,
                       ),
                       SizedBox(width: width * .03),
-                      DashboardTotalCountWidget(
-                        title: "Pending",
-                        subTitle: "Current month",
-                        width: width,
-                        totalCount:
-                            dashboardController.totalPendingPostCount.value,
-                        color: kPrimaryColor,
-                        isMobile: isMobile,
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed('/pending/post');
+                        },
+                        child: DashboardTotalCountWidget(
+                          title: "Pending",
+                          subTitle: "Current month",
+                          width: width,
+                          totalCount:
+                              dashboardController.totalPendingPostCount.value,
+                          color: kPrimaryColor,
+                          isMobile: isMobile,
+                        ),
                       ),
                     ],
                   ),
