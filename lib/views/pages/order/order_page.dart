@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend_grounda/controllers/categoryController/category_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/widgets/Buttons.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
@@ -92,17 +91,17 @@ class OrderPage extends GetView<ThemeChangeController> {
                                   SvgPicture.asset('assets/icons/search.svg'),
                             ),
                           ),
-                          DefaultButton(
-                            primaryColor: kPrimaryColor,
-                            hoverColor: kDarkCardColor,
-                            buttonText: "Manage Order",
-                            width: width * .12,
-                            height: height * .05,
-                            onPressed: () {
-                              //Todo: Activate this when this page is build
-                              Get.toNamed('/order/create');
-                            },
-                          ),
+                          // DefaultButton(
+                          //   primaryColor: kPrimaryColor,
+                          //   hoverColor: kDarkCardColor,
+                          //   buttonText: "Manage Order",
+                          //   width: width * .12,
+                          //   height: height * .05,
+                          //   onPressed: () {
+                          //     //Todo: Activate this when this page is build
+                          //     Get.toNamed('/order/create');
+                          //   },
+                          // ),
                         ],
                       ),
                       SizedBox(
