@@ -172,6 +172,8 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                               productsController.status.value,
                             );
                             Navigator.pop(context);
+                            productsController.getAll();
+                            Get.toNamed('/product');
                             // }
                           } else {
                             //  if (_createProductFormKey.currentState!
@@ -196,10 +198,10 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                               productsController.status.value,
                             );
                             Navigator.pop(context);
-                            Get.toNamed('/product/');
+                            productsController.getAll();
+                            Get.toNamed('/product');
                             // }
                           }
-                          //Todo: submit function here
                         },
                         onTap: () {
                           Get.back();

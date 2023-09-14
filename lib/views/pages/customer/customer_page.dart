@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend_grounda/controllers/customerController/customer_controller.dart';
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/widgets/Buttons.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
@@ -234,16 +233,16 @@ class CustomerPage extends GetView<ThemeChangeController> {
                                   SvgPicture.asset('assets/icons/search.svg'),
                             ),
                           ),
-                          DefaultButton(
-                            primaryColor: kPrimaryColor,
-                            hoverColor: kDarkCardColor,
-                            buttonText: "Manage Customer",
-                            width: width * .12,
-                            height: height * .05,
-                            onPressed: () {
-                              Get.toNamed('/customer/create');
-                            },
-                          ),
+                          // DefaultButton(
+                          //   primaryColor: kPrimaryColor,
+                          //   hoverColor: kDarkCardColor,
+                          //   buttonText: "Manage Customer",
+                          //   width: width * .12,
+                          //   height: height * .05,
+                          //   onPressed: () {
+                          //     Get.toNamed('/customer/create');
+                          //   },
+                          // ),
                         ],
                       ),
                       SizedBox(
