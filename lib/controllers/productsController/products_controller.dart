@@ -111,8 +111,8 @@ class ProductsController extends GetxController {
 
   Future<void> create(
     String title,
-    double price,
-    double salesPrice,
+    String price,
+    String salesPrice,
     int productLifeInDays,
     String productType,
     String description,
@@ -152,8 +152,8 @@ class ProductsController extends GetxController {
   Future<void> updateProduct(
     int id,
     String title,
-    double price,
-    double salesPrice,
+    String price,
+    String salesPrice,
     int productLifeInDays,
     String productType,
     String description,

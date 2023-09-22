@@ -27,8 +27,8 @@ class ProductsModel {
 
   int? id;
   String? title;
-  double? price;
-  double? salePrice;
+  String? price;
+  String? salePrice;
   String? productType;
   String? description;
   int? productLifeInDays;
@@ -73,8 +73,8 @@ String singleProductToJson(SingleProduct data) => json.encode(data.toJson());
 class SingleProduct {
   int? id;
   String? title;
-  double? price;
-  double? salePrice;
+  String? price;
+  String? salePrice;
   String? productType;
   String? description;
   int? productLifeInDays;
@@ -98,8 +98,8 @@ class SingleProduct {
   factory SingleProduct.fromJson(Map<String, dynamic> json) => SingleProduct(
         id: json["id"],
         title: json["title"],
-        price: json["price"].toDouble(),
-        salePrice: json["salePrice"].toDouble(),
+        price: json["price"],
+        salePrice: json["salePrice"],
         productType: json["productType"],
         description: json["description"],
         productLifeInDays: json["productLifeInDays"],

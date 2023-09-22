@@ -126,7 +126,19 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                         statusChanges: (value) {
                           productsController.status.value = value;
                         },
-                        formSubmit: () async {
+                        formSubmit:
+                            // () {
+                            //   print(productsController.priceController.text);
+                            //   print(productsController.salePriceController.text);
+                            //   productsController.price.value = double.parse(
+                            //       productsController.priceController.text);
+                            //   productsController.salePrice.value = double.parse(
+                            //       productsController.salePriceController.text);
+                            //   print(productsController.price.toDouble());
+                            //   print(productsController.salePrice.toDouble());
+                            // },
+
+                            () async {
                           if (productsController.htmlController != '' ||
                               productsController.htmlController != null) {
                             productsController.description.value =
@@ -142,7 +154,8 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                             //     productsController.priceController.text));
                             productsController.price.value = double.parse(
                                 productsController.priceController.text);
-                            print(productsController.price.value);
+                            print(productsController.priceController.value);
+                            print(productsController.salePriceController.value);
                           }
                           if (productsController.salePriceController != '' ||
                               productsController.salePriceController != null) {
@@ -151,8 +164,6 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                             print(productsController.salePrice.value);
                           }
                           if (productsController.productId.value == 0) {
-                            // if (_createProductFormKey.currentState!
-                            //     .validate()) {
                             Get.defaultDialog(
                               barrierDismissible: false,
                               title: 'Creating Product',
@@ -163,8 +174,8 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                             );
                             await productsController.create(
                               productsController.productTitleController.text,
-                              productsController.price.value,
-                              productsController.salePrice.value,
+                              productsController.priceController.text,
+                              productsController.salePriceController.text,
                               int.parse(productsController
                                   .productLifeController.text),
                               productsController.type.value,
@@ -189,8 +200,8 @@ class CreateProductPage extends GetView<ThemeChangeController> {
                             await productsController.updateProduct(
                               productsController.productId.value,
                               productsController.productTitleController.text,
-                              productsController.price.value,
-                              productsController.salePrice.value,
+                              productsController.priceController.text,
+                              productsController.salePriceController.text,
                               int.parse(productsController
                                   .productLifeController.text),
                               productsController.typeValue.value,
