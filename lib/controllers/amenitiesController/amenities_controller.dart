@@ -38,7 +38,7 @@ class AmenitiesController extends GetxController {
       selectedItemName.value = amenities.first.name!;
       isLoading.value = false;
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -61,10 +61,10 @@ class AmenitiesController extends GetxController {
     );
 
     if (response.statusCode == 200 && response.body != 'null') {
-      showSuccessSnak('Success', 'Amenity Created Sucessfully');
+      showSuccessSnack('Success', 'Amenity Created Sucessfully');
       isLoading.value = false;
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -89,10 +89,10 @@ class AmenitiesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      showSuccessSnak('Success', 'Amenity Updated Sucessfully');
+      showSuccessSnack('Success', 'Amenity Updated Sucessfully');
       isLoading.value = false;
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -113,11 +113,11 @@ class AmenitiesController extends GetxController {
       getAll();
       var deletedAmenities = jsonDecode(response.body);
       var amenities = deletedAmenities['name'];
-      showDeleteSnak('Amenity Deleted',
+      showDeleteSnack('Amenity Deleted',
           'The Amenity with name: $amenities has been deleted');
       isLoading.value = false;
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 

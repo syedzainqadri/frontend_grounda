@@ -645,7 +645,7 @@ class CreateAgency extends GetView<ThemeChangeController> {
                                                       categoryController
                                                           .category[index]
                                                           .name!));
-                                              print(agencyCategory);
+                                              // print(agencyCategory);
                                             },
                                           );
                                         },

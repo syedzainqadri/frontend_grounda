@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class ProjectPage extends GetView<ThemeChangeController> {
-  ProjectPage({Key? key}) : super(key: key);
+  ProjectPage({super.key});
   final TextEditingController searchCategory = TextEditingController();
   QuillEditorController contentController = QuillEditorController();
   TextEditingController categoryNameController = TextEditingController();

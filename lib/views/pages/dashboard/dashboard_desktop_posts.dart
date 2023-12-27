@@ -58,7 +58,7 @@ class DashboardDesktopPosts extends GetView<ThemeChangeController> {
                       const SizedBox(height: 16),
                       InkWell(
                         onTap: () {
-                          print("Pending Button Clicked");
+                          // print("Pending Button Clicked");
                           Get.toNamed('/pending/post');
                         },
                         child: DashboardTotalCountWidget(
@@ -135,7 +135,7 @@ class DashboardDesktopPosts extends GetView<ThemeChangeController> {
                   child: Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: SfCartesianChart(
-                      title: ChartTitle(
+                      title: const ChartTitle(
                         text: 'Published Post vs Pending Post',
                         alignment: ChartAlignment.near,
                       ),
@@ -143,17 +143,17 @@ class DashboardDesktopPosts extends GetView<ThemeChangeController> {
                           ? kDarkCardColor
                           : kCardColor,
                       plotAreaBorderWidth: 0,
-                      primaryXAxis: CategoryAxis(
-                        majorGridLines: const MajorGridLines(width: 0),
+                      primaryXAxis: const CategoryAxis(
+                        majorGridLines: MajorGridLines(width: 0),
                         labelPlacement: LabelPlacement.onTicks,
                       ),
-                      primaryYAxis: NumericAxis(
+                      primaryYAxis: const NumericAxis(
                         minimum: 0,
                         maximum: 80,
-                        axisLine: const AxisLine(width: 0),
+                        axisLine: AxisLine(width: 0),
                         edgeLabelPlacement: EdgeLabelPlacement.shift,
                         labelFormat: '{value}K',
-                        majorTickLines: const MajorTickLines(size: 0),
+                        majorTickLines: MajorTickLines(size: 0),
                       ),
                       series: visitSplineSeriesData,
                       tooltipBehavior: TooltipBehavior(enable: true),

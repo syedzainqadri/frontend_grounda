@@ -9,7 +9,7 @@ import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class LoginView extends GetView<ThemeChangeController> {
-  LoginView({Key? key}) : super(key: key);
+  LoginView({super.key});
 
   double height = Get.height;
   double width = Get.width;

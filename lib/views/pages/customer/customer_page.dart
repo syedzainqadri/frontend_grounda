@@ -10,7 +10,7 @@ import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class CustomerPage extends GetView<ThemeChangeController> {
-  CustomerPage({Key? key}) : super(key: key);
+  CustomerPage({super.key});
   final TextEditingController searchCategory = TextEditingController();
   final CustomerController customerController = Get.find<CustomerController>();
 

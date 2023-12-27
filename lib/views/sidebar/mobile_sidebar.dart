@@ -11,7 +11,7 @@ import '../../utils/global_variable.dart';
 // ignore: must_be_immutable
 class MobileSidebar extends GetView<ThemeChangeController> {
   SideBarController sideBarController;
-  MobileSidebar({Key? key, required this.sideBarController}) : super(key: key);
+  MobileSidebar({super.key, required this.sideBarController});
 
   @override
   Widget build(BuildContext context) {

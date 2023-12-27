@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class InitialNavigation extends GetView<AuthController> {
-  InitialNavigation({Key? key}) : super(key: key);
+  InitialNavigation({super.key});
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   @override
   Widget build(BuildContext context) {

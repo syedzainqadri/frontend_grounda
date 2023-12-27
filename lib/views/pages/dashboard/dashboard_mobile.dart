@@ -75,13 +75,13 @@ class DashboardMobile extends GetView<ThemeChangeController> {
                   padding: const EdgeInsets.all(24.0),
                   child: SfCartesianChart(
                     plotAreaBorderWidth: 0,
-                    primaryXAxis: DateTimeAxis(
+                    primaryXAxis: const DateTimeAxis(
                         name: 'X-Axis',
-                        majorGridLines: const MajorGridLines(width: 0)),
-                    primaryYAxis: NumericAxis(
-                        axisLine: const AxisLine(width: 0),
+                        majorGridLines: MajorGridLines(width: 0)),
+                    primaryYAxis: const NumericAxis(
+                        axisLine: AxisLine(width: 0),
                         // anchorRangeToVisiblePoints: _enableAnchor,
-                        majorTickLines: const MajorTickLines(size: 0)),
+                        majorTickLines: MajorTickLines(size: 0)),
                     series: visitSeriesData,
                   ),
                 ),

@@ -9,7 +9,7 @@ import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
 
 class CreateProductPage extends GetView<ThemeChangeController> {
-  CreateProductPage({Key? key}) : super(key: key);
+  CreateProductPage({super.key});
 
   //<=============== Data Controllers ========================>
 

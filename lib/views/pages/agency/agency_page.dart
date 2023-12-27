@@ -11,7 +11,7 @@ import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class AgencyPage extends GetView<ThemeChangeController> {
-  AgencyPage({Key? key}) : super(key: key);
+  AgencyPage({super.key});
   TextEditingController agencySearchController = TextEditingController();
   AgencyController agencyController = Get.find<AgencyController>();
   var selectedItemId = 0.obs;

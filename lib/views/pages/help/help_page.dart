@@ -7,7 +7,7 @@ import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
 
 class HelpPage extends GetView<ThemeChangeController> {
-  HelpPage({Key? key}) : super(key: key);
+  HelpPage({super.key});
 
   TextEditingController searchController = TextEditingController();
   bool isMobile = false;
@@ -431,9 +431,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -441,7 +441,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -695,9 +695,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -705,7 +705,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -962,9 +962,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -972,7 +972,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -1293,9 +1293,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -1303,7 +1303,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -1557,9 +1557,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -1567,7 +1567,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -1824,9 +1824,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -1834,7 +1834,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -2154,9 +2154,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -2164,7 +2164,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -2418,9 +2418,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -2428,7 +2428,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -2685,9 +2685,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -2695,7 +2695,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -3009,9 +3009,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -3019,7 +3019,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -3267,9 +3267,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -3277,7 +3277,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -3526,9 +3526,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -3536,7 +3536,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -3847,9 +3847,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -3857,7 +3857,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -4105,9 +4105,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -4115,7 +4115,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -4364,9 +4364,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -4374,7 +4374,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -4685,9 +4685,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -4695,7 +4695,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -4943,9 +4943,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -4953,7 +4953,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,
@@ -5202,9 +5202,9 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                         width: 5,
                                                       ),
                                                       //Todo: Attachements
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                     .only(
                                                                 left: 5,
                                                                 top: 13),
@@ -5212,7 +5212,7 @@ class HelpPage extends GetView<ThemeChangeController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
-                                                          children: const [
+                                                          children: [
                                                             Icon(
                                                               Icons.attach_file,
                                                               size: 10,

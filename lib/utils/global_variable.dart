@@ -10,6 +10,10 @@ String baseUrl = 'https://server-pwo2qiqgmq-uc.a.run.app';
 // local api endpoint
 // String baseUrl = 'http://127.0.0.1:8080';
 
+
+var height = Get.height.obs;
+var width = Get.width.obs;
+
 String createUser = '/auth/register';
 String userLogin = '/auth/login';
 String allUsers = '/users/';

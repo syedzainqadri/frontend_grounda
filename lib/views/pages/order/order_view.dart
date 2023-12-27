@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_grounda/controllers/menuController/sidebar_controller.dart';
-import 'package:frontend_grounda/models/visits_data.dart';
-import 'package:frontend_grounda/utils/constants.dart';
 import 'package:frontend_grounda/views/pages/order/order_page.dart';
 import 'package:frontend_grounda/views/sidebar/desktop_sidebar.dart';
 import 'package:frontend_grounda/views/sidebar/tablet_desktop.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../utils/global_variable.dart';
 import '../../sidebar/mobile_sidebar.dart';
 

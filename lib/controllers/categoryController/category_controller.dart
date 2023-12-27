@@ -47,7 +47,7 @@ class CategoryController extends GetxController {
         // }
       }
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -61,7 +61,7 @@ class CategoryController extends GetxController {
       subCategory.value = subCategoryModelFromJson(response.body);
       subCategorySelectedItemName.value = subCategory.first.name!;
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -79,7 +79,7 @@ class CategoryController extends GetxController {
       listOfAmenitiesCodes.value =
           singleCategory.value.amenitiesIconCodes!.split(",");
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -112,12 +112,12 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       var createdCategory = jsonDecode(response.body);
       var categoryName = createdCategory['name'];
-      showSuccessSnak(
+      showSuccessSnack(
         'Category Created',
         'Category Name: $categoryName has been created',
       );
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -143,7 +143,7 @@ class CategoryController extends GetxController {
       'amenitiesNames': amenitiesNames,
       'amenitiesIconCodes': amenitiesIcons
     };
-    print(bodyPrepare);
+    // print(bodyPrepare);
     var response = await http.put(Uri.parse(baseUrl + updateCategory),
         body: jsonEncode(bodyPrepare),
         headers: {
@@ -153,12 +153,12 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       var createdCategory = jsonDecode(response.body);
       var categoryName = createdCategory['name'];
-      showSuccessSnak(
+      showSuccessSnack(
         'Category Updated',
         'Category Name: $categoryName has been Updated',
       );
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -172,12 +172,12 @@ class CategoryController extends GetxController {
     if (response.statusCode == 200) {
       var deletedCategory = jsonDecode(response.body);
       var categoryName = deletedCategory['name'];
-      showSuccessSnak(
-        'Category Remved',
+      showSuccessSnack(
+        'Category Removed',
         'Category name: $categoryName Has been deleted',
       );
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 

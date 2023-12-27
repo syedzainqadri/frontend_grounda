@@ -11,9 +11,8 @@ class DashBoardAppBar extends GetView<ThemeChangeController>
   @override
   final Size preferredSize;
 
-  DashBoardAppBar({Key? key, required this.title})
-      : preferredSize = const Size.fromHeight(50.0),
-        super(key: key);
+  DashBoardAppBar({super.key, required this.title})
+      : preferredSize = const Size.fromHeight(50.0);
 
   final String title;
   final TextEditingController searchController = TextEditingController();

@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import '../widgets/customer_form.dart';
 
 class CreateCustomerPage extends GetView<ThemeChangeController> {
-  CreateCustomerPage({Key? key}) : super(key: key);
+  CreateCustomerPage({super.key});
 
   final CustomerController customerController = Get.find<CustomerController>();
   final _createCustomerFormKey = GlobalKey<FormState>();

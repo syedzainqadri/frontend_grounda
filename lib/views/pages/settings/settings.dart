@@ -8,7 +8,7 @@ import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:get/get.dart';
 
 class SettingsPage extends GetView<ThemeChangeController> {
-  SettingsPage({Key? key}) : super(key: key);
+  SettingsPage({super.key});
 
   var width = Get.width;
   var height = Get.height;

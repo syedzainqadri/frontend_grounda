@@ -8,7 +8,7 @@ import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class ForumPage extends GetView<ThemeChangeController> {
-  ForumPage({Key? key}) : super(key: key);
+  ForumPage({super.key});
   TextEditingController searchController = TextEditingController();
 
   @override

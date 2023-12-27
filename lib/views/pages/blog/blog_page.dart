@@ -8,7 +8,7 @@ import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class BlogPage extends GetView<ThemeChangeController> {
-  BlogPage({Key? key}) : super(key: key);
+  BlogPage({super.key});
 
   TextEditingController searchController = TextEditingController();
 

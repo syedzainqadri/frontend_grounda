@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=3.1.5<4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -40,33 +40,33 @@ dependencies:
   # firebase_auth: ^4.2.5
   firebase_core: ^2.4.1
   firebase_analytics: ^10.1.0
-  http: ^0.13.5
+  http: ^1.1.2
   html: ^0.15.1
   firebase_storage: ^11.0.10
-  google_fonts: ^4.0.0
-  google_sign_in: ^5.4.3
+  google_fonts: ^6.1.0
+  google_sign_in: ^6.2.1
   collapsible_sidebar: ^2.0.3+2
   flutter_svg: ^2.0.4
   sizer: ^2.0.15
   hive_flutter: ^1.1.0
-  syncfusion_flutter_charts: ^20.4.44
-  syncfusion_flutter_gauges: ^20.4.48
+  syncfusion_flutter_charts: ^24.1.41
+  syncfusion_flutter_gauges: ^24.1.41
   # country_picker: ^2.0.20
   country_list_pick: ^1.0.1+6
   slugify: ^2.0.0
-  quill_html_editor: ^2.1.5
-  location: ^4.4.0
-  file_picker: ^5.2.6
+  quill_html_editor: ^2.2.6
+  location: ^5.0.3
+  file_picker: ^5.0.0
   map_picker: ^0.0.3
-  country_currency_pickers: ^2.0.0
+  country_currency_pickers: ^3.0.0
   google_maps_flutter: ^2.2.5
   # map_pin_picker: ^0.0.1.
   geocoding: ^2.1.0
   # open_street_map_search_and_pick: ^0.0.16
-  permission_handler: ^10.2.0
-  geolocator: ^9.0.2
+  permission_handler: ^11.1.0
+  geolocator: ^10.1.0
   image_picker_web: ^3.0.0+1
-  icon_picker: ^2.1.0
+  # icon_picker: ^2.1.0
   html_editor_enhanced: ^2.5.1
   country_state_city_picker: ^1.2.8
   chips_choice_null_safety: ^2.0.6
@@ -90,7 +90,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

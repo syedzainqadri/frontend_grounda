@@ -8,10 +8,9 @@ import 'package:geocoding/geocoding.dart';
 
 class GoogleMapPicker extends StatelessWidget {
   GoogleMapPicker(
-      {Key? key,
+      {super.key,
       required this.mapPickerController,
-      required this.textController})
-      : super(key: key);
+      required this.textController});
 
   final _controller = Completer<GoogleMapController>();
 

@@ -42,7 +42,7 @@ class ProjectNearByPlacesController extends GetxController {
       print(projectNearByPlace.length);
       isLoading.value = false;
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -65,10 +65,10 @@ class ProjectNearByPlacesController extends GetxController {
     );
 
     if (response.statusCode == 200 && response.body != 'null') {
-      showSuccessSnak('Success', 'Project Place Created Sucessfully');
+      showSuccessSnack('Success', 'Project Place Created Sucessfully');
       isLoading.value = false;
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -93,10 +93,10 @@ class ProjectNearByPlacesController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
-      showSuccessSnak('Success', 'Project Place Updated Sucessfully');
+      showSuccessSnack('Success', 'Project Place Updated Sucessfully');
       isLoading.value = false;
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 
@@ -117,11 +117,11 @@ class ProjectNearByPlacesController extends GetxController {
       getAll();
       var deletedProjectPlace = jsonDecode(response.body);
       var ProjectPlace = deletedProjectPlace['name'];
-      showDeleteSnak('Project Place Deleted',
+      showDeleteSnack('Project Place Deleted',
           'The Project Palce with name: $ProjectPlace has been deleted');
       isLoading.value = false;
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 }

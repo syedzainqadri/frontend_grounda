@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class TabletSidebar extends GetView<ThemeChangeController> {
   SideBarController sideBarController;
-  TabletSidebar({Key? key, required this.sideBarController}) : super(key: key);
+  TabletSidebar({super.key, required this.sideBarController});
 
   @override
   Widget build(BuildContext context) {

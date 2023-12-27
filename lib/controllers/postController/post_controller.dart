@@ -413,10 +413,10 @@ class PostController extends GetxController {
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
       isLoading.value = false;
-      showSuccessSnak('Softly Deleted',
+      showSuccessSnack('Softly Deleted',
           'This post has been updated as delted in the system');
     } else {
-      showErrorSnak('Error', response.body);
+      showErrorSnack('Error', response.body);
     }
   }
 

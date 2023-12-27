@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,14 +7,12 @@ import 'package:frontend_grounda/controllers/projectController/projectNearByPlac
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/utils/global_variable.dart';
-import 'package:frontend_grounda/views/pages/settings/subpages/project_near_by_places/project_near_by_places_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/icon_from_api.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
 import 'package:get/get.dart';
-import 'package:icon_picker/icon_picker.dart';
+// import 'package:icon_picker/icon_picker.dart';
 
 class ProjectNearByPlacesDesktop extends GetView<ThemeChangeController> {
   ProjectNearByPlacesDesktop({super.key});
@@ -61,89 +58,89 @@ class ProjectNearByPlacesDesktop extends GetView<ThemeChangeController> {
                     ),
                   ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: ProjectNearByPlacesForm(
-                    iconPicker: IconPicker(
-                      style: TextStyle(
-                        color: controller.isDarkMode.value
-                            ? kDarkTextColor
-                            : kTextColor,
-                      ),
-                      initialValue: 'Please Select an Icon',
-                      icon: Icon(
-                        IconData(icon.value, fontFamily: iconFontFamily.value),
-                        color: controller.isDarkMode.value
-                            ? kDarkTextColor
-                            : kTextColor,
-                      ),
-                      labelText: "Icon",
-                      title: "Select an icon",
-                      cancelBtn: "CANCEL",
-                      enableSearch: true,
-                      searchHint: 'Search icon',
-                      onChanged: (val) {
-                        var value = jsonDecode(val);
-                        icon.value = value['codePoint'];
-                        print(icon.value);
-                      },
-                    ),
-                    projectPlaceTitleController:
-                        projectNearByPlacesTitleController,
-                    buttonText:
-                        projectNearByPlaceId.value == '' ? 'Submit' : 'Update',
-                    formSubmit: () async {
-                      if (projectNearByPlaceId.value == '') {
-                        print(projectNearByPlacesTitleController.text);
-                        Get.defaultDialog(
-                          title: 'Creating Project Place',
-                          content: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                        await projectNearByPlacesController.create(
-                            projectNearByPlacesTitleController.text,
-                            icon.value.toString(),
-                            isPublished.value);
-                        await projectNearByPlacesController.getAll();
-                        Navigator.pop(context);
-                      } else {
-                        Get.defaultDialog(
-                          title: 'Updating Amenity',
-                          content: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                        await projectNearByPlacesController
-                            .updateProjectNearByPlaces(
-                          int.parse(projectNearByPlaceId.value),
-                          projectNearByPlacesTitleController.text,
-                          icon.value.toString(),
-                          isPublished.value,
-                        );
-                        projectNearByPlacesTitleController.text = '';
-                        icon.value = 57487;
-                        projectNearByPlaceId.value = '';
-                        await projectNearByPlacesController.getAll();
-                        Navigator.pop(context);
-                      }
-                    },
-                    cancelText:
-                        projectNearByPlaceId.value == '' ? '' : 'Cancel Update',
-                    onTap: () async {
-                      projectNearByPlacesTitleController.text = '';
-                      icon.value = 57487;
-                      projectNearByPlaceId.value = '';
-                      await projectNearByPlacesController.getAll();
-                    },
-                    statusValue: isPublished.value,
-                    statusChanges: (value) {
-                      isPublished.value = value;
-                    },
-                  ),
-                ),
+                // child: Padding(
+                //   padding: const EdgeInsets.all(25.0),
+                //   child: ProjectNearByPlacesForm(
+                //     iconPicker: IconPicker(
+                //       style: TextStyle(
+                //         color: controller.isDarkMode.value
+                //             ? kDarkTextColor
+                //             : kTextColor,
+                //       ),
+                //       initialValue: 'Please Select an Icon',
+                //       icon: Icon(
+                //         IconData(icon.value, fontFamily: iconFontFamily.value),
+                //         color: controller.isDarkMode.value
+                //             ? kDarkTextColor
+                //             : kTextColor,
+                //       ),
+                //       labelText: "Icon",
+                //       title: "Select an icon",
+                //       cancelBtn: "CANCEL",
+                //       enableSearch: true,
+                //       searchHint: 'Search icon',
+                //       onChanged: (val) {
+                //         var value = jsonDecode(val);
+                //         icon.value = value['codePoint'];
+                //         print(icon.value);
+                //       },
+                //     ),
+                //     projectPlaceTitleController:
+                //         projectNearByPlacesTitleController,
+                //     buttonText:
+                //         projectNearByPlaceId.value == '' ? 'Submit' : 'Update',
+                //     formSubmit: () async {
+                //       if (projectNearByPlaceId.value == '') {
+                //         print(projectNearByPlacesTitleController.text);
+                //         Get.defaultDialog(
+                //           title: 'Creating Project Place',
+                //           content: const Center(
+                //             child:
+                //                 CircularProgressIndicator(color: kPrimaryColor),
+                //           ),
+                //         );
+                //         await projectNearByPlacesController.create(
+                //             projectNearByPlacesTitleController.text,
+                //             icon.value.toString(),
+                //             isPublished.value);
+                //         await projectNearByPlacesController.getAll();
+                //         Navigator.pop(context);
+                //       } else {
+                //         Get.defaultDialog(
+                //           title: 'Updating Amenity',
+                //           content: const Center(
+                //             child:
+                //                 CircularProgressIndicator(color: kPrimaryColor),
+                //           ),
+                //         );
+                //         await projectNearByPlacesController
+                //             .updateProjectNearByPlaces(
+                //           int.parse(projectNearByPlaceId.value),
+                //           projectNearByPlacesTitleController.text,
+                //           icon.value.toString(),
+                //           isPublished.value,
+                //         );
+                //         projectNearByPlacesTitleController.text = '';
+                //         icon.value = 57487;
+                //         projectNearByPlaceId.value = '';
+                //         await projectNearByPlacesController.getAll();
+                //         Navigator.pop(context);
+                //       }
+                //     },
+                //     cancelText:
+                //         projectNearByPlaceId.value == '' ? '' : 'Cancel Update',
+                //     onTap: () async {
+                //       projectNearByPlacesTitleController.text = '';
+                //       icon.value = 57487;
+                //       projectNearByPlaceId.value = '';
+                //       await projectNearByPlacesController.getAll();
+                //     },
+                //     statusValue: isPublished.value,
+                //     statusChanges: (value) {
+                //       isPublished.value = value;
+                //     },
+                //   ),
+                // ),
               ),
               SizedBox(
                 width: width * .03,

@@ -12,10 +12,10 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardDesktopOrders extends GetView<ThemeChangeController> {
   const DashboardDesktopOrders({
-    Key? key,
+    super.key,
     required this.visitColumnSeriesData,
     required this.visitSplineSeriesData,
-  }) : super(key: key);
+  });
 
   final List<ColumnSeries<VisitsChartData, String>> visitColumnSeriesData;
   final List<SplineSeries<VisitsChartData, String>> visitSplineSeriesData;
@@ -229,15 +229,15 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                           width: width,
                           child: SfCartesianChart(
                             plotAreaBorderWidth: 0,
-                            primaryXAxis: CategoryAxis(
-                                majorGridLines: const MajorGridLines(width: 0)),
-                            primaryYAxis: NumericAxis(
+                            primaryXAxis: const CategoryAxis(
+                                majorGridLines: MajorGridLines(width: 0)),
+                            primaryYAxis: const NumericAxis(
                                 minimum: 200,
                                 maximum: 800,
                                 labelFormat: '{value}K',
-                                axisLine: const AxisLine(width: 0),
-                                majorGridLines: const MajorGridLines(width: 0),
-                                majorTickLines: const MajorTickLines(size: 0)),
+                                axisLine: AxisLine(width: 0),
+                                majorGridLines: MajorGridLines(width: 0),
+                                majorTickLines: MajorTickLines(size: 0)),
                             series: visitColumnSeriesData,
                           ),
                         ),
@@ -294,14 +294,14 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Column(
+                                    const Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -328,11 +328,11 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           height: 20,
                                         ),
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -358,11 +358,11 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           height: 20,
                                         ),
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -388,11 +388,11 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           height: 20,
                                         ),
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -418,11 +418,11 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           height: 20,
                                         ),
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -554,20 +554,20 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                               ? kDarkCardColor
                                               : kCardColor,
                                       plotAreaBorderWidth: 0,
-                                      primaryXAxis: CategoryAxis(
+                                      primaryXAxis: const CategoryAxis(
                                         majorGridLines:
-                                            const MajorGridLines(width: 0),
+                                            MajorGridLines(width: 0),
                                         labelPlacement: LabelPlacement.onTicks,
                                       ),
-                                      primaryYAxis: NumericAxis(
+                                      primaryYAxis: const NumericAxis(
                                         minimum: 0,
                                         maximum: 80,
-                                        axisLine: const AxisLine(width: 0),
+                                        axisLine: AxisLine(width: 0),
                                         edgeLabelPlacement:
                                             EdgeLabelPlacement.shift,
                                         labelFormat: '{value}K',
                                         majorTickLines:
-                                            const MajorTickLines(size: 0),
+                                            MajorTickLines(size: 0),
                                       ),
                                       series: visitSplineSeriesData,
                                       tooltipBehavior:
@@ -631,14 +631,14 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Column(
+                                    const Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -665,11 +665,11 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           height: 20,
                                         ),
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -695,11 +695,11 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           height: 20,
                                         ),
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -725,11 +725,11 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           height: 20,
                                         ),
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -755,11 +755,11 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           height: 20,
                                         ),
                                         Row(
-                                          children: const [
+                                          children: [
                                             SizedBox(
                                               height: 15,
                                               width: 15,
@@ -890,20 +890,20 @@ class DashboardDesktopOrders extends GetView<ThemeChangeController> {
                                               ? kDarkCardColor
                                               : kCardColor,
                                       plotAreaBorderWidth: 0,
-                                      primaryXAxis: CategoryAxis(
+                                      primaryXAxis: const CategoryAxis(
                                         majorGridLines:
-                                            const MajorGridLines(width: 0),
+                                            MajorGridLines(width: 0),
                                         labelPlacement: LabelPlacement.onTicks,
                                       ),
-                                      primaryYAxis: NumericAxis(
+                                      primaryYAxis: const NumericAxis(
                                         minimum: 0,
                                         maximum: 80,
-                                        axisLine: const AxisLine(width: 0),
+                                        axisLine: AxisLine(width: 0),
                                         edgeLabelPlacement:
                                             EdgeLabelPlacement.shift,
                                         labelFormat: '{value}K',
                                         majorTickLines:
-                                            const MajorTickLines(size: 0),
+                                            MajorTickLines(size: 0),
                                       ),
                                       series: visitSplineSeriesData,
                                       tooltipBehavior:

@@ -8,8 +8,7 @@ import '../../controllers/themeController/theme_change_controller.dart';
 
 class DesktopSidebar extends GetView<ThemeChangeController> {
   final SideBarController sideBarController;
-  const DesktopSidebar({Key? key, required this.sideBarController})
-      : super(key: key);
+  const DesktopSidebar({super.key, required this.sideBarController});
 
   @override
   Widget build(BuildContext context) {

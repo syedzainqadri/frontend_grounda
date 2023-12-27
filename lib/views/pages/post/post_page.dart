@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class PostPage extends GetView<ThemeChangeController> {
-  PostPage({Key? key}) : super(key: key);
+  PostPage({super.key});
   final TextEditingController searchCategory = TextEditingController();
   QuillEditorController contentController = QuillEditorController();
   TextEditingController categoryNameController = TextEditingController();

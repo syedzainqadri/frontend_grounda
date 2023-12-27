@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class TextEditor extends GetView<PostController> {
-  TextEditor({required this.textController, Key? key}) : super(key: key);
+  TextEditor({required this.textController, super.key});
   dynamic textController;
 
   final customToolBarList = [

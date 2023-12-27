@@ -110,7 +110,7 @@ class ProjectController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       singleProject.value = singleProjectModelFromJson(response.body);
       projectID.value = singleProject.value.id!;
@@ -194,8 +194,8 @@ class ProjectController extends GetxController {
       "projectNearByPlacesIcons": projectNearByPlaceCodes
     };
 
-    print("<=== body we are sending ===>");
-    print(bodyPrepare);
+    // print("<=== body we are sending ===>");
+    // print(bodyPrepare);
 
     var response = await http.post(
       Uri.parse(
@@ -207,7 +207,7 @@ class ProjectController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       // project.addAll(projectsModelFromJson(response.body));
       await getAll();

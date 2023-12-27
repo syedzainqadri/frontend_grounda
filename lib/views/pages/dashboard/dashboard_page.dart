@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardPage extends GetView<ThemeChangeController> {
-  DashboardPage({Key? key}) : super(key: key);
+  DashboardPage({super.key});
 
   List<VisitsChartData> visitChartData = [
     VisitsChartData(x: DateTime(1950, 3, 31), y: 80.7),

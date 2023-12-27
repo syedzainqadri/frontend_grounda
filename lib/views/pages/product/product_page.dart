@@ -13,7 +13,7 @@ import 'package:frontend_grounda/widgets/text_fields.dart';
 import 'package:get/get.dart';
 
 class ProductPage extends GetView<ThemeChangeController> {
-  ProductPage({Key? key}) : super(key: key);
+  ProductPage({super.key});
   final TextEditingController searchProduct = TextEditingController();
   ProductsController productController = Get.find<ProductsController>();
   var selectedItemId = 0.obs;

@@ -102,7 +102,7 @@ class CustomerController extends GetxController {
     }
   }
 
-  Future<void> getbyId(String id) async {
+  Future<void> getById(String id) async {
     isLoading.value = true;
     var response = await http.get(
       Uri.parse(
@@ -142,7 +142,7 @@ class CustomerController extends GetxController {
     String featuredImage,
     String logoImage,
     String slug,
-    int refrenceId,
+    int referenceId,
   ) async {
     isLoading.value = true;
     var bodyPrepare = {
@@ -164,7 +164,7 @@ class CustomerController extends GetxController {
       "featuredImage": featuredImage,
       "logoImage": logoImage,
       "slug": slug,
-      "refrenceId": refrenceId
+      "refrenceId": referenceId
     };
 
     var response = await http.post(
@@ -315,6 +315,6 @@ class CustomerController extends GetxController {
     _locationData = await location.getLocation();
     latitude.value = _locationData.latitude!;
     longitude.value = _locationData.longitude!;
-    print("latitude = $latitude longitude = $longitude");
+    // print("latitude = $latitude longitude = $longitude");
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_grounda/utils/constants.dart';
 import 'package:get/get.dart';
 
-showSuccessSnak(String title, String message) {
+showSuccessSnack(String title, String message) {
   Get.snackbar(
       icon: const Icon(
         Icons.check,
@@ -18,7 +18,7 @@ showSuccessSnak(String title, String message) {
       shouldIconPulse: true);
 }
 
-showErrorSnak(String title, String message) {
+showErrorSnack(String title, String message) {
   Get.snackbar(
       icon: const Icon(
         Icons.dangerous,
@@ -34,7 +34,7 @@ showErrorSnak(String title, String message) {
       shouldIconPulse: true);
 }
 
-showDeleteSnak(String title, String message) {
+showDeleteSnack(String title, String message) {
   Get.snackbar(
       icon: const Icon(
         Icons.delete,

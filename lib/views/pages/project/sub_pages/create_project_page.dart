@@ -19,7 +19,7 @@ import '../../../../controllers/projectController/project_controller.dart';
 import '../../../../utils/global_variable.dart';
 
 class CreateProjectPage extends GetView<ThemeChangeController> {
-  CreateProjectPage({Key? key}) : super(key: key);
+  CreateProjectPage({super.key});
 
   //<=============== Data Controllers ========================>
   CategoryController categoryController = Get.find<CategoryController>();
@@ -503,11 +503,11 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                 Navigator.pop(context);
                                 Get.toNamed('/project');
                               } else {
-                                showErrorSnak('No Image Selected',
+                                showErrorSnack('No Image Selected',
                                     'Images Must not be Empty');
                               }
                             } else {
-                              showErrorSnak('Description is Empty',
+                              showErrorSnack('Description is Empty',
                                   'Description Can Not be empty');
                             }
                           } else {
@@ -574,11 +574,11 @@ class CreateProjectPage extends GetView<ThemeChangeController> {
                                 //       'Please Select Amenities');
                                 // }
                               } else {
-                                showErrorSnak('No Image Selected',
+                                showErrorSnack('No Image Selected',
                                     'Images Must not be Empty');
                               }
                             } else {
-                              showErrorSnak('Description is Empty',
+                              showErrorSnack('Description is Empty',
                                   'Description Can Not be empty');
                             }
                           }

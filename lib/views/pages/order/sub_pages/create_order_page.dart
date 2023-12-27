@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 class CreateOrderPage extends StatefulWidget {
-  const CreateOrderPage({Key? key}) : super(key: key);
+  const CreateOrderPage({super.key});
 
   @override
   State<CreateOrderPage> createState() => _CreateOrderPageState();
@@ -626,20 +626,20 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                                       postController.getAll();
                                       Get.toNamed('/post');
                                     } else {
-                                      showErrorSnak('Amenities are empty',
+                                      showErrorSnack('Amenities are empty',
                                           'Please Select Amenities');
                                     }
                                   }
                                 } else {
-                                  showErrorSnak('Sub Category is not selected',
+                                  showErrorSnack('Sub Category is not selected',
                                       'Please select a Sub Category');
                                 }
                               } else {
-                                showErrorSnak('No Image Selected',
+                                showErrorSnack('No Image Selected',
                                     'Images Must not be Empty');
                               }
                             } else {
-                              showErrorSnak('Description is Empty',
+                              showErrorSnack('Description is Empty',
                                   'Description Can Not be empty');
                             }
                           } else {
@@ -718,11 +718,11 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                                 //       'Please Select Amenities');
                                 // }
                               } else {
-                                showErrorSnak('No Image Selected',
+                                showErrorSnack('No Image Selected',
                                     'Images Must not be Empty');
                               }
                             } else {
-                              showErrorSnak('Description is Empty',
+                              showErrorSnack('Description is Empty',
                                   'Description Can Not be empty');
                             }
                           }

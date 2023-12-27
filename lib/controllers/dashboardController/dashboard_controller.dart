@@ -12,7 +12,7 @@ class DashboardController extends GetxController {
   var token = ''.obs;
   var isLoading = false.obs;
   var postModel = <PostModel>[].obs;
-  var activepost = <PostModel>[].obs;
+  var activePost = <PostModel>[].obs;
   var percentage = 0.0.obs;
   var totalPostCount = 120.obs;
   var totalPublishedPostCount = 90.obs;
@@ -40,15 +40,15 @@ class DashboardController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       postModel.value = postModelFromJson(response.body);
-      print("<======= lenght of post is ========>");
-      print(postModel.length);
-      print(postModel.value[6].status);
+      // print("<======= length of post is ========>");
+      // print(postModel.length);
+      // print(postModel.value[6].status);
       for (var i = 0; i < postModel.length; i++) {
         if (postModel[i].status == true) {
-          activepost.add(postModel[i]);
+          activePost.add(postModel[i]);
         }
       }
-      print(activepost.length);
+      // print(activePost.length);
       isLoading.value = false;
       calculatePercentage();
     } else {
@@ -59,8 +59,8 @@ class DashboardController extends GetxController {
   }
 
   void calculatePercentage() {
-    percentage.value = (activepost.length / postModel.length) * 100;
-    print('======== percentage is =======');
-    print(percentage.value);
+    percentage.value = (activePost.length / postModel.length) * 100;
+    // print('======== percentage is =======');
+    // print(percentage.value);
   }
 }

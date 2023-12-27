@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,14 +7,11 @@ import 'package:frontend_grounda/controllers/amenitiesController/amenities_contr
 import 'package:frontend_grounda/controllers/themeController/theme_change_controller.dart';
 
 import 'package:frontend_grounda/utils/constants.dart';
-import 'package:frontend_grounda/utils/global_variable.dart';
-import 'package:frontend_grounda/views/pages/settings/subpages/amenities/amenities_form.dart';
 import 'package:frontend_grounda/widgets/dashboard/dashboard_app_bar.dart';
 import 'package:frontend_grounda/widgets/icon_from_api.dart';
 import 'package:frontend_grounda/widgets/text_fields.dart';
 
 import 'package:get/get.dart';
-import 'package:icon_picker/icon_picker.dart';
 
 class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
   AmenitiesPageDesktop({super.key});
@@ -60,83 +56,84 @@ class AmenitiesPageDesktop extends GetView<ThemeChangeController> {
                     ),
                   ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: AmenitiesForm(
-                    iconPicker: IconPicker(
-                      style: TextStyle(
-                        color: controller.isDarkMode.value
-                            ? kDarkTextColor
-                            : kTextColor,
-                      ),
-                      initialValue: 'Please Select an Icon',
-                      icon: Icon(
-                        IconData(icon.value, fontFamily: iconFontFamily.value),
-                        color: controller.isDarkMode.value
-                            ? kDarkTextColor
-                            : kTextColor,
-                      ),
-                      labelText: "Icon",
-                      title: "Select an icon",
-                      cancelBtn: "CANCEL",
-                      enableSearch: true,
-                      searchHint: 'Search icon',
-                      onChanged: (val) {
-                        var value = jsonDecode(val);
-                        icon.value = value['codePoint'];
-                        print(icon.value);
-                      },
-                    ),
-                    amenityTitleController: amenityTitleController,
-                    buttonText: amenityId.value == '' ? 'Submit' : 'Update',
-                    formSubmit: () async {
-                      if (amenityId.value == '') {
-                        Get.defaultDialog(
-                          title: 'Creating Amenity',
-                          content: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                        await amenitiesController.create(
-                            amenityTitleController.text,
-                            icon.value.toString(),
-                            isPublished.value);
-                        await amenitiesController.getAll();
-                        Navigator.pop(context);
-                      } else {
-                        Get.defaultDialog(
-                          title: 'Updating Amenity',
-                          content: const Center(
-                            child:
-                                CircularProgressIndicator(color: kPrimaryColor),
-                          ),
-                        );
-                        await amenitiesController.updateAmenities(
-                          int.parse(amenityId.value),
-                          amenityTitleController.text,
-                          icon.value.toString(),
-                          isPublished.value,
-                        );
-                        amenityTitleController.text = '';
-                        icon.value = 57487;
-                        amenityId.value = '';
-                        await amenitiesController.getAll();
-                        Navigator.pop(context);
-                      }
-                    },
-                    cancelText: amenityId.value == '' ? '' : 'Cancel Update',
-                    onTap: () async {
-                      amenityTitleController.text = '';
-                      icon.value = 57487;
-                      amenityId.value = '';
-                      await amenitiesController.getAll();
-                    },
-                    statusValue: isPublished.value,
-                    statusChanges: (value) {
-                      isPublished.value = value;
-                    },
-                  ),
+                child: const Padding(
+                  padding: EdgeInsets.all(25.0),
+                  // child: AmenitiesForm(
+                  //   iconPicker: IconPicker(
+                  //     style: TextStyle(
+                  //       color: controller.isDarkMode.value
+                  //           ? kDarkTextColor
+                  //           : kTextColor,
+                  //     ),
+                  //     initialValue: 'Please Select an Icon',
+                  //     icon: Icon(
+                  //       IconData(icon.value, fontFamily: iconFontFamily.value),
+                  //       color: controller.isDarkMode.value
+                  //           ? kDarkTextColor
+                  //           : kTextColor,
+                  //     ),
+                  //     labelText: "Icon",
+                  //     title: "Select an icon",
+                  //     cancelBtn: "CANCEL",
+                  //     enableSearch: true,
+                  //     searchHint: 'Search icon',
+                  //     onChanged: (val) {
+                  //       var value = jsonDecode(val);
+                  //       icon.value = value['codePoint'];
+                  //       print(icon.value);
+                  //     },
+                  //   ),
+                  //   amenityTitleController: amenityTitleController,
+                  //   buttonText: amenityId.value == '' ? 'Submit' : 'Update',
+                  //   formSubmit: () async {
+                  //     if (amenityId.value == '') {
+                  //       Get.defaultDialog(
+                  //         title: 'Creating Amenity',
+                  //         content: const Center(
+                  //           child:
+                  //               CircularProgressIndicator(color: kPrimaryColor),
+                  //         ),
+                  //       );
+                  //       await amenitiesController.create(
+                  //           amenityTitleController.text,
+                  //           icon.value.toString(),
+                  //           isPublished.value);
+                  //       await amenitiesController.getAll();
+                  //       Navigator.pop(context);
+                  //     } else {
+                  //       Get.defaultDialog(
+                  //         title: 'Updating Amenity',
+                  //         content: const Center(
+                  //           child:
+                  //               CircularProgressIndicator(color: kPrimaryColor),
+                  //         ),
+                  //       );
+                  //       await amenitiesController.updateAmenities(
+                  //         int.parse(amenityId.value),
+                  //         amenityTitleController.text,
+                  //         icon.value.toString(),
+                  //         isPublished.value,
+                  //       );
+                  //       amenityTitleController.text = '';
+                  //       icon.value = 57487;
+                  //       amenityId.value = '';
+                  //       await amenitiesController.getAll();
+                  //       Navigator.pop(context);
+                  //     }
+                  //   },
+                  //   cancelText: amenityId.value == '' ? '' : 'Cancel Update',
+                  //   onTap: () async {
+                  //     amenityTitleController.text = '';
+                  //     icon.value = 57487;
+                  //     amenityId.value = '';
+                  //     await amenitiesController.getAll();
+                  //   },
+                  //   statusValue: isPublished.value,
+                  //   statusChanges: (value) {
+                  //     isPublished.value = value;
+                  //   },
+                  // ),
+                
                 ),
               ),
               SizedBox(

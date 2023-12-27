@@ -7,12 +7,11 @@ import 'package:get/get.dart';
 
 class SidebarItem extends GetView<ThemeChangeController> {
   const SidebarItem(
-      {Key? key,
+      {super.key,
       this.title,
       required this.svgSrc,
       required this.press,
-      required this.isTablet})
-      : super(key: key);
+      required this.isTablet});
   final String? title;
   final String svgSrc;
   final VoidCallback press;

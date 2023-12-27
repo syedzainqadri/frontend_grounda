@@ -77,7 +77,6 @@ class AgencyController extends GetxController {
       agencies.value = agencyModelFromJson(response.body);
       isLoading.value = false;
     } else {
-      print('this is getting error here');
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
@@ -95,7 +94,6 @@ class AgencyController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
-    print(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       singleAgencies.value = singleAgenciesFromJson(response.body);
       agencyNameController.text = singleAgencies.value.title!;
@@ -317,6 +315,6 @@ class AgencyController extends GetxController {
     _locationData = await location.getLocation();
     latitude.value = _locationData.latitude!;
     longitude.value = _locationData.longitude!;
-    print("latitude = $latitude longitude = $longitude");
+    // print("latitude = $latitude longitude = $longitude");
   }
 }
